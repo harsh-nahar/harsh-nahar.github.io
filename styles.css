@@ -229,3 +229,11 @@ body {
     font-size: 18px;
   }
 }
+/* Prevent wrapping of the site title on narrow screens */
+@media (max-width: 600px) {
+  .home-container .site-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
