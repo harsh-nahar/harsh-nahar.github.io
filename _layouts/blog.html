@@ -1,12 +1,11 @@
-{% raw %}
 <div class="container blog-container">
   <div class="header-bar">
     <a href="{{ '/' | relative_url }}" class="back-home">home</a>
-    <input type="search" id="search" class="search" placeholder="Search posts...">
+    <input type="search" id="search" class="search" placeholder="Search posts…">
   </div>
   <div class="grid" id="postGrid">
     {% for post in site.posts %}
-    <a href="{{ post.url }}" class="post-card"><h3>{{ post.title }}</h3></a>
+      <a href="{{ post.url }}" class="post-card"><h3>{{ post.title }}</h3></a>
     {% endfor %}
   </div>
 </div>
@@ -18,4 +17,3 @@
     });
   });
 </script>
-{% endraw %}
