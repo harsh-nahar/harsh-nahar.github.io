@@ -5,12 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
   <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}">
-
-  <!-- Minimal Open Graph for link previews -->
-  <meta property="og:title" content="{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}">
-  <meta property="og:description" content="Personal blog by Harsh Nahar—explore posts on design, photography, coding, and life.">
-  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
-  <meta property="og:type" content="website">
 </head>
 <body class="fade-in {{ page.layout }}-page">
   {{ content }}
