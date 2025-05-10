@@ -9,3 +9,6 @@ defaults:
       type: "posts"
     values:
       layout: "post"
+
+include:
+  - styles.css
