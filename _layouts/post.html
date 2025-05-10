@@ -1,0 +1,40 @@
+{% raw %}
+<div class="full-bg">
+  <div class="container post-container">
+    <div class="post-header">
+      <a href="{{ '/blog/' | relative_url }}" class="back-link">&lt; blog</a>
+      <button id="fontSwitch" class="font-switch">default</button>
+    </div>
+    <article class="post-content">
+      <h1>{{ page.title }}</h1>
+      <div class="content">
+        {{ content }}
+      </div>
+    </article>
+    <button id="shareBtn" class="share-btn">🔗 share</button>
+  </div>
+</div>
+<script>
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+    const url = window.location.href;
+    if (navigator.share && /Mobi|Tablet|iPad|iPhone/.test(navigator.userAgent)) {
+      navigator.share({ url });
+    } else {
+      await navigator.clipboard.writeText(url);
+      const btn = document.getElementById('shareBtn');
+      btn.textContent = '✔️ copied';
+      setTimeout(() => btn.textContent = '🔗 share', 2000);
+    }
+  });
+  document.getElementById('fontSwitch').addEventListener('click', () => {
+    const btn = document.getElementById('fontSwitch');
+    if (btn.textContent === 'default') {
+      document.body.style.fontFamily = 'sans-serif';
+      btn.textContent = 'sans-serif';
+    } else {
+      document.body.style.fontFamily = "'Cormorant Garamond', serif";
+      btn.textContent = 'default';
+    }
+  });
+</script>
+{% endraw %}
