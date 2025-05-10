@@ -183,12 +183,14 @@ body {
 }
 /* Mobile adjustments */
 @media (max-width: 600px) {
-  /* Home page title: allow wrapping and smaller font */
   .home-container .site-title {
-    font-size: 64px;
-    line-height: 1.1;
+    font-size: 56px;      /* reduced from 64px */
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-
+}
   /* Nav links: smaller and stacked if needed */
   .nav-links {
     gap: 1rem;
