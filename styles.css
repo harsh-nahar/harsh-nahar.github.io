@@ -181,3 +181,51 @@ body {
 .share-btn:hover {
   color: #ff5232;
 }
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  /* Home page title: allow wrapping and smaller font */
+  .home-container .site-title {
+    font-size: 64px;
+    line-height: 1.1;
+  }
+
+  /* Nav links: smaller and stacked if needed */
+  .nav-links {
+    gap: 1rem;
+  }
+  .link {
+    font-size: 32px;
+  }
+
+  /* Blog grid header */
+  .header-bar {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .search {
+    flex: 1 1 100%;
+    font-size: 16px;
+    padding: 0.5rem;
+    margin-left: 0;
+  }
+
+  /* Post page: reduce paddings */
+  .full-bg {
+    padding: 1rem 0;
+  }
+  .post-content {
+    padding: 0 0.5rem;
+  }
+  .post-content h1 {
+    font-size: 28px;
+  }
+  .content {
+    font-size: 18px;
+  }
+  .back-link {
+    font-size: 28px;
+  }
+  .font-switch, .share-btn {
+    font-size: 18px;
+  }
+}
