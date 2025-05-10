@@ -1,0 +1,11 @@
+url: "https://harshnahar.com"
+baseurl: ""
+title: "harsh nahar"
+permalink: /:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
