@@ -1,7 +1,7 @@
 url: "https://harshnahar.com"
 baseurl: ""
 title: "harsh nahar"
-permalink: /:path/
+permalink: /blog/:title/
 
 defaults:
   - scope:
