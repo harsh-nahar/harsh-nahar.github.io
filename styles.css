@@ -184,7 +184,7 @@ body {
 /* Mobile adjustments */
 @media (max-width: 600px) {
   .home-container .site-title {
-    font-size: 56px;      /* reduced from 64px */
+    font-size: 48px;      /* reduced from 64px */
     line-height: 1;
     white-space: nowrap;
     overflow: hidden;
