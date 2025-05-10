@@ -2,4 +2,4 @@
 layout: home
 ---
 
-<!-- No other content needed here; your home layout renders everything -->
+<!-- Home page is rendered by _layouts/home.html -->
