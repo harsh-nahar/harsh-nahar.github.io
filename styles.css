@@ -201,15 +201,17 @@ body {
 
   /* Blog grid header */
   .header-bar {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;    /* prevent wrapping */
     gap: 0.5rem;
   }
   .search {
-    flex: 1 1 100%;
+    flex: 0 0 auto;       /* don’t grow to full width */
+    max-width: 150px;      /* limit its width */
     font-size: 16px;
     padding: 0.5rem;
-    margin-left: 0;
+    margin-left: auto;     /* push it to the right */
   }
+}
 
   /* Post page: reduce paddings */
   .full-bg {
