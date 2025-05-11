@@ -248,3 +248,16 @@ body {
   display: block;     /* remove inline whitespace issues */
   margin: 1rem auto;  /* vertical spacing and center in container */
 }
+/* Make code blocks responsive within posts */
+.post-content pre {
+  max-width: 100%;      /* never exceed the container */
+  overflow-x: auto;     /* horizontal scroll if needed */
+  padding: 1rem;        /* match your post padding */
+  background: #f4f4f4;  /* or whatever your code-block bg is */
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.post-content code {
+  word-break: break-word;  /* wrap long inline code */
+}
