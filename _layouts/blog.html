@@ -1,22 +1,30 @@
 ---
 layout: default
 ---
+
 <div class="container blog-container">
   <div class="header-bar">
-    <a href="{{ '/' | relative_url }}" class="back-home">&lt; home</a>
-    <input type="search" id="search" class="search" placeholder="search">
+    <a href="{{ '/' | relative_url }}" class="back-home">home</a>
+    <input type="search" id="search" class="search" placeholder="Search posts…">
   </div>
-  <div class="grid" id="postGrid">
+
+  <ul class="post-list" id="postList">
     {% for post in site.posts %}
-      <a href="{{ post.url }}" class="post-card"><h3>{{ post.title }}</h3></a>
+    <li>
+      <a href="{{ post.url }}" class="post-link">
+        <h3>{{ post.title }}</h3>
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+      </a>
+    </li>
     {% endfor %}
-  </div>
+  </ul>
 </div>
+
 <script>
-  document.getElementById('search').addEventListener('input', e => {
-    const filter = e.target.value.toLowerCase();
-    document.querySelectorAll('#postGrid .post-card').forEach(card => {
-      card.style.display = card.textContent.toLowerCase().includes(filter) ? 'flex' : 'none';
+  document.getElementById('search').addEventListener('input', function(e) {
+    var filter = e.target.value.toLowerCase();
+    document.querySelectorAll('#postList .post-link').forEach(function(link) {
+      link.parentNode.style.display = link.textContent.toLowerCase().includes(filter) ? 'block' : 'none';
     });
   });
 </script>
