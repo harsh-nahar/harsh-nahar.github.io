@@ -241,3 +241,10 @@ body {
     text-overflow: ellipsis;
   }
 }
+/* Make all images in posts responsive */
+.post-content img {
+  max-width: 100%;    /* never exceed the width of its container */
+  height: auto;       /* maintain aspect ratio */
+  display: block;     /* remove inline whitespace issues */
+  margin: 1rem auto;  /* vertical spacing and center in container */
+}
