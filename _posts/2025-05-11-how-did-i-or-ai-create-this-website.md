@@ -100,7 +100,7 @@ Here is the process -
 |A|@|185.199.109.153|Default|
 |A|@|185.199.110.153|Default|
 |A|@|185.199.111.153|Default|
-#And for CNAME, it is the follwoing
+#And for CNAME, it is:
 |Type|Host|Points to|TTL|
 |CNAME|www|`github repo link`|Default|
 ```
