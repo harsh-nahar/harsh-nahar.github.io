@@ -43,11 +43,6 @@ body {
   font-weight: 500;
   margin: 0;
 }
-.nav-links {
-  display: flex;
-  gap: 3rem;
-  margin-top: 1rem;
-}
 .link {
   font-size: 64px;
   font-style: italic;
@@ -192,7 +187,7 @@ body {
   }
 }
   /* Nav links: smaller and stacked if needed */
-  .nav-links {
+  
     gap: 1rem;
   }
   .link {
@@ -300,20 +295,10 @@ body {
 }
 
 /* Homepage nav separator */
-.nav-links {
+
   display: flex;
   align-items: center;
   gap: 1rem;                /* space between items and separators */
-}
-.nav-links a {
-  position: relative;       /* so pseudo-element is relative to each link */
-  padding: 0 0.5rem;        /* half of the gap on each side */
-}
-.nav-links a + a::before {
-  content: "|";
-  position: absolute;
-  left: 0;                  /* at the left edge of the second link’s padding */
-  color: #ccc;
 }
 
 /* —— Mobile adjustments for list layout —— */
@@ -329,4 +314,29 @@ body {
   .post-link h3 {
     font-size: 24px;
   }
+}
+
+/* Homepage nav separator */
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center the two links as a group */
+}
+.nav-links a {
+  color: #000;
+  text-decoration: none;
+  font-size: 64px;
+  font-style: italic;
+  transition: color 0.2s;
+  margin: 0;              /* reset any existing margin/padding */
+  padding: 0;
+}
+.nav-links a:first-child::after {
+  /* separator after the “blog” link */
+  content: "|";
+  color: #ccc;
+  margin: 0 1rem;         /* equal space before/after the pipe */
+}
+.nav-links a:hover {
+  color: #ff5232;
 }
