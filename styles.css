@@ -299,21 +299,21 @@ body {
   background: rgba(255,82,50,0.05);
 }
 
-/* —— Homepage separator between “blog” and “photos” —— */
+/* Homepage nav separator */
 .nav-links {
   display: flex;
   align-items: center;
-  position: relative;  /* for pseudo-element positioning */
+  gap: 1rem;                /* space between items and separators */
 }
 .nav-links a {
-  padding: 0 0.75rem;  /* space around text and separator */
+  position: relative;       /* so pseudo-element is relative to each link */
+  padding: 0 0.5rem;        /* half of the gap on each side */
 }
 .nav-links a + a::before {
   content: "|";
-  color: #ccc;
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;                  /* at the left edge of the second link’s padding */
+  color: #ccc;
 }
 
 /* —— Mobile adjustments for list layout —— */
