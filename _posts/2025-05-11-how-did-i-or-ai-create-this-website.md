@@ -93,13 +93,14 @@ My excitement was short-lived. As I had not yet added my domain to this repo, wh
 Here is the process - 
 - Go to the DNS settings of your domain.
 - Add four A records and one CNAME record in the DNS records:
+
 ```
 |Type|Host|Points to|TTL|
 |A|@|185.199.108.153|Default|
 |A|@|185.199.109.153|Default|
 |A|@|185.199.110.153|Default|
 |A|@|185.199.111.153|Default|
-
+#And for CNAME, it is the follwoing
 |Type|Host|Points to|TTL|
 |CNAME|www|`github repo link`|Default|
 ```
