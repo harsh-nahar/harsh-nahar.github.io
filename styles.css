@@ -71,6 +71,14 @@ body {
   color: #ff5232;
 }
 
+/* Separator between homepage nav links */
+.separator {
+  color: #ccc;           /* subtle grey */
+  margin: 0 1rem;        /* equal space on each side */
+  font-size: inherit;    /* match your .link size (64px desktop, 32px mobile) */
+  line-height: 1;        /* align vertically */
+}
+
 /*───────────────────────────────────────────────────────────────────────────────
   4. Blog List Layout
 ───────────────────────────────────────────────────────────────────────────────*/
