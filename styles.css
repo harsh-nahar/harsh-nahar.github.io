@@ -1,40 +1,49 @@
+/*───────────────────────────────────────────────────────────────────────────────
+  1. Web-font import & base resets
+───────────────────────────────────────────────────────────────────────────────*/
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
 
 html, body {
   margin: 0;
   padding: 0;
-  scroll-behavior: smooth;
+  scroll-behavior: smooth;   /* smooth anchor-scrolling */
 }
 
+/*───────────────────────────────────────────────────────────────────────────────
+  2. Body font & fade-in animation
+───────────────────────────────────────────────────────────────────────────────*/
 body {
   font-family: 'Cormorant Garamond', serif;
   transition: opacity 0.3s;
 }
-
 .fade-in {
   animation: fadeIn 0.4s ease-in;
 }
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
 
+/*───────────────────────────────────────────────────────────────────────────────
+  3. Centered content container
+───────────────────────────────────────────────────────────────────────────────*/
 .container {
-  max-width: 800px;
-  width: 90%;
-  margin: auto;
-  padding: 2rem;
-  box-sizing: border-box;
+  max-width: 800px;          /* never wider than 800px */
+  width: 90%;                /* but shrink to 90% of viewport */
+  margin: auto;              /* center horizontally */
+  padding: 2rem;             /* breathing room */
+  box-sizing: border-box;    /* include padding in width */
 }
 
-/* Home */
+/*───────────────────────────────────────────────────────────────────────────────
+  4. Homepage styles
+───────────────────────────────────────────────────────────────────────────────*/
 .home-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 100vh;             /* full-screen vertical center */
   background: #fff;
 }
 .site-title {
@@ -43,8 +52,9 @@ body {
   font-weight: 500;
   margin: 0;
 }
+/* “blog” & “photos” links */
 .link {
-  font-size: 64px;
+  font-size: 64px;           /* desktop size */
   font-style: italic;
   color: #000;
   text-decoration: none;
@@ -54,7 +64,9 @@ body {
   color: #ff5232;
 }
 
-/* Blog Grid (now vertical list) */
+/*───────────────────────────────────────────────────────────────────────────────
+  5. Blog page header (search & back)
+───────────────────────────────────────────────────────────────────────────────*/
 .blog-container {
   background: #fff;
 }
@@ -77,10 +89,12 @@ body {
 .search {
   font-size: 20px;
   padding: 0.5rem;
-  margin-left: auto;
+  margin-left: auto;         /* push search to the right */
 }
 
-/* —— Vertical list layout for blog index —— */
+/*───────────────────────────────────────────────────────────────────────────────
+  6. Vertical list layout for posts
+───────────────────────────────────────────────────────────────────────────────*/
 .post-list {
   list-style: none;
   padding: 0;
@@ -104,12 +118,12 @@ body {
 .post-link h3 {
   font-size: 28px;
   margin: 0;
-  flex: 1;
+  flex: 1;                   /* title takes available space */
 }
 .post-link time {
   font-size: 16px;
   color: #666;
-  white-space: nowrap;
+  white-space: nowrap;       /* keep date on one line */
   margin-left: 1rem;
 }
 .post-link:hover {
@@ -117,16 +131,15 @@ body {
   background: rgba(255,82,50,0.05);
 }
 
-/* Post Page */
+/*───────────────────────────────────────────────────────────────────────────────
+  7. Individual post page
+───────────────────────────────────────────────────────────────────────────────*/
 .post-page {
   background: #F8F5F1;
 }
 .full-bg {
   min-height: 100vh;
   padding: 2rem 0;
-}
-.post-container {
-  padding: 0;
 }
 .post-header {
   display: flex;
@@ -181,46 +194,11 @@ body {
   color: #ff5232;
 }
 
-/* Make all images in posts responsive */
-.post-content img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 1rem auto;
-}
-
-/* Make code blocks responsive within posts */
-.post-content pre {
-  max-width: 100%;
-  overflow-x: auto;
-  padding: 1rem;
-  background: #f4f4f4;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-.post-content code {
-  word-break: break-word;
-}
-
-/* Homepage nav separator */
-.nav-links {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.nav-links .link {
-  margin: 0;
-  padding: 0;
-}
-.nav-links .link:first-child::after {
-  content: "|";
-  color: #ccc;
-  margin: 0 1rem;
-}
-
-/* Mobile adjustments */
+/*───────────────────────────────────────────────────────────────────────────────
+  8. Responsive media query (≤600px)
+───────────────────────────────────────────────────────────────────────────────*/
 @media (max-width: 600px) {
-  /* Home title */
+  /* Home title smaller, no wrap */
   .home-container .site-title {
     font-size: 48px;
     line-height: 1;
@@ -228,11 +206,11 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  /* Nav links smaller */
+  /* Make nav links smaller on mobile */
   .link {
-    font-size: 32px;
+    font-size: 32px;         /* mobile size */
   }
-  /* Blog header */
+  /* Prevent header wrap, smaller search */
   .header-bar {
     flex-wrap: nowrap;
     gap: 0.5rem;
@@ -244,7 +222,7 @@ body {
     padding: 0.5rem;
     margin-left: auto;
   }
-  /* Post page tweaks */
+  /* Post page tighter padding & text */
   .full-bg {
     padding: 1rem 0;
   }
@@ -264,7 +242,7 @@ body {
   .share-btn {
     font-size: 18px;
   }
-  /* List layout on mobile */
+  /* Vertical list stacks on mobile */
   .post-link {
     flex-direction: column;
     align-items: flex-start;
@@ -276,4 +254,46 @@ body {
   .post-link h3 {
     font-size: 24px;
   }
+}
+
+/*───────────────────────────────────────────────────────────────────────────────
+  9. Make images & code blocks responsive
+───────────────────────────────────────────────────────────────────────────────*/
+/* Images never overflow post width */
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+}
+/* Pre blocks scroll horizontally if too wide */
+.post-content pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 1rem;
+  background: #F8F5F1;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.post-content code {
+  word-break: break-word;
+}
+
+/*───────────────────────────────────────────────────────────────────────────────
+ 10. Homepage nav separator (final)
+───────────────────────────────────────────────────────────────────────────────*/
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-links .link {
+  margin: 0;
+  padding: 0;
+}
+/* Pipe between “blog” and “photos” */
+.nav-links .link:first-child::after {
+  content: "|";
+  color: #ccc;
+  margin: 0 1rem;
 }
