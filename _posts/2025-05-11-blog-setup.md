@@ -4,7 +4,7 @@ date: 2025-05-11
 ---
 posted on May 11, 2025
 
-I have had the <harshnahar.com> domain for over five years now. Back in 2020-21, I had purchased the cheapest WIX plan, which was probably 300/- a month for hosting, and they offered a year's worth of domain registration free. This plan also had about 10GB of hosting space and about 100GB of bandwidth per month for a site. I did not know what all that meant and Googled along the way to get the site up and running.
+I have had the `harshnahar.com` domain for over five years now. Back in 2020-21, I had purchased the cheapest WIX plan, which was probably 300/- a month for hosting, and they offered a year's worth of domain registration free. This plan also had about 10GB of hosting space and about 100GB of bandwidth per month for a site. I did not know what all that meant and Googled along the way to get the site up and running.
 
 As I am a photographer and I occasionally write, I wanted a simple yet modern blog which could display my gallery and posts. WIX's drag-and-drop functionality, margins, and paddings made it pretty intuitive to build the look of the site, and they also had a CMS so that I could add posts to the blog page. In no time, I set up the site with the minimal design I had in mind, and it looked fine on a phone too!
 
