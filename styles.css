@@ -54,7 +54,7 @@ body {
   color: #ff5232;
 }
 
-/* Blog Grid */
+/* Blog Grid (now vertical list) */
 .blog-container {
   background: #fff;
 }
@@ -79,38 +79,42 @@ body {
   padding: 0.5rem;
   margin-left: auto;
 }
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-  gap: 1rem;
-}
-.post-card {
-  background: #f4f4f4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  text-decoration: none;
-  transition: background 0.2s, color 0.2s;
-  width: 100%;
-  padding-top: 100%;    /* maintain square */
-  position: relative;
-}
-.post-card h3 {
-  font-size: 36px;
-  font-weight: 500;
-  color: #000;
+
+/* —— Vertical list layout for blog index —— */
+.post-list {
+  list-style: none;
+  padding: 0;
   margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
 }
-.post-card:hover {
-  background: #ff5232;
+.post-list li {
+  border-bottom: 1px solid #ddd;
 }
-.post-card:hover h3 {
-  color: #fff;
+.post-list li:last-child {
+  border-bottom: none;
+}
+.post-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s, background 0.2s;
+}
+.post-link h3 {
+  font-size: 28px;
+  margin: 0;
+  flex: 1;
+}
+.post-link time {
+  font-size: 16px;
+  color: #666;
+  white-space: nowrap;
+  margin-left: 1rem;
+}
+.post-link:hover {
+  color: #ff5232;
+  background: rgba(255,82,50,0.05);
 }
 
 /* Post Page */
@@ -176,39 +180,71 @@ body {
 .share-btn:hover {
   color: #ff5232;
 }
+
+/* Make all images in posts responsive */
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+}
+
+/* Make code blocks responsive within posts */
+.post-content pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 1rem;
+  background: #f4f4f4;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.post-content code {
+  word-break: break-word;
+}
+
+/* Homepage nav separator */
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-links .link {
+  margin: 0;
+  padding: 0;
+}
+.nav-links .link:first-child::after {
+  content: "|";
+  color: #ccc;
+  margin: 0 1rem;
+}
+
 /* Mobile adjustments */
 @media (max-width: 600px) {
+  /* Home title */
   .home-container .site-title {
-    font-size: 48px;      /* reduced from 64px */
+    font-size: 48px;
     line-height: 1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-}
-  /* Nav links: smaller and stacked if needed */
-  
-    gap: 1rem;
-  }
+  /* Nav links smaller */
   .link {
     font-size: 32px;
   }
-
-  /* Blog grid header */
+  /* Blog header */
   .header-bar {
-    flex-wrap: nowrap;    /* prevent wrapping */
+    flex-wrap: nowrap;
     gap: 0.5rem;
   }
   .search {
-    flex: 0 0 auto;       /* don’t grow to full width */
-    max-width: 150px;      /* limit its width */
+    flex: 0 0 auto;
+    max-width: 150px;
     font-size: 16px;
     padding: 0.5rem;
-    margin-left: auto;     /* push it to the right */
+    margin-left: auto;
   }
-}
-
-  /* Post page: reduce paddings */
+  /* Post page tweaks */
   .full-bg {
     padding: 1rem 0;
   }
@@ -224,85 +260,11 @@ body {
   .back-link {
     font-size: 28px;
   }
-  .font-switch, .share-btn {
+  .font-switch,
+  .share-btn {
     font-size: 18px;
   }
-}
-/* Prevent wrapping of the site title on narrow screens */
-@media (max-width: 600px) {
-  .home-container .site-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-/* Make all images in posts responsive */
-.post-content img {
-  max-width: 100%;    /* never exceed the width of its container */
-  height: auto;       /* maintain aspect ratio */
-  display: block;     /* remove inline whitespace issues */
-  margin: 1rem auto;  /* vertical spacing and center in container */
-}
-/* Make code blocks responsive within posts */
-.post-content pre {
-  max-width: 100%;      /* never exceed the container */
-  overflow-x: auto;     /* horizontal scroll if needed */
-  padding: 1rem;        /* match your post padding */
-  background: #f4f4f4;  /* or whatever your code-block bg is */
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.post-content code {
-  word-break: break-word;  /* wrap long inline code */
-}
-
-/* —— Vertical list layout for blog index —— */
-.post-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.post-list li {
-  border-bottom: 1px solid #ddd;
-}
-.post-list li:last-child {
-  border-bottom: none;
-}
-.post-link {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
-  text-decoration: none;
-  color: inherit;
-  transition: color 0.2s, background 0.2s;
-}
-.post-link h3 {
-  font-size: 28px;
-  margin: 0;
-  flex: 1;
-}
-.post-link time {
-  font-size: 16px;
-  color: #666;
-  white-space: nowrap;
-  margin-left: 1rem;
-}
-.post-link:hover {
-  color: #ff5232;
-  background: rgba(255,82,50,0.05);
-}
-
-/* Homepage nav separator */
-
-  display: flex;
-  align-items: center;
-  gap: 1rem;                /* space between items and separators */
-}
-
-/* —— Mobile adjustments for list layout —— */
-@media (max-width: 600px) {
+  /* List layout on mobile */
   .post-link {
     flex-direction: column;
     align-items: flex-start;
@@ -314,29 +276,4 @@ body {
   .post-link h3 {
     font-size: 24px;
   }
-}
-
-/* Homepage nav separator */
-.nav-links {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* center the two links as a group */
-}
-.nav-links a {
-  color: #000;
-  text-decoration: none;
-  font-size: 64px;
-  font-style: italic;
-  transition: color 0.2s;
-  margin: 0;              /* reset any existing margin/padding */
-  padding: 0;
-}
-.nav-links a:first-child::after {
-  /* separator after the “blog” link */
-  content: "|";
-  color: #ccc;
-  margin: 0 1rem;         /* equal space before/after the pipe */
-}
-.nav-links a:hover {
-  color: #ff5232;
 }
