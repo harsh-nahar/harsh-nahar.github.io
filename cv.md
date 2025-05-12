@@ -6,6 +6,8 @@ permalink: /cv/
 
 <meta name="robots" content="noindex,nofollow">
 
+<div class="container cv-page">
+
 # Harsh Nahar
 
 **Designer • Photographer • Web Enthusiast**  
@@ -15,24 +17,28 @@ permalink: /cv/
 
 ## Experience
 
-### Responsible Content Specialist 
+### Responsible Content Specialist  
 **Microsoft** — 2024 to Present  
-- Contributing to Copilot Red Teaming projects
-- Testing Copilot's features such as transcription, summarization on various platforms
-- Moderating content flagged by government organizations
+- Contributing to Copilot Red Teaming projects  
+- Testing Copilot's features such as transcription, summarization on various platforms  
+- Moderating content flagged by government organizations  
+
 ### Annotation Analyst  
 **Apple** — 2021 to 2024  
-- Oversaw a team of 10 analysts in establishing a computer vision model project 
-- Produced a corporate podcast series called "Espresso Yourself"
+- Oversaw a team of 10 analysts in establishing a computer vision model project  
+- Produced a corporate podcast series called "Espresso Yourself"  
+
 ### Associate  
 **Wipro** — 2020 to 2021  
-- Worked for an Entity-linking project for Meta 
+- Worked for an Entity-linking project for Meta  
+
 ### Risk Investigator  
 **Amazon** — 2019 to 2020  
-- Investigated fraudulent activities and accounts on Amazon marketplace 
-### Process Associate 
-**Genpact** — 2017 to 2019
-- Moderated content 
+- Investigated fraudulent activities and accounts on Amazon marketplace  
+
+### Process Associate  
+**Genpact** — 2017 to 2019  
+- Moderated content
 
 ---
 
@@ -71,3 +77,4 @@ Osmania University — 2014 to 2017
 
 - LinkedIn: [https://www.linkedin.com/in/hrsvnr/](https://www.linkedin.com/in/hrsvnr/)  
 
+</div>
