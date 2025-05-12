@@ -6,7 +6,6 @@ permalink: /cv/
 
 <meta name="robots" content="noindex,nofollow">
 
-<div class="container cv-page">
 
 # Harsh Nahar
 
@@ -75,6 +74,5 @@ Osmania University — 2014 to 2017
 
 ## Contact
 
-- LinkedIn: [https://www.linkedin.com/in/hrsvnr/](https://www.linkedin.com/in/hrsvnr/)  
+- LinkedIn: [https://www.linkedin.com/in/hrsvnr/](https://www.linkedin.com/in/hrsvnr/)
 
-</div>
