@@ -3,6 +3,16 @@
 ───────────────────────────────────────────────────────────────────────────────*/
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
 
+/*──────────────────────────────────────────────────────────────────────────────
+  Import Inter & CV‐page font rule
+───────────────────────────────────────────────────────────────────────────────*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap') screen;
+
+/* On the CV page we want Inter instead of Garamond */
+.cv-page {
+  font-family: 'Inter', sans-serif;
+}
+
 html, body {
   margin: 0;
   padding: 0;
