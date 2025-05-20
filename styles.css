@@ -44,34 +44,74 @@ body {
 }
 
 /*───────────────────────────────────────────────────────────────────────────────
-  3. HOMEPAGE CONTAINER — always vertically center
+  3. HOMEPAGE CORE STYLING
 ───────────────────────────────────────────────────────────────────────────────*/
 .home-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;   /* vertical centering */
-  align-items: flex-start;   /* left-align content */
-  min-height: 100vh;         /* fill at least viewport height */
-  background: #fff;
-  padding: 0;                /* no extra top/bottom padding */
+  justify-content: center;     /* vertical centering */
+  align-items: flex-start;     /* left-align content inside the container */
+  min-height: 100vh;           /* always fill viewport */
+  background: #fff;            /* pure white */
+  padding: 0;                  /* no extra top/bottom padding */
+}
+
+/* Intro paragraph */
+.home-intro {
+  font-size: 24px;             /* readable size on desktop */
+  color: #444;
+  line-height: 1.5;
+  margin: 0 0 2rem 0;          /* space below intro */
+  text-align: left;
+}
+
+/* Link list (no bullets) */
+.home-links {
+  list-style: none;            /* remove bullets */
+  margin: 0;
+  padding: 0;
+}
+.home-links li {
+  margin-bottom: 1.5rem;       /* space between each link */
+}
+
+/* Links themselves */
+.home-links .link {
+  font-size: 48px;             /* larger on desktop */
+  font-style: normal;          /* remove italics */
+  color: #000;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+/* Hover effect */
+.home-links .link:hover {
+  color: #ff5232;
+}
+
+/* Container bounds (ensure list doesn’t touch edges) */
+.container {
+  max-width: 800px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 0 2rem;             /* 2rem side gutter */
+  box-sizing: border-box;
 }
 
 /*───────────────────────────────────────────────────────────────────────────────
    MOBILE TWEAKS (≤600px)
 ───────────────────────────────────────────────────────────────────────────────*/
 @media (max-width: 600px) {
-  /* Keep vertical centering but allow extra breathing room */
   .home-container {
-    /* Remove any override of height or min-height here */
-    padding: 2rem 0;         /* small breathing room top/bottom */
+    padding: 2rem 0;           /* small breathing room */
   }
   .home-intro {
     font-size: 20px;
-    margin-bottom: 1.5rem;
-    padding: 0 1rem;         /* maintain side padding */
+    margin-bottom: 1rem;
+    padding: 0 1rem;           /* maintain gutter */
   }
   .home-links .link {
-    font-size: 24px;
+    font-size: 32px;           /* shrink links on mobile */
   }
 }
 
