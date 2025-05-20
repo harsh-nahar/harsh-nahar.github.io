@@ -44,67 +44,26 @@ body {
 }
 
 /*───────────────────────────────────────────────────────────────────────────────
-   3. HOMEPAGE REVISITED
-   ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-   Vertically center intro & list, harmonize font sizes, contain to .container
+  3. HOMEPAGE CONTAINER — always vertically center
 ───────────────────────────────────────────────────────────────────────────────*/
 .home-container {
   display: flex;
   flex-direction: column;
   justify-content: center;   /* vertical centering */
-  align-items: flex-start;   /* left-align content inside */
-  height: 100vh;             /* full viewport height */
-  background: #fff;          /* keep pure white */
-  padding: 0;                /* no extra padding top/bottom */
-}
-
-/* Intro paragraph */
-.home-intro {
-  font-size: 24px;           /* slightly larger for readability */
-  color: #444;
-  line-height: 1.5;
-  margin: 0 0 2rem 0;        /* bottom margin to separate from list */
-  text-align: left;          /* left align text */
-}
-
-/* Link list, confined by .container’s width & padding */
-.home-links {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.home-links li {
-  margin-bottom: 1rem;       /* space between items */
-}
-
-/* Link styling */
-.home-links .link {
-  font-size: 28px;           /* slightly larger than intro */
-  font-style: normal;        /* remove italic */
-  color: #000;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.home-links .link:hover {
-  color: #ff5232;
-}
-
-/* Ensure your global .container still centers horizontally */
-.container {
-  max-width: 800px;
-  width: 90%;
-  margin: 0 auto;            /* center block */
-  padding: 0 2rem;           /* maintain side gutters */
-  box-sizing: border-box;
+  align-items: flex-start;   /* left-align content */
+  min-height: 100vh;         /* fill at least viewport height */
+  background: #fff;
+  padding: 0;                /* no extra top/bottom padding */
 }
 
 /*───────────────────────────────────────────────────────────────────────────────
    MOBILE TWEAKS (≤600px)
 ───────────────────────────────────────────────────────────────────────────────*/
 @media (max-width: 600px) {
+  /* Keep vertical centering but allow extra breathing room */
   .home-container {
-    height: auto;            /* grow with content if screen shorter */
-    padding: 2rem 0;         /* small top/bottom breathing room */
+    /* Remove any override of height or min-height here */
+    padding: 2rem 0;         /* small breathing room top/bottom */
   }
   .home-intro {
     font-size: 20px;
