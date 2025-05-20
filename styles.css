@@ -44,41 +44,43 @@ body {
 }
 
 /*───────────────────────────────────────────────────────────────────────────────
-  3. Homepage: Keep white bg, serif intro, left-aligned plain links
+   3. HOMEPAGE REVISITED
+   ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+   Vertically center intro & list, harmonize font sizes, contain to .container
 ───────────────────────────────────────────────────────────────────────────────*/
 .home-container {
-  background: #fff;               /* ensure it stays white */
-  height: auto;                   /* let it size to content */
-  padding-top: 4rem;              /* push content down a bit */
-  padding-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* vertical centering */
+  align-items: flex-start;   /* left-align content inside */
+  height: 100vh;             /* full viewport height */
+  background: #fff;          /* keep pure white */
+  padding: 0;                /* no extra padding top/bottom */
 }
 
+/* Intro paragraph */
 .home-intro {
-  /* revert to site serif, no override */
-  margin: 0;
-  font-size: 20px;
+  font-size: 24px;           /* slightly larger for readability */
   color: #444;
   line-height: 1.5;
-  text-align: left;               /* left align the paragraph */
+  margin: 0 0 2rem 0;        /* bottom margin to separate from list */
+  text-align: left;          /* left align text */
 }
 
-/* Left-aligned list */
+/* Link list, confined by .container’s width & padding */
 .home-links {
   list-style: none;
-  margin: 2rem 0 0;
+  margin: 0;
   padding: 0;
 }
 .home-links li {
-  margin: 0.75rem 0;              /* spacing between items */
-}
-.home-links {
-  display: block;                 /* simple block, not flex */
+  margin-bottom: 1rem;       /* space between items */
 }
 
-/* Plain, non-italic links */
+/* Link styling */
 .home-links .link {
-  font-size: 32px;
-  font-style: normal;             /* remove italics */
+  font-size: 28px;           /* slightly larger than intro */
+  font-style: normal;        /* remove italic */
   color: #000;
   text-decoration: none;
   transition: color 0.2s;
@@ -87,18 +89,30 @@ body {
   color: #ff5232;
 }
 
-/* Mobile tweak: keep left align and scale text */
+/* Ensure your global .container still centers horizontally */
+.container {
+  max-width: 800px;
+  width: 90%;
+  margin: 0 auto;            /* center block */
+  padding: 0 2rem;           /* maintain side gutters */
+  box-sizing: border-box;
+}
+
+/*───────────────────────────────────────────────────────────────────────────────
+   MOBILE TWEAKS (≤600px)
+───────────────────────────────────────────────────────────────────────────────*/
 @media (max-width: 600px) {
   .home-container {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    height: auto;            /* grow with content if screen shorter */
+    padding: 2rem 0;         /* small top/bottom breathing room */
   }
   .home-intro {
-    font-size: 18px;
-    padding: 0 1rem;
+    font-size: 20px;
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;         /* maintain side padding */
   }
   .home-links .link {
-    font-size: 28px;
+    font-size: 24px;
   }
 }
 
