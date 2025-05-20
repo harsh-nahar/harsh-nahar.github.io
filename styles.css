@@ -43,69 +43,42 @@ body {
   box-sizing: border-box;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   3. Homepage Styles
+/*───────────────────────────────────────────────────────────────────────────────
+  3. Homepage: Keep white bg, serif intro, left-aligned plain links
 ───────────────────────────────────────────────────────────────────────────────*/
 .home-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background: #fff;
+  background: #fff;               /* ensure it stays white */
+  height: auto;                   /* let it size to content */
+  padding-top: 4rem;              /* push content down a bit */
+  padding-bottom: 4rem;
 }
 
-.site-title {
-  font-size: 96px;
-  font-style: italic;
-  font-weight: 500;
-  margin: 0;
-}
-
-.nav-links {
-  display: flex;
-  gap: 2rem;
-  margin-top: 1rem;
-}
-
-.link {
-  font-size: 64px;
-  font-style: italic;
-  color: #000;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.link:hover {
-  color: #ff5232;
-}
-
-/*───────────────────────────────────────────────────────────────────────────────
-  Homepage Styles: intro paragraph + linked list
-────────────────────────────────────────────────────────────────────────────────*/
 .home-intro {
-  margin-top: 1.5rem;
-  max-width: 600px;
-  text-align: center;
+  /* revert to site serif, no override */
+  margin: 0;
   font-size: 20px;
   color: #444;
   line-height: 1.5;
-  font-family: sans-serif;
+  text-align: left;               /* left align the paragraph */
 }
 
+/* Left-aligned list */
 .home-links {
   list-style: none;
   margin: 2rem 0 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 .home-links li {
-  margin: 0.5rem 0;
+  margin: 0.75rem 0;              /* spacing between items */
 }
+.home-links {
+  display: block;                 /* simple block, not flex */
+}
+
+/* Plain, non-italic links */
 .home-links .link {
   font-size: 32px;
-  font-style: italic;
+  font-style: normal;             /* remove italics */
   color: #000;
   text-decoration: none;
   transition: color 0.2s;
@@ -114,10 +87,12 @@ body {
   color: #ff5232;
 }
 
-/*───────────────────────────────────────────────────────────────────────────────
-  Responsive tweak for homepage
-────────────────────────────────────────────────────────────────────────────────*/
+/* Mobile tweak: keep left align and scale text */
 @media (max-width: 600px) {
+  .home-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
   .home-intro {
     font-size: 18px;
     padding: 0 1rem;
@@ -126,7 +101,6 @@ body {
     font-size: 28px;
   }
 }
-
 
 /* ─────────────────────────────────────────────────────────────────────────────
    4. Blog List Layout
