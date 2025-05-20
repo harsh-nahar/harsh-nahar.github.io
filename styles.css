@@ -44,57 +44,52 @@ body {
 }
 
 /*───────────────────────────────────────────────────────────────────────────────
-  3. HOMEPAGE CORE STYLING
+  3. HOMEPAGE CORE STYLING (Adjusted Sizes)
 ───────────────────────────────────────────────────────────────────────────────*/
 .home-container {
   display: flex;
   flex-direction: column;
   justify-content: center;     /* vertical centering */
-  align-items: flex-start;     /* left-align content inside the container */
-  min-height: 100vh;           /* always fill viewport */
-  background: #fff;            /* pure white */
-  padding: 0;                  /* no extra top/bottom padding */
+  align-items: flex-start;     /* left-align inside container */
+  min-height: 100vh;           /* fill viewport */
+  background: #fff;
+  padding: 0;
 }
 
-/* Intro paragraph */
 .home-intro {
-  font-size: 24px;             /* readable size on desktop */
+  font-size: 24px;             /* unchanged */
   color: #444;
   line-height: 1.5;
-  margin: 0 0 2rem 0;          /* space below intro */
+  margin: 0 0 2rem 0;
   text-align: left;
 }
 
-/* Link list (no bullets) */
 .home-links {
-  list-style: none;            /* remove bullets */
+  list-style: none;            /* no bullets */
   margin: 0;
   padding: 0;
 }
 .home-links li {
-  margin-bottom: 1.5rem;       /* space between each link */
+  margin-bottom: 1.25rem;      /* slightly tighter spacing */
 }
 
-/* Links themselves */
 .home-links .link {
-  font-size: 48px;             /* larger on desktop */
-  font-style: normal;          /* remove italics */
+  font-size: 36px;             /* reduced from 48px */
+  font-style: normal;
   color: #000;
   text-decoration: none;
   transition: color 0.2s;
 }
-
-/* Hover effect */
 .home-links .link:hover {
   color: #ff5232;
 }
 
-/* Container bounds (ensure list doesn’t touch edges) */
+/* Ensure the container keeps side gutters */
 .container {
   max-width: 800px;
   width: 90%;
   margin: 0 auto;
-  padding: 0 2rem;             /* 2rem side gutter */
+  padding: 0 2rem;
   box-sizing: border-box;
 }
 
@@ -103,15 +98,15 @@ body {
 ───────────────────────────────────────────────────────────────────────────────*/
 @media (max-width: 600px) {
   .home-container {
-    padding: 2rem 0;           /* small breathing room */
+    padding: 2rem 0;
   }
   .home-intro {
     font-size: 20px;
     margin-bottom: 1rem;
-    padding: 0 1rem;           /* maintain gutter */
+    padding: 0 1rem;
   }
   .home-links .link {
-    font-size: 32px;           /* shrink links on mobile */
+    font-size: 28px;           /* shrink proportionally */
   }
 }
 
