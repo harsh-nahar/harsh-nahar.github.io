@@ -1,336 +1,65 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tax Calculator FY 2025–26</title>
-  <link rel="stylesheet" href="/styles.css" />
-  <style>
-    /* Tool font override */
-    .tax-app, .tax-app * {
-      font-family: Helvetica, Arial, sans-serif;
-    }
-    body {
-      background: #f9fafb;
-      margin: 0;
-    }
-    .tax-app {
-      max-width: 600px;
-      margin: 2rem auto;
-      background: #fff;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    }
-    .tax-app h1 {
-      font-size: 24px;
-      margin-bottom: 1rem;
-      text-align: center;
-      font-weight: 500;
-    }
-    .toggle-regime {
-      display: flex;
-      background: #eaeaea;
-      border-radius: 6px;
-      overflow: hidden;
-      margin-bottom: 1rem;
-    }
-    .toggle-regime button {
-      flex: 1;
-      padding: 0.5rem;
-      border: none;
-      background: none;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background 0.2s;
-      font-weight: 400;
-    }
-    .toggle-regime button.active {
-      background: #000;
-      color: #fff;
-      font-weight: 500;
-    }
-    .field {
-      margin-bottom: 1rem;
-    }
-    .field label {
-      font-size: 14px;
-      display: block;
-      margin-bottom: 0.25rem;
-    }
-    .field input {
-      width: 100%;
-      padding: 0.5rem;
-      font-size: 14px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      box-sizing: border-box;
-    }
-    .actions {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
-    .actions button {
-      flex: 1;
-      padding: 0.5rem;
-      font-size: 14px;
-      font-weight: 400;
-      border: 1px solid #000;
-      border-radius: 6px;
-      background: #fff;
-      color: #000;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-    .actions button:hover {
-      background: #000;
-      color: #fff;
-    }
-    .summary, .breakdown, .guide-popup {
-      background: #f5f5f5;
-      margin-top: 1rem;
-      padding: 1rem;
-      border-radius: 6px;
-    }
-    .summary div {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
-      font-size: 13px;
-    }
-    .summary div.total {
-      font-weight: 500;
-      font-size: 15px;
-    }
-    .breakdown { display: none; }
-    .breakdown table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-    }
-    .breakdown th, .breakdown td {
-      padding: 0.4rem;
-      border-bottom: 1px solid #ddd;
-      text-align: left;
-    }
-    .link-btn {
-      display: inline-block;
-      background: none;
-      border: none;
-      color: #0073e6;
-      padding: 0;
-      margin-top: 1rem;
-      font-size: 13px;
-      cursor: pointer;
-      transition: color 0.2s;
-      font-weight: 400;
-    }
-    .link-btn:hover {
-      color: #ff5232;
-    }
-    .guide-popup {
-      position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 85%; max-height: 80%;
-      overflow-y: auto;
-      display: none;
-      z-index: 1000;
-      background: #fff;
-      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-    }
-    .guide-popup h2 {
-      margin-top: 0;
-      font-size: 16px;
-      font-weight: 500;
-    }
-    .guide-popup p {
-      font-size: 13px;
-      margin-bottom: 0.75rem;
-    }
-    .guide-popup .close {
-      position: absolute;
-      top: 0.5rem; right: 0.5rem;
-      background: none;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .overlay {
-      position: fixed;
-      top:0;left:0;width:100%;height:100%;
-      background: rgba(0,0,0,0.3);
-      display: none;
-      z-index: 900;
-    }
-    .back-home-tool {
-      display: block;
-      text-align: center;
-      margin-top: 1rem;
-      font-size: 13px;
-    }
-    .back-home-tool a {
-      color: #000;
-      text-decoration: none;
-      font-weight: 400;
-      transition: color 0.2s;
-    }
-    .back-home-tool a:hover {
-      color: #ff5232;
-    }
-    @media (max-width: 600px) {
-      .tax-app { margin: 1rem; padding: 1rem; }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Income Tax Calculator FY 2025–26</title>
+  <!-- Inter font for a modern clean look -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container tax-app">
-    <h1>FY 2025–26 Income Tax Calculator</h1>
+  <div class="tax-app">
+    <h1>Income Tax Calculator<br>FY 2025–26</h1>
 
-    <div class="toggle-regime">
-      <button id="newBtn" class="active">New Regime</button>
-      <button id="oldBtn">Old Regime</button>
+    <!-- Regime toggle -->
+    <div class="regime-toggle">
+      <button data-regime="new" class="active">New Regime</button>
+      <button data-regime="old">Old Regime</button>
     </div>
 
-    <div class="field">
+    <!-- Inputs -->
+    <div class="form-group">
       <label for="income">Annual Income (₹)</label>
-      <input type="number" id="income" placeholder="0" />
+      <input type="number" id="income" placeholder="0">
     </div>
-    <div class="field" id="exemptionsField" style="display:none">
-      <label for="exemptions">Exemptions (₹)</label>
-      <input type="number" id="exemptions" placeholder="0" />
+    <div class="form-group exemptions" hidden>
+      <label for="exemptions">Exemptions (₹) – Old Regime only</label>
+      <input type="number" id="exemptions" placeholder="0">
     </div>
 
+    <!-- Actions -->
     <div class="actions">
-      <button onclick="calculateTax()">Calculate</button>
-      <button onclick="resetForm()">Reset</button>
+      <button id="calculate">Calculate</button>
+      <button id="reset">Reset</button>
     </div>
 
-    <div class="summary" id="summary" style="display:none">
-      <div><span>Income</span><span id="sumIncome"></span></div>
-      <div><span>Deduction</span><span id="sumDeduction"></span></div>
-      <div><span>Taxable</span><span id="sumTaxable"></span></div>
-      <div><span>Tax</span><span id="sumTax"></span></div>
-      <div><span>Cess (4%)</span><span id="sumCess"></span></div>
-      <div class="total"><span>Total</span><span id="sumTotal"></span></div>
-    </div>
-    <button class="link-btn" onclick="toggleBreak()" id="breakBtn" style="display:none">Show Breakdown</button>
+    <!-- Summary card -->
+    <section class="summary" hidden>
+      <h2>Tax Summary</h2>
+      <div class="row"><span>Income</span><span id="sumIncome"></span></div>
+      <div class="row"><span>Deduction</span><span id="sumDeduction"></span></div>
+      <div class="row"><span>Taxable</span><span id="sumTaxable"></span></div>
+      <div class="row"><span>Tax</span><span id="sumTax"></span></div>
+      <div class="row"><span>Cess (4%)</span><span id="sumCess"></span></div>
+      <div class="row total"><span>Total Liability</span><span id="sumTotal"></span></div>
+      <button class="link-button" id="toggleBreak" hidden>Show Breakdown</button>
+    </section>
 
-    <div class="breakdown" id="breakdown">
+    <!-- Breakdown table -->
+    <section class="breakdown" hidden>
+      <h2>Slab Breakdown</h2>
       <table>
-        <thead><tr><th>Slab</th><th>Amt</th><th>%</th><th>Tax</th></tr></thead>
+        <thead><tr><th>Slab</th><th>Amount</th><th>Rate</th><th>Tax</th></tr></thead>
         <tbody id="breakBody"></tbody>
       </table>
-    </div>
+    </section>
 
-    <button class="link-btn" onclick="openGuide()">Tax Calculation Guide</button>
-
-    <div class="back-home-tool">
-      <a href="/">← Back to home</a>
-    </div>
+    <!-- Back to home -->
+    <div class="back-home"><a href="/">← Back to Home</a></div>
   </div>
 
-  <div class="overlay" onclick="closeGuide()"></div>
-  <div class="guide-popup" id="guidePopup">
-    <button class="close" onclick="closeGuide()">×</button>
-    <h2>Tax Regime Explained</h2>
-    <p><strong>New Regime:</strong> Standard deduction ₹75,000 only. Slab rates apply from first rupee above deduction. Income up to ₹12,00,000 (post-deduction) is exempt under 87A.</p>
-    <p><strong>Old Regime:</strong> Standard deduction ₹75,000 + user exemptions. Original slabs apply on remainder.</p>
-    <p><strong>Cess:</strong> An additional 4% on calculated tax, both regimes.</p>
-  </div>
-
-  <script>
-    const newBtn = document.getElementById('newBtn');
-    const oldBtn = document.getElementById('oldBtn');
-    const exemptionsField = document.getElementById('exemptionsField');
-    const summary = document.getElementById('summary');
-    const breakdown = document.getElementById('breakdown');
-    const breakBtn = document.getElementById('breakBtn');
-    let currentRegime = 'new';
-
-    newBtn.onclick = () => { currentRegime='new'; toggleReg(); };
-    oldBtn.onclick = () => { currentRegime='old'; toggleReg(); };
-    function toggleReg() {
-      newBtn.classList.toggle('active', currentRegime==='new');
-      oldBtn.classList.toggle('active', currentRegime==='old');
-      exemptionsField.style.display = currentRegime==='old'?'block':'none';
-      summary.style.display = 'none'; breakdown.style.display='none'; breakBtn.style.display='none';
-    }
-
-    function calculateTax() {
-      const income = parseFloat(document.getElementById('income').value);
-      const exemptions = parseFloat(document.getElementById('exemptions').value)||0;
-      if (isNaN(income)||income<=0) return;
-      const deduction=75000;
-      let taxable=income - deduction;
-      if (currentRegime==='old') taxable -= exemptions;
-      taxable = Math.max(0, taxable);
-
-      // always show summary, even if zero
-      let tax=0;
-      if (!(currentRegime==='new'&&taxable<=0)) {
-        const slabsNew = [
-          { up:400000, pct:0 },
-          { up:800000, pct:5 },
-          { up:1200000, pct:10 },
-          { up:1600000, pct:15 },
-          { up:2000000, pct:20 },
-          { up:2400000, pct:25 },
-          { up:Infinity, pct:30 }
-        ];
-        const slabsOld = [
-          { up:250000, pct:0 },
-          { up:500000, pct:5 },
-          { up:750000, pct:10 },
-          { up:1000000, pct:15 },
-          { up:1250000, pct:20 },
-          { up:1500000, pct:25 },
-          { up:Infinity, pct:30 }
-        ];
-        const slabs = currentRegime==='new'? slabsNew: slabsOld;
-        let prev=0;
-        slabs.forEach(s=>{
-          if (taxable>prev) {
-            const amount=Math.min(taxable, s.up) - prev;
-            tax += amount * (s.pct/100);
-            prev = s.up;
-          }
-        });
-      }
-      const cess = tax * 0.04;
-      const total = Math.round(tax + cess);
-
-      // populate summary
-      document.getElementById('sumIncome').textContent = '₹'+income.toLocaleString();
-      document.getElementById('sumDeduction').textContent = '-₹'+deduction.toLocaleString();
-      document.getElementById('sumTaxable').textContent = '₹'+taxable.toLocaleString();
-      document.getElementById('sumTax').textContent = '₹'+Math.round(tax).toLocaleString();
-      document.getElementById('sumCess').textContent = '₹'+Math.round(cess).toLocaleString();
-      document.getElementById('sumTotal').textContent = '₹'+total.toLocaleString();
-      summary.style.display='block'; breakBtn.style.display='inline';
-
-      // breakdown table
-      let html='';
-      let prev=0; let tmpTax=0;
-      slabs.forEach(s=>{
-        if (taxable>prev) {
-          const amt=Math.min(taxable, s.up) - prev;
-          const t=amt*(s.pct/100);
-          html += `<tr><td>₹${prev.toLocaleString()}–₹${s.up===Infinity?'∞':s.up.toLocaleString()}</td><td>₹${amt.toLocaleString()}</td><td>${s.pct}%</td><td>₹${Math.round(t).toLocaleString()}</td></tr>`;
-          tmpTax += t;
-          prev = s.up;
-        }
-      });
-      html += `<tr><td colspan="3"><strong>Tax</strong></td><td><strong>₹${Math.round(tmpTax).toLocaleString()}</strong></td></tr>`;
-      html += `<tr><td colspan="3">Cess (4%)</td><td>₹${Math.round(cess).toLocaleString()}</td></tr>`;
-      document.getElementById('breakBody').innerHTML = html;
-    }
-    function resetForm(){ document.getElementById('income').value=''; document.getElementById('exemptions').value=''; summary.style.display='none'; breakdown.style.display='none'; breakBtn.style.display='none'; }
-    function toggleBreak(){ breakdown.style.display = breakdown.style.display==='none'?'block':'none'; breakBtn.textContent = breakdown.style.display==='block'?'Hide Breakdown':'Show Breakdown'; }
-    function openGuide(){ document.querySelector('.overlay').style.display='block'; document.getElementById('guidePopup').style.display='block'; }
-    function closeGuide(){ document.querySelector('.overlay').style.display='none'; document.getElementById('guidePopup').style.display='none'; }
-    toggleReg();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
