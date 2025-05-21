@@ -1,0 +1,167 @@
+/* styles.css */
+:root {
+  --bg: #f9fafb;
+  --card: #ffffff;
+  --text: #222;
+  --accent: #0073e6;
+  --accent-hover: #ff5232;
+  --font: 'Inter', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  font-family: var(--font);
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.tax-app {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: var(--card);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.tax-app h1 {
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.regime-toggle {
+  display: flex;
+  background: #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.regime-toggle button {
+  flex: 1;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.regime-toggle button.active {
+  background: var(--text);
+  color: #fff;
+  font-weight: 500;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 0.25rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.actions button {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 14px;
+  background: var(--card);
+  border: 1px solid var(--text);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.actions button:hover {
+  background: var(--text);
+  color: #fff;
+}
+
+.summary, .breakdown {
+  margin-top: 1rem;
+  background: #f5f5f5;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.summary h2, .breakdown h2 {
+  font-size: 16px;
+  margin-bottom: 0.5rem;
+}
+
+.summary .row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 0.4rem;
+}
+
+.summary .total {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 13px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: color 0.2s;
+}
+
+.link-button:hover {
+  color: var(--accent-hover);
+}
+
+.breakdown table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.breakdown th, .breakdown td {
+  border-bottom: 1px solid #ddd;
+  padding: 0.4rem;
+  text-align: left;
+}
+
+.back-home {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.back-home a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+
+.back-home a:hover {
+  color: var(--accent-hover);
+}
+
+@media (max-width: 600px) {
+  .tax-app { margin: 1rem; padding: 1rem; }
+}
