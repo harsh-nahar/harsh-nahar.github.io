@@ -1,4 +1,3 @@
-// script.js
 (() => {
   const slabsNew = [
     { up: 400000, pct: 0 },
@@ -17,15 +16,19 @@
   ];
 
   let regime = 'new';
-  document.querySelectorAll('.regime-toggle button').forEach(b => {
-    b.onclick = () => {
-      regime = b.dataset.regime;
-      document.querySelectorAll('.regime-toggle button')
-        .forEach(x => x.classList.toggle('active', x === b));
+  const container = document.querySelector('.regime-toggle');
+
+  document.querySelectorAll('.regime-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      regime = btn.dataset.regime;
+      container.setAttribute('data-active', regime);
+      container.querySelectorAll('button').forEach(b => {
+        b.classList.toggle('active', b === btn);
+      });
       document.querySelector('.exemptions').hidden = (regime !== 'old');
       hideResults();
       validate();
-    };
+    });
   });
 
   const incomeI = document.getElementById('income');
@@ -66,7 +69,6 @@
     const cess = tax * 0.04;
     const total = Math.round(tax + cess);
 
-    // Populate summary
     document.getElementById('sumIncome').textContent = '₹' + income.toLocaleString();
     document.getElementById('sumDeduction').textContent = '-₹' + stdDed.toLocaleString();
     document.getElementById('sumTaxable').textContent = '₹' + taxable.toLocaleString();
@@ -74,10 +76,8 @@
     document.getElementById('sumCess').textContent = '₹' + Math.round(cess).toLocaleString();
     document.getElementById('sumTotal').textContent = '₹' + total.toLocaleString();
 
-    // Show summary & breakdown toggle
     const sum = document.querySelector('.summary');
-    sum.hidden = false;
-    sum.classList.add('show');
+    sum.hidden = false; sum.classList.add('show');
 
     const btn = document.getElementById('toggleBreak');
     btn.hidden = false;
