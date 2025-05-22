@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +31,6 @@
     <div class="actions">
       <button id="calculate" disabled>Calculate</button>
       <button id="reset">Reset</button>
-      <!-- ↓ arrow instead of SVG -->
       <button id="savePdf" class="icon-btn" hidden title="Save as PDF">↓</button>
     </div>
 
@@ -42,6 +40,11 @@
       <div class="summary-row"><span>Deduction</span><span id="sumDeduction"></span></div>
       <div class="summary-row"><span>Taxable</span><span id="sumTaxable"></span></div>
       <div class="summary-row"><span>Tax</span><span id="sumTax"></span></div>
+      <!-- surcharge label now dynamic -->
+      <div class="summary-row">
+        <span id="surchargeLabel">Surcharge</span>
+        <span id="sumSurcharge"></span>
+      </div>
       <div class="summary-row"><span>Cess (4%)</span><span id="sumCess"></span></div>
       <div class="summary-row total"><span>Total Liability</span><span id="sumTotal"></span></div>
       <div class="link-wrap">
@@ -53,7 +56,12 @@
       <h2>Slab Breakdown</h2>
       <table>
         <thead>
-          <tr><th>Slab</th><th>Amount</th><th>Rate</th><th>Tax</th></tr>
+          <tr>
+            <th>Slab</th>
+            <th>Amount</th>
+            <th>Rate</th>
+            <th>Tax</th>
+          </tr>
         </thead>
         <tbody id="breakBody"></tbody>
       </table>
