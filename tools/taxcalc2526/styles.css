@@ -1,4 +1,4 @@
-/* ===== Root & Reset ===== */
+l/* styles.css */
 :root {
   --bg: #f9fafb;
   --card: #fff;
@@ -9,15 +9,14 @@
   --font-fallback: 'Inter', sans-serif;
   --radius: 12px;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin:0; padding:0; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-system), var(--font-fallback);
+  font-family: var(--font-system),var(--font-fallback);
   line-height: 1.5;
 }
 
-/* ===== Container ===== */
 .tax-app {
   max-width: 600px;
   margin: 2rem auto;
@@ -32,7 +31,7 @@ body {
   margin-bottom: 1rem;
 }
 
-/* ===== Regime Toggle ===== */
+/* Toggle */
 .regime-toggle {
   position: relative;
   display: flex;
@@ -42,169 +41,158 @@ body {
   margin-bottom: 1rem;
 }
 .regime-toggle .thumb {
-  position: absolute;
-  top: 2px; bottom: 2px;
-  width: calc(50% - 4px);
+  position: absolute; top:2px; bottom:2px;
+  width:calc(50% - 4px);
   background: var(--card);
   border-radius: 16px;
-  z-index: 0;
   left: var(--thumb-left,2px);
+  z-index:0;
 }
-.regime-toggle[data-active="new"] .thumb { --thumb-left: 2px; }
-.regime-toggle[data-active="old"] .thumb { --thumb-left: calc(50%+2px); }
+.regime-toggle[data-active="new"] .thumb { --thumb-left:2px; }
+.regime-toggle[data-active="old"] .thumb { --thumb-left:calc(50%+2px); }
 .regime-toggle button {
-  flex: 1;
-  padding: 0.5rem;
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 14px;
-  position: relative;
-  z-index: 1;
+  flex:1;
+  padding:0.5rem;
+  border:none;
+  background:none;
+  cursor:pointer;
+  font-size:14px;
+  position:relative;
+  z-index:1;
 }
-.regime-toggle button.active { color: #000; }
-.regime-toggle button:not(.active) { color: #666; }
+.regime-toggle button.active { color:#000; }
+.regime-toggle button:not(.active)) { color:#666; }
 
-/* ===== Form Inputs ===== */
-.form-group { margin-bottom: 1rem; }
-.form-group label {
-  display: block;
-  font-size: 13px;
-  margin-bottom: 0.25rem;
-}
+/* Inputs */
+.form-group { margin-bottom:1rem; }
+label { display:block; font-size:13px; margin-bottom:0.25rem; }
 input[type=number] {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: var(--radius);
+  width:100%;
+  padding:0.5rem;
+  font-size:14px;
+  border:1px solid #ccc;
+  border-radius:var(--radius);
 }
 input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(10,132,255,0.2);
+  outline:none;
+  border-color:var(--accent);
+  box-shadow:0 0 0 2px rgba(10,132,255,0.2);
 }
 .error {
-  color: #c00;
-  font-size: 12px;
-  min-height: 14px;
-  margin-top: 2px;
+  color:#c00;
+  font-size:12px;
+  min-height:14px;
+  margin-top:2px;
 }
 
-/* ===== Action Buttons ===== */
+/* Buttons */
 .actions {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  display:flex;
+  gap:0.5rem;
+  margin-bottom:1rem;
 }
 .actions button {
-  flex: 0 1 auto;
-  padding: 0.5rem 1rem;
-  font-size: 14px;
-  border: 1px solid var(--text);
-  background: #fff;
-  color: var(--text);
-  border-radius: var(--radius);
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  flex:0 1 auto;
+  padding:0.5rem 1rem;
+  font-size:14px;
+  border:1px solid var(--text);
+  background:#fff;
+  color:var(--text);
+  border-radius:var(--radius);
+  cursor:pointer;
+  transition:background 0.2s,color 0.2s;
 }
 .actions button:hover {
-  background: var(--accent);
-  color: #fff;
+  background:var(--accent);
+  color:#fff;
 }
 .icon-btn {
-  width: 36px;
-  padding: 0;
-  border: 1px solid var(--text);
-  background: #fff;
+  width:36px;
+  padding:0;
+  border:1px solid var(--text);
+  background:#fff;
 }
-.icon-btn img { width: 100%; display: block; }
+.icon-btn img {
+  width:100%;
+  display:block;
+}
 
-/* ===== Summary & Breakdown ===== */
-.summary,
-.breakdown {
-  margin-top: 1.5rem;
-  background: #fff;
-  padding: 1rem;
-  border-radius: var(--radius);
-  box-shadow: 0 0 0 1px #eee;
+/* Summary & Breakdown */
+.summary, .breakdown {
+  margin-top:1.5rem;
+  background:#fff;
+  padding:1rem;
+  border-radius:var(--radius);
+  box-shadow:0 0 0 1px #eee;
 }
-.summary h2,
-.breakdown h2 {
-  font-size: 16px;
-  margin-bottom: 1rem;
+.summary h2, .breakdown h2 {
+  font-size:16px;
+  margin-bottom:1rem;
 }
 .summary-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.25rem 0;
-  font-size: 14px;
+  display:flex;
+  justify-content:space-between;
+  padding:0.25rem 0;
+  font-size:14px;
 }
 .summary-row.total {
-  font-weight: bold;
-  border-top: 1px solid #ccc;
-  margin-top: 0.5rem;
-  padding-top: 0.5rem;
+  font-weight:bold;
+  border-top:1px solid #ccc;
+  margin-top:0.5rem;
+  padding-top:0.5rem;
 }
 .link-wrap {
-  text-align: right;
-  margin-top: 1rem;
+  text-align:right;
+  margin-top:1rem;
 }
 .link-button {
-  font-size: 14px;
-  background: none;
-  border: none;
-  color: var(--accent);
-  cursor: pointer;
-  text-decoration: underline dotted;
-  padding: 0;
+  font-size:14px;
+  background:none;
+  border:none;
+  color:var(--accent);
+  cursor:pointer;
+  text-decoration:underline dotted;
+  padding:0;
 }
 .link-button:hover {
-  color: var(--accent-hover);
+  color:var(--accent-hover);
 }
 .breakdown table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
 }
-.breakdown th,
-.breakdown td {
-  padding: 0.5rem;
-  border-bottom: 1px solid #ddd;
+.breakdown th, .breakdown td {
+  padding:0.5rem;
+  border-bottom:1px solid #ddd;
 }
 
-/* ===== Back Home ===== */
+/* Back */
 .back-home {
-  text-align: center;
-  margin-top: 2rem;
+  text-align:center;
+  margin-top:2rem;
 }
 .back-home a {
-  text-decoration: none;
-  color: var(--accent);
+  text-decoration:none;
+  color:var(--accent);
 }
 .back-home a:hover {
-  color: var(--accent-hover);
+  color:var(--accent-hover);
 }
 
-/* ===== Mobile ===== */
-@media (max-width: 600px) {
+/* Mobile */
+@media (max-width:600px) {
   .tax-app {
-    margin: 1rem;
-    padding: 1rem;
-    width: calc(100% - 2rem);
+    margin:1rem; padding:1rem;
+    width:calc(100% - 2rem);
   }
-  .icon-btn {
-    width: 32px;
-  }
+  .icon-btn { width:32px; }
 }
 
-/* ===== Print ===== */
+/* Print */
 @media print {
-  body * { visibility: hidden; }
-  .tax-app,
-  .tax-app * { visibility: visible; }
-  .actions,
-  .back-home,
-  .link-wrap { display: none; }
-  @page { size: A4 portrait; margin: 1cm; }
+  body * { visibility:hidden; }
+  .tax-app, .tax-app * { visibility:visible; }
+  .actions, .back-home, .link-wrap { display:none; }
+  @page { size:A4 portrait; margin:1cm; }
 }
