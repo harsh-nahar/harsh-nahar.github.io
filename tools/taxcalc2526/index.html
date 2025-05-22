@@ -5,18 +5,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Income Tax Calculator FY 2025–26</title>
-  <!-- Google Fonts for fallback -->
+  <!-- Google Fonts fallback -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="tax-app">
     <h1>Income Tax Calculator<br>FY 2025–26</h1>
 
-    <!-- Regime Toggle -->
+    <!-- Segmented control with sliding thumb -->
     <div class="regime-toggle">
+      <span class="thumb"></span>
       <button data-regime="new" class="active">New Regime</button>
       <button data-regime="old">Old Regime</button>
     </div>
@@ -38,7 +41,7 @@
       <button id="calculate" disabled>Calculate</button>
       <button id="reset">Reset</button>
       <button id="savePdf" class="icon-btn" hidden title="Save as PDF">
-        <img src="assets/download.svg" alt="Download PDF" />
+        <img src="assets/download.svg" alt="Download PDF">
       </button>
     </div>
 
@@ -58,7 +61,9 @@
     <section class="breakdown" hidden>
       <h2>Slab Breakdown</h2>
       <table>
-        <thead><tr><th>Slab</th><th>Amount</th><th>Rate</th><th>Tax</th></tr></thead>
+        <thead>
+          <tr><th>Slab</th><th>Amount</th><th>Rate</th><th>Tax</th></tr>
+        </thead>
         <tbody id="breakBody"></tbody>
       </table>
     </section>
