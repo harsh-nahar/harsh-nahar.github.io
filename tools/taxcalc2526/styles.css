@@ -127,6 +127,17 @@ input:focus {
   padding:0.5rem; border-bottom:1px solid #ddd;
 }
 
+
+/* Breakdown right-align for Amount, Rate, Tax columns */
+.breakdown th:nth-child(2),
+.breakdown th:nth-child(3),
+.breakdown th:nth-child(4),
+.breakdown td:nth-child(2),
+.breakdown td:nth-child(3),
+.breakdown td:nth-child(4) {
+  text-align: right;
+}
+
 /* Back home */
 .back-home {
   text-align:center; margin-top:2rem;
