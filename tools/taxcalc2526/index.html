@@ -1,36 +1,41 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Income Tax FY 2025–26</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <!-- System font + Inter fallback -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="tax-app">
+    <!-- Heading -->
     <h1>Income Tax FY 2025–26</h1>
 
+    <!-- Regime Toggle -->
     <div class="regime-toggle" data-active="new">
       <span class="thumb"></span>
       <button data-regime="new" class="active">New Regime</button>
       <button data-regime="old">Old Regime</button>
     </div>
 
+    <!-- Income Input -->
     <div class="form-group">
       <label for="income">Annual Income (₹)</label>
       <input type="number" id="income" placeholder="0">
       <div class="error" id="incomeError"></div>
     </div>
+
+    <!-- Exemptions (Old only) -->
     <div class="form-group exemptions" hidden>
-      <label for="exemptions">Exemptions (₹) – Old Regime only</label>
+      <label for="exemptions">Exemptions (₹)</label>
       <input type="number" id="exemptions" placeholder="0">
       <div class="error" id="exemptionsError"></div>
     </div>
 
+    <!-- Buttons -->
     <div class="actions">
       <button id="calculate" disabled>Calculate</button>
       <button id="reset">Reset</button>
@@ -39,6 +44,7 @@
       </button>
     </div>
 
+    <!-- Summary Section -->
     <section class="summary" hidden>
       <h2>Tax Summary</h2>
       <div class="summary-row"><span>Income</span><span id="sumIncome"></span></div>
@@ -52,18 +58,25 @@
       </div>
     </section>
 
+    <!-- Breakdown Table -->
     <section class="breakdown" hidden>
       <h2>Slab Breakdown</h2>
       <table>
         <thead>
-          <tr><th>Slab</th><th>Amount</th><th>Rate</th><th>Tax</th></tr>
+          <tr>
+            <th>Slab</th><th>Amount</th><th>Rate</th><th>Tax</th>
+          </tr>
         </thead>
         <tbody id="breakBody"></tbody>
       </table>
     </section>
 
-    <div class="back-home"><a href="/">← Back to Home</a></div>
+    <!-- Back Home -->
+    <div class="back-home">
+      <a href="/">← Back to Home</a>
+    </div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
