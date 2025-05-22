@@ -1,4 +1,4 @@
-/* styles.css */
+/* ===== Root & Reset ===== */
 :root {
   --bg: #f9fafb;
   --card: #fff;
@@ -9,17 +9,15 @@
   --font-fallback: 'Inter', sans-serif;
   --radius: 12px;
 }
-
-* { box-sizing: border-box; }
-
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-system), var(--font-fallback);
-  margin: 0;
   line-height: 1.5;
 }
 
+/* ===== Container ===== */
 .tax-app {
   max-width: 600px;
   margin: 2rem auto;
@@ -28,36 +26,84 @@ body {
   border-radius: var(--radius);
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
-
 .tax-app h1 {
   text-align: center;
-  font-weight: 500;
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
-/* Regime Toggle (unchanged) */
-.regime-toggle { /* … */ }
-.regime-toggle .thumb { /* … */ }
-.regime-toggle button { /* … */ }
+/* ===== Regime Toggle ===== */
+.regime-toggle {
+  position: relative;
+  display: flex;
+  background: #e0e0e5;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.regime-toggle .thumb {
+  position: absolute;
+  top: 2px; bottom: 2px;
+  width: calc(50% - 4px);
+  background: var(--card);
+  border-radius: 16px;
+  z-index: 0;
+  left: var(--thumb-left,2px);
+}
+.regime-toggle[data-active="new"] .thumb { --thumb-left: 2px; }
+.regime-toggle[data-active="old"] .thumb { --thumb-left: calc(50%+2px); }
+.regime-toggle button {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  position: relative;
+  z-index: 1;
+}
+.regime-toggle button.active { color: #000; }
+.regime-toggle button:not(.active) { color: #666; }
 
-/* Form Inputs */
-.form-group { /* … */ }
+/* ===== Form Inputs ===== */
+.form-group { margin-bottom: 1rem; }
+.form-group label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 0.25rem;
+}
+input[type=number] {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: var(--radius);
+}
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(10,132,255,0.2);
+}
+.error {
+  color: #c00;
+  font-size: 12px;
+  min-height: 14px;
+  margin-top: 2px;
+}
 
-/* Action Buttons */
+/* ===== Action Buttons ===== */
 .actions {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
 .actions button {
-  /* remove flex:1 so they don't stretch */
   flex: 0 1 auto;
   padding: 0.5rem 1rem;
   font-size: 14px;
   border: 1px solid var(--text);
-  background: #fff;      /* white background */
-  color: var(--text);    /* black text */
+  background: #fff;
+  color: var(--text);
   border-radius: var(--radius);
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
@@ -72,12 +118,9 @@ body {
   border: 1px solid var(--text);
   background: #fff;
 }
-.icon-btn img {
-  width: 100%;
-  display: block;
-}
+.icon-btn img { width: 100%; display: block; }
 
-/* Summary & Breakdown (spacing fixes) */
+/* ===== Summary & Breakdown ===== */
 .summary,
 .breakdown {
   margin-top: 1.5rem;
@@ -85,6 +128,11 @@ body {
   padding: 1rem;
   border-radius: var(--radius);
   box-shadow: 0 0 0 1px #eee;
+}
+.summary h2,
+.breakdown h2 {
+  font-size: 16px;
+  margin-bottom: 1rem;
 }
 .summary-row {
   display: flex;
@@ -104,8 +152,8 @@ body {
 }
 .link-button {
   font-size: 14px;
+  background: none;
   border: none;
-  background: transparent;
   color: var(--accent);
   cursor: pointer;
   text-decoration: underline dotted;
@@ -114,7 +162,6 @@ body {
 .link-button:hover {
   color: var(--accent-hover);
 }
-
 .breakdown table {
   width: 100%;
   border-collapse: collapse;
@@ -122,12 +169,11 @@ body {
 }
 .breakdown th,
 .breakdown td {
-  text-align: left;
   padding: 0.5rem;
   border-bottom: 1px solid #ddd;
 }
 
-/* Back to home (hide in print) */
+/* ===== Back Home ===== */
 .back-home {
   text-align: center;
   margin-top: 2rem;
@@ -140,7 +186,7 @@ body {
   color: var(--accent-hover);
 }
 
-/* Mobile */
+/* ===== Mobile ===== */
 @media (max-width: 600px) {
   .tax-app {
     margin: 1rem;
@@ -152,13 +198,13 @@ body {
   }
 }
 
-/* Print — hide controls and footer link */
+/* ===== Print ===== */
 @media print {
   body * { visibility: hidden; }
-  .tax-app, .tax-app * { visibility: visible; }
-  .actions, .back-home, .link-wrap { display: none; }
-  @page {
-    size: A4 portrait;
-    margin: 1cm;
-  }
+  .tax-app,
+  .tax-app * { visibility: visible; }
+  .actions,
+  .back-home,
+  .link-wrap { display: none; }
+  @page { size: A4 portrait; margin: 1cm; }
 }
