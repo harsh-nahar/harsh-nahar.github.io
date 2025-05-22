@@ -15,42 +15,46 @@
     { up: 1000000, pct: 20 },
     { up: Infinity, pct: 30 }
   ];
-
   let regime = 'new';
-  const btns = document.querySelectorAll('.regime-toggle button');
-  btns.forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.regime-toggle button').forEach(b => b.onclick = () => {
     regime = b.dataset.regime;
-    btns.forEach(x => x.classList.toggle('active', x === b));
+    document.querySelectorAll('.regime-toggle button').forEach(x =>
+      x.classList.toggle('active', x === b)
+    );
     document.querySelector('.exemptions').hidden = (regime !== 'old');
-    document.querySelector('.summary').hidden = true;
-    document.querySelector('.breakdown').hidden = true;
-    document.getElementById('toggleBreak').hidden = true;
-  }));
+    hideResults();
+    validate();
+  });
 
-  document.getElementById('calculate').onclick = () => {
-    const income = parseFloat(document.getElementById('income').value) || 0;
-    const exemptions = parseFloat(document.getElementById('exemptions').value) || 0;
-    const stdDed = (regime === 'old' ? 50000 : 75000);
-    let taxable = Math.max(0, income - stdDed - (regime==='old'?exemptions:0));
+  const incomeI = document.getElementById('income');
+  const exI     = document.getElementById('exemptions');
+  const calcBtn = document.getElementById('calculate');
+  const resetBtn= document.getElementById('reset');
 
-    // Exemption up to 12L in new regime
-    if (regime==='new' && taxable <= 1200000) taxable = 0;
+  const validate = () => {
+    const inc = parseFloat(incomeI.value);
+    document.getElementById('incomeError').textContent = (inc > 0) ? '' : 'Enter a positive income';
+    calcBtn.disabled = !(inc > 0);
+  };
+  incomeI.oninput = exI.oninput = validate;
 
-    const slabs = regime==='new'? slabsNew : slabsOld;
-    let rem = taxable, tax = 0, breakdownHTML = '', prev = 0;
+  calcBtn.onclick = () => {
+    const income = +incomeI.value;
+    const exemptions = (regime === 'old') ? (+exI.value || 0) : 0;
+    const stdDed = (regime === 'old') ? 50000 : 75000;
+    let taxable = Math.max(0, income - stdDed - exemptions);
+    if (regime === 'new' && taxable <= 1200000) taxable = 0;
+
+    const slabs = (regime === 'new') ? slabsNew : slabsOld;
+    let rem = taxable, tax = 0, prev = 0, html = '';
 
     slabs.forEach(s => {
       if (rem > 0) {
         const amt = Math.min(rem, s.up - prev);
         const t = amt * (s.pct/100);
-        if (amt>0) {
-          breakdownHTML += 
-            `<tr>
-               <td>₹${prev.toLocaleString()}–₹${s.up===Infinity?'∞':s.up.toLocaleString()}</td>
-               <td>₹${amt.toLocaleString()}</td>
-               <td>${s.pct}%</td>
-               <td>₹${Math.round(t).toLocaleString()}</td>
-             </tr>`;
+        if (amt > 0) {
+          html += `<tr><td>₹${prev.toLocaleString()}–₹${s.up===Infinity?'∞':s.up.toLocaleString()}</td>` +
+                  `<td>₹${amt.toLocaleString()}</td><td>${s.pct}%</td><td>₹${Math.round(t).toLocaleString()}</td></tr>`;
         }
         tax += t;
         rem -= amt;
@@ -58,10 +62,9 @@
       }
     });
 
-    const cess = tax*0.04;
+    const cess = tax * 0.04;
     const total = Math.round(tax + cess);
 
-    // Populate summary
     document.getElementById('sumIncome').textContent = '₹'+income.toLocaleString();
     document.getElementById('sumDeduction').textContent = '-₹'+stdDed.toLocaleString();
     document.getElementById('sumTaxable').textContent = '₹'+taxable.toLocaleString();
@@ -69,28 +72,38 @@
     document.getElementById('sumCess').textContent = '₹'+Math.round(cess).toLocaleString();
     document.getElementById('sumTotal').textContent = '₹'+total.toLocaleString();
 
-    document.querySelector('.summary').hidden = false;
+    const sum = document.querySelector('.summary');
+    sum.hidden = false;
+    sum.classList.add('show');
     const btn = document.getElementById('toggleBreak');
     btn.hidden = false;
-    btn.textContent = 'Show Breakdown';
     document.querySelector('.breakdown').hidden = true;
+    document.querySelector('.breakdown').classList.remove('show');
+    document.getElementById('breakBody').innerHTML = html +
+      `<tr><td colspan="3"><strong>Tax</strong></td><td><strong>₹${Math.round(tax).toLocaleString()}</strong></td></tr>` +
+      `<tr><td colspan="3">Cess (4%)</td><td>₹${Math.round(cess).toLocaleString()}</td></tr>`;
 
-    document.getElementById('breakBody').innerHTML = breakdownHTML +
-      `<tr><td colspan="3"><strong>Tax</strong></td><td><strong>₹${Math.round(tax).toLocaleString()}</strong></td></tr>`+
-      `<tr><td colspan="3">Cess (4%)</td><td>₹${Math.round(cess).toLocaleString()}</td></tr>`;
+    document.getElementById('savePdf').hidden = false;
   };
 
   document.getElementById('toggleBreak').onclick = () => {
     const bd = document.querySelector('.breakdown');
-    const btn = document.getElementById('toggleBreak');
     bd.hidden = !bd.hidden;
-    btn.textContent = bd.hidden? 'Show Breakdown' : 'Hide Breakdown';
+    bd.classList.toggle('show');
+    document.getElementById('toggleBreak').textContent = bd.hidden ? 'Show Breakdown' : 'Hide Breakdown';
   };
 
-  document.getElementById('reset').onclick = () => {
-    ['income','exemptions'].forEach(id=>document.getElementById(id).value='');
+  resetBtn.onclick = () => { incomeI.value = ''; exI.value = ''; hideResults(); validate(); };
+  document.getElementById('savePdf').onclick = () => window.print();
+
+  function hideResults() {
     document.querySelector('.summary').hidden = true;
     document.querySelector('.breakdown').hidden = true;
     document.getElementById('toggleBreak').hidden = true;
-  };
+    document.getElementById('savePdf').hidden = true;
+    document.querySelector('.summary').classList.remove('show');
+    document.querySelector('.breakdown').classList.remove('show');
+  }
+
+  validate();
 })();
