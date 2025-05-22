@@ -1,9 +1,10 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Income Tax Calculator FY 2025–26</title>
+  <title>Income Tax FY 2025–26</title>
   <!-- Google Fonts fallback -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,9 +15,10 @@
 </head>
 <body>
   <div class="tax-app">
-    <h1>Income Tax Calculator<br>FY 2025–26</h1>
+    <!-- Shorter heading to fit print -->
+    <h1>Income Tax FY 2025–26</h1>
 
-    <!-- Segmented control with sliding thumb -->
+    <!-- Segmented control without animation -->
     <div class="regime-toggle" data-active="new">
       <span class="thumb"></span>
       <button data-regime="new" class="active">New Regime</button>
@@ -35,7 +37,7 @@
       <div class="error" id="exemptionsError"></div>
     </div>
 
-    <!-- Actions -->
+    <!-- Actions: hover returns to original accent, no faint active -->
     <div class="actions">
       <button id="calculate" disabled>Calculate</button>
       <button id="reset">Reset</button>
