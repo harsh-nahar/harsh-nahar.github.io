@@ -25,14 +25,16 @@
   const toggleBreak = document.getElementById('toggleBreak');
   const summary = document.querySelector('.summary');
   const breakdown = document.querySelector('.breakdown');
-  const body = document.getElementById('breakBody');
+  const breakBody = document.getElementById('breakBody');
+  const surchargeLabel = document.getElementById('surchargeLabel');
 
   document.querySelectorAll('.regime-toggle button').forEach(b => {
     b.addEventListener('click', () => {
       regime = b.dataset.regime;
       toggle.setAttribute('data-active', regime);
-      toggle.querySelectorAll('button').forEach(x => x.classList.toggle('active', x===b));
-      document.querySelector('.exemptions').hidden = regime!=='old';
+      toggle.querySelectorAll('button')
+        .forEach(x => x.classList.toggle('active', x===b));
+      document.querySelector('.exemptions').hidden = (regime!=='old');
       hideAll(); validate();
     });
   });
@@ -46,66 +48,98 @@
 
   calc.onclick = () => {
     const income = +incomeI.value;
-    const exem = regime==='old' ? (+exI.value||0) : 0;
-    const std = regime==='old' ? 50000 : 75000;
-    let taxbase = Math.max(0, income - std - exem);
-    if (regime==='new' && taxbase <= 1200000) taxbase = 0;
+    const exemptions = regime==='old' ? (+exI.value||0) : 0;
+    const stdDed = regime==='old' ? 50000 : 75000;
+    let taxable = Math.max(0, income - stdDed - exemptions);
 
-    const slabs = regime==='new'? slabsNew: slabsOld;
-    let rem=taxbase, sum=0, prev=0, rows='';
-    slabs.forEach(s=>{
-      if(rem<=0) return;
+    if (regime==='new' && taxable <= 1200000) taxable = 0;
+
+    // slab tax
+    const slabs = regime==='new' ? slabsNew : slabsOld;
+    let rem = taxable, tax = 0, prev = 0, rows = '';
+    slabs.forEach(s => {
+      if (rem <= 0) return;
       const amt = Math.min(rem, s.up - prev);
-      const t = amt*(s.pct/100);
-      if(amt>0){
-        rows+=`<tr>
-                  <td>₹${prev.toLocaleString()}–₹${s.up===Infinity?'∞':s.up.toLocaleString()}</td>
-                  <td>₹${amt.toLocaleString()}</td>
-                  <td>${s.pct}%</td>
-                  <td>₹${Math.round(t).toLocaleString()}</td>
-               </tr>`;
+      const t = amt * (s.pct / 100);
+      if (amt > 0) {
+        rows += `<tr>
+                   <td>₹${prev.toLocaleString()}–₹${s.up===Infinity?'∞':s.up.toLocaleString()}</td>
+                   <td>₹${amt.toLocaleString()}</td>
+                   <td>${s.pct}%</td>
+                   <td>₹${Math.round(t).toLocaleString()}</td>
+                 </tr>`;
       }
-      sum+=t; rem-=amt; prev=s.up;
+      tax += t;
+      rem -= amt;
+      prev = s.up;
     });
-    const cess = sum*0.04;
-    const total = Math.round(sum+cess);
 
-    document.getElementById('sumIncome').textContent = `₹${income.toLocaleString()}`;
-    document.getElementById('sumDeduction').textContent = `-₹${std.toLocaleString()}`;
-    document.getElementById('sumTaxable').textContent = `₹${taxbase.toLocaleString()}`;
-    document.getElementById('sumTax').textContent = `₹${Math.round(sum).toLocaleString()}`;
-    document.getElementById('sumCess').textContent = `₹${Math.round(cess).toLocaleString()}`;
-    document.getElementById('sumTotal').textContent = `₹${total.toLocaleString()}`;
+    // old-regime 87A rebate
+    if (regime==='old') {
+      if (income <= 500000) {
+        tax = 0;
+      } else {
+        tax = Math.max(0, tax - 12500);
+      }
+    }
 
-    body.innerHTML = rows +
-      `<tr><td colspan="3"><strong>Tax</strong></td><td><strong>₹${Math.round(sum).toLocaleString()}</strong></td></tr>`+
+    // surcharge on slab-tax
+    let surcharge = 0, rate = 0;
+    if (taxable > 50000000) {      // > ₹5 Cr
+      rate = 37;
+    } else if (taxable > 20000000) { // > ₹2 Cr
+      rate = 25;
+    } else if (taxable > 10000000) { // > ₹1 Cr
+      rate = 15;
+    } else if (taxable >  5000000) { // > ₹50 L
+      rate = 10;
+    }
+    surcharge = tax * (rate/100);
+
+    // cess
+    const cess = (tax + surcharge) * 0.04;
+    const total = Math.round(tax + surcharge + cess);
+
+    // populate summary
+    document.getElementById('sumIncome').textContent     = `₹${income.toLocaleString()}`;
+    document.getElementById('sumDeduction').textContent  = `-₹${stdDed.toLocaleString()}`;
+    document.getElementById('sumTaxable').textContent    = `₹${taxable.toLocaleString()}`;
+    document.getElementById('sumTax').textContent        = `₹${Math.round(tax).toLocaleString()}`;
+    surchargeLabel.textContent                           = `Surcharge (${rate}%)`;
+    document.getElementById('sumSurcharge').textContent  = `₹${Math.round(surcharge).toLocaleString()}`;
+    document.getElementById('sumCess').textContent       = `₹${Math.round(cess).toLocaleString()}`;
+    document.getElementById('sumTotal').textContent      = `₹${total.toLocaleString()}`;
+
+    breakBody.innerHTML = rows +
+      `<tr><td colspan="3"><strong>Tax</strong></td><td><strong>₹${Math.round(tax).toLocaleString()}</strong></td></tr>` +
+      `<tr><td colspan="3">Surcharge (${rate}%)</td><td>₹${Math.round(surcharge).toLocaleString()}</td></tr>` +
       `<tr><td colspan="3">Cess (4%)</td><td>₹${Math.round(cess).toLocaleString()}</td></tr>`;
 
-    summary.hidden = false;
+    summary.hidden     = false;
     toggleBreak.hidden = false;
-    breakdown.hidden = true;
-    save.hidden = false;
+    breakdown.hidden   = true;
+    save.hidden        = false;
   };
 
   toggleBreak.onclick = () => {
     const open = !breakdown.hidden;
-    breakdown.hidden = open;
+    breakdown.hidden   = open;
     toggleBreak.textContent = open ? 'Show Breakdown' : 'Hide Breakdown';
   };
 
   reset.onclick = () => {
     incomeI.value = '';
-    exI.value = '';
+    exI.value     = '';
     hideAll(); validate();
   };
+
   save.onclick = () => window.print();
 
   function hideAll() {
-    summary.hidden = true;
-    breakdown.hidden = true;
+    summary.hidden     = true;
+    breakdown.hidden   = true;
     toggleBreak.hidden = true;
-    save.hidden = true;
+    save.hidden        = true;
   }
-  hideAll();
-  validate();
+  hideAll(); validate();
 })();
