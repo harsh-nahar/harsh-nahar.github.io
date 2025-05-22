@@ -1,4 +1,4 @@
-/* styles.css */
+/* ==== Root Theme ==== */
 :root {
   --bg: #f9fafb;
   --card: #fff;
@@ -9,14 +9,18 @@
   --font-fallback: 'Inter', sans-serif;
   --radius: 12px;
 }
+
+/* ==== Reset & Base Styles ==== */
 * { box-sizing: border-box; }
+
 body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-system), var(--font-fallback);
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.5;
 }
+
 .tax-app {
   max-width: 600px;
   margin: 2rem auto;
@@ -25,13 +29,15 @@ body {
   border-radius: var(--radius);
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
+
 .tax-app h1 {
   text-align: center;
   font-weight: 500;
+  font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
-/* Segmented control without animation */
+/* ==== Regime Toggle ==== */
 .regime-toggle {
   position: relative;
   display: flex;
@@ -40,63 +46,84 @@ body {
   overflow: hidden;
   margin-bottom: 1rem;
 }
+
 .regime-toggle .thumb {
   position: absolute;
   top: 2px; bottom: 2px;
   width: calc(50% - 4px);
   background: var(--card);
   border-radius: 16px;
-  z-index: 0;
   left: var(--thumb-left, 2px);
+  z-index: 0;
 }
+
 .regime-toggle[data-active="new"] .thumb {
   --thumb-left: 2px;
 }
 .regime-toggle[data-active="old"] .thumb {
   --thumb-left: calc(50% + 2px);
 }
+
 .regime-toggle button {
-  position: relative;
-  z-index: 1;
   flex: 1;
   padding: 0.5rem;
-  border: none;
   background: none;
-  cursor: pointer;
+  border: none;
   font-size: 14px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
 }
-.regime-toggle button.active { color: #000; }
-.regime-toggle button:not(.active) { color: #666; }
+.regime-toggle button.active {
+  color: #000;
+}
+.regime-toggle button:not(.active) {
+  color: #666;
+}
 
-.form-group { margin-bottom: 1rem; }
-.form-group label { display: block; font-size: 13px; margin-bottom: 0.25rem; }
-.form-group input {
+/* ==== Form Inputs ==== */
+.form-group {
+  margin-bottom: 1rem;
+}
+label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 0.25rem;
+}
+input[type=number] {
   width: 100%;
   padding: 0.5rem;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: var(--radius);
 }
-.form-group input:focus {
+input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(10,132,255,0.2);
+  box-shadow: 0 0 0 2px rgba(10,132,255,0.2);
 }
-.error { color: #c00; font-size: 12px; height: 14px; margin-top: 2px; }
+.error {
+  color: #c00;
+  font-size: 12px;
+  margin-top: 2px;
+  min-height: 14px;
+}
 
+/* ==== Action Buttons ==== */
 .actions {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
 .actions button {
-  flex: 0 0 auto;
+  flex: 1;
   padding: 0.5rem;
   font-size: 14px;
   border: 1px solid var(--accent);
   background: var(--accent);
   color: #fff;
   border-radius: var(--radius);
+  cursor: pointer;
 }
 .actions button:hover {
   background: var(--accent-hover);
@@ -104,37 +131,110 @@ body {
 .icon-btn {
   width: 40px;
   padding: 0;
-  background: var(--accent);
-  border: 1px solid var(--accent);
-  color: #fff;
 }
-.icon-btn img { width: 100%; display: block; }
+.icon-btn img {
+  width: 100%;
+  display: block;
+}
 
-.summary, .breakdown {
-  margin-top: 1rem;
-  background: rgba(255,255,255,0.8);
+/* ==== Summary + Breakdown ==== */
+.summary,
+.breakdown {
+  margin-top: 1.5rem;
+  background: #fff;
   padding: 1rem;
   border-radius: var(--radius);
-  backdrop-filter: blur(8px);
+  box-shadow: 0 0 0 1px #eee;
 }
-.summary.show, .breakdown.show { opacity: 1; transform: none; }
-.summary h2, .breakdown h2 { font-size: 16px; margin-bottom: 0.5rem; }
-.summary .row {}
-.link-button {}
-.breakdown table {}
 
-.back-home { text-align: center; margin-top: 1rem; }
-.back-home a { color: var(--accent); text-decoration: none; }
-.back-home a:hover { color: var(--accent-hover); }
+.summary h2,
+.breakdown h2 {
+  font-size: 16px;
+  margin-bottom: 1rem;
+}
 
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+  font-size: 14px;
+}
+
+.summary-row.total {
+  font-weight: bold;
+  border-top: 1px solid #ccc;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.link-wrap {
+  text-align: right;
+  margin-top: 1rem;
+}
+
+.link-button {
+  font-size: 14px;
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: underline dotted;
+  padding: 0;
+}
+.link-button:hover {
+  color: var(--accent-hover);
+}
+
+.breakdown table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.breakdown th,
+.breakdown td {
+  text-align: left;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+}
+
+/* ==== Back Button ==== */
+.back-home {
+  text-align: center;
+  margin-top: 2rem;
+}
+.back-home a {
+  text-decoration: none;
+  color: var(--accent);
+}
+.back-home a:hover {
+  color: var(--accent-hover);
+}
+
+/* ==== Mobile ==== */
 @media (max-width: 600px) {
-  .tax-app { margin: 1rem; padding: 1rem; width: calc(100% - 2rem); }
-  .icon-btn { width: 36px; }
+  .tax-app {
+    margin: 1rem;
+    padding: 1rem;
+    width: calc(100% - 2rem);
+  }
+  .icon-btn {
+    width: 36px;
+  }
 }
 
+/* ==== Print Styles ==== */
 @media print {
-  body * { visibility: hidden; }
-  .tax-app, .tax-app * { visibility: visible; }
-  .actions, .back-home { display: none; }
-  @page { size: A4 portrait; margin: 1cm; }
+  body * {
+    visibility: hidden;
+  }
+  .tax-app, .tax-app * {
+    visibility: visible;
+  }
+  .actions, .back-home {
+    display: none;
+  }
+  @page {
+    size: A4 portrait;
+    margin: 1cm;
+  }
 }
