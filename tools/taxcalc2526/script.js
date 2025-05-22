@@ -23,7 +23,8 @@
       document.querySelectorAll('.regime-toggle button')
         .forEach(x => x.classList.toggle('active', x === b));
       document.querySelector('.exemptions').hidden = (regime !== 'old');
-      hideResults(); validate();
+      hideResults();
+      validate();
     };
   });
 
@@ -34,7 +35,8 @@
 
   const validate = () => {
     const inc = parseFloat(incomeI.value);
-    document.getElementById('incomeError').textContent = (inc > 0) ? '' : 'Enter a positive income';
+    document.getElementById('incomeError').textContent =
+      (inc > 0) ? '' : 'Enter a positive income';
     calcBtn.disabled = !(inc > 0);
   };
   incomeI.oninput = exI.oninput = validate;
@@ -52,7 +54,7 @@
     slabs.forEach(s => {
       if (rem > 0) {
         const amt = Math.min(rem, s.up - prev);
-        const t = amt * (s.pct/100);
+        const t = amt * (s.pct / 100);
         if (amt > 0) {
           html += `<tr><td>₹${prev.toLocaleString()}–₹${s.up===Infinity?'∞':s.up.toLocaleString()}</td>` +
                   `<td>₹${amt.toLocaleString()}</td><td>${s.pct}%</td><td>₹${Math.round(t).toLocaleString()}</td></tr>`;
@@ -64,6 +66,7 @@
     const cess = tax * 0.04;
     const total = Math.round(tax + cess);
 
+    // Populate summary
     document.getElementById('sumIncome').textContent = '₹' + income.toLocaleString();
     document.getElementById('sumDeduction').textContent = '-₹' + stdDed.toLocaleString();
     document.getElementById('sumTaxable').textContent = '₹' + taxable.toLocaleString();
@@ -71,19 +74,29 @@
     document.getElementById('sumCess').textContent = '₹' + Math.round(cess).toLocaleString();
     document.getElementById('sumTotal').textContent = '₹' + total.toLocaleString();
 
-    const sum = document.querySelector('.summary'); sum.hidden = false; sum.classList.add('show');
-    const btn = document.getElementById('toggleBreak'); btn.hidden = false;
-    const bd = document.querySelector('.breakdown'); bd.hidden = true; bd.classList.remove('show');
-    document.getElementById('breakBody').innerHTML = html +
+    // Show summary & breakdown toggle
+    const sum = document.querySelector('.summary');
+    sum.hidden = false;
+    sum.classList.add('show');
+
+    const btn = document.getElementById('toggleBreak');
+    btn.hidden = false;
+    const bd = document.querySelector('.breakdown');
+    bd.hidden = true; bd.classList.remove('show');
+
+    document.getElementById('breakBody').innerHTML =
+      html +
       `<tr><td colspan="3"><strong>Tax</strong></td><td><strong>₹${Math.round(tax).toLocaleString()}</strong></td></tr>` +
-      `<tr><td colspan="3">Cess (4%)</td><td>₹${Math.round(cess).toLocaleString()}</td></tr>`;
+      `<tr><td colspan="3">Cess (4%)</td><td>₹${Math.round(cess).toLocaleString()}</td></tr>`;
+
     document.getElementById('savePdf').hidden = false;
   };
 
   document.getElementById('toggleBreak').onclick = () => {
     const bd = document.querySelector('.breakdown');
     bd.hidden = !bd.hidden; bd.classList.toggle('show');
-    document.getElementById('toggleBreak').textContent = bd.hidden ? 'Show Breakdown' : 'Hide Breakdown';
+    document.getElementById('toggleBreak').textContent =
+      bd.hidden ? 'Show Breakdown' : 'Hide Breakdown';
   };
 
   resetBtn.onclick = () => { incomeI.value = ''; exI.value = ''; hideResults(); validate(); };
@@ -98,5 +111,6 @@
     document.querySelector('.breakdown').classList.remove('show');
   }
 
-  hideResults(); validate();
+  hideResults();
+  validate();
 })();
