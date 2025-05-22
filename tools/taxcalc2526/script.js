@@ -15,21 +15,22 @@
     { up: 1000000, pct: 20 },
     { up: Infinity, pct: 30 }
   ];
+
   let regime = 'new';
-  document.querySelectorAll('.regime-toggle button').forEach(b => b.onclick = () => {
-    regime = b.dataset.regime;
-    document.querySelectorAll('.regime-toggle button').forEach(x =>
-      x.classList.toggle('active', x === b)
-    );
-    document.querySelector('.exemptions').hidden = (regime !== 'old');
-    hideResults();
-    validate();
+  document.querySelectorAll('.regime-toggle button').forEach(b => {
+    b.onclick = () => {
+      regime = b.dataset.regime;
+      document.querySelectorAll('.regime-toggle button')
+        .forEach(x => x.classList.toggle('active', x === b));
+      document.querySelector('.exemptions').hidden = (regime !== 'old');
+      hideResults(); validate();
+    };
   });
 
   const incomeI = document.getElementById('income');
-  const exI     = document.getElementById('exemptions');
+  const exI = document.getElementById('exemptions');
   const calcBtn = document.getElementById('calculate');
-  const resetBtn= document.getElementById('reset');
+  const resetBtn = document.getElementById('reset');
 
   const validate = () => {
     const inc = parseFloat(incomeI.value);
@@ -56,40 +57,32 @@
           html += `<tr><td>₹${prev.toLocaleString()}–₹${s.up===Infinity?'∞':s.up.toLocaleString()}</td>` +
                   `<td>₹${amt.toLocaleString()}</td><td>${s.pct}%</td><td>₹${Math.round(t).toLocaleString()}</td></tr>`;
         }
-        tax += t;
-        rem -= amt;
-        prev = s.up;
+        tax += t; rem -= amt; prev = s.up;
       }
     });
 
     const cess = tax * 0.04;
     const total = Math.round(tax + cess);
 
-    document.getElementById('sumIncome').textContent = '₹'+income.toLocaleString();
-    document.getElementById('sumDeduction').textContent = '-₹'+stdDed.toLocaleString();
-    document.getElementById('sumTaxable').textContent = '₹'+taxable.toLocaleString();
-    document.getElementById('sumTax').textContent = '₹'+Math.round(tax).toLocaleString();
-    document.getElementById('sumCess').textContent = '₹'+Math.round(cess).toLocaleString();
-    document.getElementById('sumTotal').textContent = '₹'+total.toLocaleString();
+    document.getElementById('sumIncome').textContent = '₹' + income.toLocaleString();
+    document.getElementById('sumDeduction').textContent = '-₹' + stdDed.toLocaleString();
+    document.getElementById('sumTaxable').textContent = '₹' + taxable.toLocaleString();
+    document.getElementById('sumTax').textContent = '₹' + Math.round(tax).toLocaleString();
+    document.getElementById('sumCess').textContent = '₹' + Math.round(cess).toLocaleString();
+    document.getElementById('sumTotal').textContent = '₹' + total.toLocaleString();
 
-    const sum = document.querySelector('.summary');
-    sum.hidden = false;
-    sum.classList.add('show');
-    const btn = document.getElementById('toggleBreak');
-    btn.hidden = false;
-    document.querySelector('.breakdown').hidden = true;
-    document.querySelector('.breakdown').classList.remove('show');
+    const sum = document.querySelector('.summary'); sum.hidden = false; sum.classList.add('show');
+    const btn = document.getElementById('toggleBreak'); btn.hidden = false;
+    const bd = document.querySelector('.breakdown'); bd.hidden = true; bd.classList.remove('show');
     document.getElementById('breakBody').innerHTML = html +
       `<tr><td colspan="3"><strong>Tax</strong></td><td><strong>₹${Math.round(tax).toLocaleString()}</strong></td></tr>` +
       `<tr><td colspan="3">Cess (4%)</td><td>₹${Math.round(cess).toLocaleString()}</td></tr>`;
-
     document.getElementById('savePdf').hidden = false;
   };
 
   document.getElementById('toggleBreak').onclick = () => {
     const bd = document.querySelector('.breakdown');
-    bd.hidden = !bd.hidden;
-    bd.classList.toggle('show');
+    bd.hidden = !bd.hidden; bd.classList.toggle('show');
     document.getElementById('toggleBreak').textContent = bd.hidden ? 'Show Breakdown' : 'Hide Breakdown';
   };
 
@@ -105,5 +98,5 @@
     document.querySelector('.breakdown').classList.remove('show');
   }
 
-  validate();
+  hideResults(); validate();
 })();
