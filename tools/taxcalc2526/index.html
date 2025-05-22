@@ -5,27 +5,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Income Tax FY 2025–26</title>
-  <!-- Google Fonts fallback -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="tax-app">
-    <!-- Shorter heading to fit print -->
     <h1>Income Tax FY 2025–26</h1>
 
-    <!-- Segmented control without animation -->
     <div class="regime-toggle" data-active="new">
       <span class="thumb"></span>
       <button data-regime="new" class="active">New Regime</button>
       <button data-regime="old">Old Regime</button>
     </div>
 
-    <!-- Inputs -->
     <div class="form-group">
       <label for="income">Annual Income (₹)</label>
       <input type="number" id="income" placeholder="0">
@@ -37,7 +31,6 @@
       <div class="error" id="exemptionsError"></div>
     </div>
 
-    <!-- Actions: hover returns to original accent, no faint active -->
     <div class="actions">
       <button id="calculate" disabled>Calculate</button>
       <button id="reset">Reset</button>
@@ -46,19 +39,19 @@
       </button>
     </div>
 
-    <!-- Summary Card -->
     <section class="summary" hidden>
       <h2>Tax Summary</h2>
-      <div class="row"><span>Income</span><span id="sumIncome"></span></div>
-      <div class="row"><span>Deduction</span><span id="sumDeduction"></span></div>
-      <div class="row"><span>Taxable</span><span id="sumTaxable"></span></div>
-      <div class="row"><span>Tax</span><span id="sumTax"></span></div>
-      <div class="row"><span>Cess (4%)</span><span id="sumCess"></span></div>
-      <div class="row total"><span>Total Liability</span><span id="sumTotal"></span></div>
-      <button class="link-button" id="toggleBreak" hidden>Show Breakdown</button>
+      <div class="summary-row"><span>Income</span><span id="sumIncome"></span></div>
+      <div class="summary-row"><span>Deduction</span><span id="sumDeduction"></span></div>
+      <div class="summary-row"><span>Taxable</span><span id="sumTaxable"></span></div>
+      <div class="summary-row"><span>Tax</span><span id="sumTax"></span></div>
+      <div class="summary-row"><span>Cess (4%)</span><span id="sumCess"></span></div>
+      <div class="summary-row total"><span>Total Liability</span><span id="sumTotal"></span></div>
+      <div class="link-wrap">
+        <button class="link-button" id="toggleBreak" hidden>Show Breakdown</button>
+      </div>
     </section>
 
-    <!-- Breakdown Table -->
     <section class="breakdown" hidden>
       <h2>Slab Breakdown</h2>
       <table>
@@ -71,7 +64,6 @@
 
     <div class="back-home"><a href="/">← Back to Home</a></div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
