@@ -1,11 +1,10 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Income Tax Calculator FY 2025–26</title>
-  <!-- Inter font for non-Apple devices; Apple uses system font -->
+  <!-- Font & Asset Optimization -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -13,41 +12,52 @@
 </head>
 <body>
   <div class="tax-app">
-    <h1>Income Tax Calculator<br>FY 2025–26</h1>
+    <h1>Income Tax Calculator<br>FY 2025–26</h1>
 
+    <!-- Segmented control -->
     <div class="regime-toggle">
       <button data-regime="new" class="active">New Regime</button>
       <button data-regime="old">Old Regime</button>
     </div>
 
+    <!-- Inputs -->
     <div class="form-group">
-      <label for="income">Annual Income (₹)</label>
+      <label for="income">Annual Income (₹)</label>
       <input type="number" id="income" placeholder="0">
       <div class="error" id="incomeError"></div>
     </div>
     <div class="form-group exemptions" hidden>
-      <label for="exemptions">Exemptions (₹) – Old Regime only</label>
+      <label for="exemptions">Exemptions (₹) – Old Regime only</label>
       <input type="number" id="exemptions" placeholder="0">
       <div class="error" id="exemptionsError"></div>
     </div>
 
+    <!-- Actions -->
     <div class="actions">
       <button id="calculate" disabled>Calculate</button>
       <button id="reset">Reset</button>
-      <button id="savePdf" class="secondary" hidden>Save as PDF</button>
+      <button id="savePdf" class="icon-btn" hidden title="Save as PDF">
+        <!-- PDF icon SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M5 1.5a.5.5 0 0 0-1 0V4H1.5a.5.5 0 0 0 0 1H4v2.5a.5.5 0 0 0 1 0V5h2.5a.5.5 0 0 0 0-1H5V1.5z"/>
+          <path d="M14 10V2H6v2h6v6h2zM6 3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-1v1.5a.5.5 0 0 1-1 0V13H7v1.5a.5.5 0 0 1-1 0V14H5a1 1 0 0 1-1-1V3z"/>
+        </svg>
+      </button>
     </div>
 
+    <!-- Summary Card -->
     <section class="summary" hidden>
       <h2>Tax Summary</h2>
       <div class="row"><span>Income</span><span id="sumIncome"></span></div>
       <div class="row"><span>Deduction</span><span id="sumDeduction"></span></div>
       <div class="row"><span>Taxable</span><span id="sumTaxable"></span></div>
       <div class="row"><span>Tax</span><span id="sumTax"></span></div>
-      <div class="row"><span>Cess (4%)</span><span id="sumCess"></span></div>
+      <div class="row"><span>Cess (4%)</span><span id="sumCess"></span></div>
       <div class="row total"><span>Total Liability</span><span id="sumTotal"></span></div>
       <button class="link-button" id="toggleBreak" hidden>Show Breakdown</button>
     </section>
 
+    <!-- Breakdown Table -->
     <section class="breakdown" hidden>
       <h2>Slab Breakdown</h2>
       <table>
@@ -56,7 +66,7 @@
       </table>
     </section>
 
-    <div class="back-home"><a href="/">← Back to Home</a></div>
+    <div class="back-home"><a href="/">← Back to Home</a></div>
   </div>
 
   <script src="script.js"></script>
