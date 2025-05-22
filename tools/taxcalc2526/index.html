@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,14 +12,12 @@
   <div class="tax-app">
     <h1>Income Tax FY 2025–26</h1>
 
-    <!-- Regime Toggle -->
     <div class="regime-toggle" data-active="new">
       <span class="thumb"></span>
       <button data-regime="new" class="active">New Regime</button>
       <button data-regime="old">Old Regime</button>
     </div>
 
-    <!-- Inputs -->
     <div class="form-group">
       <label for="income">Annual Income (₹)</label>
       <input type="number" id="income" placeholder="0">
@@ -30,17 +29,13 @@
       <div class="error" id="exemptionsError"></div>
     </div>
 
-    <!-- Action Buttons -->
     <div class="actions">
       <button id="calculate" disabled>Calculate</button>
       <button id="reset">Reset</button>
-      <button id="savePdf" class="icon-btn" hidden title="Save as PDF">
-        <img src="https://raw.githubusercontent.com/harsh-nahar/harsh-nahar.github.io/main/tools/taxcalc2526/download.svg"
-             alt="Download PDF">
-      </button>
+      <!-- ↓ arrow instead of SVG -->
+      <button id="savePdf" class="icon-btn" hidden title="Save as PDF">↓</button>
     </div>
 
-    <!-- Summary -->
     <section class="summary" hidden>
       <h2>Tax Summary</h2>
       <div class="summary-row"><span>Income</span><span id="sumIncome"></span></div>
@@ -54,7 +49,6 @@
       </div>
     </section>
 
-    <!-- Breakdown -->
     <section class="breakdown" hidden>
       <h2>Slab Breakdown</h2>
       <table>
