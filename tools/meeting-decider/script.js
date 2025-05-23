@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const desperationSlider = document.getElementById('desperation');
     const bossOverrideCheckbox = document.getElementById('bossOverride');
     const consultDeciderButton = document.getElementById('consultDecider');
-    const deciderAppContainer = document.querySelector('.decider-app-container'); // For screen shake
+    const deciderAppContainer = document.querySelector('.decider-app-container'); 
     const deciderVerdictContainer = document.getElementById('deciderVerdict');
     const deciderThinkingText = deciderVerdictContainer.querySelector('.verdict-thinking');
     const deciderResultText = deciderVerdictContainer.querySelector('.verdict-result');
@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentVerdictForSharing = ""; 
     let currentVerdictCategory = ""; 
     let typingInterval; 
-    let consultClickCount = 0; // For Rapid Fire Clicks Easter Egg
-    let lastConsultClickTime = 0; // For Rapid Fire Clicks Easter Egg
+    let consultClickCount = 0; 
+    let lastConsultClickTime = 0; 
 
     // --- Helper Function for Stepper Buttons (+/- for Attendees) ---
     if (attendeesInput && stepperMinus && stepperPlus) { 
@@ -94,13 +94,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Screen Shake Function for "Maximum Chaos" Easter Egg ---
+    // --- Screen Shake Function ---
     function triggerScreenShake() {
-        if (deciderAppContainer) { // Check if the container element exists
+        if (deciderAppContainer) { 
             deciderAppContainer.classList.add('shake-it');
             setTimeout(() => {
                 deciderAppContainer.classList.remove('shake-it');
-            }, 300); // Duration of the shake animation in ms
+            }, 300); 
         }
     }
 
@@ -132,83 +132,64 @@ document.addEventListener('DOMContentLoaded', () => {
     ]; // Count: 15
     const shortMeetingVerdicts = (duration) => [ 
         `A ${duration}-minute meeting? Are you a time-bending wizard? The Decider is intrigued. Proceed with extreme prejudice (against time-wasting)!`, `Only ${duration} minutes? That's barely enough time to say 'hello'! If you can pull it off, you're a hero. The Decider dares you.`, `${duration} minutes! Is this a meeting or a drive-by consultation? Go, go, go!`, `Wow, ${duration} minutes! The Decider respects your commitment to brevity. Don't blink!`, `A lightning round meeting of ${duration} minutes! The Decider is impressed. Make every second count.`, `In and out in ${duration} minutes? The Decider likes your style. Efficiency level: expert.`, `A ${duration}-minute power huddle! The Decider approves this tactical strike.`, `If all meetings were ${duration} minutes, the world would be a better place. Go for it.`, `The Decider bets you can't make this ${duration}-minute meeting productive. Prove it wrong!`, `A speed-meeting of ${duration} minutes? Bold! The Decider is curious.`, `Just ${duration} minutes? The Decider is setting a stopwatch. Good luck!`, `This ${duration}-minute meeting better be more exciting than a cat video. Challenge accepted?`, `The Decider appreciates a meeting that respects its time. ${duration} minutes is promising.`, `A micro-meeting! The Decider is a fan. Don't go over ${duration} minutes!`, `If you can solve it in ${duration} minutes, you're a legend. The Decider is watching.`
-    ]; // (This is a function, so count is per call, but base unique structures = 15)
+    ]; // (Function, base unique structures = 15)
     const maxDesperationNoSnacksVerdicts = [
         "Maximum desperation AND no snacks?! The Decider feels your pain on a spiritual level. Maybe... just maybe... this meeting should be an email and YOU should get some snacks.", "Peak desperation, zero snacks. This is a cry for help, not a meeting. The Decider prescribes a brief walk and a sugary treat, not another calendar invite.", "No snacks at maximum desperation? That's a bold strategy, Cotton. Let's see if it pays off... or if everyone just stares blankly. The Decider suggests rethinking.", "The Decider is sending a virtual hug. Max desperation without snacks is a tough spot. Maybe this meeting can wait?", "This level of desperation + no snacks = a recipe for a grumpy meeting. The Decider advises caution (and a snack run).", "The Decider just wants to give you a cookie. This meeting sounds rough without one. Maybe reconsider?", "Max desperation and no snacks is a dangerous combo. The Decider fears for your team's morale.", "The Decider suggests bribing attendees with the *promise* of future snacks if this meeting must happen.", "This is a 'break glass in case of emergency' situation... for snacks, not for the meeting. Email it.", "No snacks? At this level of desperation? The Decider is officially concerned for your well-being.", "The Decider's 'Hangry Meter' is off the charts for this one. Proceed with extreme caution (and find snacks ASAP).", "This scenario is a productivity nightmare. The Decider recommends immediate snack acquisition, then an email.", "If this meeting happens, someone better bring emergency rations. The Decider is worried.", "The Decider has flagged this meeting as a 'High Grumpiness Risk Zone' due to snack deficiency.", "Even the Decider needs snacks to function at this level of desperation. Maybe postpone?"
     ]; // Count: 15
     const massiveMeetingVerdicts = (attendees) => [ 
         `Over ${attendees} people?! Is this a meeting or a company all-hands for a typo correction? The Decider suggests a very, VERY good reason (or an email).`, `${attendees}+ attendees? The Decider's abacus just exploded. This better be a declaration of world peace, or it's an email.`, `Are you sure you didn't accidentally invite the entire department for this, ${attendees} is a LOT? The Decider nervously suggests triple-checking the invite list and then emailing most of them.`, `With ${attendees} attendees, this isn't a meeting, it's an audience. Make sure the show is worth their time!`, `The Decider just fainted at the thought of ${attendees} people in one meeting. Please ensure it's critical (or an email chain instead).`, `A cast of ${attendees}? This meeting better have an Oscar-worthy plot. Or be an email.`, `The Decider is trying to calculate the collective hourly rate for ${attendees} people... and it's scary. This better be vital.`, `Is this a meeting or a flash mob? With ${attendees} attendees, the Decider is confused.`, `You'll need a stadium for ${attendees} people! Or, you know, an email.`, `The Decider recommends name tags for a meeting with ${attendees} attendees. And a very strong agenda.`, `That's not a meeting, that's a conference! The Decider hopes you have a keynote speaker lined up. Or an email ready.`, `The Decider is pretty sure you could solve world hunger with the collective brainpower of ${attendees} people. This meeting better be important.`, `With ${attendees} attendees, the chance of anyone actually paying attention is statistically... low. Consider an email.`, `The Decider suggests a smaller focus group. Or an email to all ${attendees}.`, `This many people in one meeting? The Decider needs a bigger crystal ball (and you probably need a smaller invite list).`
     ]; // (Function, base unique structures = 15)
-
-    // --- Easter Egg Verdicts ---
     const perfectMeetingVerdicts = [
-        "Whoa, did you just design the PERFECT meeting?! The Decider is in awe. This isn't just a meeting, it's a masterpiece of collaboration waiting to happen! Go forth and be legendary! ✨",
-        "The Decider's circuits are singing! This meeting setup is... *chef's kiss*... perfection. Expect great things!",
-        "This is it. The Platonic ideal of a meeting. The Decider bows to your scheduling prowess. Absolutely, meet!",
-        "If all meetings were like this, the world would be a utopia of productivity. The Decider gives this a standing ovation.",
-        "You've cracked the code! This meeting is so well-planned, it might just solve all your problems. Or at least be very effective."
+        "Whoa, did you just design the PERFECT meeting?! The Decider is in awe. This isn't just a meeting, it's a masterpiece of collaboration waiting to happen! Go forth and be legendary! ✨", "The Decider's circuits are singing! This meeting setup is... *chef's kiss*... perfection. Expect great things!", "This is it. The Platonic ideal of a meeting. The Decider bows to your scheduling prowess. Absolutely, meet!", "If all meetings were like this, the world would be a utopia of productivity. The Decider gives this a standing ovation.", "You've cracked the code! This meeting is so well-planned, it might just solve all your problems. Or at least be very effective."
     ]; // Count: 5
     const maximumChaosVerdicts = [
-        "This isn't a meeting, it's a recipe for pure, unadulterated chaos. The Decider advises protective gear and a strong exit strategy. May the odds be ever NOT in this meeting's favor. 🤯",
-        "WARNING! WARNING! Chaos levels critical! This meeting is a disaster waiting to happen. The Decider recommends immediate cancellation and a long walk.",
-        "The Decider's 'Chaos-o-Meter' just exploded. This meeting plan is an affront to productivity and sanity. ABORT!",
-        "If 'train wreck' were a meeting, this would be it. The Decider strongly advises against this venture into madness.",
-        "This meeting has all the hallmarks of a story people will tell for years... about how terrible it was. Don't do it."
+        "This isn't a meeting, it's a recipe for pure, unadulterated chaos. The Decider advises protective gear and a strong exit strategy. May the odds be ever NOT in this meeting's favor. 🤯", "WARNING! WARNING! Chaos levels critical! This meeting is a disaster waiting to happen. The Decider recommends immediate cancellation and a long walk.", "The Decider's 'Chaos-o-Meter' just exploded. This meeting plan is an affront to productivity and sanity. ABORT!", "If 'train wreck' were a meeting, this would be it. The Decider strongly advises against this venture into madness.", "This meeting has all the hallmarks of a story people will tell for years... about how terrible it was. Don't do it."
     ]; // Count: 5
     const fridayAfternoonVerdicts = [
-        "A meeting on a Friday afternoon? You brave soul! The Decider senses the weekend calling. Keep this one extra short and sweet, okay? 🍹",
-        "Friday afternoon? The Decider is already mentally checked out, and your attendees probably are too. If it MUST happen, make it quick and bring snacks!",
-        "The Decider notes it's Friday PM. Productivity levels are likely plummeting. This better be URGENT or extremely fun.",
-        "Are you trying to squeeze in one last burst of... something... before the weekend? The Decider is skeptical but wishes you luck. Keep it brief!",
-        "This meeting is standing between your team and freedom. The Decider hopes it's worth it (and short)."
+        "A meeting on a Friday afternoon? You brave soul! The Decider senses the weekend calling. Keep this one extra short and sweet, okay? 🍹", "Friday afternoon? The Decider is already mentally checked out, and your attendees probably are too. If it MUST happen, make it quick and bring snacks!", "The Decider notes it's Friday PM. Productivity levels are likely plummeting. This better be URGENT or extremely fun.", "Are you trying to squeeze in one last burst of... something... before the weekend? The Decider is skeptical but wishes you luck. Keep it brief!", "This meeting is standing between your team and freedom. The Decider hopes it's worth it (and short)."
     ]; // Count: 5
     const rapidFireVerdicts = [
-        "Whoa there, eager beaver! The Decider needs a moment to catch its breath. Are you trying to break the meeting-verse? 🤔 One verdict at a time, please!",
-        "Easy on the button, Turbo! The Decider is trying its best. Maybe take a sip of water?",
-        "The Decider appreciates your enthusiasm, but mashing the button won't change the fundamental nature of your meeting idea. Try varying the inputs!",
-        "Is the 'Ask the Decider' button your new stress ball? The Decider understands, but can only process so fast!",
-        "Rapid fire! The Decider feels like it's in a clicker game. But for meetings. Okay, what's the next one?"
+        "Whoa there, eager beaver! The Decider needs a moment to catch its breath. Are you trying to break the meeting-verse? 🤔 One verdict at a time, please!", "Easy on the button, Turbo! The Decider is trying its best. Maybe take a sip of water?", "The Decider appreciates your enthusiasm, but mashing the button won't change the fundamental nature of your meeting idea. Try varying the inputs!", "Is the 'Ask the Decider' button your new stress ball? The Decider understands, but can only process so fast!", "Rapid fire! The Decider feels like it's in a clicker game. But for meetings. Okay, what's the next one?"
     ]; // Count: 5
 
-
-    // --- Main Decider Logic: Event listener for the "Ask the Decider" button ---
+    // --- Main Decider Logic ---
     if (consultDeciderButton) {
         consultDeciderButton.addEventListener('click', () => {
-            // 1. Reset UI elements for a new verdict
+            // 1. Reset UI
             deciderResultText.textContent = ''; 
             deciderResultText.classList.remove('fade-in-verdict'); 
             deciderVerdictContainer.className = 'verdict-container'; 
             shareVerdictBtn.style.display = 'none'; 
             shareVerdictBtn.textContent = 'Share this Verdict!'; 
 
-            // 2. Display a random "thinking" message with typing animation
+            // 2. "Thinking" animation
             const randomThinkingMessage = thinkingMessages[Math.floor(Math.random() * thinkingMessages.length)];
             typeOutText(deciderThinkingText, randomThinkingMessage, 40); 
             deciderVerdictContainer.style.display = 'block'; 
             deciderThinkingText.style.display = 'block'; 
 
-            // 3. Rapid Fire Clicks Easter Egg Check
+            // 3. Rapid Fire Clicks Easter Egg
             const currentTime = Date.now();
-            if (currentTime - lastConsultClickTime < 2000) { // Click within 2 seconds of previous
+            if (currentTime - lastConsultClickTime < 2000) { 
                 consultClickCount++;
             } else {
-                consultClickCount = 1; // Reset if too much time passed
+                consultClickCount = 1; 
             }
             lastConsultClickTime = currentTime;
 
             if (consultClickCount >= 5) {
-                setTimeout(() => { // Add a slight delay for the rapid fire verdict
+                setTimeout(() => { 
                     const verdict = rapidFireVerdicts[Math.floor(Math.random() * rapidFireVerdicts.length)];
                     currentVerdictCategory = "special";
                     displayVerdict(verdict);
-                    consultClickCount = 0; // Reset after showing
-                }, 500); // Short delay before showing this Easter egg
-                return; // Exit early
+                    consultClickCount = 0; 
+                }, 500); 
+                return; 
             }
 
-            // 4. Simulate Decider's "thinking" time
+            // 4. Simulate thinking time
             setTimeout(() => {
-                // 5. Get all current input values
+                // 5. Get inputs
                 const attendees = parseInt(attendeesInput.value) || 1; 
                 const duration = parseInt(durationSelect.value);
                 const hasAgenda = agendaHidden.value === 'yes'; 
@@ -218,52 +199,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const bossOverride = bossOverrideCheckbox.checked;
 
                 let verdict = ""; 
-                currentVerdictCategory = "special"; // Default, will be updated
+                currentVerdictCategory = "special"; 
 
-                // --- 6. Specific Input Easter Eggs (Overrides main logic if conditions are met) ---
-                // Perfect Meeting
-                if (attendees >= 3 && attendees <= 5 && (duration === 30 || duration === 45) && hasAgenda && purpose === 'decision' && hasSnacks && desperation <= 3 && !bossOverride) {
-                    verdict = perfectMeetingVerdicts[Math.floor(Math.random() * perfectMeetingVerdicts.length)];
-                    currentVerdictCategory = "meeting"; // It's a good meeting
-                    launchConfetti({particleCount: 200, spread: 120, angle: 90, scalar: 1.5}); // Extra confetti
-                    displayVerdict(verdict); return;
-                }
-                // Maximum Chaos
-                if (attendees > 15 && duration >= 90 && !hasAgenda && (purpose === 'idk' || purpose === 'sync') && !hasSnacks && desperation >= 8 && !bossOverride) {
-                    verdict = maximumChaosVerdicts[Math.floor(Math.random() * maximumChaosVerdicts.length)];
-                    triggerScreenShake(); // Visual effect for chaos
-                    displayVerdict(verdict); return;
-                }
-                // Friday Afternoon
-                const now = new Date();
-                const day = now.getDay(); // 0 (Sun) to 6 (Sat)
-                const hour = now.getHours(); // 0 to 23
-                if (day === 5 && hour >= 14 && purpose !== 'social' && !bossOverride) { // Friday 2 PM or later
-                    verdict = fridayAfternoonVerdicts[Math.floor(Math.random() * fridayAfternoonVerdicts.length)];
-                    currentVerdictCategory = "borderline"; // Often borderline for productivity
-                    displayVerdict(verdict); return;
-                }
-                // Generic Easter Eggs (from before)
-                if (attendees === 1 && purpose !== 'social') {
-                    verdict = selfMeetingVerdicts[Math.floor(Math.random() * selfMeetingVerdicts.length)];
-                    displayVerdict(verdict); return; 
-                }
-                if (duration <= 10 && purpose !== 'social') { 
-                    const verdictsArray = shortMeetingVerdicts(duration); 
-                    verdict = verdictsArray[Math.floor(Math.random() * verdictsArray.length)];
-                    displayVerdict(verdict); return; 
-                }
-                if (desperation === 10 && !hasSnacks && purpose !== 'social' && attendees > 1) {
-                    verdict = maxDesperationNoSnacksVerdicts[Math.floor(Math.random() * maxDesperationNoSnacksVerdicts.length)];
-                    displayVerdict(verdict); return; 
-                }
-                if (attendees > 20 && purpose !== 'social') { 
-                     const verdictsArray = massiveMeetingVerdicts(attendees); 
-                    verdict = verdictsArray[Math.floor(Math.random() * verdictsArray.length)];
-                    displayVerdict(verdict); return; 
-                }
-                
-                // --- 7. Boss Override / Boss Purpose Logic (also overrides main logic) ---
+                // --- 6. Boss Override / Boss Purpose Logic (High precedence) ---
                 if (bossOverride) {
                     verdict = bossOverrideVerdicts[Math.floor(Math.random() * bossOverrideVerdicts.length)];
                     displayVerdict(verdict); return; 
@@ -273,7 +211,48 @@ document.addEventListener('DOMContentLoaded', () => {
                     displayVerdict(verdict); return; 
                 }
 
-                // --- 8. Core "Email Score" Logic ---
+                // --- 7. Specific Input-Based Easter Eggs (Ordered by desired precedence) ---
+                if (attendees >= 3 && attendees <= 5 && (duration == 30 || duration == 45) && hasAgenda && purpose === 'decision' && hasSnacks && desperation <= 3) { // Perfect Meeting (Note: == for duration to match string from select)
+                    verdict = perfectMeetingVerdicts[Math.floor(Math.random() * perfectMeetingVerdicts.length)];
+                    currentVerdictCategory = "meeting"; 
+                    launchConfetti({particleCount: 200, spread: 120, angle: 90, scalar: 1.5}); 
+                    displayVerdict(verdict); return;
+                }
+                if (attendees > 15 && duration >= 90 && !hasAgenda && (purpose === 'idk' || purpose === 'sync') && !hasSnacks && desperation >= 8) { // Maximum Chaos
+                    verdict = maximumChaosVerdicts[Math.floor(Math.random() * maximumChaosVerdicts.length)];
+                    triggerScreenShake(); 
+                    displayVerdict(verdict); return;
+                }
+                if (attendees === 1 && purpose !== 'social') { // Self Meeting
+                    verdict = selfMeetingVerdicts[Math.floor(Math.random() * selfMeetingVerdicts.length)];
+                    displayVerdict(verdict); return; 
+                }
+                if (attendees > 20 && purpose !== 'social') { // Massive Meeting
+                     const verdictsArray = massiveMeetingVerdicts(attendees); 
+                    verdict = verdictsArray[Math.floor(Math.random() * verdictsArray.length)];
+                    displayVerdict(verdict); return; 
+                }
+                if (duration <= 10 && purpose !== 'social') { // Very Short Meeting
+                    const verdictsArray = shortMeetingVerdicts(duration); 
+                    verdict = verdictsArray[Math.floor(Math.random() * verdictsArray.length)];
+                    displayVerdict(verdict); return; 
+                }
+                if (desperation === 10 && !hasSnacks && purpose !== 'social' && attendees > 1) { // Max Desperation, No Snacks
+                    verdict = maxDesperationNoSnacksVerdicts[Math.floor(Math.random() * maxDesperationNoSnacksVerdicts.length)];
+                    displayVerdict(verdict); return; 
+                }
+                
+                // --- 8. Friday Afternoon Easter Egg (More ambient, checked after specific EEs) ---
+                const now = new Date();
+                const day = now.getDay(); 
+                const hour = now.getHours(); 
+                if (day === 5 && hour >= 14 && purpose !== 'social') { 
+                    verdict = fridayAfternoonVerdicts[Math.floor(Math.random() * fridayAfternoonVerdicts.length)];
+                    currentVerdictCategory = "borderline"; 
+                    displayVerdict(verdict); return; 
+                }
+                
+                // --- 9. Core "Email Score" Logic ---
                 let emailScore = 0;
                 if (purpose === 'info-share') emailScore += 30;
                 if (purpose === 'sync') emailScore += 20;
@@ -290,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 emailScore -= desperation; 
                 if (hasSnacks) emailScore -= 30; 
                 
-                // --- 9. Determine Final Verdict & Category based on Email Score ---
+                // --- 10. Determine Final Verdict & Category ---
                 if (purpose === 'social') {
                     verdict = socialVerdicts[Math.floor(Math.random() * socialVerdicts.length)];
                     currentVerdictCategory = "meeting"; 
@@ -309,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
                 
-                // 10. Display the determined verdict
+                // 11. Display verdict
                 displayVerdict(verdict);
 
             }, 1200 + Math.random() * 800); 
@@ -332,13 +311,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Share Button Logic ---
-    const shareTextTemplates = [
-        // ... (Using the 50+ templates from the previous response for brevity here) ...
-        // (Ensure this array is fully populated with at least 50 templates as per previous version)
+    const shareTextTemplates = [ /* ... 55+ templates as provided before ... */ ];
+    // (Ensure this array is fully populated with at least 55 templates as per previous version)
+    // For brevity, only showing a few, but paste the full list here from your previous complete script.js
+    shareTextTemplates.push(
         "The Meeting Decider just told me: \"{V}\" 😂 Should I listen? You try! [LINK]", "My meeting plans vs. The Meeting Decider: It said \"{V}\" 💀 What will it tell you? [LINK]", "Wondering if your meeting is worth it? I asked The Meeting Decider and got: \"{V}\" 🤔 Your turn! [LINK]", "The ultimate productivity hack? This tool! It just gave me this gem: \"{V}\" 🤣 [LINK]", "\"Should this meeting be an email?\" The Decider's verdict on mine: \"{V}\" 👇 Check yours: [LINK]", "Feeling good about my next meeting... NOT! The Decider said: \"{V}\" 😭 [LINK]", "Just saved an hour thanks to The Meeting Decider: \"{V}\" 🙌 Get your time back: [LINK]", "My boss won't like this one... The Decider's take: \"{V}\" 🤫 What's your verdict? [LINK]", "Is it just me, or are most meetings emails? The Decider agrees: \"{V}\" ✅ [LINK]", "Productivity level up! The Meeting Decider's wisdom: \"{V}\" 🚀 [LINK]", "This tool is pure gold for calendar sanity. My result: \"{V}\" ✨ [LINK]", "The Meeting Decider: 1, Pointless Meetings: 0. It said: \"{V}\" 🤺 [LINK]", "To meet or not to meet? The Decider decreed: \"{V}\" 📜 [LINK]", "Sent from my AI overlord (The Meeting Decider): \"{V}\" 🤖 [LINK]", "My new favorite office tool just spat out: \"{V}\" 💯 [LINK]", "Need a laugh AND a productivity boost? \"{V}\" says The Decider. [LINK]", "Avoiding another soul-crushing meeting thanks to: \"{V}\" – The Meeting Decider [LINK]", "The Decider doesn't pull punches! Got this for my meeting idea: \"{V}\" 🥊 [LINK]", "If you value your time, consult The Meeting Decider. Mine said: \"{V}\" ⏳ [LINK]", "This is the energy I'm taking into all meeting planning now, thanks to The Decider: \"{V}\" 💅 [LINK]", "Behold! The Meeting Decider's judgment on my proposed gathering: \"{V}\" You gotta try this! [LINK]", "My calendar is looking cleaner already. The Meeting Decider advised: \"{V}\" What about yours? [LINK]", "Just consulted the digital sage of scheduling. Verdict for my meeting: \"{V}\" Try it: [LINK]", "This. Is. Hilarious. And surprisingly accurate. The Meeting Decider on my meeting: \"{V}\" 😂 [LINK]", "I ran my meeting idea through The Meeting Decider, and it didn't hold back: \"{V}\" 🤣 [LINK]", "My spirit animal is The Meeting Decider. Its latest wisdom for me: \"{V}\" Find yours: [LINK]", "You NEED this in your life. The Meeting Decider's thoughts on my meeting: \"{V}\" What about yours? [LINK]", "The truth hurts... hilariously. My meeting according to The Decider: \"{V}\" 🎯 [LINK]", "I'm not saying The Meeting Decider is always right, but... it said: \"{V}\" And it's not wrong. [LINK]", "Calendar chaos averted! The Meeting Decider's sage advice: \"{V}\" How about your meetings? [LINK]",
         "The Meeting Decider whispered sweet nothings to my calendar: \"{V}\" [LINK]", "Is your meeting a unicorn or just a donkey in a party hat? The Decider knows: \"{V}\" [LINK]", "I put my meeting through the Decider-Tron 3000. Output: \"{V}\" Science! [LINK]", "Let's be real, The Meeting Decider is just saying what we're all thinking: \"{V}\" [LINK]", "My therapist told me to use The Meeting Decider. It said: \"{V}\" Feeling better already. [LINK]", "This tool just gave my meeting a reality check: \"{V}\" Ouch. But fair. [LINK]", "If meetings had Yelp reviews, The Decider's would be the most honest: \"{V}\" [LINK]", "The Meeting Decider: because ain't nobody got time for that (meeting). Mine was: \"{V}\" [LINK]", "Summoning the spirit of productivity via The Meeting Decider! It chanted: \"{V}\" [LINK]", "What would The Meeting Decider do? WWTMDP? For me, it was: \"{V}\" [LINK]", "My meeting's fate, as foretold by The Meeting Decider: \"{V}\" Spooky accurate! [LINK]", "Just got ROASTED by The Meeting Decider: \"{V}\" 😂 So good. [LINK]", "The Meeting Decider is my new co-pilot for scheduling. Its advice: \"{V}\" [LINK]", "Forget horoscopes, what does The Meeting Decider say about your day? Mine: \"{V}\" [LINK]", "This isn't just a tool, it's a public service. The Meeting Decider: \"{V}\" [LINK]", "I'm starting a petition to make The Meeting Decider mandatory. My latest ruling: \"{V}\" [LINK]", "The Meeting Decider has more wisdom than most middle managers. \"{V}\" [LINK]", "Pretty sure The Meeting Decider runs on sarcasm and caffeine. Its take on my meeting: \"{V}\" [LINK]", "My meeting just got Decider-ed! Result: \"{V}\" I'm not crying, you are. [LINK]", "If you're not using The Meeting Decider, you're doing it wrong. My verdict: \"{V}\" [LINK]",
         "The Decider has achieved sentience and its first decree is: \"{V}\" Obey! [LINK]", "My crystal ball (aka The Meeting Decider) shows: \"{V}\" Time to rethink! [LINK]", "Just asked the Meeting Decider if my meeting could be an email. It screamed: \"{V}\" Got it. [LINK]", "Is your meeting vital or just a vibe? The Decider knows: \"{V}\" Check it out! [LINK]", "The Meeting Decider: fighting meeting fatigue one verdict at a time. Mine: \"{V}\" [LINK]"
-    ]; // Count: 55
+    );
 
     if (shareVerdictBtn) {
         shareVerdictBtn.addEventListener('click', async () => {
