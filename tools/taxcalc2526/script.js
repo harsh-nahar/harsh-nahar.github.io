@@ -74,14 +74,13 @@
       prev = s.up;
     });
 
-    // old-regime 87A rebate
-    if (regime==='old') {
-      if (income <= 500000) {
-        tax = 0;
-      } else {
-        tax = Math.max(0, tax - 12500);
-      }
-    }
+// old-regime 87A rebate
+if (regime === 'old') {
+  if (taxable <= 500000) {   // use net taxable income here
+    tax = 0;
+  }
+  // otherwise leave `tax` as calculated from the slabs
+}
 
     // surcharge on slab-tax
     let surcharge = 0, rate = 0;
