@@ -3,25 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Meeting Decider - harshnahar.com</title>
-    <!-- Google Fonts: Cormorant Garamond (for H1) and Inter (for body text) -->
+    
+    <!-- Primary Meta Tags for SEO & Link Previews -->
+    <title>The Meeting Decider - Is Your Meeting Worth It?</title>
+
+    <!-- Open Graph Meta Tags (Facebook, LinkedIn, WhatsApp, etc.) -->
+    <meta property="og:title" content="The Meeting Decider | Should This Meeting Be An Email?" />
+    <meta property="og:description" content="A fun, witty tool to determine if your meeting is truly necessary or just another calendar clogger. Get your verdict now!" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://harshnahar.com/tools/meeting-decider/" />
+    <meta property="og:image" content="https://harshnahar.com/tools/meeting-decider/assets/market-decider-preview.webp" />
+    <meta property="og:image:alt" content="Preview image for The Meeting Decider tool showing a question mark over a calendar" />
+    <meta property="og:image:width" content="1536" />
+    <meta property="og:image:height" content="1024" />
+    <meta property="og:site_name" content="harshnahar.com" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The Meeting Decider | Is This Meeting Just an Email in Disguise?" />
+    <meta name="twitter:description" content="Use this hilarious tool to get a verdict on your next meeting. Save time, save sanity! #MeetingOptimizer" />
+    <meta name="twitter:image" content="https://harshnahar.com/tools/meeting-decider/assets/market-decider-preview.webp" />
+    <meta name="twitter:image:alt" content="Preview image for The Meeting Decider - a tool to evaluate meetings" />
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="styles.css">
-    <!-- Canvas Confetti Library (for celebrations!) -->
+    <!-- Canvas Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 </head>
 <body>
     <div class="decider-app-container">
         <header class="app-header">
             <h1>The Meeting Decider</h1>
-            <p class="subtitle">will determine your meeting's destiny.</p>
+            <p class="subtitle">Let this trusty tool (and a dash of wit) determine your meeting's destiny.</p>
         </header>
 
         <main class="decider-form">
-            <!-- Grid for form inputs -->
             <div class="form-grid">
-                <!-- Number of Attendees -->
                 <div class="form-group">
                     <label for="attendees">Number of Attendees?</label>
                     <div class="number-input-group">
@@ -31,7 +50,6 @@
                     </div>
                 </div>
 
-                <!-- Meeting Duration -->
                 <div class="form-group">
                     <label for="duration">Meeting Duration?</label>
                     <select id="duration" class="select-field">
@@ -44,17 +62,17 @@
                     </select>
                 </div>
 
-                <!-- Clear Agenda Toggle -->
                 <div class="form-group full-width">
                     <label>Is there a CLEAR Agenda?</label>
-                    <div class="toggle-group" id="agendaToggle">
+                    <!-- ID for JS to target this specific toggle group -->
+                    <div class="toggle-group" id="agendaToggle"> 
                         <button type="button" data-value="yes" class="toggle-btn active">Yes, Crystal Clear!</button>
                         <button type="button" data-value="no" class="toggle-btn">No, We'll Wing It</button>
-                        <input type="hidden" id="agenda" value="yes">
+                        <!-- ID for JS to target this hidden input -->
+                        <input type="hidden" id="agenda" value="yes"> 
                     </div>
                 </div>
                 
-                <!-- Primary Purpose Dropdown -->
                 <div class="form-group full-width">
                     <label for="purpose">Primary Purpose?</label>
                     <select id="purpose" class="select-field">
@@ -70,17 +88,17 @@
                     </select>
                 </div>
 
-                <!-- Free Snacks Toggle -->
                 <div class="form-group">
                     <label>Will there be FREE SNACKS?</label>
-                    <div class="toggle-group" id="snacksToggle">
+                    <!-- ID for JS to target this specific toggle group -->
+                    <div class="toggle-group" id="snacksToggle"> 
                         <button type="button" data-value="yes" class="toggle-btn">Oh Yes! (The Good Kind)</button>
                         <button type="button" data-value="no" class="toggle-btn active">Sadly, No</button>
-                        <input type="hidden" id="snacks" value="no">
+                        <!-- ID for JS to target this hidden input -->
+                        <input type="hidden" id="snacks" value="no"> 
                     </div>
                 </div>
 
-                <!-- Desperation Level Slider -->
                 <div class="form-group">
                     <label for="desperation">Your Desperation Level for this Meeting?</label>
                     <div class="desperation-group">
@@ -91,16 +109,13 @@
                 </div>
             </div>
 
-            <!-- Boss Override Checkbox -->
             <div class="form-group boss-override-group">
                 <input type="checkbox" id="bossOverride" class="checkbox-field">
                 <label for="bossOverride">Is your boss making you schedule this regardless of the Decider's wisdom?</label>
             </div>
 
-            <!-- Main Action Button -->
             <button id="consultDecider" class="cta-button">Ask the Decider</button>
 
-            <!-- Verdict Display Area -->
             <div id="deciderVerdict" class="verdict-container" style="display:none;">
                 <p class="verdict-thinking">The Decider is deliberating...</p>
                 <p class="verdict-result"></p>
@@ -113,7 +128,6 @@
             <a href="/" class="back-link">← Back to Homepage</a>
         </footer>
     </div>
-    <!-- Main JavaScript File -->
     <script src="script.js"></script>
 </body>
 </html>
