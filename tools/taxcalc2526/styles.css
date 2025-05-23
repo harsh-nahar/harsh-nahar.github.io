@@ -92,6 +92,26 @@ input:focus {
   color: #fff;
 }
 
+/* Default primary look */
+.actions button#calculate {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+/* Hover for primary */
+.actions button#calculate:hover:not(:disabled) {
+  filter: brightness(0.9);
+}
+
+/* Disabled primary */
+.actions button#calculate:disabled {
+  background: var(--accent);
+  color: #fff;
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: var(--accent);
+}
+
 /* Summary & Breakdown */
 .summary, .breakdown {
   margin-top:1.5rem; background:#fff; padding:1rem;
