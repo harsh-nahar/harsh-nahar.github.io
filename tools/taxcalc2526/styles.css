@@ -91,13 +91,6 @@ input:focus {
   background: var(--accent);
   color: #fff;
 }
-.icon-btn {
-  width: 36px;
-  padding: 0;
-  border: 1px solid var(--text);
-  background: #fff;
-}
-.icon-btn img { width:100%; display:block; }
 
 /* Summary & Breakdown */
 .summary, .breakdown {
