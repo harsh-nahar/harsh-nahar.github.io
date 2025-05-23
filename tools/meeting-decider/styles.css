@@ -1,0 +1,323 @@
+/* Basic Resets & Font Imports */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* Apple system fonts first, then Inter, then generic sans-serif */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    background-color: #f4f6f8; /* Quiet Modern: Body background */
+    color: #333; /* Default text color */
+    line-height: 1.6; /* Standard line height for readability */
+    padding: 1rem; /* Padding around the content */
+    display: flex; /* For centering the app container */
+    justify-content: center;
+    align-items: flex-start; /* Align to top if content is long */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+}
+
+.decider-app-container {
+    background-color: #fff; /* Quiet Modern: App card white */
+    padding: 2rem; /* Internal padding for the app card */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07); /* Quiet Modern: Softer shadow */
+    max-width: 700px; /* Max width for responsiveness */
+    width: 100%; /* Ensure it uses available width up to max-width */
+}
+
+/* Header Styles */
+.app-header {
+    text-align: center;
+    margin-bottom: 2rem; /* Space below header */
+}
+.app-header h1 {
+    font-family: 'Cormorant Garamond', serif; /* Serif for main title only */
+    font-size: 2.5rem; /* Large title font */
+    color: #2c3e50; /* Dark, sophisticated blue-grey */
+    margin-bottom: 0.5rem;
+}
+.app-header .subtitle {
+    font-size: 1rem;
+    color: #6c757d; /* Muted grey for subtitle */
+}
+
+/* Form Styling */
+.decider-form .form-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Default to single column for mobile */
+    gap: 1.5rem; /* Space between form elements */
+    margin-bottom: 2rem;
+}
+
+/* Two columns layout for wider screens */
+@media (min-width: 600px) {
+    .decider-form .form-grid {
+        grid-template-columns: 1fr 1fr; 
+    }
+    .form-group.full-width {
+        grid-column: 1 / -1; /* Element spans full width of the grid */
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column; /* Stack label and input vertically */
+}
+.form-group label { /* Applied to standard labels */
+    font-weight: 600; /* Bold labels */
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #34495e; /* Darker blue-grey for labels */
+}
+
+/* Input Fields (text, number, select) */
+.input-field,
+.select-field {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db; /* Quiet Modern: Lighter border */
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit; /* Inherit from body's font stack (Inter/System) */
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: #fff; 
+}
+.input-field:focus,
+.select-field:focus {
+    outline: none;
+    border-color: #4A90E2; /* New Subtle Blue Accent */
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2); /* Focus glow with accent color */
+}
+
+/* Number Input with Stepper Buttons */
+.number-input-group {
+    display: flex;
+    align-items: center;
+}
+.number-input-group .input-field {
+    text-align: center; /* Center align number in input */
+    flex-grow: 1; /* Allow input to take available space */
+    border-left: none; /* Remove borders to merge with buttons */
+    border-right: none;
+    border-radius: 0; /* Remove individual radius */
+}
+.stepper-btn {
+    padding: 0.75rem 0.8rem; 
+    background-color: #f0f0f0; /* Light grey background */
+    border: 1px solid #d1d5db; 
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1; /* Ensure text is centered vertically */
+    color: #333;
+    transition: background-color 0.2s;
+}
+.stepper-btn:hover {
+    background-color: #e7e7e7; /* Darker on hover */
+}
+.stepper-btn.minus { /* Left button rounded corners */
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+.stepper-btn.plus { /* Right button rounded corners */
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+/* Toggle Buttons (Yes/No style) */
+.toggle-group {
+    display: flex;
+    border-radius: 6px;
+    overflow: hidden; /* To make border-radius work with child borders */
+    border: 1px solid #d1d5db; 
+}
+.toggle-btn {
+    flex: 1; /* Each button takes equal space */
+    padding: 0.75rem;
+    background-color: #fff;
+    border: none; /* Handled by parent border and sibling border-right */
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: background-color 0.2s, color 0.2s;
+    color: #555; /* Default text color for inactive button */
+}
+.toggle-btn:not(:last-child) { /* Border between buttons */
+    border-right: 1px solid #d1d5db; 
+}
+.toggle-btn.active { /* Active state styling */
+    background-color: #4A90E2; 
+    color: #fff;
+    font-weight: 600;
+}
+.toggle-btn:hover:not(.active) { /* Hover for inactive buttons */
+    background-color: #f9f9f9;
+}
+
+/* Desperation Level Slider */
+.desperation-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* Space between labels and slider */
+}
+.desperation-label {
+    font-size: 0.8rem;
+    color: #6c757d; /* Muted text color */
+    font-family: inherit;
+}
+.slider-field {
+    flex-grow: 1;
+    cursor: pointer;
+    accent-color: #4A90E2; /* Styles the track/thumb for modern browsers */
+}
+
+/* Boss Override Checkbox Group */
+.boss-override-group {
+    display: flex;
+    align-items: center; 
+    gap: 0.5rem; /* Space between checkbox and label */
+    margin-top: -0.5rem; /* Adjust vertical spacing */
+    margin-bottom: 1.5rem;
+}
+.boss-override-group label { /* Specific label for checkbox inline */
+    font-weight: normal; /* Less emphasis than main labels */
+    font-size: 0.9rem;
+    margin-bottom: 0; /* Override default margin */
+    cursor: pointer;
+    color: #34495e;
+    font-family: inherit;
+    line-height: 1.2; /* Prevent wrapping issues */
+}
+.checkbox-field {
+    margin-right: 0; 
+    width: 18px;
+    height: 18px;
+    accent-color: #4A90E2; 
+    cursor: pointer;
+    flex-shrink: 0; /* Prevent checkbox from shrinking on small screens */
+}
+
+/* Main Call-to-Action Button */
+.cta-button {
+    display: block;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background-color: #4A90E2; 
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    margin-bottom: 2rem;
+}
+.cta-button:hover {
+    background-color: #357ABD; /* Darker shade on hover */
+}
+.cta-button:active { /* Slight press effect */
+    transform: translateY(1px);
+}
+
+/* Verdict Display Area */
+.verdict-container {
+    background-color: #f9fafb; /* Default background */
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e0e0e5;
+    text-align: center;
+    transition: background-color 0.3s ease-in-out; /* Smooth BG transition */
+}
+/* Verdict Background Colors - Applied by JS */
+.verdict-bg-email { background-color: #eef3f7; } /* Very light blue/grey for email */
+.verdict-bg-borderline { background-color: #fdf8e6; } /* Very light yellow for borderline */
+.verdict-bg-meeting { background-color: #e6f4e9; } /* Very light green for meeting */
+.verdict-bg-special { background-color: #fdecef; } /* Light pink for boss/special cases */
+
+.verdict-thinking { /* "Thinking" text with typing animation */
+    font-style: italic;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+    font-family: inherit;
+    min-height: 1.2em; /* Reserve space for typing animation cursor */
+}
+.verdict-thinking::after { /* Blinking cursor for typing animation */
+    content: '_'; 
+    animation: blink-caret 0.75s step-end infinite;
+}
+@keyframes blink-caret { /* Cursor blink animation */
+    from, to { opacity: 0 }
+    50% { opacity: 1 }
+}
+
+.verdict-result { /* Final verdict text */
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    min-height: 40px; /* Prevent layout shift */
+    opacity: 0; /* Initially hidden for fade-in */
+    transition: opacity 0.5s ease-in-out; /* Fade-in animation */
+    font-family: inherit;
+    margin-bottom: 1rem; /* Space before share button */
+}
+.verdict-result.fade-in-verdict { /* Class to trigger fade-in */
+    opacity: 1;
+}
+
+/* Share Button Styling */
+.share-button {
+    background-color: #fff; /* White background, accent border */
+    color: #4A90E2;
+    border: 1px solid #4A90E2;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    margin-top: 0.5rem; 
+}
+.share-button:hover { /* Invert colors on hover */
+    background-color: #4A90E2;
+    color: #fff;
+}
+.share-button:focus-visible { /* Specific focus for share button */
+    outline: 2px solid #357ABD; /* Darker accent */
+    outline-offset: 1px;
+}
+
+/* Footer Styles */
+.app-footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e5; /* Separator line */
+}
+.ai-attribution {
+    font-size: 0.8rem;
+    color: #95a5a6; /* Very muted grey */
+    margin-bottom: 0.75rem;
+    font-family: inherit;
+}
+.back-link {
+    color: #4A90E2; 
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-family: inherit;
+}
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* Accessibility: General Focus Visible Styling */
+:focus-visible {
+  outline: 2px solid #4A90E2; 
+  outline-offset: 2px;
+}
+/* Specific focus for some interactive elements if different style needed */
+.stepper-btn:focus-visible,
+.toggle-btn:focus-visible,
+.cta-button:focus-visible {
+  outline: 2px solid #2c3e50; /* Darker, distinct focus for buttons */
+}
