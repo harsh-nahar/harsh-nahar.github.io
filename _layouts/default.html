@@ -3,21 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
+
+  <title>
+    {% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}
+  </title>
+
   <!-- Social Preview Meta Tags -->
   <meta property="og:site_name" content="{{ site.title }}" />
-  <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}" />
+  <meta property="og:type"
+        content="{% if page.layout == 'post' %}article{% else %}website{% endif %}" />
   <meta property="og:url" content="{{ page.url | absolute_url }}" />
-  <meta property="og:title" content="{% if page.title %}{{ page.title }} — {{ site.title }}{% else %}{{ site.title }}{% endif %}" />
-  <meta property="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | truncate: 160 }}{% else %}{{ site.description | default: 'Personal blog and portfolio of Harsh Nahar.' }}{% endif %}" />
-  <!-- If you have post images: -->
-  <meta property="og:image" content="{% if page.image %}{{ page.image | absolute_url }}{% else %}{{ '/assets/default-share.png' | absolute_url }}{% endif %}" />
+  <meta property="og:title"
+        content="{% if page.title %}{{ page.title }} — {{ site.title }}{% else %}{{ site.title }}{% endif %}" />
+  <meta property="og:description"
+        content="{% if page.excerpt %}{{ page.excerpt | strip_html | truncate: 160 }}{% else %}{{ site.description | default: 'Personal blog and portfolio of Harsh Nahar.' }}{% endif %}" />
+
+  <!-- Page-specific or default share image -->
+  {% if page.layout == 'home' or page.layout == 'blog' %}
+    <!-- Home & Blog List share image -->
+    <meta property="og:image"
+          content="https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blog-images/harsh-home.jpg" />
+    <meta name="twitter:image"
+          content="https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blog-images/harsh-home.jpg" />
+  {% elsif page.layout == 'post' and page.image %}
+    <!-- Individual post share image -->
+    <meta property="og:image" content="{{ page.image | absolute_url }}" />
+    <meta name="twitter:image" content="{{ page.image | absolute_url }}" />
+  {% else %}
+    <!-- Fallback image for all other pages -->
+    <meta property="og:image" content="{{ '/assets/default-share.png' | absolute_url }}" />
+    <meta name="twitter:image" content="{{ '/assets/default-share.png' | absolute_url }}" />
+  {% endif %}
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@hrsvnr" />
-  <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}" />
-  <meta name="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | truncate: 160 }}{% else %}{{ site.description | default: 'Personal blog and portfolio of Harsh Nahar.' }}{% endif %}" />
-  <meta name="twitter:image" content="{% if page.image %}{{ page.image | absolute_url }}{% else %}{{ '/assets/default-share.png' | absolute_url }}{% endif %}" />
+  <meta name="twitter:title"
+        content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}" />
+  <meta name="twitter:description"
+        content="{% if page.excerpt %}{{ page.excerpt | strip_html | truncate: 160 }}{% else %}{{ site.description | default: 'Personal blog and portfolio of Harsh Nahar.' }}{% endif %}" />
+
   <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}">
 </head>
 <body class="fade-in {{ page.layout }}-page">
