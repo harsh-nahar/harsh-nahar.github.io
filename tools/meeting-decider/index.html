@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Meeting Decider - harshnahar.com</title>
+    <!-- Google Fonts: Cormorant Garamond (for H1) and Inter (for body text) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Canvas Confetti Library (for celebrations!) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div class="decider-app-container">
+        <header class="app-header">
+            <h1>The Meeting Decider</h1>
+            <p class="subtitle">will determine your meeting's destiny.</p>
+        </header>
+
+        <main class="decider-form">
+            <!-- Grid for form inputs -->
+            <div class="form-grid">
+                <!-- Number of Attendees -->
+                <div class="form-group">
+                    <label for="attendees">Number of Attendees?</label>
+                    <div class="number-input-group">
+                        <button type="button" class="stepper-btn minus" aria-label="Decrease attendees">-</button>
+                        <input type="number" id="attendees" min="1" value="3" class="input-field" inputmode="numeric" pattern="[0-9]*">
+                        <button type="button" class="stepper-btn plus" aria-label="Increase attendees">+</button>
+                    </div>
+                </div>
+
+                <!-- Meeting Duration -->
+                <div class="form-group">
+                    <label for="duration">Meeting Duration?</label>
+                    <select id="duration" class="select-field">
+                        <option value="15">15 minutes</option>
+                        <option value="30" selected>30 minutes</option>
+                        <option value="45">45 minutes</option>
+                        <option value="60">60 minutes (1 hour)</option>
+                        <option value="90">90 minutes</option>
+                        <option value="120">120 minutes (2 hours)</option>
+                    </select>
+                </div>
+
+                <!-- Clear Agenda Toggle -->
+                <div class="form-group full-width">
+                    <label>Is there a CLEAR Agenda?</label>
+                    <div class="toggle-group" id="agendaToggle">
+                        <button type="button" data-value="yes" class="toggle-btn active">Yes, Crystal Clear!</button>
+                        <button type="button" data-value="no" class="toggle-btn">No, We'll Wing It</button>
+                        <input type="hidden" id="agenda" value="yes">
+                    </div>
+                </div>
+                
+                <!-- Primary Purpose Dropdown -->
+                <div class="form-group full-width">
+                    <label for="purpose">Primary Purpose?</label>
+                    <select id="purpose" class="select-field">
+                        <option value="decision">Critical Decision (Needs Discussion)</option>
+                        <option value="brainstorm">Brainstorming / Creative Work</option>
+                        <option value="feedback">Constructive Feedback Session</option>
+                        <option value="onboarding">Onboarding / Training (Interactive)</option>
+                        <option value="info-share">Information Sharing (One-Way)</option>
+                        <option value="sync">"Quick Sync" / Status Update</option>
+                        <option value="social">Team Bonding / Social Gathering</option>
+                        <option value="boss-purpose">My Boss Demands It</option>
+                        <option value="idk">Honestly, I Don't Know</option>
+                    </select>
+                </div>
+
+                <!-- Free Snacks Toggle -->
+                <div class="form-group">
+                    <label>Will there be FREE SNACKS?</label>
+                    <div class="toggle-group" id="snacksToggle">
+                        <button type="button" data-value="yes" class="toggle-btn">Oh Yes! (The Good Kind)</button>
+                        <button type="button" data-value="no" class="toggle-btn active">Sadly, No</button>
+                        <input type="hidden" id="snacks" value="no">
+                    </div>
+                </div>
+
+                <!-- Desperation Level Slider -->
+                <div class="form-group">
+                    <label for="desperation">Your Desperation Level for this Meeting?</label>
+                    <div class="desperation-group">
+                        <span class="desperation-label">Zen</span>
+                        <input type="range" id="desperation" min="0" max="10" value="3" class="slider-field">
+                        <span class="desperation-label">MAXIMUM OVERDRIVE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Boss Override Checkbox -->
+            <div class="form-group boss-override-group">
+                <input type="checkbox" id="bossOverride" class="checkbox-field">
+                <label for="bossOverride">Is your boss making you schedule this regardless of the Decider's wisdom?</label>
+            </div>
+
+            <!-- Main Action Button -->
+            <button id="consultDecider" class="cta-button">Ask the Decider</button>
+
+            <!-- Verdict Display Area -->
+            <div id="deciderVerdict" class="verdict-container" style="display:none;">
+                <p class="verdict-thinking">The Decider is deliberating...</p>
+                <p class="verdict-result"></p>
+                <button id="shareVerdictBtn" class="share-button" style="display:none;">Share this Verdict!</button>
+            </div>
+        </main>
+        
+        <footer class="app-footer">
+            <p class="ai-attribution">This tool was creatively sculpted with AI assistance.</p>
+            <a href="/" class="back-link">← Back to Homepage</a>
+        </footer>
+    </div>
+    <!-- Main JavaScript File -->
+    <script src="script.js"></script>
+</body>
+</html>
