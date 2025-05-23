@@ -321,3 +321,13 @@ body {
 .cta-button:focus-visible {
   outline: 2px solid #2c3e50; /* Darker, distinct focus for buttons */
 }
+/* Screen Shake Animation */
+@keyframes screenShake {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px) rotate(-0.5deg); }
+  20%, 40%, 60%, 80% { transform: translateX(2px) rotate(0.5deg); }
+}
+
+.shake-it { /* Class to apply to decider-app-container */
+  animation: screenShake 0.3s cubic-bezier(.36,.07,.19,.97) both;
+}
