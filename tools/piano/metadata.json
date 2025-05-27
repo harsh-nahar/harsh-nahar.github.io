@@ -1,5 +1,0 @@
-{
-  "name": "Digital Piano",
-  "description": "An interactive digital piano that allows users to play notes using their mouse or keyboard. Features customizable waveform, volume, octave, key labels, and a dark mode.",
-  "requestFramePermissions": []
-}
