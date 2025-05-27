@@ -1,0 +1,353 @@
+:root {
+    --bg-color: #f0f2f5;
+    --text-color: #1c1e21;
+    --primary-color: #007bff;
+    --primary-hover-color: #0056b3;
+    --control-bg: #ffffff;
+    --control-border: #d1d5db;
+    --control-active-bg: #e9ecef;
+    
+    --key-white-bg: #ffffff;
+    --key-white-border: #c5c5c5;
+    --key-white-text: #555;
+    --key-white-active-bg: #e0e0e0;
+    --key-white-active-border: #b0b0b0;
+    --key-white-hover-bg: #f7f7f7;
+
+    --key-black-bg: #2c3e50;
+    --key-black-border: #1e2b37;
+    --key-black-text: #f0f0f0;
+    --key-black-active-bg: #415465;
+    --key-black-active-border: #2c3e50;
+    --key-black-hover-bg: #384a5c;
+
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --piano-corner-radius: 8px;
+    
+    --oscilloscope-grid-color: rgba(137, 196, 244, 0.25); 
+    --oscilloscope-line-color: rgba(137, 196, 244, 0.50); 
+}
+
+.dark-mode {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --primary-color: #3b82f6;
+    --primary-hover-color: #2563eb;
+    --control-bg: #1e1e1e;
+    --control-border: #333333;
+    --control-active-bg: #2a2a2a;
+
+    --key-white-bg: #4a4a4a;
+    --key-white-border: #383838;
+    --key-white-text: #d0d0d0;
+    --key-white-active-bg: #5c5c5c;
+    --key-white-active-border: #484848;
+    --key-white-hover-bg: #525252;
+
+    --key-black-bg: #1c1e21;
+    --key-black-border: #101113;
+    --key-black-text: #c7c7c7;
+    --key-black-active-bg: #303338;
+    --key-black-active-border: #1c1e21;
+    --key-black-hover-bg: #282b2e;
+    
+    --shadow-color: rgba(0, 0, 0, 0.25);
+
+    --oscilloscope-grid-color: rgba(255, 255, 255, 0.15); 
+    --oscilloscope-line-color: var(--text-color); 
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: background-color 0.3s, color 0.3s;
+}
+.app-container {
+    background-color: var(--control-bg);
+    padding: 25px 35px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px var(--shadow-color);
+    width: 100%;
+    max-width: 850px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+header {
+    position: relative;
+    margin-bottom: 5px;
+}
+h1 {
+    font-size: 2.2em;
+    font-weight: 600;
+    margin: 0 auto 8px auto;
+    padding: 8px 0;
+    color: var(--text-color);
+}
+.subtitle {
+    font-size: 0.95em;
+    color: var(--text-color);
+    opacity: 0.7;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+#darkModeToggle {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    transition: background-color 0.2s, border-color 0.2s;
+}
+#darkModeToggle:hover {
+    background-color: var(--control-active-bg);
+    border-color: var(--control-border);
+}
+#darkModeToggle svg { width: 22px; height: 22px; }
+.sun-icon { display: block; } 
+.moon-icon { display: none; }
+.dark-mode .sun-icon { display: none; }
+.dark-mode .moon-icon { display: block; } 
+
+/* General button focus style - will apply to control buttons too */
+button:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--control-bg), 0 0 0 4px var(--primary-color);
+}
+/* Removed specific focus styles for .button-group button as the general one should work better now */
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px 20px; 
+    margin-bottom: 25px; 
+    text-align: left;
+}
+.control-group { display: flex; flex-direction: column; gap: 8px; } 
+.control-label {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+/* --- Redesigned Button Group Styling --- */
+.button-group {
+    display: flex;
+    gap: 8px; /* Spacing between individual buttons */
+    /* Removed: border-radius, overflow: hidden, border */
+}
+
+.button-group button {
+    padding: 10px; 
+    font-size: 0.9em;
+    background-color: var(--control-bg); 
+    color: var(--text-color);
+    border: 1px solid var(--control-border); /* Individual button border */
+    border-radius: 6px; /* Rounded corners for individual buttons */
+    cursor: pointer; 
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    gap: 6px; 
+    text-align: center;
+    /* Removed: border-left, :first-child { border-left: none; } */
+}
+
+.button-group button:hover { 
+    background-color: var(--control-active-bg);
+    border-color: var(--primary-color); /* Highlight border on hover */
+}
+
+.button-group button.active {
+    background-color: var(--primary-color); 
+    color: white;
+    font-weight: 500; 
+    border-color: var(--primary-color); 
+}
+.button-group button.active svg { /* Ensure SVGs in active buttons are white */
+    color: white; 
+}
+
+.button-group button.active:hover { 
+    background-color: var(--primary-hover-color);
+    border-color: var(--primary-hover-color);
+}
+
+.toggle-button.active { /* For Reverb button specifically, if it needs distinct active state */
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+/* --- End Redesigned Button Group Styling --- */
+
+
+/* --- Button Group Sizing Refinements (Mostly Unchanged, applies to new button style) --- */
+.waveform-buttons.button-group {
+    flex-wrap: wrap; /* Essential for wrapping */
+}
+.waveform-buttons.button-group button {
+    flex: 1 1 auto; /* Grow and shrink as needed, basis is auto (content) */
+    min-width: 80px; /* Ensure there's enough space for icon + text */
+}
+
+.octave-buttons.button-group button,
+.keylabel-buttons.button-group button {
+    flex-grow: 1;
+    flex-basis: 0; /* Start from 0 before distributing space equally */
+}
+
+.reverb-control-group .button-group button {
+    /* This button is usually alone in its group */
+    min-width: auto; 
+    flex-grow: 0; /* Don't grow beyond content + padding */
+    flex-basis: auto;  /* Size based on content */
+    padding: 10px 20px; /* More padding for a single button */
+}
+/* --- End Button Group Sizing Refinements --- */
+
+
+.visualizer-wrapper {
+    height: 80px; 
+    margin-bottom: 25px; 
+    border-radius: 8px; 
+    box-sizing: border-box;
+    overflow: hidden; 
+    
+    max-width: 50%; 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.visualizer-container { 
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.3s ease-in-out; 
+}
+
+#oscilloscope {
+    display: block; 
+    width: 100%;
+    height: 100%;
+}
+
+.piano-container {
+    display: flex; justify-content: center; align-items: flex-start;
+    margin-bottom: 25px; padding: 15px;
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    box-shadow: inset 0 3px 6px var(--shadow-color);
+    overflow-x: auto;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    min-height: calc(220px + 30px); 
+    text-align: left;
+}
+.piano {
+    display: flex; position: relative;
+    height: 220px; user-select: none;
+    border-radius: var(--piano-corner-radius);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.key {
+    display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+    box-sizing: border-box; cursor: pointer;
+    transition: background-color 0.05s, border-color 0.05s, transform 0.05s ease-out;
+    font-size: 0.95em; font-weight: 500; padding-bottom: 12px;
+}
+.key.white {
+    background-color: var(--key-white-bg); color: var(--key-white-text);
+    height: 100%; border: 1px solid var(--key-white-border); border-top-width: 2px;
+    border-radius: 0 0 5px 5px; z-index: 1; margin-right: -1px;
+}
+.key.white:hover { background-color: var(--key-white-hover-bg); }
+.piano > .key.white:first-child {
+    border-top-left-radius: var(--piano-corner-radius);
+    border-bottom-left-radius: var(--piano-corner-radius);
+    margin-left: 1px; 
+}
+.piano > .key.white:last-child {
+    border-top-right-radius: var(--piano-corner-radius);
+    border-bottom-right-radius: var(--piano-corner-radius);
+    margin-right: 1px; 
+}
+.key.white.active {
+    background-color: var(--key-white-active-bg); border-color: var(--key-white-active-border);
+    border-bottom-color: var(--key-white-bg);
+    transform: translateY(2px); 
+}
+.key.black {
+    background-color: var(--key-black-bg); color: var(--key-black-text);
+    position: absolute; top: 0; z-index: 2;
+    border: 1px solid var(--key-black-border); border-top-width: 0;
+    border-radius: 0 0 5px 5px;
+    box-shadow: -1px 0 0px rgba(255,255,255,0.1) inset, 0 -2px 3px rgba(0,0,0,0.3) inset, 0 2px 2px rgba(0,0,0,0.2);
+}
+.key.black:hover { background-color: var(--key-black-hover-bg); }
+.key.black.active {
+    background-color: var(--key-black-active-bg); border-color: var(--key-black-active-border);
+    box-shadow: -1px 0 0px rgba(255,255,255,0.05) inset, 0 -1px 1px rgba(0,0,0,0.2) inset, 0 1px 1px rgba(0,0,0,0.1);
+    transform: translateY(1.5px); 
+}
+.status-bar {
+    font-size: 0.85em; color: var(--text-color); opacity: 0.65; text-align: center;
+    padding-top: 15px; border-top: 1px solid var(--control-border); margin-top: 25px;
+    transition: color 0.3s, border-color 0.3s;
+}
+@media (max-width: 768px) {
+    h1 { font-size: 1.9em; padding: 6px 0; }
+    .app-container { padding: 20px 25px; max-width: 95%; }
+    .controls-grid { grid-template-columns: 1fr; gap: 15px; }
+    .piano { height: 200px; }
+    .piano-container { min-height: calc(200px + 30px); }
+    .visualizer-wrapper { 
+        height: 70px; 
+        max-width: 60%; 
+    } 
+    .button-group { gap: 6px; } /* Slightly reduce gap on smaller screens */
+    .button-group button { padding: 8px; font-size: 0.85em; }
+    .waveform-buttons.button-group button { min-width: 70px; }
+}
+@media (max-width: 480px) {
+    body { padding: 10px; }
+    h1 { font-size: 1.6em; padding: 4px 0;}
+    .app-container { padding: 15px; border-radius: 12px; }
+    .subtitle { font-size: 0.85em; margin-bottom: 20px; }
+    
+    .waveform-buttons.button-group button {
+        min-width: 60px; 
+        flex-basis: auto; 
+    }
+    .piano { height: 180px; }
+    .piano-container { min-height: calc(180px + 30px); }
+    .key { font-size: 0.8em; padding-bottom: 8px; }
+    .status-bar { font-size: 0.75em; }
+    #darkModeToggle { padding: 6px; }
+    #darkModeToggle svg { width: 20px; height: 20px;}
+    .visualizer-wrapper { 
+        height: 60px; 
+        max-width: 75%; 
+    } 
+    /* Further reduce button padding and gap for very small screens */
+    .button-group { gap: 5px; }
+    .button-group button { padding: 8px 6px; } /* More horizontal padding reduction */
+    .waveform-buttons.button-group button { min-width: 55px; gap: 4px; }
+    .waveform-buttons.button-group button svg { width: 14px; height: 14px;}
+
+}
