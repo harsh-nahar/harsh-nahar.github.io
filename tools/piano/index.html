@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Piano</title>
+  <style>
+    :root { /* ...variables... */ }
+    [data-theme="dark"] { /* ...dark variables... */ }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { /* ...body styles... */ }
+    .header { /* ... */ }
+    .controls { /* ... */ }
+    .waveform-buttons { /* original pill style from your code */ }
+    .waveform-btn { /* original button style */ }
+    .volume-slider { /* ... */ }
+    .octave-controls { /* ... */ }
+    .visualizer-container {
+      position: absolute;
+      top: 100px; left: 50%; transform: translateX(-50%);
+      width: 80%; max-width: 600px; height: 60px;
+      pointer-events: none;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    canvas { width:100%; height:100%; background:transparent; }
+    .piano-container { padding:20px; margin-bottom:20px; }
+    .piano { /* inline-block, nowrap */ padding:0 10px; }
+    .white-key { width:60px; height:200px; }
+    .black-key { width:36px; height:120px; }
+    @media(max-width:600px) {
+      .white-key { width:45px; height:150px; }
+      .black-key { width:28px; height:90px; }
+      .piano-container { padding:10px; }
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <!-- header & controls unchanged -->
+  <div class="visualizer-container" id="visContainer"><canvas id="visualizer"></canvas></div>
+  <div class="piano-container"><div class="piano" id="piano"></div></div>
+  <!-- status, back-home, ai-note unchanged -->
+  <script>
+    class DigitalPiano {
+      constructor() {
+        this.audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+        this.analyser = this.audioCtx.createAnalyser();
+        this.analyser.fftSize = 2048;
+        this.analyser.connect(this.audioCtx.destination);
+        this.dataArray = new Uint8Array(this.analyser.fftSize);
+        this.canvas = document.getElementById('visualizer');
+        this.ctx = this.canvas.getContext('2d');
+        this.currentWave = 'sine';
+        this.volume = 0.25;
+        this.octave = 0;
+        this.whiteWidth = 60; // fixed
+        this.notes = [ /* note data */ ];
+        this.init();
+      }
+      init() {
+        this.buildKeys();
+        this.bindEvents();
+        this.updateStatus();
+        this.loadTheme();
+        this.drawWaveform();
+      }
+      buildKeys() {
+        const piano = document.getElementById('piano');
+        piano.innerHTML = '';
+        // white keys
+        this.notes.filter(n=>n.type==='white').forEach(n=>{
+          const w=document.createElement('div');
+          w.className='white-key'; w.dataset.freq=n.freq; w.textContent=n.key;
+          piano.appendChild(w);
+        });
+        // black keys
+        this.notes.forEach((n,i)=>{
+          if(n.type==='black'){
+            const whitesBefore = this.notes.slice(0,i).filter(x=>x.type==='white').length;
+            const b=document.createElement('div');
+            b.className='black-key'; b.dataset.freq=n.freq; b.textContent=n.key;
+            b.style.left = `${whitesBefore*this.whiteWidth - (parseInt(getComputedStyle(b).width)/2)}px`;
+            piano.appendChild(b);
+          }
+        });
+      }
+      bindEvents() {
+        // waveform buttons use original style
+        document.querySelectorAll('.waveform-btn').forEach(btn=>btn.onclick=()=>{
+          document.querySelector('.waveform-btn.active').classList.remove('active');
+          btn.classList.add('active');
+          this.currentWave = btn.dataset.wave;
+        });
+        document.getElementById('volume').oninput = e=>{
+          this.volume = e.target.value/100;
+        };
+        document.getElementById('octave-up').onclick = ()=>{
+          this.octave = Math.min(2,this.octave+1);
+          document.getElementById('octave-display').textContent = this.octave;
+        };
+        document.getElementById('octave-down').onclick = ()=>{
+          this.octave = Math.max(-2,this.octave-1);
+          document.getElementById('octave-display').textContent = this.octave;
+        };
+        const playHandlers = ['mousedown','touchstart'];
+        const stopHandlers = ['mouseup','touchend'];
+        playHandlers.forEach(evt=>{
+          document.getElementById('piano').addEventListener(evt,e=>{
+            if(e.target.dataset.freq){
+              this.showVisualizer(true);
+              this.playNote(e.target);
+            }
+          });
+        });
+        stopHandlers.forEach(evt=>{
+          document.getElementById('piano').addEventListener(evt,e=>{
+            if(e.target.dataset.freq){
+              this.stopNote(e.target);
+              this.showVisualizer(false);
+            }
+          });
+        });
+        document.addEventListener('keydown',e=>{
+          const n=this.notes.find(x=>x.key===e.key.toUpperCase());
+          if(n && !e.repeat){
+            const el=[...document.querySelectorAll('.white-key,.black-key')]
+              .find(d=>+d.dataset.freq===n.freq);
+            if(el){ this.showVisualizer(true); this.playNote(el);}          
+          }
+        });
+        document.addEventListener('keyup',e=>{
+          const n=this.notes.find(x=>x.key===e.key.toUpperCase());
+          if(n){
+            const el=[...document.querySelectorAll('.white-key,.black-key')]
+              .find(d=>+d.dataset.freq===n.freq);
+            if(el){ this.stopNote(el); this.showVisualizer(false);}          
+          }
+        });
+        document.getElementById('theme-toggle').onclick = ()=>{
+          const t=document.documentElement.getAttribute('data-theme');
+          const nt=t==='dark'?'light':'dark';
+          document.documentElement.setAttribute('data-theme',nt);
+          document.getElementById('theme-toggle').textContent = nt==='dark'?'☀️':'🌙';
+          localStorage.setItem('piano-theme',nt);
+        };
+      }
+      playNote(el) {
+        const osc = this.audioCtx.createOscillator();
+        const gain = this.audioCtx.createGain();
+        osc.type = this.currentWave;
+        osc.frequency.value = +el.dataset.freq * Math.pow(2,this.octave);
+        gain.gain.value = this.volume;
+        osc.connect(gain);
+        gain.connect(this.analyser);
+        osc.start();
+        el._osc = osc;
+        el.classList.add('active');
+      }
+      stopNote(el) {
+        if(el._osc){ el._osc.stop(); el.classList.remove('active'); }
+      }
+      showVisualizer(on) {
+        document.getElementById('visContainer').style.opacity = on?1:0;
+      }
+      drawWaveform() {
+        const c = this.canvas; c.width = c.offsetWidth; c.height = c.offsetHeight;
+        const ctx = this.ctx;
+        const render = () =>{
+          requestAnimationFrame(render);
+          this.analyser.getByteTimeDomainData(this.dataArray);
+          ctx.clearRect(0,0,c.width,c.height);
+          ctx.beginPath(); ctx.lineWidth=2;
+          ctx.strokeStyle = getComputedStyle(document.documentElement)
+            .getPropertyValue('--accent-color').trim();
+          const slice = c.width/this.dataArray.length;
+          this.dataArray.forEach((v,i)=>{
+            const y = (v/128) * c.height/2;
+            if(i===0) ctx.moveTo(0,y);
+            else ctx.lineTo(i*slice,y);
+          });
+          ctx.stroke();
+        };
+        render();
+      }
+    }
+    window.addEventListener('DOMContentLoaded',()=>new DigitalPiano());
+  </script>
+        <footer class="app-footer">
+            <p class="ai-attribution">This tool was creatively sculpted with AI assistance.</p>
+            <a href="/" class="back-link">← Back to Homepage</a>
+        </footer>
+</body>
+</html>
