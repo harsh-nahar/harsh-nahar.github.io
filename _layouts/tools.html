@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tools — {{ site.title }}</title>
-  <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}" />
+  <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}">
 </head>
 <body class="fade-in tools-page">
   <div class="container blog-container">
@@ -13,11 +13,10 @@
       <a href="{{ '/blog/' | relative_url }}" class="back-home">blog</a>
       <a href="{{ '/tools/' | relative_url }}" class="back-home active">tools</a>
     </div>
-
     <ul class="post-list">
-      {% assign tools = site.pages 
-           | where_exp: "p", "p.path contains 'tools/' and p.path != 'tools/index.md'" 
-           | sort: "title" %}
+      {% assign all = site.pages %}
+      {% assign under_tools = all | where_exp: "p", "p.path contains 'tools/'" %}
+      {% assign tools = under_tools | reject: "url", "/tools/" | sort: "title" %}
       {% for tool in tools %}
         <li>
           <a href="{{ tool.url }}" class="post-link">
