@@ -20,12 +20,12 @@
       " />
     </div>
 
-    <!-- Vertical list of all tools (excludes the index page itself) -->
+    <!-- Build the tools list -->
+    {% assign tools_all = site.pages | where_exp: "p", "p.path contains 'tools/'" %}
+    {% assign tools_list = tools_all | where_exp: "p", "p.url != '/tools/'" | sort: "title" %}
+
     <ul class="post-list">
-      {% assign tools = site.pages
-           | where_exp: "p", "p.path contains 'tools/' and p.path != 'tools/index.md'"
-           | sort: "title" %}
-      {% for tool in tools %}
+      {% for tool in tools_list %}
         <li>
           <a href="{{ tool.url }}" class="post-link">
             <h3>{{ tool.title }}</h3>
