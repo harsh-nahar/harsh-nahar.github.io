@@ -1,39 +1,38 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1">
- <title>Tools — {{ site.title }}</title>
- <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tools — {{ site.title }}</title>
+  <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}" />
 </head>
 <body class="fade-in tools-page">
- <div class="container blog-container">
-   <div class="header-bar">
-     <!-- Back to home only -->
-     <a href="{{ '/' | relative_url }}" class="back-home">&lt; home</a>
-     <!-- Search box on top right -->
-     <input type="search" id="toolSearch" class="search" placeholder="Search tools...">
-   </div>
-   <ul class="post-list">
-     {% assign all = site.pages %}
-     {% assign under_tools = all | where_exp: "p", "p.path contains 'tools/'" %}
-     {% assign tools = under_tools | reject: "url", '/tools/' | sort: "title" %}
-     {% for tool in tools %}
-       <li>
-         <a href="{{ tool.url }}" class="post-link">
-           <h3>{{ tool.title }}</h3>
-         </a>
-       </li>
-     {% endfor %}
-   </ul>
- </div>
- <script>
-   document.getElementById('toolSearch').addEventListener('input', function(e) {
-     const filter = e.target.value.toLowerCase();
-     document.querySelectorAll('.post-list li').forEach(li => {
-       const text = li.textContent.toLowerCase();
-       li.style.display = text.includes(filter) ? '' : 'none';
-     });
-   });
- </script>
+  <div class="container blog-container">
+
+    <!-- Header: just a back-home link and search -->
+    <div class="header-bar">
+      <a href="{{ '/' | relative_url }}" class="back-home">&lt; home</a>
+      <input type="search" placeholder="Search tools…" class="search" onkeyup="
+        var q=this.value.toLowerCase();
+        document.querySelectorAll('.post-list li').forEach(function(li){
+          li.style.display = li.textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+      " />
+    </div>
+
+    <!-- Vertical list of tools (excluding the index itself) -->
+    <ul class="post-list">
+      {% assign tools_all = site.pages | where_exp: "p", "p.path contains 'tools/'" %}
+      {% assign tools = tools_all | reject: "url", "/tools/" | sort: "title" %}
+      {% for tool in tools %}
+        <li>
+          <a href="{{ tool.url }}" class="post-link">
+            <h3>{{ tool.title }}</h3>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+
+  </div>
 </body>
 </html>
