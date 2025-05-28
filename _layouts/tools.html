@@ -1,30 +1,39 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tools — {{ site.title }}</title>
-  <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}">
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Tools — {{ site.title }}</title>
+ <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}">
 </head>
 <body class="fade-in tools-page">
-  <div class="container blog-container">
-    <div class="header-bar">
-      <a href="{{ '/' | relative_url }}" class="back-home">home</a>
-      <a href="{{ '/blog/' | relative_url }}" class="back-home">blog</a>
-      <a href="{{ '/tools/' | relative_url }}" class="back-home active">tools</a>
-    </div>
-    <ul class="post-list">
-      {% assign all = site.pages %}
-      {% assign under_tools = all | where_exp: "p", "p.path contains 'tools/'" %}
-      {% assign tools = under_tools | reject: "url", "/tools/" | sort: "title" %}
-      {% for tool in tools %}
-        <li>
-          <a href="{{ tool.url }}" class="post-link">
-            <h3>{{ tool.title }}</h3>
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
+ <div class="container blog-container">
+   <div class="header-bar">
+     <!-- Back to home only -->
+     <a href="{{ '/' | relative_url }}" class="back-home">&lt; home</a>
+     <!-- Search box on top right -->
+     <input type="search" id="toolSearch" class="search" placeholder="Search tools...">
+   </div>
+   <ul class="post-list">
+     {% assign all = site.pages %}
+     {% assign under_tools = all | where_exp: "p", "p.path contains 'tools/'" %}
+     {% assign tools = under_tools | reject: "url", '/tools/' | sort: "title" %}
+     {% for tool in tools %}
+       <li>
+         <a href="{{ tool.url }}" class="post-link">
+           <h3>{{ tool.title }}</h3>
+         </a>
+       </li>
+     {% endfor %}
+   </ul>
+ </div>
+ <script>
+   document.getElementById('toolSearch').addEventListener('input', function(e) {
+     const filter = e.target.value.toLowerCase();
+     document.querySelectorAll('.post-list li').forEach(li => {
+       const text = li.textContent.toLowerCase();
+       li.style.display = text.includes(filter) ? '' : 'none';
+     });
+   });
+ </script>
 </body>
 </html>
