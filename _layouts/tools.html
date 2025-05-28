@@ -9,7 +9,7 @@
 <body class="fade-in tools-page">
   <div class="container blog-container">
 
-    <!-- Header: just a back-home link and search -->
+    <!-- Header: back to home + search -->
     <div class="header-bar">
       <a href="{{ '/' | relative_url }}" class="back-home">&lt; home</a>
       <input type="search" placeholder="Search tools…" class="search" onkeyup="
@@ -20,10 +20,10 @@
       " />
     </div>
 
-    <!-- Vertical list of tools (excluding the index itself) -->
-        <ul class="post-list">
-      {% assign tools = site.pages 
-           | where_exp: "p", "p.path contains 'tools/' and p.path != 'tools/index.md'" 
+    <!-- Vertical list of all tools (excludes the index page itself) -->
+    <ul class="post-list">
+      {% assign tools = site.pages
+           | where_exp: "p", "p.path contains 'tools/' and p.path != 'tools/index.md'"
            | sort: "title" %}
       {% for tool in tools %}
         <li>
