@@ -1,0 +1,115 @@
+---
+layout: default
+title: "Emoji Alchemy"
+permalink: /tools/emoji-alchemy/
+excerpt: "Combine basic elements like 🔥 and 💧 to unlock a universe of 150+ surprising emoji discoveries! Can you create them all?"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Alchemy</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧪</text></svg>">    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="light">
+    <div id="game-container">
+        <header id="app-header">
+            <div id="app-title-area">
+                 <h1>Emoji Alchemy</h1>
+            </div>
+            <div id="controls">
+                <button id="instructions-button" class="control-button" title="How to Play">❓</button>
+                <button id="sound-toggle-button" class="control-button" title="Toggle Sound">🔊</button>
+                <button id="dark-mode-toggle" class="control-button" title="Toggle Theme">🌙</button>
+                <button id="reset-button" class="control-button" title="Reset Game">🔄</button>
+            </div>
+        </header>
+
+        <div id="progress-area">
+            <p>Discovered: <span id="progress-counter">0 / 0</span></p>
+        </div>
+
+        <main id="workbench">
+            <section id="palette-section" class="game-panel">
+                <h2>Elements</h2>
+                <div id="palette" class="emoji-grid"></div>
+            </section>
+
+            <section id="combination-section" class="game-panel">
+                <h2>Workbench</h2>
+                <div id="combination-area">
+                    <div class="combo-slot" id="slot1" data-slot-index="0" title="Combination Slot 1"></div>
+                    <span class="plus-sign">+</span>
+                    <div class="combo-slot" id="slot2" data-slot-index="1" title="Combination Slot 2"></div>
+                </div>
+                <button id="combine-button" class="action-button">Combine</button>
+                <div id="result-area">
+                    <p id="result-message"></p>
+                    <button id="hint-button" class="control-button hint-button-inline" title="Get a Hint">💡</button> 
+                    <div id="result-details">
+                        <div id="new-emoji-display"></div>
+                        <p id="new-emoji-name"></p>
+                        <p id="new-emoji-flavor"></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="discovered-section" class="game-panel">
+                <h2>Collection</h2>
+                <div id="discovered-list" class="emoji-grid"></div>
+            </section>
+        </main>
+
+        <footer id="app-footer">
+            <div id="save-load-area">
+                <button id="export-button" class="utility-button">Save Progress</button>
+                <label for="import-file" class="utility-button file-label">Load Progress</label>
+                <input type="file" id="import-file" accept=".json,.txt" style="display: none;">
+            </div>
+        </footer>
+        
+        <div id="dynamic-tooltip" class="tooltip">
+            <p id="tooltip-emoji" class="tooltip-emoji"></p>
+            <p id="tooltip-name" class="tooltip-name"></p>
+            <p id="tooltip-flavor" class="tooltip-flavor"></p>
+        </div>
+
+        <div id="instructions-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-button" id="close-instructions-button">×</span>
+                <h2>How to Play Emoji Alchemy</h2>
+                <p>Welcome, Alchemist! Your goal is to discover new elements by combining existing ones.</p>
+                <h3>Gameplay:</h3>
+                <ul>
+                    <li>Start with a few base elements in the "Elements" panel.</li>
+                    <li><strong>To Combine:</strong>
+                        <ul>
+                            <li>Drag an element from "Elements" to one of the two slots on the "Workbench".</li>
+                            <li>Alternatively, tap an element (in "Elements" or your "Collection") to view its info, then tap an empty slot on the "Workbench" to place it.</li>
+                        </ul>
+                    </li>
+                    <li>Once two slots are filled, press the "Combine" button.</li>
+                    <li>If successful, a new element is discovered and added to your "Elements" and "Collection"!</li>
+                </ul>
+                <h3>Controls:</h3>
+                <ul>
+                    <li>❓: Shows these instructions.</li>
+                    <li>🔊/🔇: Toggles sound effects.</li>
+                    <li>💡 (in result area): Provides a hint if you're stuck.</li>
+                    <li>🌙/☀️: Toggles between Light and Dark mode.</li>
+                    <li>🔄: Resets all your game progress (use with caution!).</li>
+                </ul>
+                <h3>Saving & Loading:</h3>
+                <ul>
+                    <li>Your progress is automatically saved in your browser.</li>
+                    <li>Use "Save Progress" to download a file of your discoveries (will prompt for name on first save).</li>
+                    <li>Use "Load Progress" to upload a previously saved file and continue.</li>
+                </ul>
+                <p>Happy experimenting!</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
