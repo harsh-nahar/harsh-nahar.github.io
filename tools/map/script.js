@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // IMPORTANT: This value MUST match the property key for state names in your in.json file.
     const stateNameProperty = 'name';
 
     const stateData = {
@@ -226,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const container = document.getElementById('map-container');
         const width = container.clientWidth;
-        const height = width; // Maintain a square aspect ratio
+        const height = width; 
         
         svg.attr('viewBox', `0 0 ${width} ${height}`);
 
@@ -309,12 +308,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     const clonedContainer = doc.getElementById('map-container');
                     clonedContainer.style.backgroundImage = 'none';
                     clonedContainer.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('background-color');
+                    clonedContainer.style.borderRadius = '0'; // Remove border radius for download
 
                     doc.querySelector('.zoom-controls').style.display = 'none';
                     doc.querySelector('#info-card').style.display = 'none';
                     if (userName.trim() !== "") {
                         const titleDiv = doc.createElement('div');
                         titleDiv.className = 'download-title';
+                        
+                        // Dynamically set font size
+                        const containerWidth = clonedContainer.clientWidth;
+                        const fontSize = Math.max(16, containerWidth / 25);
+                        titleDiv.style.fontSize = `${fontSize}px`;
+
                         let possessiveName = userName.trim();
                         possessiveName += possessiveName.slice(-1).toLowerCase() === 's' ? "'" : "'s";
                         titleDiv.textContent = `${possessiveName} Travels`;
