@@ -64,7 +64,6 @@ body {
 }
 #app-container { width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 16px; text-align: center; }
 
-/* UPDATED: Header layout for robust centering */
 .app-header {
     display: flex;
     justify-content: space-between;
@@ -143,8 +142,15 @@ body.dark-mode .state-label { fill: var(--text-color); }
 .attribution a { color: var(--secondary-text-color); text-decoration: none; font-weight: 500; }
 .attribution a:hover { text-decoration: underline; color: var(--text-color); }
 
-/* Title on Downloaded Image */
-.download-title { position: absolute; top: 25px; right: 25px; font-size: 32px; font-weight: 600; color: var(--text-color); background-color: var(--card-bg-color); padding: 8px 16px; border-radius: 12px; box-shadow: 0 4px 12px var(--shadow-color); }
+/* UPDATED: Download Title styling */
+.download-title {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    font-weight: 600;
+    color: var(--text-color);
+    text-shadow: 0 1px 3px var(--shadow-color); /* Use text-shadow for legibility */
+}
 
 /* Other Elements */
 #achievements-container { margin-top: 24px; padding: 16px; background-color: var(--card-bg-color); border-radius: 16px; text-align: left; transition: opacity 0.5s, transform 0.5s; transform: translateY(20px); opacity: 0; }
@@ -165,20 +171,18 @@ body.dark-mode .state-label { fill: var(--text-color); }
 body.dark-mode #theme-toggle .sun { display: none; }
 body.dark-mode #theme-toggle .moon { display: block; }
 
-/* UPDATED: Zoom controls with margin-based spacing */
 .zoom-controls { position: absolute; top: 16px; right: 16px; display: flex; flex-direction: column; z-index: 5; }
 .zoom-controls button { width: 40px; height: 40px; background-color: var(--card-bg-color); color: var(--text-color); border: 1px solid var(--map-border-color); border-radius: 50%; cursor: pointer; font-size: 22px; font-weight: 500; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px var(--shadow-color); transition: background-color 0.2s; }
 .zoom-controls button:not(:last-child) { margin-bottom: 8px; }
 .zoom-controls button:hover { background-color: var(--map-unfilled-color); }
 .zoom-controls svg { width: 20px; height: 20px; }
 
-/* Tablet Layout */
+/* Responsive Layout */
 @media (max-width: 1024px) {
     #app-container { gap: 20px; }
     .app-header h1 { font-size: 30px; }
 }
 
-/* Mobile Layout */
 @media (max-width: 600px) {
     body { padding: 16px; }
     #app-container { gap: 16px; }
