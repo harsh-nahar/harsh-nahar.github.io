@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const visitedCount = d3.selectAll('.state.visited').size();
         visitedCountEl.textContent = visitedCount;
         totalCountEl.textContent = totalPlaces;
+        
         checkAchievements();
         updateLabelVisibility();
         saveSelections();
@@ -223,9 +224,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const geoJsonFeatures = geojsonData.features;
         totalPlaces = geoJsonFeatures.length;
         
-        // Use a fixed aspect ratio for the viewBox, CSS will handle the container size
-        const width = 800;
-        const height = 800;
+        const container = document.getElementById('map-container');
+        const width = container.clientWidth;
+        const height = width; // Maintain a square aspect ratio
+        
         svg.attr('viewBox', `0 0 ${width} ${height}`);
 
         const projection = d3.geoMercator().fitSize([width, height], geojsonData);
@@ -246,7 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
         g.selectAll('text.state-label')
             .data(geoJsonFeatures)
             .enter()
-            .filter(d => pathGenerator.area(d) > 70) 
+            .filter(d => {
+                const area = pathGenerator.area(d);
+                return area > (width * height * 0.0001); 
+            }) 
             .append('text')
             .attr('class', 'state-label')
             .attr('data-name', d => d.properties[stateNameProperty])
@@ -303,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 onclone: (doc) => {
                     const clonedContainer = doc.getElementById('map-container');
                     clonedContainer.style.backgroundImage = 'none';
-                    clonedContainer.style.backgroundColor = getComputedStyle(doc.body).getPropertyValue('background-color');
+                    clonedContainer.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('background-color');
 
                     doc.querySelector('.zoom-controls').style.display = 'none';
                     doc.querySelector('#info-card').style.display = 'none';
