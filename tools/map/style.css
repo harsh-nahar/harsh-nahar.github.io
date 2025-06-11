@@ -1,0 +1,185 @@
+/* --- Root Variables & Theming --- */
+:root {
+    --bg-color: #f0f2f5;
+    --text-color: #1c1e21;
+    --secondary-text-color: #606770;
+    --card-bg-color: #ffffff;
+    --map-unfilled-color: #e4e6eb;
+    --map-border-color: #ced0d4;
+    
+    --accent-color: #007aff;
+    --completed-color: #28a745; 
+    --visited-state-color: var(--completed-color);
+    --button-bg-color: var(--accent-color);
+    --button-text-color: #ffffff;
+    
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --glass-shadow: rgba(0, 0, 0, 0.15);
+    --system-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    
+    --fill-opacity: 1;
+    --body-dot-color: rgba(0, 0, 0, 0.07);
+    --container-dot-color: rgba(0, 0, 0, 0.09);
+}
+
+body.dark-mode {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --secondary-text-color: #8e8e93;
+    --card-bg-color: #1c1c1e;
+    --map-unfilled-color: #2c2c2e;
+    --map-border-color: rgba(255, 255, 255, 0.15);
+
+    --accent-color: #0a84ff;
+    --completed-color: #45B178;
+    --visited-state-color: var(--completed-color);
+    --button-bg-color: var(--accent-color);
+    --shadow-color: rgba(0, 0, 0, 0.4);
+
+    --glass-bg: rgba(28, 28, 30, 0.75);
+    --glass-border: rgba(68, 68, 70, 0.5);
+    --glass-shadow: rgba(0, 0, 0, 0.5);
+    
+    --body-dot-color: rgba(255, 255, 255, 0.07);
+    --container-dot-color: rgba(255, 255, 255, 0.09);
+}
+
+/* --- General Layout --- */
+body {
+    margin: 0;
+    font-family: var(--system-font);
+    background-color: var(--bg-color);
+    background-image: radial-gradient(var(--body-dot-color) 1px, transparent 1px);
+    background-size: 30px 30px;
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 16px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+#app-container { width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 16px; text-align: center; }
+.app-header h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.5px; margin: 0; }
+.description { font-size: 16px; color: var(--secondary-text-color); margin: -8px 0 8px 0; max-width: 550px; margin-left: auto; margin-right: auto; line-height: 1.4; }
+.stats-counter { color: var(--secondary-text-color); font-size: 15px; font-weight: 500; }
+.stats-counter span { color: var(--text-color); font-weight: 600; }
+
+/* View Options */
+.view-options { display: flex; justify-content: center; align-items: center; gap: 24px; font-size: 15px; color: var(--secondary-text-color); margin-top: -4px; margin-bottom: 4px;}
+.radio-group { display: flex; background-color: var(--map-unfilled-color); padding: 4px; border-radius: 8px; align-items: center; gap: 4px;}
+.radio-group span { margin-left: 8px; font-weight: 500; }
+.radio-group label { padding: 6px 12px; border-radius: 6px; cursor: pointer; color: var(--secondary-text-color); font-weight: 500; transition: background-color 0.2s, color 0.2s; }
+.radio-group input { display: none; }
+.radio-group input:checked + label { background-color: var(--card-bg-color); color: var(--text-color); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+/* Opacity Slider */
+.slider-control { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 8px; }
+.slider-control label { font-size: 15px; font-weight: 500; color: var(--secondary-text-color); }
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 150px; height: 8px; background: var(--map-unfilled-color); border-radius: 5px; outline: none; transition: background 0.2s; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; background: var(--card-bg-color); border: 2px solid var(--map-border-color); border-radius: 50%; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.15);}
+input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; background: var(--card-bg-color); border: 2px solid var(--map-border-color); border-radius: 50%; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.15);}
+
+/* Map and SVG */
+#map-container {
+    position: relative;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: var(--card-bg-color);
+    background-image: radial-gradient(var(--container-dot-color) 1px, transparent 1px);
+    background-size: 20px 20px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    transition: background-color 0.3s ease;
+    
+    /* NEW: CSS Aspect Ratio Trick */
+    height: 0;
+    padding-bottom: 100%; /* Creates a square container (height = 100% of width) */
+}
+
+#map-container svg {
+    /* NEW: Position the SVG to fill the aspect ratio box */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.state { fill: var(--map-unfilled-color); stroke: var(--map-border-color); stroke-width: 0.5; transition: fill 0.3s ease, filter 0.2s ease, fill-opacity 0.2s ease; cursor: pointer; }
+.state:hover { filter: brightness(95%); }
+body.dark-mode .state:hover { filter: brightness(120%); }
+.state.visited { fill-opacity: var(--fill-opacity); fill: var(--visited-state-color); }
+
+/* State Labels */
+.state-label { font-family: var(--system-font); font-size: 10px; font-weight: 500; fill: var(--text-color); text-anchor: middle; pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
+.state-label.visible { opacity: 1; }
+body.dark-mode .state-label { fill: var(--text-color); }
+
+/* Info Card */
+#info-card { position: absolute; bottom: 20px; left: 20px; padding: 16px 24px; border-radius: 12px; background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 20px var(--glass-shadow); text-align: left; color: var(--text-color); z-index: 10; transform: translateY(20px); opacity: 0; transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+#info-card.visible { transform: translateY(0); opacity: 1; }
+#info-card.hidden { display: none; }
+#info-card h2 { font-size: 20px; font-weight: 600; margin: 0 0 4px 0; }
+#info-card p { font-size: 14px; margin: 0 0 4px 0; color: var(--secondary-text-color); }
+#info-card p:last-of-type { margin-bottom: 0; }
+#info-card p span { color: var(--text-color); font-weight: 500; }
+#info-learn-more { display: block; margin-top: 12px; font-size: 14px; font-weight: 600; color: var(--accent-color); text-decoration: none; }
+#info-learn-more:hover { text-decoration: underline; }
+
+/* Footer & Controls */
+.app-footer { margin-top: 12px; }
+.controls { display: flex; justify-content: center; gap: 12px; }
+.controls button { font-family: var(--system-font); font-size: 16px; font-weight: 500; border: none; border-radius: 999px; padding: 12px 28px; cursor: pointer; transition: transform 0.1s ease, filter 0.2s, background-color 0.2s; }
+#download-btn { background-color: var(--button-bg-color); color: var(--button-text-color); }
+#download-btn:hover { filter: brightness(1.1); }
+#download-btn:active, #clear-btn:active, #share-btn:active { transform: scale(0.98); }
+#clear-btn, #share-btn { background-color: var(--map-unfilled-color); color: var(--secondary-text-color); }
+#clear-btn:hover, #share-btn:hover { background-color: var(--map-border-color); }
+.attribution { font-size: 12px; color: var(--secondary-text-color); margin-top: 16px; }
+.attribution a { color: var(--secondary-text-color); text-decoration: none; font-weight: 500; }
+.attribution a:hover { text-decoration: underline; color: var(--text-color); }
+
+/* Title on Downloaded Image */
+.download-title { position: absolute; top: 25px; right: 25px; font-size: 32px; font-weight: 600; color: var(--text-color); background-color: var(--card-bg-color); padding: 8px 16px; border-radius: 12px; box-shadow: 0 4px 12px var(--shadow-color); }
+
+/* Other Elements */
+#achievements-container { margin-top: 24px; padding: 16px; background-color: var(--card-bg-color); border-radius: 16px; text-align: left; transition: opacity 0.5s, transform 0.5s; transform: translateY(20px); opacity: 0; }
+#achievements-container.visible { transform: translateY(0); opacity: 1; }
+#achievements-container.hidden { display: none; }
+#achievements-container h3 { margin: 0 0 12px 0; font-size: 18px; font-weight: 600; }
+#achievements-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.achievement { background-color: var(--map-unfilled-color); padding: 8px 12px; border-radius: 8px; font-size: 14px; font-weight: 500; color: var(--secondary-text-color); display: flex; align-items: center; gap: 6px; }
+.achievement.unlocked { background-color: #34c7591a; color: #34c759; }
+.achievement.unlocked::before { content: '✓'; font-weight: 700; }
+.loader { position: absolute; top: 50%; left: 50%; width: 50px; height: 50px; margin: -25px 0 0 -25px; border: 5px solid var(--map-unfilled-color); border-top-color: var(--button-bg-color); border-radius: 50%; animation: spin 1s linear infinite; z-index: 15; transition: opacity 0.3s ease; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loader.hidden { opacity: 0; pointer-events: none; }
+#theme-toggle { background: none; border: none; cursor: pointer; padding: 8px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: absolute; right: 0; top: 50%; transform: translateY(-50%); color: var(--text-color); }
+#theme-toggle:hover { background-color: var(--map-unfilled-color); }
+#theme-toggle .moon { display: none; }
+body.dark-mode #theme-toggle .sun { display: none; }
+body.dark-mode #theme-toggle .moon { display: block; }
+.zoom-controls { position: absolute; top: 16px; right: 16px; display: flex; flex-direction: column; gap: 8px; z-index: 5; }
+.zoom-controls button { width: 40px; height: 40px; background-color: var(--card-bg-color); color: var(--text-color); border: 1px solid var(--map-border-color); border-radius: 50%; cursor: pointer; font-size: 22px; font-weight: 500; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px var(--shadow-color); transition: background-color 0.2s; }
+.zoom-controls button:hover { background-color: var(--map-unfilled-color); }
+.zoom-controls svg { width: 20px; height: 20px; }
+
+/* ADAPTIVE LAYOUT BREAKPOINTS */
+@media (max-width: 1024px) and (min-width: 601px) {
+    #app-container { gap: 20px; }
+    .app-header h1 { font-size: 30px; }
+    .view-options { flex-direction: row; align-items: center; }
+}
+@media (max-width: 600px) {
+    .app-header h1 { font-size: 26px; }
+    .description { font-size: 15px; }
+    .view-options { flex-direction: column; align-items: stretch; gap: 16px; }
+    .slider-control { justify-content: space-between; margin-top: 0; }
+    #info-card { top: 16px; bottom: auto; left: 16px; right: 16px; transform: translateY(-20px); }
+    #info-card.visible { transform: translateY(0); }
+    .app-footer { margin-top: auto; }
+}
