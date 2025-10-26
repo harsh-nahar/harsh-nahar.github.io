@@ -9,7 +9,8 @@ permalink: /cv/
 
 # Harsh Nahar
 
-**Designer • Photographer • Web Enthusiast**  
+<!-- UPDATED: Added "Developer" to showcase my new programming skills right at the top. -->
+**Developer • Designer • Web Enthusiast**  
 [harshnahar.com](https://harshnahar.com) • [behance.net/hrsvnr](https://behance.net/hrsvnr)
 
 ---
@@ -42,9 +43,10 @@ permalink: /cv/
 ---
 
 ## Skills
-
-- **Design:** Figma, Adobe Photoshop, Illustrator  
+<!-- UPDATED: Reordered to put your strongest technical skills first. -->
+- **Programming:** Python, Flask, API Integration
 - **Web:** HTML5, CSS3, Markdown, Git, GitHub Pages, Jekyll  
+- **Design:** Figma, Adobe Photoshop, Illustrator  
 - **Photography:** DSLR, Lightroom, Composition, Color Grading  
 - **Soft:** Concept Development, Visual Storytelling, Collaboration
 
@@ -58,7 +60,9 @@ Osmania University — 2014 to 2017
 ---
 
 ## Certifications
-
+<!-- UPDATED: Added cs50 certs at the top. -->
+- **CS50's Introduction to Programming with Python**: [Link](https://certificates.cs50.io/18075c5c-8e4d-4041-9036-aac26329c0df.pdf)
+- **CS50's Introduction to Computer Science**: [Link](https://certificates.cs50.io/186276c5-6314-4298-877e-9059531f2ef1.pdf)
 - **Microsoft Certified: Azure AI Fundamentals**: [Link](https://learn.microsoft.com/en-in/users/harshvardhannahar-7779/credentials/8aeb8bf3c007f67c)
 - **freeCodeCamp Responsible Web Design:** [Link](https://www.freecodecamp.org/certification/yokomita/responsive-web-design)  
 - **Google UX Design:** [Link](https://coursera.org/share/97b933ec6fb2bbb106b16c12972f45fa)  
@@ -66,9 +70,10 @@ Osmania University — 2014 to 2017
 ---
 
 ## Selected Projects
-
+<!-- UPDATED: Replaced the old project with your new, highly technical CS50P Final Project. -->
+- **YT-Recommender** ([GitHub Repo](https://github.com/harsh-nahar/ytRecommender_cs50P)): A data-driven recommendation engine with both a CLI and a Flask web interface. It uses a custom algorithm to rank YouTube tutorials based on engagement metrics fetched from the YouTube Data API.
 - **Personal Blog** ([harshnahar.com](https://harshnahar.com)): A minimalist site built with Jekyll and GitHub Pages  
-- **Travel Photography:** Exhibition at Local Gallery, Summer 2021  
+- **Photography:** [behance.net/hrsvnr](https://behance.net/hrsvnr)
 
 ---
 
