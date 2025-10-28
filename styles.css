@@ -457,4 +457,14 @@ body {
   cursor: pointer;
 }
 
+.gallery-header-center {
+  justify-content: center;
+  position: relative;
+}
+
+.gallery-header-center .back-link {
+  position: absolute;
+  left: 0;
+}
+
 
