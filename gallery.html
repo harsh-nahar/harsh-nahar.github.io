@@ -27,7 +27,7 @@ title: "Photo Gallery"
 
         <a href="{{ gallery.url | relative_url }}" class="gallery-card">
           {% if thumb %}
-            <img src="{{ thumb | relative_url }}" alt="{{ gallery.title }}">
+            <img src="{{ thumb | relative_url }}" alt="{{ gallery.title }}" loading="lazy">
           {% endif %}
           <div class="gallery-info">
             <h2>{{ gallery.title }}</h2>
