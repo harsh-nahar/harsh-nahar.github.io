@@ -1,7 +1,6 @@
 ---
 layout: default
 ---
-
 <div class="full-bg">
   <div class="container post-container">
     <div class="post-header">
@@ -11,6 +10,7 @@ layout: default
 
     <article class="post-content">
       <h1>{{ page.title }}</h1>
+
       {% if page.description %}
         <p class="desc">{{ page.description }}</p>
       {% endif %}
@@ -25,6 +25,7 @@ layout: default
 </div>
 
 <script>
+  // Share button logic
   const shareBtn = document.getElementById('shareBtn');
   shareBtn.addEventListener('click', async () => {
     const url = window.location.href;
@@ -37,6 +38,7 @@ layout: default
     }
   });
 
+  // Font toggle logic
   const fontBtn = document.getElementById('fontSwitch');
   fontBtn.addEventListener('click', () => {
     if (fontBtn.textContent === 'default') {
@@ -48,3 +50,21 @@ layout: default
     }
   });
 </script>
+
+<style>
+/* Gallery-specific overrides */
+.gallery-images img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 1rem;
+  border-radius: 0; /* remove rounded corners */
+}
+
+.desc {
+  color: #555;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+</style>
