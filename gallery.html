@@ -5,16 +5,16 @@ title: "Photo Gallery"
 
 <div class="full-bg">
   <div class="container post-container">
-    <div class="post-header">
+    <div class="post-header header-center">
       <a href="{{ '/' | relative_url }}" class="back-link">&lt; home</a>
+      <h1 class="page-title">Photo Gallery</h1>
     </div>
 
-    <h1 class="page-title">Photo Gallery</h1>
     <p class="page-desc">Collections of photographs and stories.</p>
 
     <p class="external-link">
-      For high-resolution photo series, visit my 
-      <a href="https://www.behance.net/yourusername" target="_blank" rel="noopener">Behance portfolio</a>.
+      For high-resolution photo series, visit my
+      <a href="https://www.behance.net/hrsvnr" target="_blank" rel="noopener">Behance portfolio</a>.
     </p>
 
     <section class="gallery-list">
@@ -31,6 +31,9 @@ title: "Photo Gallery"
           {% endif %}
           <div class="gallery-info">
             <h2>{{ gallery.title }}</h2>
+            {% if gallery.date %}
+              <p class="gallery-date">{{ gallery.date | date: "%b %Y" }}</p>
+            {% endif %}
             {% if gallery.description %}
               <p>{{ gallery.description }}</p>
             {% endif %}
@@ -40,3 +43,22 @@ title: "Photo Gallery"
     </section>
   </div>
 </div>
+
+<script>
+  // --- Lazy show-more system ---
+  document.addEventListener("DOMContentLoaded", function () {
+    const cards = Array.from(document.querySelectorAll(".gallery-card"));
+    const maxVisible = 6; // number of galleries initially visible
+    if (cards.length > maxVisible) {
+      cards.slice(maxVisible).forEach(card => card.style.display = "none");
+      const btn = document.createElement("button");
+      btn.textContent = "Show more";
+      btn.className = "show-more-btn";
+      btn.addEventListener("click", () => {
+        cards.forEach(card => (card.style.display = "flex"));
+        btn.remove();
+      });
+      document.querySelector(".gallery-list").after(btn);
+    }
+  });
+</script>
