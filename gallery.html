@@ -5,7 +5,7 @@ title: "Photo Gallery"
 
 <div class="full-bg">
   <div class="container post-container">
-    <div class="post-header header-center">
+    <div class="gallery-header">
       <a href="{{ '/' | relative_url }}" class="back-link">&lt; home</a>
       <h1 class="page-title">Photo Gallery</h1>
     </div>
@@ -17,14 +17,14 @@ title: "Photo Gallery"
       <a href="https://www.behance.net/hrsvnr" target="_blank" rel="noopener">Behance portfolio</a>.
     </p>
 
-    <section class="gallery-list">
-      {% for gallery in site.gallery reversed %}
+    <section class="gallery-list" id="galleryList">
+      {% assign galleries = site.gallery | sort: "date" | reverse %}
+      {% for gallery in galleries %}
         {% assign thumb = gallery.thumbnail %}
         {% if thumb == nil %}
           {% assign first_img = gallery.content | regex_replace: ".*?!\\[[^)]*\\]\\(([^)]*)\\).*", "\\1" %}
           {% assign thumb = first_img %}
         {% endif %}
-
         <a href="{{ gallery.url | relative_url }}" class="gallery-card">
           {% if thumb %}
             <img src="{{ thumb | relative_url }}" alt="{{ gallery.title }}" loading="lazy">
@@ -41,24 +41,27 @@ title: "Photo Gallery"
         </a>
       {% endfor %}
     </section>
+
+    <button id="showMore" class="show-more">Show More</button>
   </div>
 </div>
 
 <script>
-  // --- Lazy show-more system ---
-  document.addEventListener("DOMContentLoaded", function () {
-    const cards = Array.from(document.querySelectorAll(".gallery-card"));
-    const maxVisible = 6; // number of galleries initially visible
-    if (cards.length > maxVisible) {
-      cards.slice(maxVisible).forEach(card => card.style.display = "none");
-      const btn = document.createElement("button");
-      btn.textContent = "Show more";
-      btn.className = "show-more-btn";
-      btn.addEventListener("click", () => {
-        cards.forEach(card => (card.style.display = "flex"));
-        btn.remove();
-      });
-      document.querySelector(".gallery-list").after(btn);
-    }
+  // "Show More" functionality
+  const items = Array.from(document.querySelectorAll(".gallery-card"));
+  const btn = document.getElementById("showMore");
+  let visible = 6; // show first 6 initially
+
+  function updateVisibility() {
+    items.forEach((item, i) => {
+      item.style.display = i < visible ? "flex" : "none";
+    });
+    btn.style.display = visible < items.length ? "block" : "none";
+  }
+
+  updateVisibility();
+  btn.addEventListener("click", () => {
+    visible += 6;
+    updateVisibility();
   });
 </script>
