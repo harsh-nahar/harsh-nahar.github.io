@@ -332,10 +332,11 @@ body {
 .back-link {
   position: absolute;
   left: 0;
-  font-size: 0.85rem;
+  font-size: 1.2rem; /* ← increased size (about half your h1) */
   color: #555;
   text-decoration: none;
   text-transform: lowercase;
+  line-height: 1.2; /* keeps vertical spacing balanced */
 }
 
 .back-link:hover {
@@ -454,4 +455,14 @@ body {
   margin-bottom: 1rem;
   display: block;
   border-radius: 0; /* no rounded corners */
+}
+
+/* ---------- Fix post header alignment ---------- */
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 720px;   /* match your post content width */
+  margin: 0 auto 1.5rem;  /* centers it */
+  padding: 0 1rem;
 }
