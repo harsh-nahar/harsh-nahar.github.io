@@ -319,17 +319,40 @@ body {
   }
 }
 
-/* ---------- Gallery Index ---------- */
+/* ---------- Gallery Page ---------- */
+
+.header-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 1.2rem;
+}
+
+.header-center .back-link {
+  position: absolute;
+  left: 0;
+  font-size: 0.9rem;
+  color: #666;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.header-center .back-link:hover {
+  color: #000;
+}
 
 .page-title {
   font-size: 1.8rem;
   font-weight: 600;
-  margin: 1rem 0 0.3rem;
+  margin: 0;
+  text-align: center;
 }
 
 .page-desc {
   font-size: 1rem;
   color: #555;
+  text-align: center;
   margin-bottom: 1.8rem;
 }
 
@@ -380,6 +403,7 @@ body {
   width: 100%;
   height: 220px;
   object-fit: cover;
+  border-bottom: 1px solid #eee;
 }
 
 .gallery-info {
@@ -392,10 +416,35 @@ body {
   margin: 0 0 0.3rem;
 }
 
+.gallery-date {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 0.2rem;
+}
+
 .gallery-info p {
   font-size: 0.9rem;
   color: #555;
   margin: 0;
+}
+
+/* ---------- Show More Button ---------- */
+
+.show-more-btn {
+  display: block;
+  margin: 2rem auto;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.show-more-btn:hover {
+  background: #f8f8f8;
+  border-color: #999;
 }
 
 /* ---------- Individual Gallery Page ---------- */
