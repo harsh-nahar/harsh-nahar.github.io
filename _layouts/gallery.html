@@ -1,7 +1,6 @@
 ---
 layout: default
 ---
-
 <div class="full-bg">
   <div class="container post-container">
     <div class="gallery-header">
@@ -11,12 +10,12 @@ layout: default
 
     <article class="post-content">
       <h1>{{ page.title }}</h1>
+
       {% if page.description %}
         <p class="desc">{{ page.description }}</p>
       {% endif %}
 
-      <!-- Gallery container -->
-      <div id="justified-gallery" class="content">
+      <div class="content gallery-images">
         {{ content }}
       </div>
     </article>
@@ -25,82 +24,61 @@ layout: default
   </div>
 </div>
 
-<!-- ---------- Libraries ---------- -->
+<!-- ✅ Lightbox2 CDN -->
 <link
+  href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/css/lightbox.min.css"
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"
 />
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/css/lightgallery-bundle.min.css"
-/>
-
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/lightgallery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/plugins/zoom/lg-zoom.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/plugins/thumbnail/lg-thumbnail.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/js/lightbox.min.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  // 1. Wrap markdown images in <a> tags for LightGallery
-  const imgs = document.querySelectorAll("#justified-gallery img");
-  imgs.forEach(img => {
-    if (!img.closest("a")) {
-      const link = document.createElement("a");
-      link.href = img.src;
-      img.parentNode.insertBefore(link, img);
-      link.appendChild(img);
-    }
-  });
-
-  // 2. Initialize Justified Gallery
-  const $gallery = $('#justified-gallery');
-  if ($gallery.length) {
-    $gallery.justifiedGallery({
-      rowHeight: 280,
-      margins: 8,
-      lastRow: 'nojustify',
-      captions: false
-    }).on('jg.complete', function () {
-      // 3. Initialize LightGallery *after* layout is ready
-      lightGallery(document.getElementById('justified-gallery'), {
-        selector: 'a',
-        thumbnail: true,
-        zoom: true,
-        download: false,
-      });
-    });
-  }
-
-  // 4. Font toggle
-  const fontBtn = document.getElementById("fontSwitch");
-  fontBtn.addEventListener("click", () => {
-    if (fontBtn.textContent === "default") {
-      document.body.style.fontFamily = "sans-serif";
-      fontBtn.textContent = "sans-serif";
-    } else {
-      document.body.style.fontFamily = "'Cormorant Garamond', serif";
-      fontBtn.textContent = "default";
-    }
-  });
-
-  // 5. Share button
-  const shareBtn = document.getElementById("shareBtn");
-  shareBtn.addEventListener("click", async () => {
+  // Share button logic
+  const shareBtn = document.getElementById('shareBtn');
+  shareBtn.addEventListener('click', async () => {
     const url = window.location.href;
     if (navigator.share && /Mobi|Tablet|iPad|iPhone/.test(navigator.userAgent)) {
       navigator.share({ url });
     } else {
       await navigator.clipboard.writeText(url);
-      shareBtn.textContent = "✔️ copied";
-      setTimeout(() => (shareBtn.textContent = "🔗 share"), 2000);
+      shareBtn.textContent = '✔️ copied';
+      setTimeout(() => (shareBtn.textContent = '🔗 share'), 2000);
     }
   });
-});
+
+  // Font toggle logic
+  const fontBtn = document.getElementById('fontSwitch');
+  fontBtn.addEventListener('click', () => {
+    if (fontBtn.textContent === 'default') {
+      document.body.style.fontFamily = 'sans-serif';
+      fontBtn.textContent = 'sans-serif';
+    } else {
+      document.body.style.fontFamily = "'Cormorant Garamond', serif";
+      fontBtn.textContent = 'default';
+    }
+  });
+
+  // ✅ Initialize Lightbox2 options
+  lightbox.option({
+    resizeDuration: 200,
+    fadeDuration: 200,
+    imageFadeDuration: 200,
+    wrapAround: true,
+    disableScrolling: true,
+    alwaysShowNavOnTouchDevices: true,
+  });
 </script>
 
 <style>
+/* Gallery-specific overrides */
+.gallery-images img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 1rem;
+  border-radius: 0;
+  cursor: zoom-in;
+}
+
 .desc {
   color: #555;
   margin-bottom: 1.5rem;
@@ -108,15 +86,9 @@ document.addEventListener("DOMContentLoaded", function() {
   line-height: 1.6;
 }
 
-#justified-gallery img {
-  border-radius: 8px;
-  transition: transform 0.25s ease;
-}
-#justified-gallery img:hover {
-  transform: scale(1.03);
-}
-
-.lg-backdrop {
-  background: rgba(0,0,0,0.92);
+/* Lightbox overlay color tweak (optional aesthetic improvement) */
+.lb-data .lb-caption {
+  font-size: 0.9rem;
+  color: #ccc;
 }
 </style>
