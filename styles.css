@@ -467,22 +467,43 @@ body {
   left: 0;
 }
 
-/* ---------- Masonry-style image flow inside gallery posts ---------- */
-.gallery-images {
-  column-count: 2;
-  column-gap: 1rem;
+/* Masonry layout using CSS Grid */
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-rows: 10px;
+  gap: 1rem;
 }
 
-.gallery-images img {
+.masonry-grid img {
   width: 100%;
   display: block;
-  margin-bottom: 1rem;
-  break-inside: avoid;
   border-radius: 0;
+  object-fit: cover;
+  grid-row-end: span var(--row-span, 30);
 }
 
+/* Let browser calculate masonry row span dynamically */
+.masonry-grid img {
+  --row-span: calc(var(--img-height) / 10);
+}
+
+/* Responsive fallback */
+@supports not (grid-template-rows: masonry) {
+  .masonry-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .masonry-grid img {
+    width: calc(50% - 0.5rem);
+    margin: 0.25rem;
+  }
+}
+
+/* Responsive tweaks */
 @media (max-width: 768px) {
-  .gallery-images {
-    column-count: 1;
+  .masonry-grid {
+    grid-template-columns: 1fr;
   }
 }
