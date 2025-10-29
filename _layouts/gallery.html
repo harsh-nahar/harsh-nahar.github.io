@@ -15,6 +15,7 @@ layout: default
         <p class="desc">{{ page.description }}</p>
       {% endif %}
 
+      <!-- Gallery container -->
       <div id="justified-gallery" class="content">
         {{ content }}
       </div>
@@ -41,21 +42,38 @@ layout: default
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/plugins/thumbnail/lg-thumbnail.min.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Share button
-  const shareBtn = document.getElementById("shareBtn");
-  shareBtn.addEventListener("click", async () => {
-    const url = window.location.href;
-    if (navigator.share && /Mobi|Tablet|iPad|iPhone/.test(navigator.userAgent)) {
-      navigator.share({ url });
-    } else {
-      await navigator.clipboard.writeText(url);
-      shareBtn.textContent = "✔️ copied";
-      setTimeout(() => (shareBtn.textContent = "🔗 share"), 2000);
+document.addEventListener("DOMContentLoaded", function() {
+  // 1. Wrap markdown images in <a> tags for LightGallery
+  const imgs = document.querySelectorAll("#justified-gallery img");
+  imgs.forEach(img => {
+    if (!img.closest("a")) {
+      const link = document.createElement("a");
+      link.href = img.src;
+      img.parentNode.insertBefore(link, img);
+      link.appendChild(img);
     }
   });
 
-  // Font toggle
+  // 2. Initialize Justified Gallery
+  const $gallery = $('#justified-gallery');
+  if ($gallery.length) {
+    $gallery.justifiedGallery({
+      rowHeight: 280,
+      margins: 8,
+      lastRow: 'nojustify',
+      captions: false
+    }).on('jg.complete', function () {
+      // 3. Initialize LightGallery *after* layout is ready
+      lightGallery(document.getElementById('justified-gallery'), {
+        selector: 'a',
+        thumbnail: true,
+        zoom: true,
+        download: false,
+      });
+    });
+  }
+
+  // 4. Font toggle
   const fontBtn = document.getElementById("fontSwitch");
   fontBtn.addEventListener("click", () => {
     if (fontBtn.textContent === "default") {
@@ -67,32 +85,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Wrap each markdown image in <a> for LightGallery
-  const imgs = document.querySelectorAll("#justified-gallery img");
-  imgs.forEach(img => {
-    if (!img.closest("a")) {
-      const link = document.createElement("a");
-      link.href = img.src;
-      img.parentNode.insertBefore(link, img);
-      link.appendChild(img);
+  // 5. Share button
+  const shareBtn = document.getElementById("shareBtn");
+  shareBtn.addEventListener("click", async () => {
+    const url = window.location.href;
+    if (navigator.share && /Mobi|Tablet|iPad|iPhone/.test(navigator.userAgent)) {
+      navigator.share({ url });
+    } else {
+      await navigator.clipboard.writeText(url);
+      shareBtn.textContent = "✔️ copied";
+      setTimeout(() => (shareBtn.textContent = "🔗 share"), 2000);
     }
-  });
-
-  // Initialize Justified Gallery + LightGallery
-  $('#justified-gallery').justifiedGallery({
-    rowHeight: 300,
-    margins: 8,
-    lastRow: 'nojustify',
-    captions: false,
-    waitThumbnailsLoad: true
-  }).on('jg.complete', function () {
-    lightGallery(document.getElementById('justified-gallery'), {
-      selector: 'a',
-      zoom: true,
-      thumbnail: true,
-      download: false,
-      closable: true,
-    });
   });
 });
 </script>
@@ -107,7 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 #justified-gallery img {
   border-radius: 8px;
-  cursor: pointer;
   transition: transform 0.25s ease;
 }
 #justified-gallery img:hover {
