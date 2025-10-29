@@ -49,16 +49,65 @@ layout: default
       fontBtn.textContent = 'default';
     }
   });
+
+  // ---------- Lightbox with Lazy Loading ----------
+  document.addEventListener("DOMContentLoaded", function() {
+    const images = Array.from(document.querySelectorAll(".gallery-images img"));
+    images.forEach(img => img.setAttribute("loading", "lazy"));
+
+    const overlay = document.createElement("div");
+    overlay.className = "lightbox-overlay";
+    overlay.innerHTML = `
+      <img class="lightbox-img" alt="">
+      <button class="lightbox-close" aria-label="Close">×</button>
+    `;
+    document.body.appendChild(overlay);
+
+    const enlarged = overlay.querySelector(".lightbox-img");
+    const closeBtn = overlay.querySelector(".lightbox-close");
+    let currentIndex = -1;
+
+    function openLightbox(index) {
+      enlarged.src = images[index].src;
+      currentIndex = index;
+      overlay.classList.add("active");
+    }
+
+    function closeLightbox() {
+      overlay.classList.remove("active");
+    }
+
+    function navigate(offset) {
+      const newIndex = (currentIndex + offset + images.length) % images.length;
+      openLightbox(newIndex);
+    }
+
+    images.forEach((img, index) => {
+      img.style.cursor = "zoom-in";
+      img.addEventListener("click", () => openLightbox(index));
+    });
+
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay || e.target === closeBtn) closeLightbox();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (!overlay.classList.contains("active")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowRight") navigate(1);
+      if (e.key === "ArrowLeft") navigate(-1);
+    });
+  });
 </script>
 
 <style>
-/* Gallery-specific overrides */
+/* ---------- Gallery-specific overrides ---------- */
 .gallery-images img {
   width: 100%;
   height: auto;
   display: block;
   margin-bottom: 1rem;
-  border-radius: 0; /* remove rounded corners */
+  border-radius: 0;
 }
 
 .desc {
@@ -66,5 +115,51 @@ layout: default
   margin-bottom: 1.5rem;
   font-size: 1rem;
   line-height: 1.6;
+}
+
+/* ---------- Lightbox Styles ---------- */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  cursor: zoom-out;
+  transition: opacity 0.25s ease;
+}
+
+.lightbox-overlay.active {
+  display: flex;
+  opacity: 1;
+}
+
+.lightbox-img {
+  max-width: 92vw;
+  max-height: 92vh;
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  transition: transform 0.25s ease;
+  transform: scale(1);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index: 10000;
+  line-height: 1;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.lightbox-close:hover {
+  opacity: 1;
 }
 </style>
