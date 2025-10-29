@@ -15,7 +15,7 @@ layout: default
         <p class="desc">{{ page.description }}</p>
       {% endif %}
 
-      <div class="content masonry-grid">
+      <div id="masonry" class="content masonry-grid">
         {{ content }}
       </div>
     </article>
@@ -24,34 +24,25 @@ layout: default
   </div>
 </div>
 
+<!-- ---------- Macy.js (Masonry Layout) ---------- -->
+<script src="https://cdn.jsdelivr.net/npm/macy@2.5.1/dist/macy.min.js" integrity="sha384-vbLQF7G6CDg1IL9aClZVk7IXbQp7EfP7O/mu5yydqRAbhEyiV14akvjMAl9mTq3t" crossorigin="anonymous"></script>
+
 <script>
-  // Share button logic
-  const shareBtn = document.getElementById('shareBtn');
-  shareBtn.addEventListener('click', async () => {
-    const url = window.location.href;
-    if (navigator.share && /Mobi|Tablet|iPad|iPhone/.test(navigator.userAgent)) {
-      navigator.share({ url });
-    } else {
-      await navigator.clipboard.writeText(url);
-      shareBtn.textContent = '✔️ copied';
-      setTimeout(() => shareBtn.textContent = '🔗 share', 2000);
-    }
-  });
+  document.addEventListener("DOMContentLoaded", function () {
+    // ---------- Masonry Setup ----------
+    const masonry = Macy({
+      container: "#masonry",
+      trueOrder: false,
+      waitForImages: true,
+      margin: 16,
+      columns: 3,
+      breakAt: {
+        1024: 2,
+        640: 1
+      }
+    });
 
-  // Font toggle logic
-  const fontBtn = document.getElementById('fontSwitch');
-  fontBtn.addEventListener('click', () => {
-    if (fontBtn.textContent === 'default') {
-      document.body.style.fontFamily = 'sans-serif';
-      fontBtn.textContent = 'sans-serif';
-    } else {
-      document.body.style.fontFamily = "'Cormorant Garamond', serif";
-      fontBtn.textContent = 'default';
-    }
-  });
-
-  // ---------- Lightbox with Lazy Loading ----------
-  document.addEventListener("DOMContentLoaded", function() {
+    // ---------- Lazy Load & Lightbox ----------
     const images = Array.from(document.querySelectorAll(".masonry-grid img"));
     images.forEach(img => img.setAttribute("loading", "lazy"));
 
@@ -97,17 +88,42 @@ layout: default
       if (e.key === "ArrowRight") navigate(1);
       if (e.key === "ArrowLeft") navigate(-1);
     });
+
+    // ---------- Share Button ----------
+    const shareBtn = document.getElementById("shareBtn");
+    shareBtn.addEventListener("click", async () => {
+      const url = window.location.href;
+      if (navigator.share && /Mobi|Tablet|iPad|iPhone/.test(navigator.userAgent)) {
+        navigator.share({ url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        shareBtn.textContent = "✔️ copied";
+        setTimeout(() => (shareBtn.textContent = "🔗 share"), 2000);
+      }
+    });
+
+    // ---------- Font Toggle ----------
+    const fontBtn = document.getElementById("fontSwitch");
+    fontBtn.addEventListener("click", () => {
+      if (fontBtn.textContent === "default") {
+        document.body.style.fontFamily = "sans-serif";
+        fontBtn.textContent = "sans-serif";
+      } else {
+        document.body.style.fontFamily = "'Cormorant Garamond', serif";
+        fontBtn.textContent = "default";
+      }
+    });
   });
 </script>
 
 <style>
-/* ---------- Gallery-specific overrides ---------- */
+/* ---------- Gallery Overrides ---------- */
 .gallery-images img {
   width: 100%;
   height: auto;
   display: block;
-  margin-bottom: 1rem;
   border-radius: 0;
+  margin-bottom: 1rem;
 }
 
 .desc {
@@ -117,7 +133,20 @@ layout: default
   line-height: 1.6;
 }
 
-/* ---------- Lightbox Styles ---------- */
+/* ---------- Masonry Grid ---------- */
+.masonry-grid img {
+  width: 100%;
+  display: block;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.masonry-grid img:hover {
+  transform: scale(1.02);
+}
+
+/* ---------- Lightbox ---------- */
 .lightbox-overlay {
   position: fixed;
   inset: 0;
