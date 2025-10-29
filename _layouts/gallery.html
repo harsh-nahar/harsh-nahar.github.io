@@ -16,7 +16,8 @@ layout: default
         <p class="desc">{{ page.description }}</p>
       {% endif %}
 
-      <div class="content gallery-images" id="macy-container">
+      <!-- Masonry container -->
+      <div class="gallery-images" id="macy-container">
         {{ content }}
       </div>
     </article>
@@ -26,18 +27,21 @@ layout: default
 </div>
 
 <!-- ---------- Libraries ---------- -->
-<!-- Macy (for masonry layout) -->
-<script src="https://cdn.jsdelivr.net/npm/macy@2.5.1/dist/macy.min.js" integrity="sha384-vbLQF7G6CDg1IL9aClZVk7IXbQp7EfP7O/mu5yydqRAbhEyiV14akvjMAl9mTq3t" crossorigin="anonymous"></script>
+<!-- Macy (Masonry Grid) -->
+<script src="https://cdn.jsdelivr.net/npm/macy@2.5.1/dist/macy.min.js"></script>
 
-<!-- LightGallery (for lightbox) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/css/lightgallery-bundle.min.css">
+<!-- LightGallery (Lightbox) -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/css/lightgallery-bundle.min.css"
+/>
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/lightgallery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/plugins/zoom/lg-zoom.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/plugins/thumbnail/lg-thumbnail.min.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  // Share button
+  /* ---------- Share button ---------- */
   const shareBtn = document.getElementById("shareBtn");
   shareBtn.addEventListener("click", async () => {
     const url = window.location.href;
@@ -50,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Font toggle
+  /* ---------- Font toggle ---------- */
   const fontBtn = document.getElementById("fontSwitch");
   fontBtn.addEventListener("click", () => {
     if (fontBtn.textContent === "default") {
@@ -62,59 +66,70 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Wrap all <img> in anchor tags for LightGallery
-  const imgs = document.querySelectorAll(".gallery-images img");
-  imgs.forEach(img => {
+  /* ---------- Wrap all Markdown images for LightGallery ---------- */
+  const galleryContainer = document.querySelector("#macy-container");
+  const imgs = galleryContainer.querySelectorAll("img");
+  imgs.forEach((img) => {
     if (!img.closest("a")) {
       const wrapper = document.createElement("a");
       wrapper.href = img.src;
+      wrapper.classList.add("gallery-item");
       img.parentNode.insertBefore(wrapper, img);
       wrapper.appendChild(img);
     }
   });
 
-  // Initialize LightGallery
-  lightGallery(document.querySelector(".gallery-images"), {
-    selector: "a",
+  /* ---------- Initialize LightGallery ---------- */
+  lightGallery(galleryContainer, {
+    selector: ".gallery-item",
     zoom: true,
     thumbnail: true,
     download: false,
-    backdropDuration: 300,
     closable: true,
   });
 
-  // Initialize Macy (Masonry Grid)
+  /* ---------- Initialize Macy (Masonry) ---------- */
   const macyInstance = Macy({
     container: "#macy-container",
     trueOrder: false,
     waitForImages: true,
     margin: 16,
-    columns: 2,
+    columns: 3,
     breakAt: {
-      768: 1,
       1024: 2,
-      1400: 3
-    }
+      768: 1,
+    },
   });
 
-  // Recalculate after all images load
-  window.addEventListener("load", () => macyInstance.runOnImageLoad(() => macyInstance.recalculate(true), true));
+  // Recalculate after all images have loaded
+  window.addEventListener("load", () => {
+    macyInstance.runOnImageLoad(() => macyInstance.recalculate(true), true);
+  });
 });
 </script>
 
 <style>
+/* ---------- Masonry & Image Styles ---------- */
+.gallery-images {
+  margin-top: 1.5rem;
+}
+.gallery-images a {
+  display: block;
+  overflow: hidden;
+  border-radius: 0;
+}
 .gallery-images img {
   width: 100%;
   height: auto;
   display: block;
-  margin-bottom: 1rem;
+  transition: transform 0.25s ease;
   cursor: pointer;
-  transition: transform 0.2s ease;
 }
 .gallery-images img:hover {
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 
+/* ---------- Description Text ---------- */
 .desc {
   color: #555;
   margin-bottom: 1.5rem;
@@ -122,8 +137,34 @@ document.addEventListener("DOMContentLoaded", () => {
   line-height: 1.6;
 }
 
-/* LightGallery backdrop fix for close-on-click */
+/* ---------- LightGallery Backdrop ---------- */
 .lg-backdrop {
-  background: rgba(0,0,0,0.9);
+  background: rgba(0, 0, 0, 0.9);
+}
+
+/* ---------- Small UI Polishes ---------- */
+.gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 720px;
+  margin: 0 auto 1.5rem;
+  padding: 0 1rem;
+}
+.gallery-header .back-link {
+  font-size: 1.2rem;
+  color: #555;
+  text-decoration: none;
+}
+.gallery-header .back-link:hover {
+  color: #000;
+}
+.gallery-header .font-switch {
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: transparent;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
 }
 </style>
