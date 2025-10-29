@@ -467,4 +467,22 @@ body {
   left: 0;
 }
 
+/* ---------- Masonry-style image flow inside gallery posts ---------- */
+.gallery-images {
+  column-count: 2;
+  column-gap: 1rem;
+}
 
+.gallery-images img {
+  width: 100%;
+  display: block;
+  margin-bottom: 1rem;
+  break-inside: avoid;
+  border-radius: 0;
+}
+
+@media (max-width: 768px) {
+  .gallery-images {
+    column-count: 1;
+  }
+}
