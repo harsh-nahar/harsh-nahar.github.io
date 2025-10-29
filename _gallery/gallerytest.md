@@ -1,4 +1,5 @@
 ---
+layout: gallery
 title: "Visual Flow Test"
 description: "Testing masonry grid with text and mixed image sizes"
 date: 2025-10-29
