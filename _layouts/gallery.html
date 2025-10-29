@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+
 <div class="full-bg">
   <div class="container post-container">
     <div class="gallery-header">
@@ -15,7 +16,7 @@ layout: default
         <p class="desc">{{ page.description }}</p>
       {% endif %}
 
-      <div class="content gallery-images">
+      <div class="content gallery-images" id="macy-container">
         {{ content }}
       </div>
     </article>
@@ -24,59 +25,67 @@ layout: default
   </div>
 </div>
 
+<!-- ---------- Libraries ---------- -->
+<!-- Macy (for masonry layout) -->
 <script src="https://cdn.jsdelivr.net/npm/macy@2.5.1/dist/macy.min.js" integrity="sha384-vbLQF7G6CDg1IL9aClZVk7IXbQp7EfP7O/mu5yydqRAbhEyiV14akvjMAl9mTq3t" crossorigin="anonymous"></script>
 
-<!-- LightGallery core + plugins -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/css/lightgallery-bundle.min.css" integrity="sha384-AYqzchVs2gK6L5WzH1Yp9KCO97Wg8xLGzD5tB0aRjHvuRfT67+6HcZfaDkoeRZ6N" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/lightgallery.min.js" integrity="sha384-wZ9ti3lP27KZjP+LPrC7mHH5fQ+7T7Zf6piS7TL07eDpaRYyU6DdtA8BFuOPLDTU" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/plugins/zoom/lg-zoom.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/plugins/thumbnail/lg-thumbnail.min.js" crossorigin="anonymous"></script>
+<!-- LightGallery (for lightbox) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/css/lightgallery-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/lightgallery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/plugins/zoom/lg-zoom.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/plugins/thumbnail/lg-thumbnail.min.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  // Share button logic
-  const shareBtn = document.getElementById('shareBtn');
-  if (shareBtn) {
-    shareBtn.addEventListener('click', async () => {
-      const url = window.location.href;
-      if (navigator.share && /Mobi|Tablet|iPad|iPhone/.test(navigator.userAgent)) {
-        navigator.share({ url });
-      } else {
-        await navigator.clipboard.writeText(url);
-        shareBtn.textContent = '✔️ copied';
-        setTimeout(() => shareBtn.textContent = '🔗 share', 2000);
-      }
-    });
-  }
-
-  // Font toggle logic
-  const fontBtn = document.getElementById('fontSwitch');
-  if (fontBtn) {
-    fontBtn.addEventListener('click', () => {
-      if (fontBtn.textContent === 'default') {
-        document.body.style.fontFamily = 'sans-serif';
-        fontBtn.textContent = 'sans-serif';
-      } else {
-        document.body.style.fontFamily = "'Cormorant Garamond', serif";
-        fontBtn.textContent = 'default';
-      }
-    });
-  }
-
-  // Wrap Markdown images for LightGallery
-  const container = document.querySelector('.gallery-images');
-  const imgs = container.querySelectorAll('img');
-  imgs.forEach(img => {
-    const wrapper = document.createElement('a');
-    wrapper.href = img.src;
-    wrapper.classList.add('gallery-item');
-    img.parentNode.insertBefore(wrapper, img);
-    wrapper.appendChild(img);
+  // Share button
+  const shareBtn = document.getElementById("shareBtn");
+  shareBtn.addEventListener("click", async () => {
+    const url = window.location.href;
+    if (navigator.share && /Mobi|Tablet|iPad|iPhone/.test(navigator.userAgent)) {
+      navigator.share({ url });
+    } else {
+      await navigator.clipboard.writeText(url);
+      shareBtn.textContent = "✔️ copied";
+      setTimeout(() => (shareBtn.textContent = "🔗 share"), 2000);
+    }
   });
 
-  // Initialize Macy masonry grid
+  // Font toggle
+  const fontBtn = document.getElementById("fontSwitch");
+  fontBtn.addEventListener("click", () => {
+    if (fontBtn.textContent === "default") {
+      document.body.style.fontFamily = "sans-serif";
+      fontBtn.textContent = "sans-serif";
+    } else {
+      document.body.style.fontFamily = "'Cormorant Garamond', serif";
+      fontBtn.textContent = "default";
+    }
+  });
+
+  // Wrap all <img> in anchor tags for LightGallery
+  const imgs = document.querySelectorAll(".gallery-images img");
+  imgs.forEach(img => {
+    if (!img.closest("a")) {
+      const wrapper = document.createElement("a");
+      wrapper.href = img.src;
+      img.parentNode.insertBefore(wrapper, img);
+      wrapper.appendChild(img);
+    }
+  });
+
+  // Initialize LightGallery
+  lightGallery(document.querySelector(".gallery-images"), {
+    selector: "a",
+    zoom: true,
+    thumbnail: true,
+    download: false,
+    backdropDuration: 300,
+    closable: true,
+  });
+
+  // Initialize Macy (Masonry Grid)
   const macyInstance = Macy({
-    container: '.gallery-images',
+    container: "#macy-container",
     trueOrder: false,
     waitForImages: true,
     margin: 16,
@@ -88,23 +97,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Initialize LightGallery
-  lightGallery(container, {
-    selector: '.gallery-item',
-    plugins: [lgZoom, lgThumbnail],
-    speed: 400
-  });
+  // Recalculate after all images load
+  window.addEventListener("load", () => macyInstance.runOnImageLoad(() => macyInstance.recalculate(true), true));
 });
 </script>
 
 <style>
-/* Gallery-specific overrides */
 .gallery-images img {
   width: 100%;
   height: auto;
   display: block;
   margin-bottom: 1rem;
-  border-radius: 0; /* remove rounded corners */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.gallery-images img:hover {
+  transform: scale(1.02);
 }
 
 .desc {
@@ -112,5 +120,10 @@ document.addEventListener("DOMContentLoaded", () => {
   margin-bottom: 1.5rem;
   font-size: 1rem;
   line-height: 1.6;
+}
+
+/* LightGallery backdrop fix for close-on-click */
+.lg-backdrop {
+  background: rgba(0,0,0,0.9);
 }
 </style>
