@@ -16,8 +16,7 @@ layout: default
         <p class="desc">{{ page.description }}</p>
       {% endif %}
 
-      <!-- Masonry container -->
-      <div class="gallery-images" id="macy-container">
+      <div class="content">
         {{ content }}
       </div>
     </article>
@@ -27,10 +26,7 @@ layout: default
 </div>
 
 <!-- ---------- Libraries ---------- -->
-<!-- Macy (Masonry Grid) -->
 <script src="https://cdn.jsdelivr.net/npm/macy@2.5.1/dist/macy.min.js"></script>
-
-<!-- LightGallery (Lightbox) -->
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/css/lightgallery-bundle.min.css"
@@ -66,64 +62,73 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  /* ---------- Wrap all Markdown images for LightGallery ---------- */
-  const galleryContainer = document.querySelector("#macy-container");
-  const imgs = galleryContainer.querySelectorAll("img");
-  imgs.forEach((img) => {
-    if (!img.closest("a")) {
+  /* ---------- Collect Markdown images into a masonry wrapper ---------- */
+  const content = document.querySelector(".content");
+  const imgs = [...content.querySelectorAll("img")];
+
+  if (imgs.length) {
+    const galleryWrapper = document.createElement("div");
+    galleryWrapper.id = "macy-container";
+    galleryWrapper.className = "gallery-images";
+
+    imgs.forEach((img) => {
       const wrapper = document.createElement("a");
       wrapper.href = img.src;
       wrapper.classList.add("gallery-item");
-      img.parentNode.insertBefore(wrapper, img);
+      img.replaceWith(wrapper);
       wrapper.appendChild(img);
-    }
-  });
+      galleryWrapper.appendChild(wrapper);
+    });
 
-  /* ---------- Initialize LightGallery ---------- */
-  lightGallery(galleryContainer, {
-    selector: ".gallery-item",
-    zoom: true,
-    thumbnail: true,
-    download: false,
-    closable: true,
-  });
+    // Insert gallery after first paragraph or at end
+    const firstPara = content.querySelector("p");
+    if (firstPara) firstPara.after(galleryWrapper);
+    else content.appendChild(galleryWrapper);
 
-  /* ---------- Initialize Macy (Masonry) ---------- */
-  const macyInstance = Macy({
-    container: "#macy-container",
-    trueOrder: false,
-    waitForImages: true,
-    margin: 16,
-    columns: 3,
-    breakAt: {
-      1024: 2,
-      768: 1,
-    },
-  });
+    /* ---------- LightGallery ---------- */
+    lightGallery(galleryWrapper, {
+      selector: ".gallery-item",
+      zoom: true,
+      thumbnail: true,
+      download: false,
+      closable: true,
+    });
 
-  // Recalculate after all images have loaded
-  window.addEventListener("load", () => {
-    macyInstance.runOnImageLoad(() => macyInstance.recalculate(true), true);
-  });
+    /* ---------- Macy (masonry) ---------- */
+    const macyInstance = Macy({
+      container: "#macy-container",
+      trueOrder: false,
+      waitForImages: true,
+      margin: 16,
+      columns: 3,
+      breakAt: {
+        1024: 2,
+        768: 1,
+      },
+    });
+
+    window.addEventListener("load", () =>
+      macyInstance.runOnImageLoad(() => macyInstance.recalculate(true), true)
+    );
+  }
 });
 </script>
 
 <style>
 /* ---------- Masonry & Image Styles ---------- */
 .gallery-images {
-  margin-top: 1.5rem;
+  margin: 1.5rem 0;
 }
 .gallery-images a {
   display: block;
   overflow: hidden;
-  border-radius: 0;
 }
 .gallery-images img {
   width: 100%;
   height: auto;
   display: block;
-  transition: transform 0.25s ease;
   cursor: pointer;
+  transition: transform 0.25s ease;
 }
 .gallery-images img:hover {
   transform: scale(1.03);
@@ -142,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
   background: rgba(0, 0, 0, 0.9);
 }
 
-/* ---------- Small UI Polishes ---------- */
+/* ---------- Header UI ---------- */
 .gallery-header {
   display: flex;
   justify-content: space-between;
