@@ -52,7 +52,7 @@ layout: default
 
   // ---------- Lightbox with Lazy Loading ----------
   document.addEventListener("DOMContentLoaded", function() {
-    const images = Array.from(document.querySelectorAll(".gallery-images img"));
+    const images = Array.from(document.querySelectorAll(".masonry-grid img"));
     images.forEach(img => img.setAttribute("loading", "lazy"));
 
     const overlay = document.createElement("div");
