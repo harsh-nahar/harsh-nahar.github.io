@@ -11,12 +11,11 @@ layout: default
 
     <article class="post-content">
       <h1>{{ page.title }}</h1>
-
       {% if page.description %}
         <p class="desc">{{ page.description }}</p>
       {% endif %}
 
-      <div class="content">
+      <div id="justified-gallery" class="content">
         {{ content }}
       </div>
     </article>
@@ -26,18 +25,24 @@ layout: default
 </div>
 
 <!-- ---------- Libraries ---------- -->
-<script src="https://cdn.jsdelivr.net/npm/macy@2.5.1/dist/macy.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"
+/>
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/css/lightgallery-bundle.min.css"
 />
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/lightgallery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/plugins/zoom/lg-zoom.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/plugins/thumbnail/lg-thumbnail.min.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  /* ---------- Share button ---------- */
+  // Share button
   const shareBtn = document.getElementById("shareBtn");
   shareBtn.addEventListener("click", async () => {
     const url = window.location.href;
@@ -50,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  /* ---------- Font toggle ---------- */
+  // Font toggle
   const fontBtn = document.getElementById("fontSwitch");
   fontBtn.addEventListener("click", () => {
     if (fontBtn.textContent === "default") {
@@ -62,79 +67,37 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  /* ---------- Collect Markdown images into a masonry wrapper ---------- */
-  const content = document.querySelector(".content");
-  const imgs = [...content.querySelectorAll("img")];
+  // Wrap each markdown image in <a> for LightGallery
+  const imgs = document.querySelectorAll("#justified-gallery img");
+  imgs.forEach(img => {
+    if (!img.closest("a")) {
+      const link = document.createElement("a");
+      link.href = img.src;
+      img.parentNode.insertBefore(link, img);
+      link.appendChild(img);
+    }
+  });
 
-  if (imgs.length) {
-    const galleryWrapper = document.createElement("div");
-    galleryWrapper.id = "macy-container";
-    galleryWrapper.className = "gallery-images";
-
-    imgs.forEach((img) => {
-      const wrapper = document.createElement("a");
-      wrapper.href = img.src;
-      wrapper.classList.add("gallery-item");
-      img.replaceWith(wrapper);
-      wrapper.appendChild(img);
-      galleryWrapper.appendChild(wrapper);
-    });
-
-    // Insert gallery after first paragraph or at end
-    const firstPara = content.querySelector("p");
-    if (firstPara) firstPara.after(galleryWrapper);
-    else content.appendChild(galleryWrapper);
-
-    /* ---------- LightGallery ---------- */
-    lightGallery(galleryWrapper, {
-      selector: ".gallery-item",
+  // Initialize Justified Gallery + LightGallery
+  $('#justified-gallery').justifiedGallery({
+    rowHeight: 300,
+    margins: 8,
+    lastRow: 'nojustify',
+    captions: false,
+    waitThumbnailsLoad: true
+  }).on('jg.complete', function () {
+    lightGallery(document.getElementById('justified-gallery'), {
+      selector: 'a',
       zoom: true,
       thumbnail: true,
       download: false,
       closable: true,
     });
-
-    /* ---------- Macy (masonry) ---------- */
-    const macyInstance = Macy({
-      container: "#macy-container",
-      trueOrder: false,
-      waitForImages: true,
-      margin: 16,
-      columns: 3,
-      breakAt: {
-        1024: 2,
-        768: 1,
-      },
-    });
-
-    window.addEventListener("load", () =>
-      macyInstance.runOnImageLoad(() => macyInstance.recalculate(true), true)
-    );
-  }
+  });
 });
 </script>
 
 <style>
-/* ---------- Masonry & Image Styles ---------- */
-.gallery-images {
-  margin: 1.5rem 0;
-}
-.gallery-images a {
-  display: block;
-  overflow: hidden;
-}
-.gallery-images img {
-  width: 100%;
-  height: auto;
-  display: block;
-  cursor: pointer;
-  transition: transform 0.25s ease;
-}
-.gallery-images img:hover {
-  transform: scale(1.03);
-}
-
-/* ---------- Description Text ---------- */
 .desc {
   color: #555;
   margin-bottom: 1.5rem;
@@ -142,34 +105,16 @@ document.addEventListener("DOMContentLoaded", () => {
   line-height: 1.6;
 }
 
-/* ---------- LightGallery Backdrop ---------- */
-.lg-backdrop {
-  background: rgba(0, 0, 0, 0.9);
+#justified-gallery img {
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+#justified-gallery img:hover {
+  transform: scale(1.03);
 }
 
-/* ---------- Header UI ---------- */
-.gallery-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 720px;
-  margin: 0 auto 1.5rem;
-  padding: 0 1rem;
-}
-.gallery-header .back-link {
-  font-size: 1.2rem;
-  color: #555;
-  text-decoration: none;
-}
-.gallery-header .back-link:hover {
-  color: #000;
-}
-.gallery-header .font-switch {
-  font-size: 0.95rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background: transparent;
-  padding: 0.25rem 0.6rem;
-  cursor: pointer;
+.lg-backdrop {
+  background: rgba(0,0,0,0.92);
 }
 </style>
