@@ -42,6 +42,11 @@
   {% elsif page.layout == 'post' and page.image %}
     <meta property="og:image"  content="{{ page.image | absolute_url }}" />
     <meta name="twitter:image" content="{{ page.image | absolute_url }}" />
+  {% elsif page.url == '/gallery/' %}
+  <meta property="og:image"
+        content="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaislmer_2022.webp" />
+  <meta name="twitter:image"
+        content="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaislmer_2022.webp" />
   {% else %}
     <meta property="og:image"  content="{{ '/assets/default-share.png' | absolute_url }}" />
     <meta name="twitter:image" content="{{ '/assets/default-share.png' | absolute_url }}" />
@@ -58,3 +63,4 @@
   {{ content }}
 </body>
 </html>
+
