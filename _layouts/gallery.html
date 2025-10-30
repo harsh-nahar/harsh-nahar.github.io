@@ -67,4 +67,43 @@ layout: default
   font-size: 1rem;
   line-height: 1.6;
 }
+
+/* Remove visible borders and spacing for tables used as image grids */
+.gallery-images table {
+  border-collapse: collapse;
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.gallery-images tr,
+.gallery-images td {
+  border: none;
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
+}
+
+/* Make table images sit naturally */
+.gallery-images table img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0;
+  margin: 0;
+}
+/* Add a small consistent gap between stacked tables and standalone images */
+.gallery-images img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 1rem;
+  border-radius: 0;
+}  
+  
+/* two-column tables have a small gap between the images */
+.gallery-images td + td {
+  padding-left: 0.5rem;
+}
 </style>
