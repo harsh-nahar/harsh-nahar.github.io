@@ -467,37 +467,31 @@ body {
   left: 0;
 }
 
-/* === GALLERY LINK HOVER EFFECTS === */
+/* === GALLERY LINK HOVER EFFECTS (TEXT ONLY, NO BOX) === */
 
-/* For links inside the main gallery index (e.g., post thumbnails/titles linking to posts) */
+/* For gallery index page links — titles, thumbnails, Behance link, back-home */
 .gallery-list a:hover,
-.gallery-links a:hover {
+.gallery-links a:hover,
+.gallery-home:hover,
+.back-link:hover {
   color: #ff5232;
-  background: rgba(255, 82, 50, 0.05);
-  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
 }
 
-/* For the “Back to Gallery” link inside a gallery post */
-.back-gallery:hover {
-  color: #ff5232;
-}
-
-/* For “Back to Home” link from Gallery */
-.gallery-home:hover {
-  color: #ff5232;
-}
-
-/* For any inline links inside gallery posts (e.g., Behance links) */
+/* For links within gallery posts — e.g., Behance project link inside a post */
 .gallery-page a:hover,
 .gallery-post a:hover {
   color: #ff5232;
-  background: rgba(255, 82, 50, 0.05);
-  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
 }
 
-/* Optional: subtle underline on hover for inline links */
-.gallery-page a:hover,
-.gallery-post a:hover {
-  text-decoration: underline;
+/* Optional: if you *do* want that faint orange background on hover for clickable cards (like your gallery post previews) */
+.gallery-card a:hover {
+  background: rgba(255, 82, 50, 0.05);
+  color: #ff5232;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
 }
 
