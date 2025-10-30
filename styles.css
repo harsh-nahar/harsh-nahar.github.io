@@ -467,4 +467,37 @@ body {
   left: 0;
 }
 
+/* === GALLERY LINK HOVER EFFECTS === */
+
+/* For links inside the main gallery index (e.g., post thumbnails/titles linking to posts) */
+.gallery-list a:hover,
+.gallery-links a:hover {
+  color: #ff5232;
+  background: rgba(255, 82, 50, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+/* For the “Back to Gallery” link inside a gallery post */
+.back-gallery:hover {
+  color: #ff5232;
+}
+
+/* For “Back to Home” link from Gallery */
+.gallery-home:hover {
+  color: #ff5232;
+}
+
+/* For any inline links inside gallery posts (e.g., Behance links) */
+.gallery-page a:hover,
+.gallery-post a:hover {
+  color: #ff5232;
+  background: rgba(255, 82, 50, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Optional: subtle underline on hover for inline links */
+.gallery-page a:hover,
+.gallery-post a:hover {
+  text-decoration: underline;
+}
 
