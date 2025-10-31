@@ -9,9 +9,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap') screen;
 
 /* No underlines for <a> tags globally */
-a {
-  text-decoration: none;
-}
 
 /* On the CV page we want Inter instead of Garamond */
 .cv-page {
@@ -342,13 +339,12 @@ body {
 
 .external-link a {
   color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .external-link a:hover {
-  color: #000;
+  color: #ff5232;
 }
 
 .gallery-list {
@@ -450,7 +446,7 @@ body {
 }
 
 .gallery-header .back-link:hover {
-  color: #000;
+  color: #ff5232;
 }
 
 .gallery-header .font-switch {
@@ -499,5 +495,6 @@ body {
   text-decoration: none;
   transition: all 0.2s ease-in-out;
 }
+
 
 
