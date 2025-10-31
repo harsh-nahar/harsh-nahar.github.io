@@ -8,8 +8,6 @@
 ───────────────────────────────────────────────────────────────────────────────*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap') screen;
 
-/* No underlines for <a> tags globally */
-
 /* On the CV page we want Inter instead of Garamond */
 .cv-page {
   font-family: 'Inter', sans-serif;
@@ -479,9 +477,15 @@ body {
   transition: color 0.2s ease-in-out;
 }
 
+/* Gallery-posts-specific link styling */
+.gallery-post a:link,
+.gallery-post a:visited {
+  color: inherit; /* match surrounding text color */
+  text-decoration: none;
+}
+
 /* For links within gallery posts — e.g., Behance project link inside a post */
 .gallery-page a:hover,
-.gallery-post a,
 .gallery-post a:hover {
   color: #ff5232;
   text-decoration: none;
@@ -495,6 +499,7 @@ body {
   text-decoration: none;
   transition: all 0.2s ease-in-out;
 }
+
 
 
 
