@@ -450,11 +450,10 @@ body {
 }
 
 .gallery-header .font-switch {
-  font-size: 0.95rem;
+  font-size: 20px;
   border: 1px solid #ccc;
-  border-radius: 6px;
-  background: transparent;
-  padding: 0.25rem 0.6rem;
+  background: none;
+  padding: 0.25rem;
   cursor: pointer;
 }
 
@@ -471,7 +470,6 @@ body {
 /* === GALLERY LINK HOVER EFFECTS (TEXT ONLY, NO BOX) === */
 
 /* For gallery index page links — titles, thumbnails, Behance link, back-home */
-.gallery-list a,
 .gallery-list a:hover,
 .gallery-links a:hover,
 .gallery-home:hover,
@@ -483,6 +481,7 @@ body {
 
 /* For links within gallery posts — e.g., Behance project link inside a post */
 .gallery-page a:hover,
+.gallery-post a,
 .gallery-post a:hover {
   color: #ff5232;
   text-decoration: none;
@@ -496,6 +495,7 @@ body {
   text-decoration: none;
   transition: all 0.2s ease-in-out;
 }
+
 
 
 
