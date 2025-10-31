@@ -8,6 +8,11 @@
 ───────────────────────────────────────────────────────────────────────────────*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap') screen;
 
+/* No underlines for <a> tags globally */
+a {
+  text-decoration: none;
+}
+
 /* On the CV page we want Inter instead of Garamond */
 .cv-page {
   font-family: 'Inter', sans-serif;
@@ -494,4 +499,5 @@ body {
   text-decoration: none;
   transition: all 0.2s ease-in-out;
 }
+
 
