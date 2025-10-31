@@ -175,7 +175,7 @@ body {
    5. Individual Post Page
 ───────────────────────────────────────────────────────────────────────────────*/
 .post-page {
-  background: #F8F5F1;
+  background: #FFFFFF; /* Previously used #F8F5F1 */
 }
 .full-bg {
   min-height: 100vh;
@@ -537,6 +537,7 @@ body {
   text-decoration: none;
   transition: all 0.2s ease-in-out;
 }
+
 
 
 
