@@ -331,6 +331,7 @@ body {
 .external-link {
   text-align: center;
   font-size: 0.95rem;
+  font-weight: bold;
   color: #666;
   margin-bottom: 2rem;
 }
@@ -477,13 +478,6 @@ body {
   transition: color 0.2s ease-in-out;
 }
 
-/* Gallery-posts-specific link styling */
-.gallery-post a:link,
-.gallery-post a:visited {
-  color: inherit; /* match surrounding text color */
-  text-decoration: none;
-}
-
 /* For links within gallery posts — e.g., Behance project link inside a post */
 .gallery-page a:hover,
 .gallery-post a:hover {
@@ -492,13 +486,41 @@ body {
   transition: color 0.2s ease-in-out;
 }
 
-/* Optional: if you *do* want that faint orange background on hover for clickable cards (like your gallery post previews) */
+/* ============================================== */
+/* Base: remove default blue/underline for links inside gallery pages/posts/list */
+.container.post-container .gallery-images a,
+.container.post-container .gallery-images a:link,
+.container.post-container .gallery-images a:visited,
+.gallery-list a:visited,
+.gallery-header .back-link,
+.gallery-header .back-link:link,
+.gallery-header .back-link:visited,
+.external-link a,
+.external-link a:link,
+.external-link a:visited {
+  color: inherit;              /* match surrounding text color */
+  text-decoration: none !important; /* explicitly remove underline */
+  outline: none;
+}
+
+/* Specific: Behance or external links that are inline text inside post content */
+.container.post-container .post-content a.external,
+.container.post-container .post-content a[rel~="noopener"],
+.container.post-container .post-content a[target="_blank"] {
+  color: inherit;
+  text-decoration: none !important;
+}
+/* ============================================== */
+
+
+/* Faint orange background on hover for clickable cards (like your gallery post previews) */
 .gallery-card a:hover {
   background: rgba(255, 82, 50, 0.05);
   color: #ff5232;
   text-decoration: none;
   transition: all 0.2s ease-in-out;
 }
+
 
 
 
