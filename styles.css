@@ -476,6 +476,11 @@ body {
   transition: color 0.2s ease-in-out;
 }
 
+/* Bold-ing the behance link on gallery-list page */
+.portfolio-link {
+  font-weight: bold;
+}
+
 /* For links within gallery posts — e.g., Behance project link inside a post */
 .gallery-page a:hover,
 .gallery-post a:hover {
@@ -532,6 +537,7 @@ body {
   text-decoration: none;
   transition: all 0.2s ease-in-out;
 }
+
 
 
 
