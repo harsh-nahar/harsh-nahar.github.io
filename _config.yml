@@ -1,6 +1,7 @@
 url: "https://harshnahar.com"
 baseurl: ""
 title: "harsh nahar"
+description: "Welcome to my little corner of the web."
 permalink: /blog/:title/
 
 # Blog posts defaults
@@ -23,4 +24,5 @@ defaults:
       path: ""
       type: "gallery"
     values:
+
       layout: "gallery_post"
