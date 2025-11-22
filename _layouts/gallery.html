@@ -1,106 +1,43 @@
 ---
 layout: default
+title: "Photography"
+description: "Collections from the road."
+image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaisalmer/jaisalmer_camelwalkers.webp"
 ---
-<div class="full-bg">
-  <div class="container post-container">
-    <div class="gallery-header">
-      <a href="{{ '/gallery/' | relative_url }}" class="back-link">&lt; gallery</a>
-      <button id="fontSwitch" class="font-switch">default</button>
+
+<div class="fade-in">
+    <div class="mb-12">
+        <h1 class="text-3xl font-bold mb-2 dark:text-white">Photography</h1>
+        <p class="text-[#86868b] dark:text-gray-400">Collections from the road. For high-res, visit <a href="https://www.behance.net/hrsvnr" target="_blank" class="text-blue-600 hover:underline">Behance</a>.</p>
     </div>
 
-    <article class="post-content">
-      <h1>{{ page.title }}</h1>
-
-      {% if page.description %}
-        <p class="desc">{{ page.description }}</p>
-      {% endif %}
-
-      <div class="content gallery-images">
-        {{ content }}
-      </div>
-    </article>
-
-    <button id="shareBtn" class="share-btn">🔗 share</button>
-  </div>
+    <div class="grid grid-cols-1 gap-12">
+      {% assign galleries = site.gallery | sort: "date" | reverse %}
+      {% for gallery in galleries %}
+        {% assign thumb = gallery.thumbnail %}
+        {% if thumb == nil %}
+            {% assign first_img = gallery.content | regex_replace: ".*?!\\[[^)]*\\]\\(([^)]*)\\).*", "\\1" %}
+            {% assign thumb = first_img %}
+        {% endif %}
+        
+        <a href="{{ gallery.url | relative_url }}" class="group cursor-pointer block">
+            <div class="overflow-hidden rounded-2xl mb-4 bg-gray-100 dark:bg-white/5 relative aspect-[3/2] shadow-sm hover:shadow-md transition-all">
+                {% if thumb %}
+                <img src="{{ thumb | relative_url }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" alt="{{ gallery.title }}" loading="lazy">
+                {% else %}
+                <div class="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-800 text-gray-400">No Image</div>
+                {% endif %}
+            </div>
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="text-lg font-semibold text-[#1d1d1f] dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{{ gallery.title }}</h3>
+                    <p class="text-[#86868b] dark:text-gray-400 text-sm">{{ gallery.description }}</p>
+                </div>
+                {% if gallery.date %}
+                <span class="font-mono text-xs bg-gray-50 dark:bg-white/10 px-2 py-1 rounded text-[#86868b] dark:text-gray-300 h-fit">{{ gallery.date | date: "%Y" }}</span>
+                {% endif %}
+            </div>
+        </a>
+      {% endfor %}
+    </div>
 </div>
-
-<script>
-  // Share button logic
-  const shareBtn = document.getElementById('shareBtn');
-  shareBtn.addEventListener('click', async () => {
-    const url = window.location.href;
-    if (navigator.share && /Mobi|Tablet|iPad|iPhone/.test(navigator.userAgent)) {
-      navigator.share({ url });
-    } else {
-      await navigator.clipboard.writeText(url);
-      shareBtn.textContent = '✔️ copied';
-      setTimeout(() => shareBtn.textContent = '🔗 share', 2000);
-    }
-  });
-
-  // Font toggle logic
-  const fontBtn = document.getElementById('fontSwitch');
-  fontBtn.addEventListener('click', () => {
-    if (fontBtn.textContent === 'default') {
-      document.body.style.fontFamily = 'sans-serif';
-      fontBtn.textContent = 'sans-serif';
-    } else {
-      document.body.style.fontFamily = "'Cormorant Garamond', serif";
-      fontBtn.textContent = 'default';
-    }
-  });
-</script>
-
-<style>
-/* Gallery-specific overrides */
-.gallery-images img {
-  width: 100%;
-  height: auto;
-  display: block;
-  margin-bottom: 1rem;
-  border-radius: 0; /* remove rounded corners */
-}
-
-.desc {
-  color: #555;
-  margin-bottom: 1.5rem;
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-/* Remove visible borders and spacing for tables used as image grids */
-.gallery-images table {
-  border-spacing: 0.75rem; /* adds natural gap between cells */
-  border-collapse: separate; /* allows spacing to work */
-  width: 100%;
-  margin: 0 0 1rem 0; /* adds small space after each table */
-}
-
-.gallery-images td {
-  padding: 0;
-  vertical-align: top;
-}
-
-
-/* Make table images sit naturally */
-.gallery-images table img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 0;
-  margin: 0;
-}
-/* Add a small consistent gap between stacked tables and standalone images */
-.gallery-images img {
-  width: 100%;
-  height: auto;
-  display: block;
-  margin-bottom: 1rem;
-  border-radius: 0;
-}  
-  
-/* two-column tables have a small gap between the images */
-.gallery-images td + td {
-  padding-left: 1rem;
-}
-</style>

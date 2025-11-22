@@ -1,41 +1,42 @@
 ---
 layout: default
 ---
-<div class="full-bg">
-  <div class="container post-container">
-    <div class="post-header">
-      <a href="{{ '/blog/' | relative_url }}" class="back-link">&lt; blog</a>
-      <button id="fontSwitch" class="font-switch">default</button>
-    </div>
-    <article class="post-content">
-      <h1>{{ page.title }}</h1>
-      <div class="content">
+<article class="fade-in">
+    <!-- Header: Pure title and metadata, NO back button -->
+    <header class="mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight text-[#1d1d1f] dark:text-white">{{ page.title }}</h1>
+        
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-white/10 pb-4">
+            <time class="font-mono text-xs text-[#86868b]">{{ page.date | date: "%b %-d, %Y" }}</time>
+            
+            <!-- Share Button Only -->
+            <button onclick="sharePost()" class="group flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-50 dark:bg-white/10 hover:bg-gray-100 dark:hover:bg-white/20 transition-colors cursor-pointer">
+                <i data-lucide="share" class="w-3 h-3 text-gray-500 dark:text-gray-300"></i>
+                <span id="share-text" class="text-[10px] font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wide">Share</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <div class="prose prose-lg dark:prose-invert max-w-none">
         {{ content }}
-      </div>
-    </article>
-    <button id="shareBtn" class="share-btn">🔗 share</button>
-  </div>
-</div>
+    </div>
+</article>
+
 <script>
-  document.getElementById('shareBtn').addEventListener('click', async () => {
+async function sharePost() {
     const url = window.location.href;
-    if (navigator.share && /Mobi|Tablet|iPad|iPhone/.test(navigator.userAgent)) {
-      navigator.share({ url });
+    const title = document.title;
+    const shareText = document.getElementById('share-text');
+    if (navigator.share) {
+        try { await navigator.share({ title, url }); } catch (err) {}
     } else {
-      await navigator.clipboard.writeText(url);
-      const btn = document.getElementById('shareBtn');
-      btn.textContent = '✔️ copied';
-      setTimeout(() => btn.textContent = '🔗 share', 2000);
+        try {
+            await navigator.clipboard.writeText(url);
+            const original = shareText.innerText;
+            shareText.innerText = "COPIED";
+            setTimeout(() => shareText.innerText = original, 2000);
+        } catch (err) {}
     }
-  });
-  document.getElementById('fontSwitch').addEventListener('click', () => {
-    const btn = document.getElementById('fontSwitch');
-    if (btn.textContent === 'default') {
-      document.body.style.fontFamily = 'sans-serif';
-      btn.textContent = 'sans-serif';
-    } else {
-      document.body.style.fontFamily = "'Cormorant Garamond', serif";
-      btn.textContent = 'default';
-    }
-  });
+}
 </script>
