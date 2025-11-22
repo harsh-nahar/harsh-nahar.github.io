@@ -27,7 +27,7 @@ permalink: /tools/taxcalc2526/
       <input type="number" id="income" placeholder="e.g. 1200000" class="w-full px-4 py-3.5 bg-gray-50 dark:bg-white/10 border border-transparent focus:border-blue-500/50 rounded-2xl text-lg text-[#1d1d1f] dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all">
     </div>
     
-    <!-- NPS Input (Visible in both, but primarily for New Regime user request) -->
+    <!-- NPS Input -->
     <div class="form-group">
         <label for="nps" class="block text-sm font-medium text-[#86868b] dark:text-gray-400 mb-2 ml-1">Employer NPS Contribution (80CCD(2))</label>
         <input type="number" id="nps" placeholder="e.g. 50000" class="w-full px-4 py-3.5 bg-gray-50 dark:bg-white/10 border border-transparent focus:border-blue-500/50 rounded-2xl text-lg text-[#1d1d1f] dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all">
@@ -41,8 +41,8 @@ permalink: /tools/taxcalc2526/
     </div>
   </div>
 
-  <!-- Results Section (Always Visible now) -->
-  <div id="resultContainer" class="opacity-50 transition-opacity duration-300"> <!-- Starts faded until input -->
+  <!-- Results Section -->
+  <div id="resultContainer" class="opacity-50 transition-opacity duration-300">
     
     <!-- Summary Card -->
     <section class="summary bg-gray-50 dark:bg-white/5 rounded-3xl p-6 sm:p-8 mb-8 border border-gray-100 dark:border-white/5">
@@ -85,10 +85,11 @@ permalink: /tools/taxcalc2526/
         </div>
     </section>
 
-    <!-- Breakdown Table (Always Visible) -->
+    <!-- Breakdown Table -->
     <section class="breakdown">
         <h2 class="text-lg font-semibold mb-4 text-[#1d1d1f] dark:text-white pl-1">Calculation Breakdown</h2>
-        <div class="overflow-hidden rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5">
+        <!-- Changed to overflow-x-auto to allow horizontal scroll on mobile -->
+        <div class="overflow-x-auto rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5">
         <table class="w-full text-sm">
             <thead class="bg-gray-50 dark:bg-white/5 text-[#86868b] dark:text-gray-400 font-medium text-xs uppercase tracking-wider border-b border-gray-200 dark:border-white/10">
             <tr>
@@ -134,10 +135,6 @@ permalink: /tools/taxcalc2526/
         <li>Surcharge is applied for incomes exceeding ₹50 Lakhs.</li>
         <li>This calculator is designed primarily for salaried individuals.</li>
     </ul>
-
-    <p class="text-sm text-[#86868b] mt-8 italic">
-        Explanation adapted from <a href="https://fincalculator.in/new-regime-income-tax-calculator/2025-26" target="_blank" rel="nofollow" class="hover:underline">FinCalculator.in</a>.
-    </p>
 </div>
 
 <script src="script.js"></script>
