@@ -21,20 +21,6 @@ image: "https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blo
     <div id="blog-posts-container" class="space-y-10">
         {% for post in site.posts %}
         <a href="{{ post.url | relative_url }}" class="blog-post-item group block" data-title="{{ post.title | downcase }}">
-            
-            <!-- Image Logic: Supports 'image' or 'thumbnail' front matter -->
-            {% assign post_image = post.image | default: post.thumbnail %}
-            
-            {% if post_image %}
-            <div class="mb-4 rounded-xl overflow-hidden h-48 w-full bg-gray-100 dark:bg-white/5 relative">
-                {% if post_image contains "http" %}
-                    <img src="{{ post_image }}" alt="{{ post.title }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
-                {% else %}
-                    <img src="{{ post_image | relative_url }}" alt="{{ post.title }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
-                {% endif %}
-            </div>
-            {% endif %}
-
             <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-1">
                 <h2 class="text-xl font-semibold text-[#1d1d1f] dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{{ post.title }}</h2>
                 <time class="font-mono text-xs text-[#86868b] whitespace-nowrap">{{ post.date | date: "%b %-d, %Y" }}</time>
@@ -69,3 +55,4 @@ image: "https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blo
         });
     }
 </script>
+
