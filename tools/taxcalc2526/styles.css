@@ -6,7 +6,7 @@
 }
 .regime-toggle[data-active="old"] .thumb { 
   transform: translateX(100%);
-  margin-left: 8px;
+  margin-left: 8px; /* Compensation for the gap */
 }
 
 /* Active state text styling */
@@ -25,16 +25,13 @@
   color: #999;
 }
 
-/* Breakdown Table Styling (Fixes Alignment & Padding) */
-.breakdown td {
-  padding: 1rem; /* Matches the p-4 (1rem) of the headers */
-}
-.breakdown td:not(:first-child) {
-  text-align: right; /* Aligns Amount, Rate, and Tax columns to the right */
-}
-/* Ensure the label column in the footer rows (which spans 3 cols) stays left-aligned */
-.breakdown td[colspan="3"] {
-  text-align: left; 
+/* Table styling tweaks */
+td, th {
+  vertical-align: middle;
+  /* Force horizontal scroll on small screens by preventing wrap */
+  white-space: nowrap; 
+  /* Add padding to JS-generated rows which lack utility classes */
+  padding: 1rem; 
 }
 
 /* Print Styles */
@@ -43,25 +40,26 @@
     background: white;
     color: black;
   }
-  nav, footer, .back-home, .actions, .link-wrap {
+  
+  nav, footer, .back-home, .actions, .link-wrap, #reset {
     display: none !important;
   }
+
   main {
     margin: 0 !important;
     padding: 0 !important;
     max-width: none !important;
   }
+
   .tax-app {
     max-width: 100%;
     margin: 0;
     box-shadow: none;
   }
-  .breakdown table {
-    width: 100%;
-    border: 1px solid #ddd;
-  }
-  .breakdown th, .breakdown td {
-    border: 1px solid #eee;
-    padding: 8px;
+  
+  /* Allow wrapping in print to avoid cutting off */
+  td, th {
+    white-space: normal;
+    padding: 4px;
   }
 }
