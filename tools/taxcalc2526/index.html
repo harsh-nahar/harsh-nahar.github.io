@@ -3,78 +3,111 @@ layout: default
 title: "Tax Calculator FY 2025–26"
 permalink: /tools/taxcalc2526/
 ---
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Income Tax FY 2025–26</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="tax-app">
-    <h1>Income Tax FY 2025–26</h1>
+<link rel="stylesheet" href="styles.css">
 
-    <div class="regime-toggle" data-active="new">
-      <span class="thumb"></span>
-      <button data-regime="new" class="active">New Regime</button>
-      <button data-regime="old">Old Regime</button>
-    </div>
-
-    <div class="form-group">
-      <label for="income">Annual Income (₹)</label>
-      <input type="number" id="income" placeholder="0">
-      <div class="error" id="incomeError"></div>
-    </div>
-    <div class="form-group exemptions" hidden>
-      <label for="exemptions">Exemptions (₹)</label>
-      <input type="number" id="exemptions" placeholder="0">
-      <div class="error" id="exemptionsError"></div>
-    </div>
-
-    <div class="actions">
-      <button id="calculate" disabled>Calculate</button>
-      <button id="reset">Reset</button>
-      <button id="savePdf">Save</button>
-    </div>
-
-    <section class="summary" hidden>
-      <h2>Tax Summary</h2>
-      <div class="summary-row"><span>Income</span><span id="sumIncome"></span></div>
-      <div class="summary-row"><span>Deduction</span><span id="sumDeduction"></span></div>
-      <div class="summary-row"><span>Taxable</span><span id="sumTaxable"></span></div>
-      <div class="summary-row"><span>Tax</span><span id="sumTax"></span></div>
-      <!-- surcharge label now dynamic -->
-      <div class="summary-row">
-        <span id="surchargeLabel">Surcharge</span>
-        <span id="sumSurcharge"></span>
-      </div>
-      <div class="summary-row"><span>Cess (4%)</span><span id="sumCess"></span></div>
-      <div class="summary-row total"><span>Total Liability</span><span id="sumTotal"></span></div>
-      <div class="link-wrap">
-        <button class="link-button" id="toggleBreak" hidden>Show Breakdown</button>
-      </div>
-    </section>
-
-    <section class="breakdown" hidden>
-      <h2>Slab Breakdown</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Slab</th>
-            <th>Amount</th>
-            <th>Rate</th>
-            <th>Tax</th>
-          </tr>
-        </thead>
-        <tbody id="breakBody"></tbody>
-      </table>
-    </section>
-
-    <div class="back-home"><a href="/">← Back to Home</a></div>
+<div class="tax-app fade-in max-w-2xl mx-auto">
+  
+  <!-- Header -->
+  <div class="text-center mb-10">
+    <h1 class="text-3xl md:text-4xl font-bold mb-2 text-[#1d1d1f] dark:text-white">Income Tax Calculator</h1>
+    <p class="text-[#86868b] dark:text-gray-400">FY 2025–26 (AY 2026–27)</p>
   </div>
 
-  <script src="script.js"></script>
-</body>
-</html>
+  <!-- Regime Toggle -->
+  <div class="regime-toggle bg-gray-100 dark:bg-white/10 p-1 rounded-xl flex relative mb-8 h-12 cursor-pointer" data-active="new">
+    <span class="thumb absolute top-1 bottom-1 w-[calc(50%-4px)] bg-white dark:bg-[#636366] rounded-lg shadow-sm transition-all duration-300 ease-[cubic-bezier(0.4,0.0,0.2,1)]"></span>
+    <button data-regime="new" class="active flex-1 relative z-10 text-sm font-medium transition-colors duration-300 text-center focus:outline-none">New Regime</button>
+    <button data-regime="old" class="flex-1 relative z-10 text-sm font-medium transition-colors duration-300 text-center focus:outline-none opacity-60 hover:opacity-100">Old Regime</button>
+  </div>
+
+  <!-- Inputs -->
+  <div class="space-y-6 mb-10">
+    <div class="form-group">
+      <label for="income" class="block text-sm font-medium text-[#86868b] dark:text-gray-400 mb-2 ml-1">Annual Income (₹)</label>
+      <input type="number" id="income" placeholder="e.g. 1200000" class="w-full px-4 py-3.5 bg-gray-50 dark:bg-white/10 border border-transparent focus:border-blue-500/50 rounded-2xl text-lg text-[#1d1d1f] dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all">
+      <div class="error text-red-500 text-xs mt-2 ml-1 h-4 font-medium" id="incomeError"></div>
+    </div>
+    
+    <div class="form-group exemptions" hidden>
+      <label for="exemptions" class="block text-sm font-medium text-[#86868b] dark:text-gray-400 mb-2 ml-1">Exemptions (80C, HRA, etc.)</label>
+      <input type="number" id="exemptions" placeholder="e.g. 150000" class="w-full px-4 py-3.5 bg-gray-50 dark:bg-white/10 border border-transparent focus:border-blue-500/50 rounded-2xl text-lg text-[#1d1d1f] dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all">
+      <div class="error text-red-500 text-xs mt-2 ml-1 h-4 font-medium" id="exemptionsError"></div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="actions grid grid-cols-2 gap-4 mb-12">
+    <button id="calculate" disabled class="col-span-2 py-4 bg-[#0071e3] hover:bg-[#0077ED] dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-lg font-semibold rounded-2xl transition-all shadow-lg shadow-blue-500/20 disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed active:scale-[0.99]">
+      Calculate Tax
+    </button>
+    <button id="reset" class="py-3 bg-gray-100 dark:bg-white/10 text-[#1d1d1f] dark:text-white font-medium rounded-xl hover:bg-gray-200 dark:hover:bg-white/20 transition-colors">
+      Reset
+    </button>
+    <button id="savePdf" class="py-3 bg-gray-100 dark:bg-white/10 text-[#1d1d1f] dark:text-white font-medium rounded-xl hover:bg-gray-200 dark:hover:bg-white/20 transition-colors flex items-center justify-center gap-2">
+      <i data-lucide="download" class="w-4 h-4 opacity-60"></i> Save PDF
+    </button>
+  </div>
+
+  <!-- Summary Card -->
+  <section class="summary bg-gray-50 dark:bg-white/5 rounded-3xl p-6 sm:p-8 mb-8 border border-gray-100 dark:border-white/5" hidden>
+    <h2 class="text-xl font-bold mb-6 text-[#1d1d1f] dark:text-white">Tax Summary</h2>
+    
+    <div class="space-y-4 text-sm sm:text-base">
+      <div class="summary-row flex justify-between items-center">
+        <span class="text-[#86868b] dark:text-gray-400">Total Income</span>
+        <span id="sumIncome" class="font-mono text-[#1d1d1f] dark:text-white font-medium"></span>
+      </div>
+      <div class="summary-row flex justify-between items-center">
+        <span class="text-[#86868b] dark:text-gray-400">Deductions</span>
+        <span id="sumDeduction" class="font-mono text-green-600 dark:text-green-400 font-medium"></span>
+      </div>
+      <div class="summary-row flex justify-between items-center pb-4 border-b border-gray-200 dark:border-white/10">
+        <span class="text-[#86868b] dark:text-gray-400">Taxable Income</span>
+        <span id="sumTaxable" class="font-mono text-[#1d1d1f] dark:text-white font-medium"></span>
+      </div>
+
+      <div class="summary-row flex justify-between items-center pt-2">
+        <span class="text-[#86868b] dark:text-gray-400">Base Tax</span>
+        <span id="sumTax" class="font-mono text-[#1d1d1f] dark:text-white"></span>
+      </div>
+      <div class="summary-row flex justify-between items-center">
+        <span id="surchargeLabel" class="text-[#86868b] dark:text-gray-400 text-xs uppercase tracking-wider">Surcharge</span>
+        <span id="sumSurcharge" class="font-mono text-[#1d1d1f] dark:text-white text-sm"></span>
+      </div>
+      <div class="summary-row flex justify-between items-center pb-4 border-b border-gray-200 dark:border-white/10">
+        <span class="text-[#86868b] dark:text-gray-400 text-xs uppercase tracking-wider">Cess (4%)</span>
+        <span id="sumCess" class="font-mono text-[#1d1d1f] dark:text-white text-sm"></span>
+      </div>
+
+      <div class="summary-row total flex justify-between items-end pt-2">
+        <span class="font-semibold text-lg text-[#1d1d1f] dark:text-white">Total Liability</span>
+        <span id="sumTotal" class="font-bold text-2xl text-[#0071e3] dark:text-blue-400 font-mono tracking-tight"></span>
+      </div>
+    </div>
+
+    <div class="link-wrap text-center mt-8">
+      <button id="toggleBreak" hidden class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:opacity-80 transition-opacity">Show Breakdown</button>
+    </div>
+  </section>
+
+  <!-- Breakdown Table -->
+  <section class="breakdown fade-in" hidden>
+    <h2 class="text-lg font-semibold mb-4 text-[#1d1d1f] dark:text-white pl-1">Slab Breakdown</h2>
+    <div class="overflow-hidden rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5">
+      <table class="w-full text-sm">
+        <thead class="bg-gray-50 dark:bg-white/5 text-[#86868b] dark:text-gray-400 font-medium text-xs uppercase tracking-wider border-b border-gray-200 dark:border-white/10">
+          <tr>
+            <th class="p-4 text-left font-semibold">Slab</th>
+            <th class="p-4 text-right font-semibold">Amount</th>
+            <th class="p-4 text-right font-semibold">Rate</th>
+            <th class="p-4 text-right font-semibold">Tax</th>
+          </tr>
+        </thead>
+        <tbody id="breakBody" class="divide-y divide-gray-100 dark:divide-white/5 text-[#1d1d1f] dark:text-white font-mono"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<!-- Load Script at the end -->
+<script src="script.js"></script>
