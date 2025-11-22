@@ -12,21 +12,24 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ page.url | absolute_url }}">
   <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
-  <meta property="og:description" content="{{ page.excerpt | default: site.description | strip_html | truncate: 160 }}">
-  {% if page.image %}
-  <meta property="og:image" content="{{ page.image | absolute_url }}">
+  <meta property="og:description" content="{{ page.excerpt | default: page.description | default: site.description | strip_html | truncate: 160 }}">
+  {% assign seo_image = page.image | default: page.thumbnail | default: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg" %}
+  {% if seo_image contains "http" %}
+    <meta property="og:image" content="{{ seo_image }}">
   {% else %}
   <!-- Fallback image: Change this URL to a real image in your assets folder -->
-  <meta property="og:image" content="{{ '/assets/default-share.png' | absolute_url }}">
+    <meta property="og:image" content="{{ seo_image | absolute_url }}">
   {% endif %}
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="{{ page.url | absolute_url }}">
   <meta property="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
-  <meta property="twitter:description" content="{{ page.excerpt | default: site.description | strip_html | truncate: 160 }}">
-  {% if page.image %}
-  <meta property="twitter:image" content="{{ page.image | absolute_url }}">
+  <meta property="twitter:description" content="{{ page.excerpt | default: page.description | default: site.description | strip_html | truncate: 160 }}">
+  {% if seo_image contains "http" %}
+    <meta property="twitter:image" content="{{ seo_image }}">
+  {% else %}
+    <meta property="twitter:image" content="{{ seo_image | absolute_url }}">
   {% endif %}
 
   <!-- Tailwind CSS & Typography Plugin -->
@@ -119,4 +122,5 @@
     }
   </script>
 </body>
+
 </html>
