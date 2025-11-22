@@ -15,6 +15,9 @@
     { up: Infinity, pct:30 },
   ];
 
+  // 1. Helper for Indian Number Formatting (e.g., 1,20,000)
+  const fmt = (n) => n.toLocaleString('en-IN');
+
   let regime = 'new';
   const toggle = document.querySelector('.regime-toggle');
   const incomeI = document.getElementById('income');
@@ -50,23 +53,27 @@
     const income = +incomeI.value;
     const exemptions = regime==='old' ? (+exI.value||0) : 0;
     const stdDed = regime==='old' ? 50000 : 75000;
+    
+    // 2. Calculate Taxable Income
+    // "Deduction" in summary refers to this Standard Deduction step
     let taxable = Math.max(0, income - stdDed - exemptions);
 
-    if (regime==='new' && taxable <= 1200000) taxable = 0;
+    // REMOVED: The "Force 0" logic. We now calculate gross tax for everyone.
 
-    // slab tax
+    // 3. Calculate Gross Tax based on Slabs
     const slabs = regime==='new' ? slabsNew : slabsOld;
     let rem = taxable, tax = 0, prev = 0, rows = '';
+    
     slabs.forEach(s => {
       if (rem <= 0) return;
       const amt = Math.min(rem, s.up - prev);
       const t = amt * (s.pct / 100);
       if (amt > 0) {
         rows += `<tr>
-                   <td>₹${prev.toLocaleString()}–₹${s.up===Infinity?'∞':s.up.toLocaleString()}</td>
-                   <td>₹${amt.toLocaleString()}</td>
+                   <td>₹${fmt(prev)}–₹${s.up===Infinity?'∞':fmt(s.up)}</td>
+                   <td>₹${fmt(amt)}</td>
                    <td>${s.pct}%</td>
-                   <td>₹${Math.round(t).toLocaleString()}</td>
+                   <td>₹${fmt(Math.round(t))}</td>
                  </tr>`;
       }
       tax += t;
@@ -74,45 +81,62 @@
       prev = s.up;
     });
 
-// old-regime 87A rebate
-if (regime === 'old') {
-  if (taxable <= 500000) {   // use net taxable income here
-    tax = 0;
-  }
-  // otherwise leave `tax` as calculated from the slabs
-}
-
-    // surcharge on slab-tax
-    let surcharge = 0, rate = 0;
-    if (taxable > 50000000) {      // > ₹5 Cr
-      rate = 37;
-    } else if (taxable > 20000000) { // > ₹2 Cr
-      rate = 25;
-    } else if (taxable > 10000000) { // > ₹1 Cr
-      rate = 15;
-    } else if (taxable >  5000000) { // > ₹50 L
-      rate = 10;
+    // 4. Apply Rebate (Section 87A)
+    // This is what turns the calculated tax into Zero
+    let rebate = 0;
+    // New Regime: Rebate if taxable income <= 12L
+    if (regime === 'new' && taxable <= 1200000 && taxable > 0) {
+        rebate = tax;
+    } 
+    // Old Regime: Rebate if taxable income <= 5L
+    else if (regime === 'old' && taxable <= 500000 && taxable > 0) {
+        rebate = tax; 
     }
-    surcharge = tax * (rate/100);
 
-    // cess
-    const cess = (tax + surcharge) * 0.04;
-    const total = Math.round(tax + surcharge + cess);
+    const taxAfterRebate = Math.max(0, tax - rebate);
 
-    // populate summary
-    document.getElementById('sumIncome').textContent     = `₹${income.toLocaleString()}`;
-    document.getElementById('sumDeduction').textContent  = `-₹${stdDed.toLocaleString()}`;
-    document.getElementById('sumTaxable').textContent    = `₹${taxable.toLocaleString()}`;
-    document.getElementById('sumTax').textContent        = `₹${Math.round(tax).toLocaleString()}`;
+    // 5. Calculate Surcharge (on Net Tax)
+    let surcharge = 0, rate = 0;
+    if (taxAfterRebate > 0) {
+        if (taxable > 50000000) rate = 25;
+        else if (taxable > 20000000) rate = 25;
+        else if (taxable > 10000000) rate = 15;
+        else if (taxable >  5000000) rate = 10;
+        surcharge = taxAfterRebate * (rate/100);
+    }
+
+    // 6. Calculate Cess
+    const cess = (taxAfterRebate + surcharge) * 0.04;
+    const total = Math.round(taxAfterRebate + surcharge + cess);
+
+    // --- Populate UI ---
+
+    document.getElementById('sumIncome').textContent     = `₹${fmt(income)}`;
+    document.getElementById('sumDeduction').textContent  = `-₹${fmt(stdDed)}`; // This is Standard Deduction
+    document.getElementById('sumTaxable').textContent    = `₹${fmt(taxable)}`;
+    document.getElementById('sumTax').textContent        = `₹${fmt(Math.round(taxAfterRebate))}`; // This shows Net Tax
+    
     surchargeLabel.textContent                           = `Surcharge (${rate}%)`;
-    document.getElementById('sumSurcharge').textContent  = `₹${Math.round(surcharge).toLocaleString()}`;
-    document.getElementById('sumCess').textContent       = `₹${Math.round(cess).toLocaleString()}`;
-    document.getElementById('sumTotal').textContent      = `₹${total.toLocaleString()}`;
+    document.getElementById('sumSurcharge').textContent  = `₹${fmt(Math.round(surcharge))}`;
+    document.getElementById('sumCess').textContent       = `₹${fmt(Math.round(cess))}`;
+    document.getElementById('sumTotal').textContent      = `₹${fmt(total)}`;
+
+    // Breakdown Table Logic
+    let rebateRow = '';
+    // If we applied a rebate, we MUST show this row so the math adds up
+    if (rebate > 0) {
+        rebateRow = `<tr class="text-green-600 dark:text-green-400">
+                        <td colspan="3"><strong>Less: Tax Rebate u/s 87A</strong></td>
+                        <td><strong>-₹${fmt(Math.round(rebate))}</strong></td>
+                     </tr>`;
+    }
 
     breakBody.innerHTML = rows +
-      `<tr><td colspan="3"><strong>Tax</strong></td><td><strong>₹${Math.round(tax).toLocaleString()}</strong></td></tr>` +
-      `<tr><td colspan="3">Surcharge (${rate}%)</td><td>₹${Math.round(surcharge).toLocaleString()}</td></tr>` +
-      `<tr><td colspan="3">Cess (4%)</td><td>₹${Math.round(cess).toLocaleString()}</td></tr>`;
+      `<tr><td colspan="3" class="pt-4"><strong>Gross Tax</strong></td><td class="pt-4"><strong>₹${fmt(Math.round(tax))}</strong></td></tr>` +
+      rebateRow + 
+      (rebate > 0 ? `<tr><td colspan="3"><strong>Net Tax</strong></td><td><strong>₹${fmt(Math.round(taxAfterRebate))}</strong></td></tr>` : '') +
+      `<tr><td colspan="3">Surcharge (${rate}%)</td><td>₹${fmt(Math.round(surcharge))}</td></tr>` +
+      `<tr><td colspan="3">Cess (4%)</td><td>₹${fmt(Math.round(cess))}</td></tr>`;
 
     summary.hidden     = false;
     toggleBreak.hidden = false;
