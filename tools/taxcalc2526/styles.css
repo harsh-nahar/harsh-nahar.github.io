@@ -6,7 +6,7 @@
 }
 .regime-toggle[data-active="old"] .thumb { 
   transform: translateX(100%);
-  margin-left: 8px; /* Compensation for the gap */
+  margin-left: 8px;
 }
 
 /* Active state text styling */
@@ -25,32 +25,37 @@
   color: #999;
 }
 
-/* Print Styles: Hide the site navigation when printing the PDF */
+/* Breakdown Table Styling (Fixes Alignment & Padding) */
+.breakdown td {
+  padding: 1rem; /* Matches the p-4 (1rem) of the headers */
+}
+.breakdown td:not(:first-child) {
+  text-align: right; /* Aligns Amount, Rate, and Tax columns to the right */
+}
+/* Ensure the label column in the footer rows (which spans 3 cols) stays left-aligned */
+.breakdown td[colspan="3"] {
+  text-align: left; 
+}
+
+/* Print Styles */
 @media print {
   body {
     background: white;
     color: black;
   }
-  
-  /* Hide global site elements */
   nav, footer, .back-home, .actions, .link-wrap {
     display: none !important;
   }
-
-  /* Reset spacing for print */
   main {
     margin: 0 !important;
     padding: 0 !important;
     max-width: none !important;
   }
-
   .tax-app {
     max-width: 100%;
     margin: 0;
     box-shadow: none;
   }
-
-  /* Improve table readability in print */
   .breakdown table {
     width: 100%;
     border: 1px solid #ddd;
