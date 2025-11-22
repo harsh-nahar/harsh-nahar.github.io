@@ -15,21 +15,25 @@
     { up: Infinity, pct:30 },
   ];
 
-  // 1. Helper for Indian Number Formatting (e.g., 1,20,000)
+  // Helper for Indian Number Formatting
   const fmt = (n) => n.toLocaleString('en-IN');
 
   let regime = 'new';
   const toggle = document.querySelector('.regime-toggle');
   const incomeI = document.getElementById('income');
+  const npsI = document.getElementById('nps');
   const exI = document.getElementById('exemptions');
-  const calc = document.getElementById('calculate');
   const reset = document.getElementById('reset');
-  const save = document.getElementById('savePdf');
-  const toggleBreak = document.getElementById('toggleBreak');
-  const summary = document.querySelector('.summary');
-  const breakdown = document.querySelector('.breakdown');
+  const resultContainer = document.getElementById('resultContainer');
+  
   const breakBody = document.getElementById('breakBody');
   const surchargeLabel = document.getElementById('surchargeLabel');
+
+  // Event Listeners for Live Calculation
+  const inputs = [incomeI, npsI, exI];
+  inputs.forEach(el => {
+    el.addEventListener('input', calculate);
+  });
 
   document.querySelectorAll('.regime-toggle button').forEach(b => {
     b.addEventListener('click', () => {
@@ -38,29 +42,30 @@
       toggle.querySelectorAll('button')
         .forEach(x => x.classList.toggle('active', x===b));
       document.querySelector('.exemptions').hidden = (regime!=='old');
-      hideAll(); validate();
+      calculate();
     });
   });
 
-  function validate() {
-    const inc = parseFloat(incomeI.value);
-    document.getElementById('incomeError').textContent = inc>0 ? '' : 'Enter valid income';
-    calc.disabled = !(inc>0);
-  }
-  incomeI.oninput = exI.oninput = validate;
+  function calculate() {
+    const income = parseFloat(incomeI.value) || 0;
+    
+    // Visual: Fade in results if income > 0
+    if (income > 0) {
+        resultContainer.classList.remove('opacity-50');
+    } else {
+        resultContainer.classList.add('opacity-50');
+    }
 
-  calc.onclick = () => {
-    const income = +incomeI.value;
-    const exemptions = regime==='old' ? (+exI.value||0) : 0;
+    const nps = parseFloat(npsI.value) || 0;
+    const otherExemptions = regime==='old' ? (parseFloat(exI.value)||0) : 0;
     const stdDed = regime==='old' ? 50000 : 75000;
     
-    // 2. Calculate Taxable Income
-    // "Deduction" in summary refers to this Standard Deduction step
-    let taxable = Math.max(0, income - stdDed - exemptions);
+    // Total Deductions = Standard Deduction + NPS (Both Regimes) + Other (Old only)
+    const totalDeductions = stdDed + nps + otherExemptions;
+    
+    let taxable = Math.max(0, income - totalDeductions);
 
-    // REMOVED: The "Force 0" logic. We now calculate gross tax for everyone.
-
-    // 3. Calculate Gross Tax based on Slabs
+    // Calculate Gross Tax based on Slabs
     const slabs = regime==='new' ? slabsNew : slabsOld;
     let rem = taxable, tax = 0, prev = 0, rows = '';
     
@@ -81,21 +86,17 @@
       prev = s.up;
     });
 
-    // 4. Apply Rebate (Section 87A)
-    // This is what turns the calculated tax into Zero
+    // Apply Rebate (Section 87A)
     let rebate = 0;
-    // New Regime: Rebate if taxable income <= 12L
     if (regime === 'new' && taxable <= 1200000 && taxable > 0) {
         rebate = tax;
-    } 
-    // Old Regime: Rebate if taxable income <= 5L
-    else if (regime === 'old' && taxable <= 500000 && taxable > 0) {
+    } else if (regime === 'old' && taxable <= 500000 && taxable > 0) {
         rebate = tax; 
     }
 
     const taxAfterRebate = Math.max(0, tax - rebate);
 
-    // 5. Calculate Surcharge (on Net Tax)
+    // Calculate Surcharge
     let surcharge = 0, rate = 0;
     if (taxAfterRebate > 0) {
         if (taxable > 50000000) rate = 25;
@@ -105,25 +106,23 @@
         surcharge = taxAfterRebate * (rate/100);
     }
 
-    // 6. Calculate Cess
+    // Calculate Cess
     const cess = (taxAfterRebate + surcharge) * 0.04;
     const total = Math.round(taxAfterRebate + surcharge + cess);
 
     // --- Populate UI ---
-
     document.getElementById('sumIncome').textContent     = `₹${fmt(income)}`;
-    document.getElementById('sumDeduction').textContent  = `-₹${fmt(stdDed)}`; // This is Standard Deduction
+    document.getElementById('sumDeduction').textContent  = `-₹${fmt(totalDeductions)}`; 
     document.getElementById('sumTaxable').textContent    = `₹${fmt(taxable)}`;
-    document.getElementById('sumTax').textContent        = `₹${fmt(Math.round(taxAfterRebate))}`; // This shows Net Tax
+    document.getElementById('sumTax').textContent        = `₹${fmt(Math.round(taxAfterRebate))}`;
     
     surchargeLabel.textContent                           = `Surcharge (${rate}%)`;
     document.getElementById('sumSurcharge').textContent  = `₹${fmt(Math.round(surcharge))}`;
     document.getElementById('sumCess').textContent       = `₹${fmt(Math.round(cess))}`;
     document.getElementById('sumTotal').textContent      = `₹${fmt(total)}`;
 
-    // Breakdown Table Logic
+    // Breakdown Table
     let rebateRow = '';
-    // If we applied a rebate, we MUST show this row so the math adds up
     if (rebate > 0) {
         rebateRow = `<tr class="text-green-600 dark:text-green-400">
                         <td colspan="3"><strong>Less: Tax Rebate u/s 87A</strong></td>
@@ -131,38 +130,28 @@
                      </tr>`;
     }
 
-    breakBody.innerHTML = rows +
-      `<tr><td colspan="3" class="pt-4"><strong>Gross Tax</strong></td><td class="pt-4"><strong>₹${fmt(Math.round(tax))}</strong></td></tr>` +
-      rebateRow + 
+    const grossRow = `<tr><td colspan="3" class="pt-4"><strong>Gross Tax</strong></td><td class="pt-4"><strong>₹${fmt(Math.round(tax))}</strong></td></tr>`;
+    
+    const finalRows = rows + grossRow + rebateRow + 
       (rebate > 0 ? `<tr><td colspan="3"><strong>Net Tax</strong></td><td><strong>₹${fmt(Math.round(taxAfterRebate))}</strong></td></tr>` : '') +
       `<tr><td colspan="3">Surcharge (${rate}%)</td><td>₹${fmt(Math.round(surcharge))}</td></tr>` +
       `<tr><td colspan="3">Cess (4%)</td><td>₹${fmt(Math.round(cess))}</td></tr>`;
 
-    summary.hidden     = false;
-    toggleBreak.hidden = false;
-    breakdown.hidden   = true;
-    save.hidden        = false;
-  };
-
-  toggleBreak.onclick = () => {
-    const open = !breakdown.hidden;
-    breakdown.hidden   = open;
-    toggleBreak.textContent = open ? 'Show Breakdown' : 'Hide Breakdown';
+    // If income is 0, keep table empty but neat
+    if(income > 0) {
+        breakBody.innerHTML = finalRows;
+    } else {
+        breakBody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-[#86868b] opacity-60">Enter income to see breakdown</td></tr>`;
+    }
   };
 
   reset.onclick = () => {
     incomeI.value = '';
-    exI.value     = '';
-    hideAll(); validate();
+    npsI.value = '';
+    exI.value = '';
+    calculate();
   };
 
-  save.onclick = () => window.print();
-
-  function hideAll() {
-    summary.hidden     = true;
-    breakdown.hidden   = true;
-    toggleBreak.hidden = true;
-    save.hidden        = true;
-  }
-  hideAll(); validate();
+  // Run once on load to set initial state
+  calculate();
 })();
