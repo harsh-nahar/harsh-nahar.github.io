@@ -1,41 +1,71 @@
 ---
 layout: default
+title: "Writing"
+permalink: /blog/
+excerpt: "Recent essays and thoughts on design, technology, and life. Dive into personal reflections and deep dives."
+image: "https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blog-images/harsh-home.jpg" # Using the same home image as a dedicated fallback for this list page
 ---
-<article class="fade-in">
-    <!-- Header (Back button removed) -->
-    <header class="mb-8">
-        <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight text-[#1d1d1f] dark:text-white">{{ page.title }}</h1>
-        
-        <div class="flex items-center justify-between border-b border-gray-100 dark:border-white/10 pb-4">
-            <time class="font-mono text-xs text-[#86868b]">{{ page.date | date: "%b %-d, %Y" }}</time>
-            
-            <button onclick="sharePost()" class="group flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-50 dark:bg-white/10 hover:bg-gray-100 dark:hover:bg-white/20 transition-colors cursor-pointer">
-                <i data-lucide="share" class="w-3 h-3 text-gray-500 dark:text-gray-300"></i>
-                <span id="share-text" class="text-[10px] font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wide">Share</span>
-            </button>
+<div class="fade-in">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-8 md:mb-12 gap-4">
+        <div>
+            <h1 class="text-3xl font-bold mb-2 dark:text-white">Writing</h1>
+            <p class="text-[#86868b] dark:text-gray-400">Recent essays and thoughts.</p>
         </div>
-    </header>
-
-    <!-- Content -->
-    <div class="prose prose-lg dark:prose-invert max-w-none">
-        {{ content }}
+        
+        <div class="relative w-full md:w-auto">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <input type="text" id="blog-search" placeholder="Search posts..." class="pl-9 pr-4 py-2 text-sm bg-gray-100 dark:bg-white/10 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:text-white w-full md:w-64 transition-all hover:bg-gray-50 dark:hover:bg-white/20 placeholder-gray-500">
+        </div>
     </div>
-</article>
+
+    <div id="blog-posts-container" class="space-y-10">
+        {% for post in site.posts %}
+        <a href="{{ post.url | relative_url }}" class="blog-post-item group block" data-title="{{ post.title | downcase }}">
+            
+            <!-- Image Logic: Supports 'image' or 'thumbnail' front matter -->
+            {% assign post_image = post.image | default: post.thumbnail %}
+            
+            {% if post_image %}
+            <div class="mb-4 rounded-xl overflow-hidden h-48 w-full bg-gray-100 dark:bg-white/5 relative">
+                {% if post_image contains "http" %}
+                    <img src="{{ post_image }}" alt="{{ post.title }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                {% else %}
+                    <img src="{{ post_image | relative_url }}" alt="{{ post.title }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-1">
+                <h2 class="text-xl font-semibold text-[#1d1d1f] dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{{ post.title }}</h2>
+                <time class="font-mono text-xs text-[#86868b] whitespace-nowrap">{{ post.date | date: "%b %-d, %Y" }}</time>
+            </div>
+            <p class="text-base text-[#86868b] dark:text-gray-400 leading-relaxed line-clamp-2">
+                {{ post.excerpt | strip_html | truncatewords: 30 }}
+            </p>
+        </a>
+        {% endfor %}
+    </div>
+
+    <div id="no-results" class="hidden text-center py-12 text-gray-400">
+        No posts found.
+    </div>
+</div>
 
 <script>
-async function sharePost() {
-    const url = window.location.href;
-    const title = document.title;
-    const shareText = document.getElementById('share-text');
-    if (navigator.share) {
-        try { await navigator.share({ title, url }); } catch (err) {}
-    } else {
-        try {
-            await navigator.clipboard.writeText(url);
-            const original = shareText.innerText;
-            shareText.innerText = "COPIED";
-            setTimeout(() => shareText.innerText = original, 2000);
-        } catch (err) {}
+    const searchInput = document.getElementById('blog-search');
+    const noResults = document.getElementById('no-results');
+
+    if(searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const posts = document.querySelectorAll('.blog-post-item');
+            let hasResults = false;
+            posts.forEach(post => {
+                const title = post.getAttribute('data-title');
+                if(title.includes(term)) { post.style.display = 'block'; hasResults = true; } 
+                else { post.style.display = 'none'; }
+            });
+            noResults.style.display = hasResults ? 'none' : 'block';
+        });
     }
-}
 </script>
