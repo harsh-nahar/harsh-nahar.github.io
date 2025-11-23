@@ -7,7 +7,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
 ---
 
 <style>
-  /* 1. STRICT MINIMALIST INPUTS */
+  /* 1. INPUTS */
   input[type=number]::-webkit-inner-spin-button, 
   input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none; 
@@ -20,11 +20,11 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
       width: 100%;
       background: transparent;
       border: 1px solid #e5e7eb;
-      border-radius: 6px;
-      padding: 8px 12px;
-      font-size: 0.9rem;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.95rem;
       color: #111;
-      transition: border-color 0.2s;
+      transition: all 0.2s;
   }
   .dark .mono-input {
       border-color: #333;
@@ -32,13 +32,12 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
   }
   .mono-input:focus {
       outline: none;
-      border-color: #666; /* Subtle focus */
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
   }
-  
-  /* Read-only inputs look like text */
   .mono-input:disabled {
       background: #f9fafb;
-      color: #6b7280;
+      color: #9ca3af;
       cursor: not-allowed;
   }
   .dark .mono-input:disabled {
@@ -46,86 +45,209 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
       color: #555;
   }
 
-  /* Labels */
+  /* 2. LABELS & TOOLTIPS */
+  .lbl-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+  }
   .lbl {
-      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #374151;
+  }
+  .dark .lbl { color: #d1d5db; }
+
+  /* Tooltip Container */
+  .info-icon {
+      position: relative;
+      cursor: help;
+      color: #9ca3af;
+      transition: color 0.2s;
+  }
+  .info-icon:hover { color: #3b82f6; }
+
+  /* The Popup */
+  .tooltip-box {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      bottom: 100%;
+      left: 50%; /* Center horizontally relative to icon */
+      transform: translateX(-50%) translateY(-8px);
+      width: 200px;
+      background: #1f2937;
+      color: #fff;
+      text-align: center;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 400;
+      line-height: 1.4;
+      z-index: 50;
+      transition: opacity 0.2s, transform 0.2s;
+      pointer-events: none;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  /* Arrow */
+  .tooltip-box::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #1f2937 transparent transparent transparent;
+  }
+  
+  .info-icon:hover .tooltip-box {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(-50%) translateY(-5px);
+  }
+  .dark .tooltip-box {
+      background: #fff;
+      color: #000;
+  }
+  .dark .tooltip-box::after {
+      border-color: #fff transparent transparent transparent;
+  }
+
+  /* 3. TOGGLE SWITCH (Segmented Control) */
+  .regime-switch {
+      display: flex;
+      background: #f3f4f6;
+      padding: 4px;
+      border-radius: 8px;
+      position: relative;
+      cursor: pointer;
+  }
+  .dark .regime-switch { background: #27272a; }
+  
+  .regime-opt {
+      flex: 1;
+      text-align: center;
       font-size: 0.8rem;
       font-weight: 500;
-      color: #111;
-      margin-bottom: 4px;
+      padding: 6px 0;
+      z-index: 10;
+      color: #6b7280;
+      transition: color 0.2s;
   }
-  .dark .lbl { color: #fff; }
-  
-  .sub-lbl {
-      display: block;
-      font-size: 0.7rem;
-      color: #666;
-      margin-bottom: 4px;
-      line-height: 1.3;
-  }
-  .dark .sub-lbl { color: #888; }
+  .regime-opt.active { color: #000; }
+  .dark .regime-opt.active { color: #fff; }
 
-  /* Table Rows */
+  /* The Sliding Background Pill */
+  .switch-bg {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+  }
+  .dark .switch-bg { background: #3f3f46; }
+
+  /* State: Right side active */
+  .regime-switch[data-active="old"] .switch-bg {
+      transform: translateX(100%);
+  }
+
+  /* 4. TABLE ROWS */
   .row {
       display: flex;
       justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid #eee;
+      padding: 10px 0;
+      border-bottom: 1px solid #f3f4f6;
       font-size: 0.9rem;
   }
-  .dark .row { border-bottom-color: #222; }
+  .dark .row { border-bottom-color: #27272a; }
   .row:last-child { border-bottom: none; }
   
   .val { font-family: 'JetBrains Mono', monospace; }
-  .negative { color: #dc2626; } /* Red for deductions */
+  .negative { color: #dc2626; } 
   .dark .negative { color: #f87171; }
 </style>
 
 <div class="fade-in max-w-5xl mx-auto mb-20">
   
-  <div class="mb-8 border-b border-gray-200 dark:border-gray-800 pb-6">
-    <h1 class="text-2xl font-semibold text-[#1d1d1f] dark:text-white">Salary Decoder</h1>
-    <p class="text-sm text-gray-500 mt-1">Break down your CTC into monthly In-Hand cash.</p>
+  <!-- Header -->
+  <div class="mb-10 border-b border-gray-100 dark:border-white/10 pb-8">
+    <h1 class="text-2xl md:text-3xl font-bold text-[#1d1d1f] dark:text-white">Salary Decoder</h1>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Make sense of your Offer Letter. CTC to In-Hand.</p>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
       
-      <!-- INPUTS (Left) -->
-      <div class="lg:col-span-7 space-y-8">
+      <!-- LEFT: INPUTS -->
+      <div class="lg:col-span-7 space-y-10">
         
         <!-- MAIN CTC -->
         <div>
-            <label class="lbl text-lg">Annual CTC (₹)</label>
-            <p class="sub-lbl mb-2">Total amount from your offer letter.</p>
-            <input type="number" id="ctc" placeholder="e.g. 1500000" class="mono-input" style="padding: 12px; font-size: 1.1rem;">
+            <div class="lbl-row">
+                <label class="lbl text-base">Annual CTC (₹)</label>
+            </div>
+            <input type="number" id="ctc" placeholder="e.g. 1500000" class="mono-input" style="padding: 14px; font-size: 1.25rem; font-weight: 600;">
+            <p class="text-xs text-gray-400 mt-2">Enter the full amount from your offer letter.</p>
         </div>
 
         <!-- 1. EARNINGS -->
         <section>
-            <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4 border-b border-gray-100 dark:border-gray-800 pb-2">Salary Components (Yearly)</h3>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-6 flex items-center gap-2">
+                <i data-lucide="coins" class="w-4 h-4"></i> Salary Structure
+            </h3>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
+                <!-- Basic -->
                 <div>
-                    <label class="lbl">Basic Salary</label>
-                    <p class="sub-lbl">Usually 40% - 50% of CTC.</p>
+                    <div class="lbl-row">
+                        <label class="lbl">Basic Salary</label>
+                        <div class="info-icon">
+                            <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                            <span class="tooltip-box">Usually 40% to 50% of CTC. Used to calculate PF & Gratuity.</span>
+                        </div>
+                    </div>
                     <input type="number" id="basic" class="mono-input">
                 </div>
+                
+                <!-- HRA -->
                 <div>
-                    <label class="lbl">HRA</label>
-                    <p class="sub-lbl">Usually 40% (Non-Metro) or 50% (Metro) of Basic.</p>
+                    <div class="lbl-row">
+                        <label class="lbl">HRA</label>
+                        <div class="info-icon">
+                            <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                            <span class="tooltip-box">House Rent Allowance. Usually 40% (Non-Metro) or 50% (Metro) of Basic.</span>
+                        </div>
+                    </div>
                     <input type="number" id="hra" class="mono-input">
                 </div>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Special -->
                 <div>
-                    <label class="lbl">Special / Flexi Allowance</label>
-                    <p class="sub-lbl">Balancing figure. Includes LTA, Meal cards, etc.</p>
+                    <div class="lbl-row">
+                        <label class="lbl">Special / Flexi</label>
+                        <div class="info-icon">
+                            <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                            <span class="tooltip-box">Balancing figure. Includes LTA, Meal cards, etc. Fully Taxable.</span>
+                        </div>
+                    </div>
                     <input type="number" id="special" class="mono-input">
                 </div>
+
+                <!-- Bonus -->
                 <div>
-                    <label class="lbl">Performance Bonus</label>
-                    <p class="sub-lbl">Paid Annually/Quarterly (Not Monthly).</p>
+                    <div class="lbl-row">
+                        <label class="lbl">Variable / Bonus</label>
+                        <div class="info-icon">
+                            <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                            <span class="tooltip-box">Performance Bonus paid Annually. Not part of monthly fixed pay.</span>
+                        </div>
+                    </div>
                     <input type="number" id="bonus" class="mono-input">
                 </div>
             </div>
@@ -133,116 +255,134 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
 
         <!-- 2. DEDUCTIONS -->
         <section>
-            <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4 border-b border-gray-100 dark:border-gray-800 pb-2">Deductions (Yearly)</h3>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-6 flex items-center gap-2">
+                <i data-lucide="trending-down" class="w-4 h-4"></i> Deductions
+            </h3>
             
-            <div class="bg-gray-50 dark:bg-white/5 p-4 rounded-lg mb-6">
-                <p class="text-xs font-bold text-gray-500 uppercase mb-3">Deducted from CTC (Invisible)</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Hidden from CTC -->
+            <div class="bg-gray-50 dark:bg-white/5 rounded-xl p-5 mb-6 border border-gray-100 dark:border-white/5">
+                <p class="text-[10px] font-bold text-gray-400 uppercase mb-4 tracking-wide">Removed from CTC (Invisible)</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
                     <div>
-                        <label class="lbl">Employer PF</label>
-                        <p class="sub-lbl">12% of Basic.</p>
+                        <div class="lbl-row">
+                            <label class="lbl text-gray-600 dark:text-gray-300">Employer PF</label>
+                            <div class="info-icon">
+                                <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                                <span class="tooltip-box">12% of Basic. Company deducts this from your CTC.</span>
+                            </div>
+                        </div>
                         <input type="number" id="employerPF" class="mono-input">
                     </div>
                     <div>
-                        <label class="lbl">Gratuity</label>
-                        <p class="sub-lbl">~4.81% of Basic.</p>
+                        <div class="lbl-row">
+                            <label class="lbl text-gray-600 dark:text-gray-300">Gratuity</label>
+                            <div class="info-icon">
+                                <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                                <span class="tooltip-box">~4.81% of Basic. Paid only after 5 years of service.</span>
+                            </div>
+                        </div>
                         <input type="number" id="gratuity" class="mono-input">
                     </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+            <!-- Pay Deductions -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6 mb-8">
                 <div>
-                    <label class="lbl">Employee PF</label>
-                    <p class="sub-lbl">Your share. 12% of Basic.</p>
+                    <div class="lbl-row">
+                        <label class="lbl">Employee PF</label>
+                        <div class="info-icon">
+                            <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                            <span class="tooltip-box">Your share. 12% of Basic.</span>
+                        </div>
+                    </div>
                     <input type="number" id="employeePF" class="mono-input">
                 </div>
                 <div>
-                    <label class="lbl">Professional Tax</label>
-                    <p class="sub-lbl">Approx ₹2400/year.</p>
+                    <div class="lbl-row">
+                        <label class="lbl">Professional Tax</label>
+                        <div class="info-icon">
+                            <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                            <span class="tooltip-box">State Tax (~₹2400/year).</span>
+                        </div>
+                    </div>
                     <input type="number" id="pt" value="2400" class="mono-input">
                 </div>
             </div>
 
-            <!-- Tax Regime Selection -->
-            <div class="mt-6">
-                <label class="lbl mb-2">Income Tax Regime</label>
-                <div class="flex gap-4 mb-4">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="radio" name="regime" value="new" checked onclick="setRegime('new')">
-                        <span class="text-sm">New Regime (Default)</span>
-                    </label>
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="radio" name="regime" value="old" onclick="setRegime('old')">
-                        <span class="text-sm">Old Regime</span>
-                    </label>
-                </div>
+            <!-- Regime Toggle -->
+            <div class="border-t border-gray-100 dark:border-white/10 pt-6">
+                 <div class="flex items-center justify-between mb-4">
+                     <label class="lbl">Income Tax Regime</label>
+                     <!-- Segmented Control -->
+                     <div class="regime-switch w-48" id="regimeSwitch" data-active="new">
+                         <div class="switch-bg"></div>
+                         <div class="regime-opt active" id="optNew" onclick="setRegime('new')">New</div>
+                         <div class="regime-opt" id="optOld" onclick="setRegime('old')">Old</div>
+                     </div>
+                 </div>
 
-                <div id="oldRegimeInput" class="hidden">
-                     <label class="lbl">Total Tax Exemptions (80C + 80D + HRA)</label>
-                     <input type="number" id="taxInvestments" placeholder="Total 80C/80D amount" class="mono-input">
-                </div>
+                 <div id="oldRegimeInput" class="hidden animate-in fade-in slide-in-from-top-2 duration-300">
+                     <div class="lbl-row">
+                        <label class="lbl text-blue-600 dark:text-blue-400">Total Tax Exemptions (80C + 80D + HRA)</label>
+                     </div>
+                     <input type="number" id="taxInvestments" placeholder="Total deduction amount" class="mono-input">
+                 </div>
             </div>
         </section>
 
       </div>
 
-      <!-- RIGHT COLUMN: SUMMARY (Sticky) -->
+      <!-- RIGHT: SUMMARY -->
       <div class="lg:col-span-5">
-          <div class="sticky top-8 bg-white dark:bg-[#151515] border border-gray-200 dark:border-gray-800 rounded-xl p-6 md:p-8">
+          <div class="sticky top-8 bg-white dark:bg-[#1c1c1e] border border-gray-200 dark:border-white/10 rounded-2xl p-6 md:p-8 shadow-sm">
             
             <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4 text-center">Estimated Monthly In-Hand</p>
             
-            <div class="text-center border-b border-gray-200 dark:border-gray-800 pb-6 mb-6">
-                <h2 id="valInHand" class="text-4xl font-mono font-bold text-[#1d1d1f] dark:text-white">₹0</h2>
+            <div class="text-center border-b border-gray-100 dark:border-white/10 pb-6 mb-6 overflow-hidden">
+                <!-- Auto-Scaling Number -->
+                <h2 id="valInHand" class="font-mono font-bold text-[#1d1d1f] dark:text-white transition-all duration-300" style="font-size: 3rem;">₹0</h2>
                 <p class="text-xs text-gray-400 mt-2">Post Deductions & Taxes</p>
             </div>
 
             <div class="space-y-1 text-sm">
-                <!-- CTC -->
                 <div class="row">
-                    <span class="text-gray-600 dark:text-gray-400">Total CTC</span>
-                    <span id="valCTC" class="val font-semibold">₹0</span>
+                    <span class="text-gray-500 dark:text-gray-400">Annual CTC</span>
+                    <span id="valCTC" class="val font-semibold text-[#1d1d1f] dark:text-white">₹0</span>
                 </div>
 
-                <!-- CTC Deductions -->
                 <div class="row">
-                    <span class="text-gray-500">(-) Employer PF & Gratuity</span>
-                    <span id="valCTCDed" class="val text-gray-500">0</span>
+                    <span class="text-orange-600/80 dark:text-orange-400/80 text-xs">(-) Employer PF & Gratuity</span>
+                    <span id="valCTCDed" class="val text-orange-600/80 dark:text-orange-400/80">0</span>
                 </div>
 
-                <!-- Variable -->
                 <div id="rowVariable" class="row hidden">
-                    <span class="text-gray-500">(-) Annual Bonus/Variable</span>
-                    <span id="valVariable" class="val text-gray-500">0</span>
+                    <span class="text-yellow-600/80 dark:text-yellow-500/80 text-xs">(-) Annual Bonus</span>
+                    <span id="valVariable" class="val text-yellow-600/80 dark:text-yellow-500/80">0</span>
                 </div>
 
-                <!-- Gross -->
-                <div class="row pt-2 mt-2 border-t border-dashed border-gray-200 dark:border-gray-700">
-                    <span class="font-medium text-gray-900 dark:text-white">Gross Salary (Yearly)</span>
-                    <span id="valGross" class="val font-semibold">₹0</span>
+                <div class="row pt-2 mt-2 border-t border-dashed border-gray-200 dark:border-white/10">
+                    <span class="font-medium text-[#1d1d1f] dark:text-white">Gross Salary (Yearly)</span>
+                    <span id="valGross" class="val font-semibold text-[#1d1d1f] dark:text-white">₹0</span>
                 </div>
                 
-                <div class="row">
-                    <span class="text-gray-500 text-xs pl-2">Monthly Gross</span>
-                    <span id="valMonthlyGross" class="val text-xs text-gray-500">₹0</span>
+                <div class="row border-b-0 pb-0">
+                    <span class="text-gray-400 text-xs pl-2">Monthly Gross</span>
+                    <span id="valMonthlyGross" class="val text-xs text-gray-400">₹0</span>
                 </div>
 
-                <!-- Pay Deductions -->
                 <div class="row mt-4">
-                    <span class="text-gray-600 dark:text-gray-400">(-) Employee PF & PT</span>
-                    <span id="valPayDed" class="val negative">0</span>
+                    <span class="text-red-500/80 text-xs">(-) Employee PF & PT</span>
+                    <span id="valPayDed" class="val negative text-xs">0</span>
                 </div>
 
-                <!-- Tax -->
                 <div class="row">
-                    <span class="text-gray-600 dark:text-gray-400">(-) Income Tax (Est)</span>
-                    <span id="valTaxYearly" class="val negative">0</span>
+                    <span class="text-red-500/80 text-xs">(-) Income Tax (Est)</span>
+                    <span id="valTaxYearly" class="val negative text-xs">0</span>
                 </div>
             </div>
 
-            <!-- Tax Calc Link -->
-            <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 text-center">
+            <div class="mt-8 pt-6 border-t border-gray-100 dark:border-white/10 text-center">
                 <a href="{{ '/tools/taxcalc2526/' | relative_url }}" class="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
                     Detailed Tax Calculation →
                 </a>
@@ -251,13 +391,38 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
           </div>
       </div>
   </div>
+
+  <!-- EXPLAINER SECTION (Restored) -->
+  <div class="mt-20 pt-10 border-t border-gray-100 dark:border-white/10 max-w-3xl mx-auto prose dark:prose-invert">
+      <h3>Why doesn't the math match?</h3>
+      <p class="text-gray-600 dark:text-gray-300">
+          If you are new to the Indian corporate world, the difference between your <strong>Offer Letter (CTC)</strong> and your <strong>Bank Credit</strong> can be shocking. Here is the invisible math:
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-8 not-prose">
+          <div class="bg-gray-50 dark:bg-white/5 p-5 rounded-lg border border-gray-100 dark:border-white/5">
+              <h4 class="font-bold text-[#1d1d1f] dark:text-white mb-2 text-sm uppercase">1. The "CTC" Trap</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  CTC stands for <strong>Cost to Company</strong>. It includes money that the company puts into your Pension (Employer PF) and Gratuity Fund. You technically "earn" this money, but you can't touch it until you retire or leave.
+              </p>
+          </div>
+          <div class="bg-gray-50 dark:bg-white/5 p-5 rounded-lg border border-gray-100 dark:border-white/5">
+              <h4 class="font-bold text-[#1d1d1f] dark:text-white mb-2 text-sm uppercase">2. The "Gross" Reality</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Your monthly payslip shows "Gross Salary," which is CTC minus those invisible deductions. But you don't get Gross either! From Gross, the government takes <strong>Professional Tax</strong>, your share of <strong>PF</strong>, and <strong>Income Tax (TDS)</strong>.
+              </p>
+          </div>
+      </div>
+      <p class="text-xs text-gray-400 italic">
+          * Note: This tool estimates tax based on standard deductions. For accurate tax planning including HRA exemptions, 80C limits, and surcharge, please use the dedicated Tax Calculator linked above.
+      </p>
+  </div>
+
 </div>
 
 <script>
-    // --- STATE ---
     let regime = 'new';
     
-    // --- DOM ---
     const el = {
         ctc: document.getElementById('ctc'),
         basic: document.getElementById('basic'),
@@ -269,8 +434,14 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         employeePF: document.getElementById('employeePF'),
         pt: document.getElementById('pt'),
         taxInvestments: document.getElementById('taxInvestments'),
+        
+        // UI
+        regimeSwitch: document.getElementById('regimeSwitch'),
+        optNew: document.getElementById('optNew'),
+        optOld: document.getElementById('optOld'),
         oldRegimeInput: document.getElementById('oldRegimeInput'),
-        // Output
+        
+        // Outputs
         valInHand: document.getElementById('valInHand'),
         valCTC: document.getElementById('valCTC'),
         valCTCDed: document.getElementById('valCTCDed'),
@@ -285,23 +456,19 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
     const fmt = (n) => Math.round(n).toLocaleString('en-IN');
     const parse = (val) => parseFloat(val) || 0;
 
-    // --- LOGIC 1: Auto-Estimate (Only when CTC changes) ---
+    // --- LOGIC 1: Auto-Estimate ---
     function estimateStructure() {
         const ctc = parse(el.ctc.value);
         if(ctc === 0) return;
 
-        // Standard Indian Structure
         const basic = ctc * 0.50; 
         const hra = basic * 0.50; 
         const empPF = basic * 0.12;
         const grat = basic * 0.0481;
-        const bonus = 0; 
         
-        // Balancing figure
-        const used = basic + hra + empPF + grat + bonus;
+        const used = basic + hra + empPF + grat;
         const special = Math.max(0, ctc - used);
 
-        // Fill
         el.basic.value = Math.round(basic);
         el.hra.value = Math.round(hra);
         el.employerPF.value = Math.round(empPF);
@@ -313,25 +480,21 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         calculate();
     }
 
-    // --- LOGIC 2: Smart Re-balance (When Basic Changes) ---
+    // --- LOGIC 2: Smart Re-balance ---
     function handleBasicChange() {
         const ctc = parse(el.ctc.value);
         if(ctc === 0) return;
 
         const basic = parse(el.basic.value);
-        
-        // Auto-update dependents
         const hra = basic * 0.50;
-        el.hra.value = Math.round(hra);
-        
         const empPF = basic * 0.12;
+        const grat = basic * 0.0481;
+
+        el.hra.value = Math.round(hra);
         el.employerPF.value = Math.round(empPF);
         el.employeePF.value = Math.round(empPF);
-        
-        const grat = basic * 0.0481;
         el.gratuity.value = Math.round(grat);
 
-        // Re-calculate Special to match original CTC
         const bonus = parse(el.bonus.value);
         const used = basic + hra + empPF + grat + bonus;
         const special = Math.max(0, ctc - used);
@@ -341,9 +504,8 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         calculate();
     }
 
-    // --- LOGIC 3: Pure Calculation (No field updates) ---
+    // --- LOGIC 3: Calculation ---
     function calculate() {
-        // Inputs
         const ctc = parse(el.ctc.value);
         const basic = parse(el.basic.value);
         const hra = parse(el.hra.value);
@@ -354,9 +516,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         const employeePF = parse(el.employeePF.value);
         const pt = parse(el.pt.value);
 
-        // Derivations
         const ctcDed = empPF + grat;
-        // Gross = Basic + HRA + Special (Variable excluded from monthly gross usually)
         const grossYearly = basic + hra + special;
         
         // Tax
@@ -370,13 +530,14 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
 
         const annualTax = calculateTax(Math.max(0, taxableIncome), regime);
         const payDed = employeePF + pt;
-        
-        // Net Calculation
         const netYearly = grossYearly - payDed - annualTax;
         const monthlyInHand = netYearly / 12;
 
-        // Render
-        el.valInHand.innerText = `₹${fmt(monthlyInHand)}`;
+        // Render & Scale
+        const inHandText = `₹${fmt(monthlyInHand)}`;
+        el.valInHand.innerText = inHandText;
+        scaleFontSize(inHandText);
+
         el.valCTC.innerText = `₹${fmt(ctc)}`;
         el.valCTCDed.innerText = `-₹${fmt(ctcDed)}`;
         el.valGross.innerText = `₹${fmt(grossYearly)}`;
@@ -392,7 +553,16 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         }
     }
 
-    // Tax Logic FY 25-26
+    // Font Scaler
+    function scaleFontSize(text) {
+        const len = text.length;
+        if(len > 14) el.valInHand.style.fontSize = "1.8rem";
+        else if(len > 11) el.valInHand.style.fontSize = "2.2rem";
+        else if(len > 9) el.valInHand.style.fontSize = "2.5rem";
+        else el.valInHand.style.fontSize = "3rem";
+    }
+
+    // Tax Logic
     function calculateTax(income, r) {
         if(income <= 0) return 0;
         let tax = 0;
@@ -424,16 +594,25 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
     el.ctc.addEventListener('input', estimateStructure);
     el.basic.addEventListener('input', handleBasicChange);
     
-    // Other inputs just trigger calc
     [el.hra, el.special, el.bonus, el.employerPF, el.gratuity, el.employeePF, el.pt, el.taxInvestments].forEach(i => {
         i.addEventListener('input', calculate);
     });
 
     window.setRegime = function(r) {
         regime = r;
-        if(r === 'old') el.oldRegimeInput.classList.remove('hidden');
-        else el.oldRegimeInput.classList.add('hidden');
+        el.regimeSwitch.setAttribute('data-active', r);
+        
+        if(r === 'new') {
+            el.optNew.classList.add('active'); el.optOld.classList.remove('active');
+            el.oldRegimeInput.classList.add('hidden');
+        } else {
+            el.optOld.classList.add('active'); el.optNew.classList.remove('active');
+            el.oldRegimeInput.classList.remove('hidden');
+        }
         calculate();
     }
+    
+    // Init icons
+    lucide.createIcons();
 
 </script>
