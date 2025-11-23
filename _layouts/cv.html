@@ -1,36 +1,150 @@
----
-layout: default
----
-<!-- 1. Link your backup CSS file -->
-<link rel="stylesheet" href="{{ '/styles_backup.css' | relative_url }}">
-
-<!-- 2. Override the website defaults to hide Header/Footer -->
-<style>
-    /* Hide the Glass Navigation Bar */
-    nav {
-        display: none !important;
-    }
-
-    /* Hide the Footer */
-    footer {
-        display: none !important;
-    }
-
-    /* Reset the top margin that usually sits below the nav */
-    main {
-        margin-top: 0 !important;
-        padding-top: 2rem !important;
-        max-width: 100% !important; /* Optional: Use full width for CV */
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} | {{ site.title }}</title>
     
-    /* Ensure the body background is what your backup CSS expects (usually white) */
-    body {
-        background: white !important;
-        color: black !important;
-    }
-</style>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- 3. The CV Content -->
-<div class="container cv-page">
-  {{ content }}
-</div>
+    <style>
+        /* RESET & BASICS */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f3f4f6; /* Light gray background for screen */
+            color: #1f2937;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+
+        /* THE PAPER */
+        .cv-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem 4rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-radius: 8px;
+        }
+
+        /* TYPOGRAPHY MAPPING (Matching your Markdown) */
+        
+        /* H1 = Name */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+            text-align: center;
+        }
+
+        /* H2 = Section Headers (Experience, Skills) */
+        h2 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6b7280;
+            border-bottom: 1px solid #e5e7eb;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* H3 = Job Titles */
+        h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #111827;
+            margin-top: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Paragraphs (Company Name / Dates / Descriptions) */
+        p {
+            margin-bottom: 0.75rem;
+            color: #374151;
+        }
+        
+        /* The "Sub-headline" (Developer • Designer...) */
+        h1 + p {
+            text-align: center;
+            font-size: 1.125rem;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
+        
+        /* Links */
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Lists (Bullet points) */
+        ul {
+            margin-bottom: 1rem;
+            padding-left: 1.2rem;
+        }
+        li {
+            margin-bottom: 0.25rem;
+            color: #4b5563;
+        }
+
+        /* Horizontal Rule */
+        hr {
+            border: 0;
+            border-top: 1px solid #e5e7eb;
+            margin: 2rem 0;
+        }
+
+        /* BACK BUTTON (Screen Only) */
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-btn:hover { color: #111827; }
+
+        /* PRINT STYLES */
+        @media print {
+            body { background: white; padding: 0; }
+            .cv-container {
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+            }
+            .back-btn { display: none; }
+            a { text-decoration: none; color: #000; }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 640px) {
+            .cv-container { padding: 2rem 1.5rem; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cv-container">
+        <!-- Back Button -->
+        <a href="/" class="back-btn">← Back to Home</a>
+
+        <!-- Content from cv.md -->
+        {{ content }}
+        
+        <!-- Subtle Footer for the CV -->
+        <div style="text-align: center; margin-top: 4rem; font-size: 0.75rem; color: #9ca3af;">
+            <p>Last updated: {{ "now" | date: "%B %Y" }}</p>
+        </div>
+    </div>
+
+</body>
+</html>
