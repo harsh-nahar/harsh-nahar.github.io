@@ -2,7 +2,7 @@
 layout: tools
 title: "tools"
 permalink: /tools/
-description: "Little utilities and web experiments."
+description: "little utilities and web experiments."
 image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_page_snippet.webp"
 ---
 
