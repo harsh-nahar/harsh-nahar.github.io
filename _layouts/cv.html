@@ -1,6 +1,36 @@
 ---
 layout: default
 ---
+<!-- 1. Link your backup CSS file -->
+<link rel="stylesheet" href="{{ '/styles_backup.css' | relative_url }}">
+
+<!-- 2. Override the website defaults to hide Header/Footer -->
+<style>
+    /* Hide the Glass Navigation Bar */
+    nav {
+        display: none !important;
+    }
+
+    /* Hide the Footer */
+    footer {
+        display: none !important;
+    }
+
+    /* Reset the top margin that usually sits below the nav */
+    main {
+        margin-top: 0 !important;
+        padding-top: 2rem !important;
+        max-width: 100% !important; /* Optional: Use full width for CV */
+    }
+    
+    /* Ensure the body background is what your backup CSS expects (usually white) */
+    body {
+        background: white !important;
+        color: black !important;
+    }
+</style>
+
+<!-- 3. The CV Content -->
 <div class="container cv-page">
   {{ content }}
 </div>
