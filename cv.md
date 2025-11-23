@@ -2,6 +2,7 @@
 layout: cv
 title: "CV"
 permalink: /cv/
+image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/cv_page_snippet.webp"
 ---
 
 <meta name="robots" content="noindex,nofollow">
