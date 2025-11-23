@@ -1,5 +1,5 @@
 ---
-title: "Rajasthan 2022"
+title: "Rajasthan"
 thumbnail: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/rajasthan_coverpage.webp"
 date: 2022-11-29
 ---
