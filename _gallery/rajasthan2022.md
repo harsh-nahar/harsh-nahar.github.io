@@ -1,6 +1,6 @@
 ---
 title: "Rajasthan"
-thumbnail: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/rajasthan_coverpage.webp"
+thumbnail: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaipur/jaipur_citypalace_painting.webp"
 date: 2022-11-29
 ---
 
