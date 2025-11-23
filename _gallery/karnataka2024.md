@@ -1,5 +1,5 @@
 ---
-title: "Karnataka 2024"
+title: "Karnataka"
 thumbnail: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/karnataka_2024/mysore_chamundeshwari.webp"
 date: 2024-04-10
 ---
