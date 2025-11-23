@@ -3,7 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV — {{ page.title }}</title>
+    <title>Harsh Nahar - {{ page.title }}</title>
+
+    <!-- Social Previews -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CV | Harsh Nahar">
+    <meta property="og:description" content="Developer • Designer • Web Enthusiast">
+    <meta property="og:url" content="https://harshnahar.com/cv/">
+    <meta property="og:image" content="{{ page.image | default: 'https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/cv_page_snippet.webp' }}">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ page.image | default: 'https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/cv_page_snippet.webp' }}">
+
     <style>
         /* 1. RESET */
         * { box-sizing: border-box; margin: 0; padding: 0; }
