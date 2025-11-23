@@ -1,5 +1,5 @@
 ---
-title: "Meghalaya 2023"
+title: "Meghalaya"
 description: "मेघालय/Meghalaya - The Cloud Abode"
 thumbnail: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/meghalaya_2023/khasihills.webp"
 date: 2023-11-25
