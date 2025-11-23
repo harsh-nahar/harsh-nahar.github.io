@@ -1,189 +1,234 @@
 ---
 layout: default
-title: "Salary Decoder (CTC to In-Hand)"
+title: "Salary Decoder (CTC vs In-Hand)"
 permalink: /tools/salary-decoder/
-description: "Understand your Indian Salary structure. Convert CTC to Net Monthly In-Hand salary and see hidden deductions."
-image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_page_snippet.webp" 
+description: "Decode your Indian Salary offer. Convert CTC to monthly In-Hand, spot hidden deductions, and understand your payslip structure."
+image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_page_snippet.webp"
 ---
 
 <!-- Tool Specific Styles -->
 <style>
-  /* Toggle Switch Logic */
-  .toggle-checkbox:checked {
-      right: 0;
-      border-color: #2563EB;
+  /* Custom Toggle Switch */
+  .toggle-checkbox {
+      appearance: none;
+      display: none;
+  }
+  .toggle-label {
+      width: 48px;
+      height: 24px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+  }
+  .toggle-label::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   }
   .toggle-checkbox:checked + .toggle-label {
-      background-color: #2563EB;
+      background: #2563eb;
   }
-  
-  /* Tooltip Logic */
-  .tooltip {
-      position: relative;
-      display: inline-block;
-      cursor: help;
+  .toggle-checkbox:checked + .toggle-label::after {
+      transform: translateX(24px);
   }
-  .tooltip .tooltip-text {
-      visibility: hidden;
-      width: 220px;
-      background-color: #1f2937;
-      color: #fff;
-      text-align: center;
-      border-radius: 6px;
-      padding: 8px;
-      position: absolute;
-      z-index: 1;
-      bottom: 125%;
-      left: 50%;
-      margin-left: -110px;
-      opacity: 0;
-      transition: opacity 0.3s;
-      font-size: 0.75rem;
-      font-weight: normal;
-      line-height: 1.4;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  .dark .toggle-label { background: #374151; }
+  .dark .toggle-checkbox:checked + .toggle-label { background: #2563eb; }
+
+  /* Range Slider */
+  input[type=range] {
+    -webkit-appearance: none; 
+    background: transparent; 
   }
-  .tooltip:hover .tooltip-text {
-      visibility: visible;
-      opacity: 1;
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #2563eb;
+    cursor: pointer;
+    margin-top: -6px; 
   }
-  .dark .tooltip .tooltip-text {
-      background-color: #f3f4f6;
-      color: #000;
-      border: 1px solid #e5e7eb;
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: #e5e7eb;
+    border-radius: 2px;
+  }
+  .dark input[type=range]::-webkit-slider-runnable-track {
+    background: #4b5563;
   }
 </style>
 
-<div class="fade-in max-w-3xl mx-auto mb-12">
+<div class="fade-in max-w-4xl mx-auto mb-12">
   
   <!-- Header -->
   <div class="text-center mb-10">
     <h1 class="text-3xl md:text-4xl font-bold mb-3 text-[#1d1d1f] dark:text-white">Salary Decoder</h1>
-    <p class="text-[#86868b] dark:text-gray-400 text-lg">Convert CTC to In-Hand & understand the deductions.</p>
+    <p class="text-[#86868b] dark:text-gray-400 text-lg">Make sense of your Offer Letter. CTC to In-Hand.</p>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       
-      <!-- INPUT SECTION (Left Side) -->
-      <div class="lg:col-span-7 space-y-6">
+      <!-- INPUT SECTION -->
+      <div class="lg:col-span-7 space-y-8">
         
-        <!-- CTC Input -->
-        <div class="bg-gray-50 dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/5">
-            <label for="ctc" class="block text-sm font-medium text-[#86868b] dark:text-gray-400 mb-2 ml-1">Annual CTC (₹)</label>
-            <input type="number" id="ctc" placeholder="e.g. 1200000" class="w-full px-4 py-3.5 bg-white dark:bg-white/10 border border-gray-200 dark:border-transparent focus:border-blue-500/50 rounded-xl text-xl font-mono text-[#1d1d1f] dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all">
-            <p class="text-xs text-[#86868b] mt-2 ml-1">Enter the full amount mentioned in your offer letter.</p>
-        </div>
-
-        <!-- Configuration Toggles -->
-        <div class="bg-gray-50 dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/5 space-y-6">
-            <h3 class="text-sm font-semibold uppercase tracking-wider text-[#86868b] dark:text-gray-400 mb-4">Salary Structure</h3>
-
-            <!-- Toggle: Employer PF -->
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <span class="text-[#1d1d1f] dark:text-white font-medium">Employer PF in CTC?</span>
-                    <div class="tooltip">
-                        <i data-lucide="info" class="w-4 h-4 text-gray-400"></i>
-                        <span class="tooltip-text">Most companies include their contribution to PF (12% of Basic) inside your CTC. This money never reaches your bank.</span>
-                    </div>
-                </div>
-                <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
-                    <input type="checkbox" name="includeEmployerPF" id="includeEmployerPF" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-all duration-300 top-0 left-0" checked/>
-                    <label for="includeEmployerPF" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer transition-colors duration-300"></label>
-                </div>
+        <!-- 1. The CTC -->
+        <section class="bg-gray-50 dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/5">
+            <label for="ctc" class="block text-sm font-semibold text-[#1d1d1f] dark:text-white mb-2 ml-1">Annual CTC (₹)</label>
+            <div class="relative">
+                <input type="number" id="ctc" placeholder="e.g. 1200000" class="w-full px-4 py-3 bg-white dark:bg-white/10 border border-gray-200 dark:border-transparent focus:border-blue-500 rounded-xl text-lg text-[#1d1d1f] dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all">
             </div>
+            <p class="text-xs text-[#86868b] mt-2 ml-1">Enter the total amount mentioned at the top of your offer letter.</p>
+        </section>
 
-            <!-- Toggle: Gratuity -->
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <span class="text-[#1d1d1f] dark:text-white font-medium">Gratuity in CTC?</span>
-                    <div class="tooltip">
-                        <i data-lucide="info" class="w-4 h-4 text-gray-400"></i>
-                        <span class="tooltip-text">Gratuity (4.81% of Basic) is often part of CTC but is only paid after 5 years of service.</span>
-                    </div>
-                </div>
-                <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
-                    <input type="checkbox" name="includeGratuity" id="includeGratuity" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-all duration-300 top-0 left-0"/>
-                    <label for="includeGratuity" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer transition-colors duration-300"></label>
-                </div>
-            </div>
+        <!-- 2. The Structure -->
+        <section class="bg-gray-50 dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/5 space-y-6">
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-[#86868b] dark:text-gray-400 mb-2">Salary Structure</h3>
 
-            <!-- Basic Salary Percentage -->
+            <!-- Basic Salary Control -->
             <div>
-                <div class="flex justify-between mb-2">
-                    <label for="basicPercent" class="text-sm font-medium text-[#1d1d1f] dark:text-white">Basic Salary %</label>
-                    <span id="basicPercentVal" class="text-sm font-mono text-blue-600 dark:text-blue-400">50%</span>
+                <div class="flex justify-between items-end mb-3">
+                    <label class="text-sm font-medium text-[#1d1d1f] dark:text-white">Basic Salary Percentage</label>
+                    <div class="flex items-center gap-2">
+                        <input type="number" id="basicInput" value="50" min="20" max="100" class="w-16 px-2 py-1 text-right text-sm bg-white dark:bg-white/10 border border-gray-200 dark:border-gray-700 rounded-md focus:outline-none focus:border-blue-500">
+                        <span class="text-sm text-[#86868b]">%</span>
+                    </div>
                 </div>
-                <input type="range" id="basicPercent" min="30" max="60" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-blue-600">
-                <p class="text-xs text-[#86868b] mt-2">Usually 40-50% of CTC. Adjust if you know your exact structure.</p>
+                <input type="range" id="basicSlider" min="20" max="80" value="50" class="w-full">
+                <p class="text-xs text-[#86868b] mt-2">Usually 40% or 50% of your CTC. Check your offer letter breakdown.</p>
             </div>
-        </div>
+
+            <hr class="border-gray-200 dark:border-white/10">
+
+            <!-- Employer PF Toggle -->
+            <div class="flex items-center justify-between">
+                <div class="pr-4">
+                    <p class="text-[#1d1d1f] dark:text-white font-medium text-sm">Is "Employer PF" included in CTC?</p>
+                    <details class="mt-1">
+                        <summary class="text-xs text-blue-600 dark:text-blue-400 cursor-pointer hover:underline">How do I check?</summary>
+                        <p class="text-xs text-[#86868b] mt-1 p-2 bg-gray-100 dark:bg-white/10 rounded leading-relaxed">
+                            Look at your salary breakdown. If there is a section called "Retirals" or if you see two PF entries (Employer & Employee) adding up to the total CTC number, then <strong>Yes</strong>, it is included. This means the company is taking money out of your stated package to put into your PF.
+                        </p>
+                    </details>
+                </div>
+                <div>
+                    <input type="checkbox" id="includeEmployerPF" class="toggle-checkbox" checked>
+                    <label for="includeEmployerPF" class="toggle-label"></label>
+                </div>
+            </div>
+
+            <!-- Gratuity Toggle -->
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-[#1d1d1f] dark:text-white font-medium text-sm">Is "Gratuity" included in CTC?</p>
+                    <p class="text-xs text-[#86868b] mt-1">Usually 4.81% of Basic Salary. Paid only after 5 years.</p>
+                </div>
+                <div>
+                    <input type="checkbox" id="includeGratuity" class="toggle-checkbox">
+                    <label for="includeGratuity" class="toggle-label"></label>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Hidden Deductions -->
+        <section class="bg-gray-50 dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/5 space-y-4">
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-[#86868b] dark:text-gray-400">Extra Deductions</h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-[#86868b] mb-1">Other Deductions from CTC (Yearly)</label>
+                    <input type="number" id="otherCTCDeductions" placeholder="e.g. Insurance" class="w-full px-3 py-2 bg-white dark:bg-white/10 border border-gray-200 dark:border-transparent rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20">
+                    <p class="text-[10px] text-[#86868b] mt-1">Ex: Group Medical Insurance, Food Coupons cost</p>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-[#86868b] mb-1">Other Deductions from Pay (Monthly)</label>
+                    <input type="number" id="otherPayDeductions" placeholder="e.g. Canteen" class="w-full px-3 py-2 bg-white dark:bg-white/10 border border-gray-200 dark:border-transparent rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20">
+                    <p class="text-[10px] text-[#86868b] mt-1">Ex: Canteen fees, Transport, VPF</p>
+                </div>
+            </div>
+        </section>
+
       </div>
 
-      <!-- OUTPUT SECTION (Right Side / Sticky) -->
+      <!-- OUTPUT SECTION (Sticky) -->
       <div class="lg:col-span-5">
           <div class="sticky top-24 space-y-6">
             
-            <!-- The Big Number Card -->
-            <div class="bg-white dark:bg-[#1c1c1e] p-6 rounded-3xl shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-white/10 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+            <!-- Result Card -->
+            <div class="bg-white dark:bg-[#1c1c1e] p-6 rounded-3xl shadow-2xl shadow-blue-900/5 dark:shadow-black/50 border border-gray-100 dark:border-white/10 relative">
                 
-                <p class="text-sm font-medium text-[#86868b] dark:text-gray-400 uppercase tracking-wider mb-1">Monthly In-Hand (Approx)</p>
-                <h2 id="monthlyInHand" class="text-4xl font-bold text-[#1d1d1f] dark:text-white font-mono tracking-tight">₹0</h2>
+                <div class="text-center mb-6">
+                    <p class="text-sm font-medium text-[#86868b] dark:text-gray-400 uppercase tracking-wider mb-2">Estimated Monthly In-Hand</p>
+                    <h2 id="monthlyInHand" class="text-5xl font-bold text-[#1d1d1f] dark:text-white font-mono tracking-tighter">₹0</h2>
+                    <p class="text-xs text-red-500 mt-2 font-medium">* Pre-Tax (Before Income Tax)</p>
+                </div>
                 
-                <div class="mt-6 pt-6 border-t border-gray-100 dark:border-white/10 space-y-3">
-                    <div class="flex justify-between text-sm">
+                <div class="bg-gray-50 dark:bg-white/5 rounded-xl p-4 space-y-3 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-[#86868b] dark:text-gray-400">Yearly Gross</span>
+                        <span id="yearlyGross" class="font-mono font-medium text-[#1d1d1f] dark:text-white">₹0</span>
+                    </div>
+                    <div class="flex justify-between">
                         <span class="text-[#86868b] dark:text-gray-400">Monthly Gross</span>
                         <span id="monthlyGross" class="font-mono font-medium text-[#1d1d1f] dark:text-white">₹0</span>
                     </div>
-                    <div class="flex justify-between text-sm">
-                        <span class="text-red-500/80">Total Deductions</span>
-                        <span id="monthlyDeductions" class="font-mono font-medium text-red-500">₹0</span>
-                    </div>
+                </div>
+
+                <!-- Dynamic Logic Text -->
+                <div class="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-100 dark:border-blue-800/30">
+                    <p id="logicText" class="text-xs leading-relaxed text-blue-800 dark:text-blue-200">
+                        Enter your CTC to see the breakdown.
+                    </p>
                 </div>
             </div>
 
-            <!-- Breakdown List -->
+            <!-- Detailed Breakdown -->
             <div class="bg-gray-50 dark:bg-white/5 rounded-2xl p-5 border border-gray-100 dark:border-white/5">
-                <h4 class="font-semibold text-[#1d1d1f] dark:text-white mb-4 flex items-center gap-2">
-                    <i data-lucide="pie-chart" class="w-4 h-4"></i> Where did the money go?
-                </h4>
+                <h4 class="font-semibold text-[#1d1d1f] dark:text-white mb-4 text-sm uppercase tracking-wide">Deduction Breakdown</h4>
                 
                 <div class="space-y-3 text-sm">
-                    <!-- Employer PF -->
-                    <div class="flex justify-between items-center group">
-                        <div class="flex items-center gap-2">
-                            <div class="w-2 h-2 rounded-full bg-orange-400"></div>
-                            <span class="text-[#86868b] dark:text-gray-400">Employer PF (Yearly)</span>
+                    <!-- CTC Deductions -->
+                    <div class="pb-3 border-b border-gray-200 dark:border-white/10">
+                        <p class="text-[10px] text-[#86868b] mb-2 uppercase">Removed from CTC (Money you never see)</p>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-gray-600 dark:text-gray-300">Employer PF (12%)</span>
+                            <span id="outEmployerPF" class="font-mono text-[#1d1d1f] dark:text-white">₹0</span>
                         </div>
-                        <span id="breakdownEmployerPF" class="font-mono text-[#1d1d1f] dark:text-white opacity-60 group-hover:opacity-100 transition-opacity">₹0</span>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-gray-600 dark:text-gray-300">Gratuity (~4.8%)</span>
+                            <span id="outGratuity" class="font-mono text-[#1d1d1f] dark:text-white">₹0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600 dark:text-gray-300">Other CTC Ded.</span>
+                            <span id="outOtherCTC" class="font-mono text-[#1d1d1f] dark:text-white">₹0</span>
+                        </div>
                     </div>
 
-                    <!-- Gratuity -->
-                    <div class="flex justify-between items-center group">
-                        <div class="flex items-center gap-2">
-                            <div class="w-2 h-2 rounded-full bg-yellow-400"></div>
-                            <span class="text-[#86868b] dark:text-gray-400">Gratuity (Yearly)</span>
+                    <!-- Pay Deductions -->
+                    <div>
+                        <p class="text-[10px] text-[#86868b] mb-2 uppercase mt-2">Deducted from Gross (Payslip items)</p>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-gray-600 dark:text-gray-300">Employee PF (12%)</span>
+                            <span id="outEmployeePF" class="font-mono text-[#1d1d1f] dark:text-white">₹0</span>
                         </div>
-                        <span id="breakdownGratuity" class="font-mono text-[#1d1d1f] dark:text-white opacity-60 group-hover:opacity-100 transition-opacity">₹0</span>
-                    </div>
-
-                    <!-- Employee PF -->
-                    <div class="flex justify-between items-center group">
-                        <div class="flex items-center gap-2">
-                            <div class="w-2 h-2 rounded-full bg-blue-400"></div>
-                            <span class="text-[#86868b] dark:text-gray-400">Your PF (Yearly)</span>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-gray-600 dark:text-gray-300">Prof. Tax</span>
+                            <span id="outPT" class="font-mono text-[#1d1d1f] dark:text-white">₹2,400</span>
                         </div>
-                        <span id="breakdownEmployeePF" class="font-mono text-[#1d1d1f] dark:text-white opacity-60 group-hover:opacity-100 transition-opacity">₹0</span>
-                    </div>
-                    
-                    <!-- PT -->
-                    <div class="flex justify-between items-center group">
-                        <div class="flex items-center gap-2">
-                            <div class="w-2 h-2 rounded-full bg-purple-400"></div>
-                            <span class="text-[#86868b] dark:text-gray-400">Prof. Tax (Yearly)</span>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600 dark:text-gray-300">Other Monthly Ded.</span>
+                            <span id="outOtherPay" class="font-mono text-[#1d1d1f] dark:text-white">₹0</span>
                         </div>
-                        <span id="breakdownPT" class="font-mono text-[#1d1d1f] dark:text-white opacity-60 group-hover:opacity-100 transition-opacity">₹2,400</span>
                     </div>
                 </div>
             </div>
@@ -191,29 +236,31 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
       </div>
   </div>
 
-  <!-- Explainer Section -->
-  <div class="mt-16 prose dark:prose-invert max-w-none border-t border-gray-200 dark:border-white/10 pt-10">
-      <h3>Understanding the Math</h3>
-      <p>The biggest shock for Indian employees is the difference between the Offer Letter (CTC) and the Bank Credit (In-Hand). Here is what is happening:</p>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 not-prose">
-          <div class="bg-blue-50 dark:bg-blue-900/10 p-5 rounded-xl">
-              <h4 class="font-bold text-blue-700 dark:text-blue-400 mb-2">1. The "CTC" Trap</h4>
-              <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                  CTC stands for <strong>Cost to Company</strong>. It is not what you get; it is what the company spends on you. This includes office coffee, insurance premiums, and the government-mandated share they must put into your Pension (PF).
-              </p>
-          </div>
-          <div class="bg-orange-50 dark:bg-orange-900/10 p-5 rounded-xl">
-              <h4 class="font-bold text-orange-700 dark:text-orange-400 mb-2">2. Provident Fund (PF)</h4>
-              <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                  PF is a double whammy. 12% is deducted from your salary (Employee Share), AND another 12% is often deducted from your CTC (Employer Share) before calculating your Gross Salary. It's your money, but locked until retirement.
-              </p>
-          </div>
+  <!-- Human Explainer Text -->
+  <div class="mt-20 border-t border-gray-200 dark:border-white/10 pt-12 max-w-2xl mx-auto">
+      <h3 class="text-2xl font-bold text-[#1d1d1f] dark:text-white mb-6">Why doesn't the math match?</h3>
+      <div class="space-y-6 text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+          <p>
+              If you are new to the Indian corporate world, the "CTC" figure is often the most confusing part. It stands for <strong>Cost to Company</strong>. Think of it as the total bill the company pays to keep you employed, not the check they hand you.
+          </p>
+          <p>
+              The biggest invisible chunk is usually the <strong>Employer's Contribution to PF</strong>. By law, 12% of your basic salary goes to your pension fund from your side. But the company also has to match that 12%. Instead of paying that extra 12% from their own pocket, most companies simply include it inside your CTC. So, technically, you are paying your own "employer share."
+          </p>
+          <p>
+              Then there is <strong>Gratuity</strong>. This is a loyalty bonus you only get if you stay for 5 years. If it's part of your CTC and you leave after 2 years, you basically donated that money back to the company.
+          </p>
       </div>
-      
-      <p class="text-sm text-gray-400 mt-8 italic">
-          * Note: This calculator assumes a standard structure. Actual components like HRA, Special Allowance, and Flexible Benefits can vary by company policy. Income Tax (TDS) is NOT included in this specific calculation as it depends heavily on your investments and regime choice.
-      </p>
+
+      <!-- Link to Tax Calc -->
+      <div class="mt-10 p-6 bg-blue-50 dark:bg-white/5 rounded-2xl border border-blue-100 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+              <h4 class="font-bold text-[#1d1d1f] dark:text-white text-lg">Calculate your Income Tax?</h4>
+              <p class="text-sm text-[#86868b] dark:text-gray-400">Now that you know your In-Hand, find out how much tax you owe.</p>
+          </div>
+          <a href="{{ '/tools/taxcalc2526/' | relative_url }}" class="whitespace-nowrap px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full transition-colors text-sm shadow-lg shadow-blue-600/20">
+              Go to Tax Calc →
+          </a>
+      </div>
   </div>
 
 </div>
@@ -222,86 +269,113 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
     // Helper for Indian Number Formatting
     const fmt = (n) => n.toLocaleString('en-IN', { maximumFractionDigits: 0 });
 
+    // Inputs
     const ctcInput = document.getElementById('ctc');
+    const basicInput = document.getElementById('basicInput');
+    const basicSlider = document.getElementById('basicSlider');
     const includeEmployerPF = document.getElementById('includeEmployerPF');
     const includeGratuity = document.getElementById('includeGratuity');
-    const basicPercent = document.getElementById('basicPercent');
-    const basicPercentVal = document.getElementById('basicPercentVal');
+    
+    // Custom Inputs
+    const otherCTCDedInput = document.getElementById('otherCTCDeductions');
+    const otherPayDedInput = document.getElementById('otherPayDeductions');
 
     // Outputs
     const elMonthlyInHand = document.getElementById('monthlyInHand');
+    const elYearlyGross = document.getElementById('yearlyGross');
     const elMonthlyGross = document.getElementById('monthlyGross');
-    const elMonthlyDeductions = document.getElementById('monthlyDeductions');
+    const elLogicText = document.getElementById('logicText');
     
-    const elBreakdownEmployerPF = document.getElementById('breakdownEmployerPF');
-    const elBreakdownGratuity = document.getElementById('breakdownGratuity');
-    const elBreakdownEmployeePF = document.getElementById('breakdownEmployeePF');
-    const elBreakdownPT = document.getElementById('breakdownPT');
+    // Breakdown outputs
+    const outEmployerPF = document.getElementById('outEmployerPF');
+    const outGratuity = document.getElementById('outGratuity');
+    const outOtherCTC = document.getElementById('outOtherCTC');
+    const outEmployeePF = document.getElementById('outEmployeePF');
+    const outPT = document.getElementById('outPT');
+    const outOtherPay = document.getElementById('outOtherPay');
+
+    // Sync Slider and Input
+    basicSlider.addEventListener('input', (e) => { basicInput.value = e.target.value; calculate(); });
+    basicInput.addEventListener('input', (e) => { basicSlider.value = e.target.value; calculate(); });
 
     function calculate() {
         const ctc = parseFloat(ctcInput.value) || 0;
-        const basicPct = parseInt(basicPercent.value) / 100;
+        if(ctc === 0) return;
+
+        const basicPct = parseInt(basicInput.value) / 100;
         
-        // 1. Calculate Basic Salary (Yearly)
-        // Usually 40-50% of CTC.
+        // 1. Basic Salary (Yearly)
         let basicSalary = ctc * basicPct;
 
-        // 2. Deductions from CTC (To get Gross)
+        // 2. Deductions FROM CTC (The "Invisible" ones)
         let employerPF = 0;
         let gratuity = 0;
+        let otherCTC = parseFloat(otherCTCDedInput.value) || 0;
 
-        // Employer PF is 12% of Basic (Capped at 12% of 15k usually, but many companies pay on full basic)
-        // We will assume full basic for simplicity in high CTC cases, or cap it if needed. 
-        // For "Understanding", calculating on full basic is safer to show worst-case in-hand.
+        // Employer PF: 12% of Basic. 
+        // Note: Some companies cap PF at 1800 (12% of 15000).
+        // For "Decoder" purposes, usually high CTC structures assume 12% of full basic.
         if (includeEmployerPF.checked) {
             employerPF = basicSalary * 0.12;
         }
 
-        // Gratuity is roughly 4.81% of Basic
         if (includeGratuity.checked) {
+            // Formula: (15 * Last Drawn Salary * Tenure) / 26. 
+            // For yearly cost estimation in CTC, companies use ~4.81% of Basic.
             gratuity = basicSalary * 0.0481;
         }
 
-        // GROSS SALARY (Yearly)
-        // This is what appears on your salary slip before your own deductions
-        const grossSalaryYearly = ctc - employerPF - gratuity;
+        const totalCTCDeductions = employerPF + gratuity + otherCTC;
 
-        // 3. Deductions from Gross (To get Net)
-        
-        // Employee PF (Your share) - 12% of Basic
+        // 3. Gross Salary (Yearly)
+        const grossSalaryYearly = ctc - totalCTCDeductions;
+
+        // 4. Deductions FROM PAY (The Payslip ones)
+        // Employee PF: Matching 12% of Basic
         const employeePF = basicSalary * 0.12;
+        const profTax = 2400; // Flat 200/mo assumption
+        const otherPayMonthly = parseFloat(otherPayDedInput.value) || 0;
+        const otherPayYearly = otherPayMonthly * 12;
 
-        // Professional Tax (Avg 200/mo = 2400/yr)
-        const profTax = 2400;
+        const totalPayDeductions = employeePF + profTax + otherPayYearly;
 
-        // NET SALARY (Yearly)
-        // Note: We are NOT deducting TDS (Income Tax) here as it varies wildly.
-        const netSalaryYearly = grossSalaryYearly - employeePF - profTax;
-
-        // 4. Monthly Conversions
+        // 5. Net Calculations
+        const netSalaryYearly = grossSalaryYearly - totalPayDeductions;
         const monthlyInHand = netSalaryYearly / 12;
         const monthlyGross = grossSalaryYearly / 12;
-        const monthlyDeductions = (employeePF + profTax) / 12; // Deductions from Gross
 
-        // 5. Update UI
+        // Update UI
         elMonthlyInHand.textContent = `₹${fmt(monthlyInHand)}`;
+        elYearlyGross.textContent = `₹${fmt(grossSalaryYearly)}`;
         elMonthlyGross.textContent = `₹${fmt(monthlyGross)}`;
-        elMonthlyDeductions.textContent = `-₹${fmt(monthlyDeductions)}`;
 
-        elBreakdownEmployerPF.textContent = `₹${fmt(employerPF)}`;
-        elBreakdownGratuity.textContent = `₹${fmt(gratuity)}`;
-        elBreakdownEmployeePF.textContent = `₹${fmt(employeePF)}`;
-        elBreakdownPT.textContent = `₹${fmt(profTax)}`;
+        // Update Breakdown
+        outEmployerPF.textContent = `-₹${fmt(employerPF)}`;
+        outGratuity.textContent = `-₹${fmt(gratuity)}`;
+        outOtherCTC.textContent = `-₹${fmt(otherCTC)}`;
+        outEmployeePF.textContent = `-₹${fmt(employeePF)}`;
+        outPT.textContent = `-₹${fmt(profTax)}`;
+        outOtherPay.textContent = `-₹${fmt(otherPayYearly)}`;
+
+        // Dynamic Logic Text
+        let logic = `Based on a Basic Salary of <strong>₹${fmt(basicSalary)}</strong> (Yearly). `;
+        
+        if (includeEmployerPF.checked) {
+            logic += `Your company is deducting the Employer's PF share (₹${fmt(employerPF)}) from your CTC package. `;
+        } else {
+            logic += `Your company pays Employer PF over and above this CTC. `;
+        }
+
+        if (totalCTCDeductions > 0) {
+            const lostPct = ((totalCTCDeductions / ctc) * 100).toFixed(1);
+            logic += `<br><br>In total, <strong>${lostPct}%</strong> of your CTC is set aside before it even becomes Gross Salary.`;
+        }
+
+        elLogicText.innerHTML = logic;
     }
 
     // Listeners
-    const inputs = [ctcInput, includeEmployerPF, includeGratuity, basicPercent];
+    const inputs = [ctcInput, includeEmployerPF, includeGratuity, otherCTCDedInput, otherPayDedInput];
     inputs.forEach(el => el.addEventListener('input', calculate));
-    
-    basicPercent.addEventListener('input', (e) => {
-        basicPercentVal.textContent = e.target.value + '%';
-    });
 
-    // Initialize icons
-    lucide.createIcons();
 </script>
