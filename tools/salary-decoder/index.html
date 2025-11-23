@@ -51,7 +51,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
       align-items: center;
       justify-content: space-between;
       margin-bottom: 6px;
-      position: relative; /* Anchor for tooltip */
+      position: relative;
   }
   .lbl {
       font-size: 0.85rem;
@@ -60,7 +60,6 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
   }
   .dark .lbl { color: #d1d5db; }
 
-  /* Tooltip Container */
   .info-icon {
       cursor: help;
       color: #9ca3af;
@@ -69,13 +68,12 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
   }
   .info-icon:hover { color: #3b82f6; }
 
-  /* The Popup */
   .tooltip-box {
       visibility: hidden;
       opacity: 0;
       position: absolute;
       bottom: 100%;
-      right: 0; /* Align to right edge to prevent overflow on mobile */
+      right: 0;
       margin-bottom: 8px;
       width: 220px;
       background: #1f2937;
@@ -92,7 +90,6 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
   
-  /* Desktop override: Center align if space permits */
   @media (min-width: 768px) {
       .tooltip-box {
           right: auto;
@@ -150,7 +147,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
   .dark .switch-bg { background: #3f3f46; }
   .regime-switch[data-active="old"] .switch-bg { transform: translateX(100%); }
 
-  /* 4. TABLE ROWS & SCROLL SAFETY */
+  /* 4. TABLE ROWS */
   .row {
       display: flex;
       justify-content: space-between;
@@ -158,19 +155,20 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
       padding: 10px 0;
       border-bottom: 1px solid #f3f4f6;
       font-size: 0.9rem;
-      overflow: hidden; /* Prevent spill */
+      overflow: hidden;
   }
   .dark .row { border-bottom-color: #27272a; }
   .row:last-child { border-bottom: none; }
   
+  /* Horizontal Scroll for long numbers */
   .val-container {
-      max-width: 50%; /* Force scroll if too wide */
+      max-width: 50%;
       overflow-x: auto;
       white-space: nowrap;
       text-align: right;
-      scrollbar-width: none; /* Hide scrollbar Firefox */
+      scrollbar-width: none;
   }
-  .val-container::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome */
+  .val-container::-webkit-scrollbar { display: none; }
 
   .val { font-family: 'JetBrains Mono', monospace; }
   .negative { color: #dc2626; } 
@@ -195,7 +193,6 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
             <div class="lbl-row">
                 <label class="lbl text-base">Annual CTC (₹)</label>
             </div>
-            <!-- Max length 12 digits (Trillions) to prevent layout break -->
             <input type="number" id="ctc" placeholder="e.g. 1500000" class="mono-input" 
                    oninput="if(this.value.length > 12) this.value = this.value.slice(0, 12);"
                    style="padding: 14px; font-size: 1.25rem; font-weight: 600;">
@@ -342,13 +339,16 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
 
       <!-- RIGHT: SUMMARY -->
       <div class="lg:col-span-5">
-          <div class="sticky top-8 bg-white dark:bg-[#1c1c1e] border border-gray-200 dark:border-white/10 rounded-2xl p-6 md:p-8 shadow-sm">
+          <!-- UPDATED: Darker Background -->
+          <div class="sticky top-8 bg-white dark:bg-[#050505] border border-gray-200 dark:border-white/10 rounded-2xl p-6 md:p-8 shadow-sm">
             
             <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4 text-center">Estimated Monthly In-Hand</p>
             
-            <div class="text-center border-b border-gray-100 dark:border-white/10 pb-6 mb-6 overflow-hidden">
-                <!-- Auto-Scaling Number -->
-                <h2 id="valInHand" class="font-mono font-bold text-[#1d1d1f] dark:text-white transition-all duration-300" style="font-size: 3rem;">₹0</h2>
+            <div class="text-center border-b border-gray-100 dark:border-white/10 pb-6 mb-6">
+                <!-- Auto-Scaling Number with Horizontal Scroll Safety -->
+                <div class="overflow-x-auto no-scrollbar">
+                    <h2 id="valInHand" class="font-mono font-bold text-[#1d1d1f] dark:text-white transition-all duration-300 whitespace-nowrap" style="font-size: 2.75rem;">₹0</h2>
+                </div>
                 <p class="text-xs text-gray-400 mt-2">Post Deductions & Taxes</p>
             </div>
 
@@ -560,13 +560,14 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         }
     }
 
-    // Font Scaler
+    // Font Scaler (UPDATED for aggressive desktop scaling)
     function scaleFontSize(text) {
         const len = text.length;
-        if(len > 14) el.valInHand.style.fontSize = "1.8rem";
-        else if(len > 11) el.valInHand.style.fontSize = "2.2rem";
-        else if(len > 9) el.valInHand.style.fontSize = "2.5rem";
-        else el.valInHand.style.fontSize = "3rem";
+        // Aggressively shrink font for longer numbers to fit 5-col layout
+        if(len > 12) el.valInHand.style.fontSize = "1.5rem";
+        else if(len > 10) el.valInHand.style.fontSize = "2rem";
+        else if(len > 8) el.valInHand.style.fontSize = "2.25rem";
+        else el.valInHand.style.fontSize = "2.75rem";
     }
 
     // Tax Logic
