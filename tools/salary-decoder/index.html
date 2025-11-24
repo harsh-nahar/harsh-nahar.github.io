@@ -286,7 +286,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
                         </div>
                         <input type="number" id="gratuity" class="mono-input" oninput="if(this.value.length > 12) this.value = this.value.slice(0, 12);">
                     </div>
-                    <!-- ADDED: Other CTC Deductions -->
+                    <!-- Other CTC Deductions -->
                     <div class="md:col-span-2">
                          <div class="lbl-row">
                             <label class="lbl text-gray-600 dark:text-gray-300">Other CTC Deductions</label>
@@ -412,21 +412,18 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
   <!-- EXPLAINER SECTION -->
   <div class="mt-20 pt-10 border-t border-gray-100 dark:border-white/10 max-w-3xl mx-auto prose dark:prose-invert">
       <h3>Understanding Your Salary</h3>
-      <p class="text-gray-600 dark:text-gray-300">
-          In India, the difference between what a company offers (CTC) and what hits your bank account can be significant. Here is a breakdown of why that happens:
-      </p>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-8 not-prose">
           <div class="bg-gray-50 dark:bg-white/5 p-5 rounded-lg border border-gray-100 dark:border-white/5">
-              <h4 class="font-bold text-[#1d1d1f] dark:text-white mb-2 text-sm uppercase">1. Cost to Company (CTC)</h4>
+              <h4 class="font-bold text-[#1d1d1f] dark:text-white mb-2 text-sm uppercase">1. The "CTC" Trap</h4>
               <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                  This is the total expense the company incurs on you. It includes "invisible" components like the Employer's share of Provident Fund (PF) and Gratuity. You earn this money, but it goes into long-term savings, not your monthly account.
+                  CTC includes "Invisible Money" like Employer PF & Gratuity. You technically earn it, but it goes straight to your long-term savings and never touches your bank account monthly.
               </p>
           </div>
           <div class="bg-gray-50 dark:bg-white/5 p-5 rounded-lg border border-gray-100 dark:border-white/5">
-              <h4 class="font-bold text-[#1d1d1f] dark:text-white mb-2 text-sm uppercase">2. Gross vs Net</h4>
+              <h4 class="font-bold text-[#1d1d1f] dark:text-white mb-2 text-sm uppercase">2. Why is the Tax lower here?</h4>
               <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                  <strong>Gross Salary</strong> is what remains after CTC deductions. However, before this hits your bank, the government mandates deductions for your share of PF, Professional Tax, and Income Tax (TDS). The remaining amount is your <strong>Net In-Hand Salary</strong>.
+                  This tool calculates tax on your <strong>Real Gross</strong> (CTC minus Employer PF/Gratuity). The standalone Tax Calculator assumes the input is fully taxable. Since your taxable base is lower here, the tax is lower.
               </p>
           </div>
       </div>
@@ -448,7 +445,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         bonus: document.getElementById('bonus'),
         employerPF: document.getElementById('employerPF'),
         gratuity: document.getElementById('gratuity'),
-        otherCTCDed: document.getElementById('otherCTCDed'), // Added
+        otherCTCDed: document.getElementById('otherCTCDed'),
         employeePF: document.getElementById('employeePF'),
         pt: document.getElementById('pt'),
         taxInvestments: document.getElementById('taxInvestments'),
@@ -559,7 +556,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         const netYearly = grossYearly - payDed - annualTax;
         const monthlyInHand = netYearly / 12;
 
-        // Render & Scale
+        // Render
         const inHandText = `₹${fmt(monthlyInHand)}`;
         el.valInHand.innerText = inHandText;
         scaleFontSize(inHandText);
@@ -648,7 +645,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
                 let theorySurcharge = taxAfterRebate * (rate / 100);
                 surcharge = theorySurcharge;
 
-                // Surcharge Marginal Relief
+                // Surcharge Relief
                 let threshold = 0;
                 if (income > 50000000) threshold = 50000000;
                 else if (income > 20000000) threshold = 20000000;
