@@ -1,0 +1,312 @@
+---
+layout: default
+title: "freedom calculator"
+permalink: /tools/freedom-calculator/
+description: "calculate your financial runway and FIRE number"
+image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_page_snippet.webp"
+---
+
+<style>
+  /* --- INPUTS --- */
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type=number] { -moz-appearance: textfield; }
+
+  .mono-input {
+      font-family: 'JetBrains Mono', 'SFMono-Regular', monospace;
+      width: 100%;
+      background: transparent;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 1rem;
+      color: #111;
+      transition: all 0.2s;
+  }
+  .dark .mono-input {
+      border-color: #333;
+      color: #eee;
+  }
+  .mono-input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  }
+
+  .lbl {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6b7280;
+      margin-bottom: 6px;
+      display: block;
+  }
+  .dark .lbl { color: #9ca3af; }
+
+  /* --- RESULT CARD --- */
+  .stat-card {
+      padding: 24px;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  }
+  .dark .stat-card {
+      background: #050505;
+      border-color: #27272a;
+  }
+
+  .big-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-top: 12px;
+      margin-bottom: 8px;
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none; /* Hide scrollbar */
+  }
+  .big-num::-webkit-scrollbar { display: none; }
+
+  .sub-text {
+      font-size: 0.85rem;
+      color: #6b7280;
+      line-height: 1.5;
+  }
+  
+  /* --- PROGRESS BAR --- */
+  .progress-track {
+      width: 100%;
+      height: 8px;
+      background: #f3f4f6;
+      border-radius: 99px;
+      overflow: hidden;
+      margin-top: 16px;
+  }
+  .dark .progress-track { background: #27272a; }
+  
+  .progress-fill {
+      height: 100%;
+      background: #1d1d1f;
+      width: 0%;
+      transition: width 0.5s ease-out;
+      border-radius: 99px;
+  }
+  .dark .progress-fill { background: #fff; }
+
+</style>
+
+<div class="fade-in max-w-5xl mx-auto mb-20">
+  
+  <!-- Header -->
+  <div class="mb-12 border-b border-gray-100 dark:border-white/10 pb-8">
+    <h1 class="text-3xl font-bold text-[#1d1d1f] dark:text-white">Freedom Calculator</h1>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Your Runway (Safety) & Your FIRE Number (Freedom).</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      
+      <!-- INPUTS -->
+      <div class="lg:col-span-5 space-y-10">
+        
+        <!-- 1. Current Status -->
+        <section>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-6">Current Status</h3>
+            
+            <div class="mb-6">
+                <label class="lbl">Liquid Savings (₹)</label>
+                <input type="number" id="savings" placeholder="e.g. 1500000" class="mono-input">
+                <p class="text-[10px] text-gray-400 mt-1.5">Cash + FD + Stocks. (Do not include PF/Home).</p>
+            </div>
+
+            <div>
+                <label class="lbl">Monthly Expenses (₹)</label>
+                <input type="number" id="expenses" placeholder="e.g. 50000" class="mono-input">
+                <p class="text-[10px] text-gray-400 mt-1.5">Rent, EMI, Food, Lifestyle.</p>
+            </div>
+        </section>
+
+        <hr class="border-gray-100 dark:border-white/10">
+
+        <!-- 2. Freedom Settings -->
+        <section>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-6">Freedom Settings</h3>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="lbl">Retirement Multiplier</label>
+                    <select id="multiplier" class="mono-input text-sm">
+                        <option value="25">25x (Risky)</option>
+                        <option value="30" selected>30x (Standard)</option>
+                        <option value="40">40x (Safe)</option>
+                        <option value="50">50x (Fat FIRE)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="lbl">Est. Return Rate (%)</label>
+                    <input type="number" id="roi" value="10" class="mono-input text-sm">
+                </div>
+            </div>
+            <p class="text-[10px] text-gray-400 mt-2">
+                <strong>30x Rule:</strong> If you have 30 times your annual expenses, you can technically retire (assuming 3-4% withdrawal rate).
+            </p>
+        </section>
+
+      </div>
+
+      <!-- OUTPUTS -->
+      <div class="lg:col-span-7 grid grid-cols-1 gap-6">
+          
+          <!-- 1. RUNWAY CARD -->
+          <div class="stat-card border-l-4 border-l-blue-500 dark:border-l-blue-400">
+              <div>
+                  <p class="lbl text-blue-600 dark:text-blue-400">Level 1: Financial Runway</p>
+                  <p class="sub-text">If you lost your income today, you could survive for:</p>
+              </div>
+              
+              <div>
+                  <div id="runwayResult" class="big-num text-[#1d1d1f] dark:text-white">0 Months</div>
+                  <p id="runwayDate" class="text-xs text-gray-400 font-mono">Until ...</p>
+              </div>
+          </div>
+
+          <!-- 2. FIRE CARD -->
+          <div class="stat-card bg-[#1d1d1f] dark:bg-white text-white dark:text-black border-none">
+              <div>
+                  <p class="lbl opacity-60">Level 2: Total Freedom</p>
+                  <p class="text-sm opacity-80 leading-relaxed">
+                      To never work again, you need a corpus of:
+                  </p>
+              </div>
+
+              <div class="mt-6">
+                  <div id="fireNumber" class="big-num">₹0</div>
+                  
+                  <!-- Progress Bar -->
+                  <div class="mt-6">
+                      <div class="flex justify-between text-xs font-mono opacity-60 mb-2">
+                          <span>Progress</span>
+                          <span id="firePercent">0%</span>
+                      </div>
+                      <div class="progress-track bg-white/20 dark:bg-black/10">
+                          <div id="progressBar" class="progress-fill bg-white dark:bg-black"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- 3. INSIGHT -->
+          <div class="p-4 rounded-lg bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 text-center">
+              <p id="verdict" class="text-sm text-gray-600 dark:text-gray-400">
+                  Enter your savings and expenses to see where you stand.
+              </p>
+          </div>
+
+      </div>
+  </div>
+
+  <!-- Explainer -->
+  <div class="mt-20 pt-10 border-t border-gray-100 dark:border-white/10 max-w-2xl mx-auto prose dark:prose-invert">
+      <h3>What do these numbers mean?</h3>
+      
+      <h4>1. The Runway (Survival)</h4>
+      <p>
+          This is your "Fuck You Money." It tells you exactly how long you can go without a paycheck. 
+          Having <strong>6-12 months</strong> of runway gives you the confidence to quit a toxic job, negotiate a better salary, or take a career break.
+      </p>
+
+      <h4>2. The Freedom Number (FIRE)</h4>
+      <p>
+          Based on the <strong>30x Rule</strong> (Standard for India). 
+          If your annual expenses are ₹6 Lakhs, you need roughly <strong>₹1.8 Crores</strong> invested to live off the interest forever, assuming your investments beat inflation by about 3-4%.
+      </p>
+  </div>
+
+</div>
+
+<script>
+    const el = {
+        savings: document.getElementById('savings'),
+        expenses: document.getElementById('expenses'),
+        multiplier: document.getElementById('multiplier'),
+        
+        runwayResult: document.getElementById('runwayResult'),
+        runwayDate: document.getElementById('runwayDate'),
+        fireNumber: document.getElementById('fireNumber'),
+        firePercent: document.getElementById('firePercent'),
+        progressBar: document.getElementById('progressBar'),
+        verdict: document.getElementById('verdict')
+    };
+
+    const fmt = (n) => Math.round(n).toLocaleString('en-IN');
+
+    function calculate() {
+        const savings = parseFloat(el.savings.value) || 0;
+        const expenses = parseFloat(el.expenses.value) || 0;
+        const mul = parseInt(el.multiplier.value) || 30;
+
+        if (expenses > 0) {
+            // 1. Calculate Runway
+            const months = savings / expenses;
+            const years = Math.floor(months / 12);
+            const remMonths = Math.round(months % 12);
+            
+            // Runway Text
+            let runwayText = "";
+            if (years > 0) runwayText += `${years} Year${years > 1 ? 's' : ''} `;
+            runwayText += `${remMonths} Month${remMonths !== 1 ? 's' : ''}`;
+            if (years === 0 && remMonths === 0 && months > 0) runwayText = `${(months*30).toFixed(0)} Days`;
+            
+            el.runwayResult.textContent = runwayText || "0 Months";
+
+            // Future Date
+            const futureDate = new Date();
+            futureDate.setMonth(futureDate.getMonth() + months);
+            const dateString = futureDate.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+            el.runwayDate.textContent = `You are safe until ${dateString}`;
+
+
+            // 2. Calculate FIRE
+            const annualExpense = expenses * 12;
+            const fireTarget = annualExpense * mul;
+            const percent = Math.min((savings / fireTarget) * 100, 100).toFixed(1);
+
+            el.fireNumber.textContent = `₹${fmt(fireTarget)}`;
+            el.firePercent.textContent = `${percent}%`;
+            el.progressBar.style.width = `${percent}%`;
+
+            // 3. Verdict
+            if (months < 3) {
+                el.verdict.innerHTML = "<strong>Danger Zone.</strong> Your priority should be building an Emergency Fund of at least 6 months.";
+            } else if (months < 12) {
+                el.verdict.innerHTML = "<strong>Stable.</strong> You have a solid Emergency Fund. Now start investing for Freedom.";
+            } else if (months < 60) {
+                el.verdict.innerHTML = "<strong>Secure.</strong> You can take career risks, sabbaticals, or start a business.";
+            } else {
+                el.verdict.innerHTML = "<strong>Freedom Approaching.</strong> You are working because you want to, not because you have to.";
+            }
+
+        } else {
+            // Reset
+            el.runwayResult.textContent = "0 Months";
+            el.runwayDate.textContent = "Until ...";
+            el.fireNumber.textContent = "₹0";
+            el.firePercent.textContent = "0%";
+            el.progressBar.style.width = "0%";
+            el.verdict.textContent = "Enter details to see your freedom timeline.";
+        }
+    }
+
+    // Listeners
+    [el.savings, el.expenses, el.multiplier].forEach(input => {
+        input.addEventListener('input', calculate);
+    });
+
+    lucide.createIcons();
+</script>

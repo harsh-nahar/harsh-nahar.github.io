@@ -1,0 +1,471 @@
+---
+layout: default
+title: "Rent vs Buy Calculator"
+permalink: /tools/rent-vs-buy/
+description: "A data-driven tool to decide whether to Buy a home or Rent. Compares EMI vs SIP Opportunity Cost."
+image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_page_snippet.webp"
+---
+
+<style>
+  /* --- INPUTS --- */
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type=number] { -moz-appearance: textfield; }
+
+  .mono-input {
+      font-family: 'JetBrains Mono', 'SFMono-Regular', monospace;
+      width: 100%;
+      background: transparent;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.95rem;
+      color: #111;
+      transition: all 0.2s;
+  }
+  .dark .mono-input {
+      border-color: #333;
+      color: #eee;
+  }
+  .mono-input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  }
+
+  .lbl {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6b7280;
+      margin-bottom: 6px;
+      display: block;
+  }
+  .dark .lbl { color: #9ca3af; }
+
+  /* --- CHART CONTAINER --- */
+  .chart-container {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      border-bottom: 1px solid #e5e7eb;
+      border-left: 1px solid #e5e7eb;
+      margin-top: 20px;
+      margin-bottom: 10px;
+  }
+  .dark .chart-container { border-color: #333; }
+  
+  svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+  }
+  
+  /* Lines */
+  .line-buy {
+      fill: none;
+      stroke: #1d1d1f;
+      stroke-width: 2;
+      stroke-linecap: round;
+  }
+  .dark .line-buy { stroke: #fff; }
+  
+  .line-rent {
+      fill: none;
+      stroke: #3b82f6; /* Blue */
+      stroke-width: 2;
+      stroke-linecap: round;
+  }
+
+  /* Tooltip Dot */
+  .chart-dot {
+      r: 5;
+      fill: #fff;
+      stroke-width: 2;
+      opacity: 0;
+      transition: opacity 0.1s;
+  }
+  .dark .chart-dot { fill: #000; }
+
+  /* Stats Legend */
+  .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 6px;
+  }
+</style>
+
+<div class="fade-in max-w-6xl mx-auto mb-20">
+  
+  <!-- Header -->
+  <div class="mb-10 border-b border-gray-100 dark:border-white/10 pb-8">
+    <h1 class="text-2xl md:text-3xl font-bold text-[#1d1d1f] dark:text-white">Rent vs. Buy</h1>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">The math behind the biggest financial decision of your life.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      
+      <!-- LEFT: INPUTS -->
+      <div class="lg:col-span-5 space-y-10">
+        
+        <!-- 1. BUY SCENARIO -->
+        <section>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-6 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-[#1d1d1f] dark:bg-white"></span> Buying Scenario
+            </h3>
+            
+            <div class="space-y-5">
+                <div>
+                    <label class="lbl">Property Price (₹)</label>
+                    <input type="number" id="homePrice" value="7500000" class="mono-input">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="lbl">Down Payment (%)</label>
+                        <input type="number" id="downPayment" value="20" class="mono-input">
+                    </div>
+                    <div>
+                        <label class="lbl">Loan Rate (%)</label>
+                        <input type="number" id="loanRate" value="8.5" class="mono-input">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="lbl">Loan Tenure (Yrs)</label>
+                        <input type="number" id="tenure" value="20" class="mono-input">
+                    </div>
+                    <div>
+                        <label class="lbl">Appreciation (%)</label>
+                        <input type="number" id="appreciation" value="5" class="mono-input">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-gray-100 dark:border-white/10">
+
+        <!-- 2. RENT SCENARIO -->
+        <section>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-blue-500 mb-6 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span> Renting Scenario
+            </h3>
+            
+            <div class="space-y-5">
+                <div>
+                    <label class="lbl text-blue-600 dark:text-blue-400">Monthly Rent (₹)</label>
+                    <input type="number" id="rent" value="25000" class="mono-input" style="border-color: rgba(59,130,246,0.3);">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="lbl">Annual Rent Hike (%)</label>
+                        <input type="number" id="rentInflation" value="5" class="mono-input">
+                    </div>
+                    <div>
+                        <label class="lbl">SIP Return Rate (%)</label>
+                        <input type="number" id="marketReturn" value="12" class="mono-input font-bold">
+                    </div>
+                </div>
+            </div>
+        </section>
+      </div>
+
+      <!-- RIGHT: OUTPUT & CHART -->
+      <div class="lg:col-span-7">
+          
+          <!-- VERDICT CARD -->
+          <div class="bg-[#1d1d1f] dark:bg-white text-white dark:text-black p-6 md:p-8 rounded-2xl shadow-xl mb-8">
+              <p class="text-xs font-bold uppercase tracking-widest opacity-60 mb-2">The Verdict (After 20 Years)</p>
+              
+              <h2 id="verdictTitle" class="text-3xl md:text-4xl font-bold leading-tight mb-4">
+                  Renting Wins by ₹0
+              </h2>
+              
+              <p id="verdictSubtitle" class="text-sm opacity-80 leading-relaxed">
+                  If you rent and invest the difference (EMI - Rent), your portfolio grows faster than the property value.
+              </p>
+          </div>
+
+          <!-- CHART -->
+          <div class="bg-white dark:bg-[#050505] border border-gray-200 dark:border-white/10 rounded-2xl p-6 md:p-8">
+              <div class="flex justify-between items-center mb-6">
+                  <h4 class="text-sm font-bold text-[#1d1d1f] dark:text-white">Net Worth Comparison</h4>
+                  <div class="flex gap-4 text-xs">
+                      <span class="flex items-center"><span class="legend-dot bg-[#1d1d1f] dark:bg-white"></span>Buy</span>
+                      <span class="flex items-center"><span class="legend-dot bg-blue-500"></span>Rent + Invest</span>
+                  </div>
+              </div>
+
+              <!-- Custom SVG Chart -->
+              <div class="chart-container" id="chartBox">
+                  <svg id="graph" preserveAspectRatio="none">
+                      <path id="lineBuy" class="line-buy" vector-effect="non-scaling-stroke" />
+                      <path id="lineRent" class="line-rent" vector-effect="non-scaling-stroke" />
+                      <!-- Interactive elements -->
+                      <line id="cursorLine" x1="0" y1="0" x2="0" y2="100%" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4" opacity="0" />
+                      <circle id="dotBuy" r="4" class="chart-dot fill-[#1d1d1f] dark:fill-white stroke-[#1d1d1f] dark:stroke-white" />
+                      <circle id="dotRent" r="4" class="chart-dot fill-blue-500 stroke-blue-500" />
+                  </svg>
+              </div>
+              
+              <!-- Chart Stats -->
+              <div class="flex justify-between text-xs text-gray-400 font-mono mt-2">
+                  <span>Year 0</span>
+                  <span id="midYear">Year 10</span>
+                  <span id="endYear">Year 20</span>
+              </div>
+              
+              <!-- Live Hover Data -->
+              <div id="hoverData" class="mt-6 p-4 bg-gray-50 dark:bg-white/5 rounded-lg flex justify-between items-center hidden">
+                  <span id="hoverYear" class="font-bold text-sm">Year 5</span>
+                  <div class="text-right">
+                      <div class="text-xs text-gray-500">Buy Net Worth: <span id="hoverBuy" class="font-mono text-[#1d1d1f] dark:text-white font-bold">₹0</span></div>
+                      <div class="text-xs text-blue-500">Rent Net Worth: <span id="hoverRent" class="font-mono font-bold">₹0</span></div>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+  </div>
+
+  <!-- EXPLAINER -->
+  <div class="mt-20 pt-10 border-t border-gray-100 dark:border-white/10 max-w-3xl mx-auto prose dark:prose-invert">
+      <h3>Understanding the Math</h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-8 not-prose">
+          <div>
+              <h4 class="font-bold text-[#1d1d1f] dark:text-white mb-2 text-sm uppercase">Scenario A: Buying</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  You pay a huge downpayment upfront. You pay monthly EMIs to the bank. You also pay maintenance. <br>
+                  <strong>Net Worth</strong> = (Current Home Value) - (Outstanding Loan).
+              </p>
+          </div>
+          <div>
+              <h4 class="font-bold text-[#1d1d1f] dark:text-white mb-2 text-sm uppercase">Scenario B: Renting</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  You invest your Downpayment in mutual funds. Every month, the money you save (EMI - Rent) is also added to this investment (SIP). <br>
+                  <strong>Net Worth</strong> = Total Investment Portfolio Value.
+              </p>
+          </div>
+      </div>
+  </div>
+
+</div>
+
+<script>
+    const inputs = document.querySelectorAll('input');
+    const el = {
+        homePrice: document.getElementById('homePrice'),
+        downPayment: document.getElementById('downPayment'),
+        loanRate: document.getElementById('loanRate'),
+        tenure: document.getElementById('tenure'),
+        appreciation: document.getElementById('appreciation'),
+        rent: document.getElementById('rent'),
+        rentInflation: document.getElementById('rentInflation'),
+        marketReturn: document.getElementById('marketReturn'),
+        
+        // Outputs
+        verdictTitle: document.getElementById('verdictTitle'),
+        verdictSubtitle: document.getElementById('verdictSubtitle'),
+        
+        // Chart
+        graph: document.getElementById('graph'),
+        lineBuy: document.getElementById('lineBuy'),
+        lineRent: document.getElementById('lineRent'),
+        endYear: document.getElementById('endYear'),
+        midYear: document.getElementById('midYear'),
+        
+        // Interaction
+        hoverData: document.getElementById('hoverData'),
+        hoverYear: document.getElementById('hoverYear'),
+        hoverBuy: document.getElementById('hoverBuy'),
+        hoverRent: document.getElementById('hoverRent'),
+        cursorLine: document.getElementById('cursorLine'),
+        dotBuy: document.getElementById('dotBuy'),
+        dotRent: document.getElementById('dotRent'),
+        chartBox: document.getElementById('chartBox')
+    };
+
+    const fmt = (n) => Math.round(n).toLocaleString('en-IN');
+    let chartData = [];
+
+    function calculate() {
+        const P = parseFloat(el.homePrice.value) || 0;
+        const dpPct = parseFloat(el.downPayment.value) || 20;
+        const r = parseFloat(el.loanRate.value) || 8.5;
+        const n = parseFloat(el.tenure.value) || 20;
+        const app = parseFloat(el.appreciation.value) || 5;
+        
+        const startRent = parseFloat(el.rent.value) || 0;
+        const rentInf = parseFloat(el.rentInflation.value) || 5;
+        const sipRate = parseFloat(el.marketReturn.value) || 12;
+
+        // --- LOAN MATH ---
+        const loanAmount = P * (1 - dpPct/100);
+        const monthlyRate = r / (12 * 100);
+        const months = n * 12;
+        // EMI Formula: [P x R x (1+R)^N]/[(1+R)^N-1]
+        const emi = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+
+        // --- SIMULATION LOOP ---
+        chartData = [];
+        let homeValue = P;
+        let outstandingLoan = loanAmount;
+        let rentCurrent = startRent;
+        
+        // Rent Scenario Portfolio
+        // Starts with Downpayment invested
+        let portfolio = P * (dpPct/100); 
+        
+        // Monthly SIP Rate
+        const monthlySipReturn = sipRate / 12 / 100;
+        const monthlyAppreciation = app / 12 / 100;
+
+        for(let year = 0; year <= n; year++) {
+            // Snapshot at Year Start (Year 0, 1, 2...)
+            let buyNetWorth = homeValue - outstandingLoan;
+            let rentNetWorth = portfolio;
+
+            chartData.push({
+                year,
+                buy: buyNetWorth,
+                rent: rentNetWorth
+            });
+
+            if (year < n) {
+                // Process 12 months
+                for(let m = 0; m < 12; m++) {
+                    // 1. BUY SIDE
+                    // Loan Amortization
+                    let interest = outstandingLoan * monthlyRate;
+                    let principal = emi - interest;
+                    outstandingLoan -= principal;
+                    if(outstandingLoan < 0) outstandingLoan = 0;
+                    
+                    // Home Appreciation
+                    homeValue *= (1 + monthlyAppreciation);
+
+                    // 2. RENT SIDE
+                    // Portfolio Growth
+                    portfolio *= (1 + monthlySipReturn);
+                    
+                    // Add Monthly Savings (EMI - Rent)
+                    // Note: In Rent scenario, you pay Rent. In Buy, you pay EMI.
+                    // The difference is available to invest. 
+                    // Usually EMI > Rent. So Savings = EMI - Rent.
+                    // If Rent > EMI, Savings is negative (you withdraw from portfolio).
+                    // Also consider maintenance (approx 0.2% of home value monthly? keeping simple for now)
+                    let maintenance = 0; // Can add later
+                    let savings = (emi + maintenance) - rentCurrent;
+                    
+                    portfolio += savings;
+                }
+                // Increase Rent annually
+                rentCurrent *= (1 + rentInf/100);
+            }
+        }
+
+        updateUI(n);
+        drawChart();
+    }
+
+    function updateUI(years) {
+        const final = chartData[chartData.length - 1];
+        const diff = final.rent - final.buy;
+        
+        if (diff > 0) {
+            el.verdictTitle.innerHTML = `Renting Wins by ₹${(diff/10000000).toFixed(2)} Cr`;
+            el.verdictTitle.classList.add('text-blue-500');
+            el.verdictSubtitle.innerHTML = `After ${years} years, your investment portfolio (₹${(final.rent/10000000).toFixed(2)} Cr) beats the property equity (₹${(final.buy/10000000).toFixed(2)} Cr).`;
+        } else {
+            el.verdictTitle.innerHTML = `Buying Wins by ₹${(Math.abs(diff)/10000000).toFixed(2)} Cr`;
+            el.verdictTitle.classList.remove('text-blue-500');
+            el.verdictSubtitle.innerHTML = `Property appreciation beat the market returns. Your home equity is worth more than the rental portfolio.`;
+        }
+        
+        el.endYear.textContent = `Year ${years}`;
+        el.midYear.textContent = `Year ${Math.round(years/2)}`;
+    }
+
+    // --- SVG CHART DRAWING ENGINE ---
+    function drawChart() {
+        const data = chartData;
+        const maxVal = Math.max(...data.map(d => Math.max(d.buy, d.rent)));
+        const width = 100; // percentage
+        const height = 100; 
+
+        // Coordinate Mapper
+        // X: Year 0 to N -> 0% to 100%
+        // Y: 0 to MaxVal -> 100% to 0% (SVG Y is inverted)
+        const getX = (i) => (i / (data.length - 1)) * 100;
+        const getY = (val) => 100 - ((val / maxVal) * 100);
+
+        // Build SVG Paths
+        let pathBuy = `M 0 ${getY(data[0].buy)} `;
+        let pathRent = `M 0 ${getY(data[0].rent)} `;
+
+        data.forEach((d, i) => {
+            if(i === 0) return;
+            pathBuy += `L ${getX(i)} ${getY(d.buy)} `;
+            pathRent += `L ${getX(i)} ${getY(d.rent)} `;
+        });
+
+        el.lineBuy.setAttribute('d', pathBuy);
+        el.lineRent.setAttribute('d', pathRent);
+    }
+
+    // --- INTERACTION (Hover/Touch) ---
+    el.chartBox.addEventListener('mousemove', (e) => {
+        const rect = el.chartBox.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const width = rect.width;
+        
+        // Find nearest year
+        const pct = x / width;
+        let index = Math.round(pct * (chartData.length - 1));
+        if(index < 0) index = 0;
+        if(index >= chartData.length) index = chartData.length - 1;
+
+        const d = chartData[index];
+
+        // Show Data
+        el.hoverData.classList.remove('hidden');
+        el.hoverYear.textContent = `Year ${d.year}`;
+        el.hoverBuy.textContent = `₹${(d.buy/100000).toFixed(2)} L`;
+        el.hoverRent.textContent = `₹${(d.rent/100000).toFixed(2)} L`;
+
+        // Move Cursor Elements
+        const xPct = (index / (chartData.length - 1)) * 100;
+        
+        // Need exact Y positions for dots
+        const maxVal = Math.max(...chartData.map(x => Math.max(x.buy, x.rent)));
+        const yBuy = 100 - ((d.buy / maxVal) * 100);
+        const yRent = 100 - ((d.rent / maxVal) * 100);
+
+        el.cursorLine.setAttribute('x1', `${xPct}%`);
+        el.cursorLine.setAttribute('x2', `${xPct}%`);
+        el.cursorLine.style.opacity = 1;
+
+        el.dotBuy.setAttribute('cx', `${xPct}%`);
+        el.dotBuy.setAttribute('cy', `${yBuy}%`);
+        el.dotBuy.style.opacity = 1;
+
+        el.dotRent.setAttribute('cx', `${xPct}%`);
+        el.dotRent.setAttribute('cy', `${yRent}%`);
+        el.dotRent.style.opacity = 1;
+    });
+
+    el.chartBox.addEventListener('mouseleave', () => {
+        el.hoverData.classList.add('hidden');
+        el.cursorLine.style.opacity = 0;
+        el.dotBuy.style.opacity = 0;
+        el.dotRent.style.opacity = 0;
+    });
+
+    // Init
+    inputs.forEach(i => i.addEventListener('input', calculate));
+    calculate();
+
+</script>
