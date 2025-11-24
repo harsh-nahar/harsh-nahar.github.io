@@ -471,7 +471,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
     const fmt = (n) => Math.round(n).toLocaleString('en-IN');
     const parse = (val) => parseFloat(val) || 0;
 
-    // --- LOGIC 1: Auto-Estimate ---
+    // --- LOGIC 1: Auto-Estimate (Reset to Standard) ---
     function estimateStructure() {
         const ctc = parse(el.ctc.value);
         if(ctc === 0) return;
@@ -497,39 +497,55 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         calculate();
     }
 
-    // --- LOGIC 2: Smart Re-balance ---
+    // --- LOGIC 2: Basic Salary Change (Cascading Update) ---
     function handleBasicChange() {
         const ctc = parse(el.ctc.value);
         if(ctc === 0) return;
 
         const basic = parse(el.basic.value);
-        const hra = basic * 0.50;
-        const empPF = basic * 0.12;
-        const grat = basic * 0.0481;
         
-        el.hra.value = Math.round(hra);
-        el.employerPF.value = Math.round(empPF);
-        el.employeePF.value = Math.round(empPF);
-        el.gratuity.value = Math.round(grat);
+        // Update dependents
+        el.hra.value = Math.round(basic * 0.50);
+        el.employerPF.value = Math.round(basic * 0.12);
+        el.employeePF.value = Math.round(basic * 0.12);
+        el.gratuity.value = Math.round(basic * 0.0481);
 
+        rebalanceSpecial();
+    }
+
+    // --- LOGIC 3: Balancing Act (The Fix) ---
+    // If User changes Deductions (NPS, PF, Grat), we reduce Special to keep CTC constant.
+    function rebalanceSpecial() {
+        const ctc = parse(el.ctc.value);
+        if(ctc === 0) return;
+
+        const basic = parse(el.basic.value);
+        const hra = parse(el.hra.value);
         const bonus = parse(el.bonus.value);
+        
+        const empPF = parse(el.employerPF.value);
+        const grat = parse(el.gratuity.value);
         const other = parse(el.otherCTCDed.value);
+
+        const used = basic + hra + empPF + grat + other + bonus;
         
-        const used = basic + hra + empPF + grat + bonus + other;
+        // The remaining amount becomes Special Allowance
         const special = Math.max(0, ctc - used);
-        
         el.special.value = Math.round(special);
         
         calculate();
     }
 
-    // --- LOGIC 3: Calculation ---
+    // --- LOGIC 4: Main Calculation ---
     function calculate() {
         const ctc = parse(el.ctc.value);
+        
+        // Inputs
         const basic = parse(el.basic.value);
         const hra = parse(el.hra.value);
         const special = parse(el.special.value);
         const bonus = parse(el.bonus.value);
+        
         const empPF = parse(el.employerPF.value);
         const grat = parse(el.gratuity.value);
         const otherCTC = parse(el.otherCTCDed.value);
@@ -537,10 +553,12 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         const employeePF = parse(el.employeePF.value);
         const pt = parse(el.pt.value);
 
+        // Derivations
         const ctcDed = empPF + grat + otherCTC;
+        // Real Gross = What hits the payslip (excluding CTC deductions)
         const grossYearly = basic + hra + special;
         
-        // --- TAX ENGINE (Matches TaxCalc) ---
+        // Taxable Income Calculation
         const stdDed = regime === 'new' ? 75000 : 50000;
         let taxableIncome = grossYearly + bonus - stdDed - pt;
         
@@ -549,9 +567,10 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
             taxableIncome -= inv;
         }
         
-        // Use Advanced Logic
+        // Use Advanced Tax Engine
         const annualTax = calculateAdvancedTax(Math.max(0, taxableIncome), regime);
         
+        // Net In Hand
         const payDed = employeePF + pt;
         const netYearly = grossYearly - payDed - annualTax;
         const monthlyInHand = netYearly / 12;
@@ -584,7 +603,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         else el.valInHand.style.fontSize = "2.75rem";
     }
 
-    // --- ADVANCED TAX LOGIC (Imported from Tax Calculator) ---
+    // --- ADVANCED TAX ENGINE ---
     function calculateAdvancedTax(income, r) {
         if(income <= 0) return 0;
 
@@ -614,7 +633,6 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
 
         let baseTax = getBaseTax(income, slabs);
 
-        // Rebate & 87A Relief
         let rebate = 0;
         let rebateRelief = 0;
 
@@ -630,12 +648,10 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
 
         let taxAfterRebate = Math.max(0, baseTax - rebate - rebateRelief);
 
-        // Surcharge
         let surcharge = 0;
         let rate = 0;
         
         if (taxAfterRebate > 0) {
-            // Surcharge Rate
             if (income > 50000000) rate = (r === 'old') ? 37 : 25;
             else if (income > 20000000) rate = 25;
             else if (income > 10000000) rate = 15;
@@ -645,7 +661,6 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
                 let theorySurcharge = taxAfterRebate * (rate / 100);
                 surcharge = theorySurcharge;
 
-                // Surcharge Relief
                 let threshold = 0;
                 if (income > 50000000) threshold = 50000000;
                 else if (income > 20000000) threshold = 20000000;
@@ -676,11 +691,21 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         return Math.round(taxAfterRebate + surcharge + cess);
     }
 
-    // --- EVENTS ---
+    // --- EVENT BINDINGS ---
+
+    // 1. Major Triggers (Re-estimates structure)
     el.ctc.addEventListener('input', estimateStructure);
     el.basic.addEventListener('input', handleBasicChange);
-    
-    [el.hra, el.special, el.bonus, el.employerPF, el.gratuity, el.otherCTCDed, el.employeePF, el.pt, el.taxInvestments].forEach(i => {
+
+    // 2. Re-Balancers (Reduces Special Allowance to accommodate these)
+    //    If you add NPS or Gratuity manually, Special decreases to keep CTC constant.
+    [el.employerPF, el.gratuity, el.otherCTCDed, el.bonus].forEach(i => {
+        i.addEventListener('input', rebalanceSpecial);
+    });
+
+    // 3. Simple Calcs (Only changes Net, doesn't affect Gross)
+    //    Employee PF and PT are deducted FROM Gross, so they don't change the "CTC Structure".
+    [el.hra, el.special, el.employeePF, el.pt, el.taxInvestments].forEach(i => {
         i.addEventListener('input', calculate);
     });
 
@@ -698,7 +723,6 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         calculate();
     }
     
-    // Init icons
     lucide.createIcons();
 
 </script>
