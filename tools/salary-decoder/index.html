@@ -526,7 +526,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         const ctcDed = empPF + grat;
         const grossYearly = basic + hra + special;
         
-        // Tax
+        // Taxable Income
         const stdDed = regime === 'new' ? 75000 : 50000;
         let taxableIncome = grossYearly + bonus - stdDed - pt;
         
@@ -535,12 +535,14 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
             taxableIncome -= inv;
         }
 
-        const annualTax = calculateTax(Math.max(0, taxableIncome), regime);
+        // Use Advanced Tax Function
+        const annualTax = calculateAdvancedTax(Math.max(0, taxableIncome), regime);
+        
         const payDed = employeePF + pt;
         const netYearly = grossYearly - payDed - annualTax;
         const monthlyInHand = netYearly / 12;
 
-        // Render & Scale
+        // Render
         const inHandText = `₹${fmt(monthlyInHand)}`;
         el.valInHand.innerText = inHandText;
         scaleFontSize(inHandText);
@@ -560,42 +562,108 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         }
     }
 
-    // Font Scaler (UPDATED for aggressive desktop scaling)
+    // Font Scaler
     function scaleFontSize(text) {
         const len = text.length;
-        // Aggressively shrink font for longer numbers to fit 5-col layout
         if(len > 12) el.valInHand.style.fontSize = "1.5rem";
         else if(len > 10) el.valInHand.style.fontSize = "2rem";
         else if(len > 8) el.valInHand.style.fontSize = "2.25rem";
         else el.valInHand.style.fontSize = "2.75rem";
     }
 
-    // Tax Logic
-    function calculateTax(income, r) {
+    // --- ADVANCED TAX LOGIC (Matches Tax Calculator) ---
+    function calculateAdvancedTax(income, r) {
         if(income <= 0) return 0;
-        let tax = 0;
-        if(r === 'new') {
-            if(income <= 1200000) return 0;
-            const slabs = [[400000,0], [800000,0.05], [1200000,0.10], [1600000,0.15], [2000000,0.20], [2400000,0.25], [Infinity,0.30]];
-            let prev = 0;
-            for(let [l, rate] of slabs) {
-                if(income > prev) {
-                    tax += (Math.min(income, l) - prev) * rate;
-                    prev = l;
-                }
+        
+        // Slabs
+        const slabsNew = [
+            { up: 400000, pct: 0 }, { up: 800000, pct: 5 }, { up: 1200000, pct: 10 },
+            { up: 1600000, pct: 15 }, { up: 2000000, pct: 20 }, { up: 2400000, pct: 25 },
+            { up: Infinity, pct: 30 }
+        ];
+        const slabsOld = [
+            { up: 250000, pct: 0 }, { up: 500000, pct: 5 }, { up: 1000000, pct: 20 },
+            { up: Infinity, pct: 30 }
+        ];
+        
+        const slabs = r === 'new' ? slabsNew : slabsOld;
+
+        // Helper: Base Tax
+        function getBaseTax(taxable, currentSlabs) {
+            let tax = 0;
+            let prevLimit = 0;
+            for (let slab of currentSlabs) {
+                if (taxable <= prevLimit) break;
+                let slabIncome = (slab.up === Infinity) ? (taxable - prevLimit) : (Math.min(taxable, slab.up) - prevLimit);
+                if (slabIncome > 0) tax += slabIncome * (slab.pct / 100);
+                prevLimit = slab.up;
+            }
+            return tax;
+        }
+
+        let baseTax = getBaseTax(income, slabs);
+
+        // Rebate & Relief
+        let rebate = 0;
+        let rebateRelief = 0;
+
+        if (r === 'new') {
+            if (income <= 1200000) rebate = baseTax;
+            else {
+                const excess = income - 1200000;
+                if (baseTax > excess) rebateRelief = baseTax - excess;
             }
         } else {
-            if(income <= 500000) return 0;
-            const slabs = [[250000,0], [500000,0.05], [1000000,0.20], [Infinity,0.30]];
-            let prev = 0;
-            for(let [l, rate] of slabs) {
-                if(income > prev) {
-                    tax += (Math.min(income, l) - prev) * rate;
-                    prev = l;
+            if (income <= 500000) rebate = baseTax;
+        }
+
+        let taxAfterRebate = Math.max(0, baseTax - rebate - rebateRelief);
+
+        // Surcharge
+        let surcharge = 0;
+        let rate = 0;
+        
+        if (taxAfterRebate > 0) {
+            // Surcharge Rate
+            if (income > 50000000) rate = (r === 'old') ? 37 : 25;
+            else if (income > 20000000) rate = 25;
+            else if (income > 10000000) rate = 15;
+            else if (income > 5000000) rate = 10;
+
+            if (rate > 0) {
+                let theorySurcharge = taxAfterRebate * (rate / 100);
+                surcharge = theorySurcharge;
+
+                // Surcharge Relief
+                let threshold = 0;
+                if (income > 50000000) threshold = 50000000;
+                else if (income > 20000000) threshold = 20000000;
+                else if (income > 10000000) threshold = 10000000;
+                else if (income > 5000000) threshold = 5000000;
+
+                if (threshold > 0) {
+                    const taxOnThreshold = getBaseTax(threshold, slabs);
+                    // Get rate at threshold
+                    let tRate = 0;
+                    if (threshold === 5000000) tRate = 0;
+                    else if (threshold === 10000000) tRate = 10;
+                    else if (threshold === 20000000) tRate = 15;
+                    else if (threshold === 50000000) tRate = 25;
+
+                    const surOnThreshold = taxOnThreshold * (tRate / 100);
+                    const maxTax = taxOnThreshold + surOnThreshold + (income - threshold);
+                    const currentTotal = taxAfterRebate + surcharge;
+
+                    if (currentTotal > maxTax) {
+                        const relief = currentTotal - maxTax;
+                        surcharge = Math.max(0, theorySurcharge - relief);
+                    }
                 }
             }
         }
-        return tax * 1.04;
+
+        const cess = (taxAfterRebate + surcharge) * 0.04;
+        return Math.round(taxAfterRebate + surcharge + cess);
     }
 
     // --- EVENTS ---
