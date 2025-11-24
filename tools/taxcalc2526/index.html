@@ -1,9 +1,9 @@
 ---
 layout: default
-title: "Tax Calculator FY 2025–26"
+title: "income tax calculator FY 25-26"
 permalink: /tools/taxcalc2526/
-description: "income Tax Calculator for FY 2025-26"
-image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_tax.webp"
+description: "calculate your income tax for FY 2025-26"
+image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_tax.webp"
 ---
 <link rel="stylesheet" href="styles.css">
 
@@ -90,19 +90,17 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_tax.webp
     <!-- Breakdown Table -->
     <section class="breakdown">
         <h2 class="text-lg font-semibold mb-4 text-[#1d1d1f] dark:text-white pl-1">Calculation Breakdown</h2>
-        <!-- Changed to overflow-x-auto to allow horizontal scroll on mobile -->
         <div class="overflow-x-auto rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5">
         <table class="w-full text-sm">
             <thead class="bg-gray-50 dark:bg-white/5 text-[#86868b] dark:text-gray-400 font-medium text-xs uppercase tracking-wider border-b border-gray-200 dark:border-white/10">
             <tr>
-                <th class="p-4 text-left font-semibold">Slab</th>
+                <th class="p-4 text-left font-semibold">Slab / Component</th>
                 <th class="p-4 text-right font-semibold">Amount</th>
                 <th class="p-4 text-right font-semibold">Rate</th>
                 <th class="p-4 text-right font-semibold">Tax</th>
             </tr>
             </thead>
             <tbody id="breakBody" class="divide-y divide-gray-100 dark:divide-white/5 text-[#1d1d1f] dark:text-white font-mono">
-                <!-- Default empty state row -->
                 <tr><td colspan="4" class="p-4 text-center text-gray-400">Enter income to see breakdown</td></tr>
             </tbody>
         </table>
@@ -111,32 +109,45 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_tax.webp
   </div>
 </div>
 
+<!-- Internal Link -->
+<div class="max-w-2xl mx-auto mb-12 p-6 rounded-2xl bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-500/20 flex flex-col sm:flex-row items-center justify-between gap-4 group">
+    <div>
+        <h4 class="font-bold text-[#1d1d1f] dark:text-white">Have a CTC Offer Letter?</h4>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Calculate your monthly in-hand salary before checking tax.</p>
+    </div>
+    <a href="{{ '/tools/salary-decoder/' | relative_url }}" class="whitespace-nowrap px-4 py-2 bg-white dark:bg-white/10 text-blue-600 dark:text-blue-400 font-medium rounded-lg text-sm shadow-sm border border-gray-200 dark:border-white/10 group-hover:border-blue-400 transition-all">
+        Go to Salary Decoder →
+    </a>
+</div>
+
 <!-- Content Section -->
 <div class="max-w-2xl mx-auto mb-24 prose dark:prose-invert">
-    <h3>About the Calculator</h3>
+    <h3>Understanding the Math</h3>
     <p>
-        This tool helps you estimate your income tax liability for the Financial Year 2025-26. 
-        It automatically considers the updated tax slabs and enhanced rebate limits to give you a precise breakdown.
+        This calculator handles the latest updates from the Finance Bill 2025, including the new slabs, standard deduction hike, and surcharge caps.
     </p>
     
-    <h4>How it works</h4>
-    <ul>
-        <li><strong>Standard Deduction:</strong> A flat deduction of ₹75,000 is automatically applied for salaried individuals in the New Regime (₹50,000 in Old Regime).</li>
-        <li><strong>NPS Benefit:</strong> Employer contributions to NPS (National Pension System) under Section 80CCD(2) are deducted from your gross income.</li>
-        <li><strong>Tax Rebate:</strong> 
-            <ul>
-                <li><strong>New Regime:</strong> Full tax rebate if taxable income is up to ₹12,00,000.</li>
-                <li><strong>Old Regime:</strong> Full tax rebate if taxable income is up to ₹5,00,000.</li>
-            </ul>
-        </li>
-    </ul>
+    <h4>1. The ₹12 Lakh Safety Net</h4>
+    <p>
+        In the New Regime, income up to ₹12 Lakhs is tax-free via rebate. But what if you earn ₹12,00,100? 
+        Normally, you would lose the rebate and pay ~₹60,000 in tax. 
+        However, we apply <strong>Marginal Relief</strong>, ensuring you only pay the excess amount earned (₹100) as tax, not the full amount.
+    </p>
 
-    <h4>Important Notes</h4>
-    <ul>
-        <li>Education Cess of 4% is included in the final tax calculation.</li>
-        <li>Surcharge is applied for incomes exceeding ₹50 Lakhs.</li>
-        <li>This calculator is designed primarily for salaried individuals.</li>
-    </ul>
+    <h4>2. The Surcharge Cap</h4>
+    <p>
+        For high incomes (> ₹50 Lakhs), a Surcharge is levied. 
+        <br>
+        <strong>New Regime:</strong> Surcharge is capped at 25% (even for income > ₹5 Cr).
+        <br>
+        <strong>Old Regime:</strong> Surcharge goes up to 37% for income > ₹5 Cr.
+    </p>
+
+    <hr class="opacity-50">
+
+    <p class="text-xs text-gray-500 italic">
+        <strong>Disclaimer:</strong> This tool provides estimates for planning purposes. While we account for marginal relief and the latest amendments, actual tax liability can vary based on specific interpretations. Please verify your final liability on the <a href="https://incometaxindia.gov.in/pages/tools/income-tax-calculator.aspx" target="_blank" class="text-blue-600 hover:underline">Official Income Tax Portal</a> or consult a tax professional.
+    </p>
 </div>
 
 <script src="script.js"></script>
