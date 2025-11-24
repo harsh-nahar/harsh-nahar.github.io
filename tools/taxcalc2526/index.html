@@ -75,6 +75,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_tax
   input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none; margin: 0; 
   }
+  input[type=number] { -moz-appearance: textfield; }
 </style>
 
 <div class="fade-in max-w-2xl mx-auto mb-12">
@@ -97,7 +98,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_tax
     <div>
       <label for="income" class="block text-sm font-medium text-[#86868b] dark:text-gray-400 mb-2 ml-1">Gross Annual Income (₹)</label>
       <input type="number" id="income" placeholder="e.g. 1200000" class="w-full px-4 py-3.5 bg-gray-50 dark:bg-white/10 border border-transparent focus:border-blue-500/50 rounded-2xl text-lg text-[#1d1d1f] dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all">
-      <!-- ADDED: Helper Text -->
+      <!-- Helper Text -->
       <p class="text-xs text-[#86868b] dark:text-gray-500 mt-1.5 ml-1">Enter amount from Payslip/Form 16 (CTC minus Employer PF).</p>
     </div>
     
@@ -166,7 +167,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_tax
             <table class="w-full text-sm">
                 <thead class="bg-gray-50 dark:bg-white/5 text-[#86868b] dark:text-gray-400 font-medium text-xs uppercase tracking-wider border-b border-gray-200 dark:border-white/10">
                     <tr>
-                        <th class="text-left font-semibold">Component</th>
+                        <th class="text-left font-semibold">Slab / Component</th>
                         <th class="text-right font-semibold">Amount</th>
                         <th class="text-right font-semibold">Rate</th>
                         <th class="text-right font-semibold">Tax</th>
@@ -224,4 +225,195 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_tax
     </p>
 </div>
 
-<script src="script.js"></script>
+<!-- JAVASCRIPT LOGIC -->
+<script>
+(() => {
+  // --- CONFIG ---
+  const slabsNew = [
+    { up: 400000, pct: 0 }, { up: 800000, pct: 5 }, { up: 1200000, pct: 10 },
+    { up: 1600000, pct: 15 }, { up: 2000000, pct: 20 }, { up: 2400000, pct: 25 },
+    { up: Infinity, pct: 30 }
+  ];
+  const slabsOld = [
+    { up: 250000, pct: 0 }, { up: 500000, pct: 5 }, { up: 1000000, pct: 20 },
+    { up: Infinity, pct: 30 }
+  ];
+
+  const fmt = (n) => n.toLocaleString('en-IN');
+
+  // --- STATE ---
+  let regime = 'new';
+
+  // --- DOM ---
+  const toggle = document.querySelector('.regime-toggle');
+  const incomeI = document.getElementById('income');
+  const npsI = document.getElementById('nps');
+  const exI = document.getElementById('exemptions');
+  const exContainer = document.getElementById('exemptionsContainer');
+  const reset = document.getElementById('reset');
+  const resultContainer = document.getElementById('resultContainer');
+  const breakBody = document.getElementById('breakBody');
+  const surchargeLabel = document.getElementById('surchargeLabel');
+
+  // --- LOGIC HELPERS ---
+  function getBaseTax(taxable, currentSlabs) {
+    let tax = 0;
+    let prevLimit = 0;
+    for (let slab of currentSlabs) {
+      if (taxable <= prevLimit) break;
+      let slabIncome = (slab.up === Infinity) ? (taxable - prevLimit) : (Math.min(taxable, slab.up) - prevLimit);
+      if (slabIncome > 0) tax += slabIncome * (slab.pct / 100);
+      prevLimit = slab.up;
+    }
+    return tax;
+  }
+
+  function getSurchargeRate(taxable, r) {
+    if (taxable <= 5000000) return 0;
+    if (taxable <= 10000000) return 10;
+    if (taxable <= 20000000) return 15;
+    if (r === 'new') return 25; 
+    return (taxable <= 50000000) ? 25 : 37;
+  }
+
+  // --- CALCULATE ---
+  function calculate() {
+    const income = parseFloat(incomeI.value) || 0;
+    
+    if (income > 0) resultContainer.classList.remove('opacity-50');
+    else resultContainer.classList.add('opacity-50');
+
+    const nps = parseFloat(npsI.value) || 0;
+    const otherEx = regime === 'old' ? (parseFloat(exI.value) || 0) : 0;
+    const stdDed = regime === 'new' ? 75000 : 50000;
+
+    const totalDed = stdDed + nps + otherEx;
+    const taxable = Math.max(0, income - totalDed);
+    const slabs = regime === 'new' ? slabsNew : slabsOld;
+
+    // 1. Base Tax
+    let baseTax = getBaseTax(taxable, slabs);
+
+    // 2. Rebate & 87A Relief
+    let rebate = 0;
+    let rebateRelief = 0;
+
+    if (regime === 'new') {
+        if (taxable <= 1200000) rebate = baseTax;
+        else {
+            const excess = taxable - 1200000;
+            if (baseTax > excess) rebateRelief = baseTax - excess;
+        }
+    } else {
+        if (taxable <= 500000) rebate = baseTax;
+    }
+
+    const taxAfterRebate = Math.max(0, baseTax - rebate - rebateRelief);
+
+    // 3. Surcharge & Surcharge Relief
+    let surcharge = 0;
+    let surchargeRelief = 0;
+    let rate = 0;
+    let theorySurcharge = 0;
+
+    if (taxAfterRebate > 0) {
+        rate = getSurchargeRate(taxable, regime);
+        if (rate > 0) {
+            theorySurcharge = taxAfterRebate * (rate / 100);
+            surcharge = theorySurcharge;
+
+            // Surcharge Marginal Relief Check
+            let threshold = 0;
+            if (taxable > 50000000) threshold = 50000000;
+            else if (taxable > 20000000) threshold = 20000000;
+            else if (taxable > 10000000) threshold = 10000000;
+            else if (taxable > 5000000) threshold = 5000000;
+
+            if (threshold > 0) {
+                const taxOnThreshold = getBaseTax(threshold, slabs);
+                const rateOnThreshold = getSurchargeRate(threshold, regime);
+                const surOnThreshold = taxOnThreshold * (rateOnThreshold / 100);
+                
+                const maxTax = taxOnThreshold + surOnThreshold + (taxable - threshold);
+                const currentTotal = taxAfterRebate + surcharge;
+
+                if (currentTotal > maxTax) {
+                    surchargeRelief = currentTotal - maxTax;
+                    surcharge = Math.max(0, theorySurcharge - surchargeRelief);
+                }
+            }
+        }
+    }
+
+    // 4. Cess
+    const cess = (taxAfterRebate + surcharge) * 0.04;
+    const total = Math.round(taxAfterRebate + surcharge + cess);
+
+    // --- UI ---
+    document.getElementById('sumIncome').textContent = `₹${fmt(income)}`;
+    document.getElementById('sumDeduction').textContent = `-₹${fmt(totalDed)}`;
+    document.getElementById('sumTaxable').textContent = `₹${fmt(taxable)}`;
+    document.getElementById('sumTax').textContent = `₹${fmt(Math.round(taxAfterRebate))}`;
+    
+    surchargeLabel.textContent = `Surcharge (${rate}%)`;
+    document.getElementById('sumSurcharge').textContent = `₹${fmt(Math.round(surcharge))}`;
+    document.getElementById('sumCess').textContent = `₹${fmt(Math.round(cess))}`;
+    document.getElementById('sumTotal').textContent = `₹${fmt(total)}`;
+
+    // --- TABLE ---
+    let html = '';
+    if(income > 0) {
+        let prev = 0;
+        for(let s of slabs) {
+            if (taxable <= prev) break;
+            let amt = (s.up === Infinity) ? (taxable - prev) : (Math.min(taxable, s.up) - prev);
+            if (amt > 0) {
+                let slabTax = amt * (s.pct / 100);
+                html += `<tr>
+                    <td>₹${fmt(prev)} - ${s.up===Infinity?'∞':fmt(s.up)}</td>
+                    <td class="text-right">₹${fmt(Math.round(amt))}</td>
+                    <td class="text-right">${s.pct}%</td>
+                    <td class="text-right">₹${fmt(Math.round(slabTax))}</td>
+                </tr>`;
+            }
+            prev = s.up;
+        }
+        
+        html += `<tr class="bg-gray-50 dark:bg-white/5 font-semibold"><td colspan="3">Base Tax</td><td class="text-right">₹${fmt(Math.round(baseTax))}</td></tr>`;
+        
+        if (rebate > 0) html += `<tr class="text-green-600 dark:text-green-400"><td colspan="3">Less: 87A Rebate</td><td class="text-right">-₹${fmt(Math.round(rebate))}</td></tr>`;
+        
+        if (rebateRelief > 0) html += `<tr class="text-green-600 dark:text-green-400"><td colspan="3">Less: 87A Marginal Relief</td><td class="text-right">-₹${fmt(Math.round(rebateRelief))}</td></tr>`;
+
+        if (rate > 0) {
+            html += `<tr><td colspan="3">Surcharge (${rate}%)</td><td class="text-right">₹${fmt(Math.round(theorySurcharge))}</td></tr>`;
+            if (surchargeRelief > 0) {
+                html += `<tr class="text-green-600 dark:text-green-400"><td colspan="3">Less: Surcharge Relief</td><td class="text-right">-₹${fmt(Math.round(surchargeRelief))}</td></tr>`;
+            }
+        }
+        
+        html += `<tr><td colspan="3">Health & Education Cess (4%)</td><td class="text-right">₹${fmt(Math.round(cess))}</td></tr>`;
+        breakBody.innerHTML = html;
+    } else {
+        breakBody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-400">Enter income to see breakdown</td></tr>`;
+    }
+  }
+
+  // --- EVENTS ---
+  [incomeI, npsI, exI].forEach(e => e.addEventListener('input', calculate));
+  
+  document.querySelectorAll('.regime-toggle button').forEach(b => {
+    b.addEventListener('click', () => {
+      regime = b.dataset.regime;
+      toggle.setAttribute('data-active', regime);
+      toggle.querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
+      exContainer.classList.toggle('hidden', regime !== 'old');
+      calculate();
+    });
+  });
+
+  reset.onclick = () => { incomeI.value = ''; npsI.value = ''; exI.value = ''; calculate(); };
+  
+  calculate();
+})();
+</script>
