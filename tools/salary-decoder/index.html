@@ -286,6 +286,17 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
                         </div>
                         <input type="number" id="gratuity" class="mono-input" oninput="if(this.value.length > 12) this.value = this.value.slice(0, 12);">
                     </div>
+                    <!-- ADDED: Other CTC Deductions -->
+                    <div class="md:col-span-2">
+                         <div class="lbl-row">
+                            <label class="lbl text-gray-600 dark:text-gray-300">Other CTC Deductions</label>
+                            <div class="info-icon">
+                                <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                                <div class="tooltip-box">Any other components removed from CTC (e.g. Employer NPS, Group Insurance).</div>
+                            </div>
+                        </div>
+                        <input type="number" id="otherCTCDed" class="mono-input" placeholder="e.g. Insurance, Employer NPS" oninput="if(this.value.length > 12) this.value = this.value.slice(0, 12);">
+                    </div>
                 </div>
             </div>
 
@@ -339,12 +350,11 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
 
       <!-- RIGHT: SUMMARY -->
       <div class="lg:col-span-5">
-          <!-- UPDATED: Darker Background -->
           <div class="sticky top-8 bg-white dark:bg-[#050505] border border-gray-200 dark:border-white/10 rounded-2xl p-6 md:p-8 shadow-sm">
             
             <p class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4 text-center">Estimated Monthly In-Hand</p>
             
-            <div class="text-center border-b border-gray-100 dark:border-white/10 pb-6 mb-6">
+            <div class="text-center border-b border-gray-100 dark:border-white/10 pb-6 mb-6 overflow-hidden">
                 <!-- Auto-Scaling Number with Horizontal Scroll Safety -->
                 <div class="overflow-x-auto no-scrollbar">
                     <h2 id="valInHand" class="font-mono font-bold text-[#1d1d1f] dark:text-white transition-all duration-300 whitespace-nowrap" style="font-size: 2.75rem;">₹0</h2>
@@ -359,7 +369,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
                 </div>
 
                 <div class="row">
-                    <span class="text-orange-600/80 dark:text-orange-400/80 text-xs">(-) Employer PF & Gratuity</span>
+                    <span class="text-orange-600/80 dark:text-orange-400/80 text-xs">(-) Employer PF, Gratuity, Others</span>
                     <div class="val-container"><span id="valCTCDed" class="val text-orange-600/80 dark:text-orange-400/80">0</span></div>
                 </div>
 
@@ -438,6 +448,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         bonus: document.getElementById('bonus'),
         employerPF: document.getElementById('employerPF'),
         gratuity: document.getElementById('gratuity'),
+        otherCTCDed: document.getElementById('otherCTCDed'), // Added
         employeePF: document.getElementById('employeePF'),
         pt: document.getElementById('pt'),
         taxInvestments: document.getElementById('taxInvestments'),
@@ -472,14 +483,16 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         const hra = basic * 0.50; 
         const empPF = basic * 0.12;
         const grat = basic * 0.0481;
+        const other = 0;
         
-        const used = basic + hra + empPF + grat;
+        const used = basic + hra + empPF + grat + other;
         const special = Math.max(0, ctc - used);
 
         el.basic.value = Math.round(basic);
         el.hra.value = Math.round(hra);
         el.employerPF.value = Math.round(empPF);
         el.gratuity.value = Math.round(grat);
+        el.otherCTCDed.value = ""; 
         el.employeePF.value = Math.round(empPF);
         el.special.value = Math.round(special);
         el.bonus.value = "";
@@ -496,14 +509,16 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         const hra = basic * 0.50;
         const empPF = basic * 0.12;
         const grat = basic * 0.0481;
-
+        
         el.hra.value = Math.round(hra);
         el.employerPF.value = Math.round(empPF);
         el.employeePF.value = Math.round(empPF);
         el.gratuity.value = Math.round(grat);
 
         const bonus = parse(el.bonus.value);
-        const used = basic + hra + empPF + grat + bonus;
+        const other = parse(el.otherCTCDed.value);
+        
+        const used = basic + hra + empPF + grat + bonus + other;
         const special = Math.max(0, ctc - used);
         
         el.special.value = Math.round(special);
@@ -520,13 +535,15 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         const bonus = parse(el.bonus.value);
         const empPF = parse(el.employerPF.value);
         const grat = parse(el.gratuity.value);
+        const otherCTC = parse(el.otherCTCDed.value);
+        
         const employeePF = parse(el.employeePF.value);
         const pt = parse(el.pt.value);
 
-        const ctcDed = empPF + grat;
+        const ctcDed = empPF + grat + otherCTC;
         const grossYearly = basic + hra + special;
         
-        // Taxable Income
+        // --- TAX ENGINE (Matches TaxCalc) ---
         const stdDed = regime === 'new' ? 75000 : 50000;
         let taxableIncome = grossYearly + bonus - stdDed - pt;
         
@@ -534,15 +551,15 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
             const inv = parse(el.taxInvestments.value);
             taxableIncome -= inv;
         }
-
-        // Use Advanced Tax Function
+        
+        // Use Advanced Logic
         const annualTax = calculateAdvancedTax(Math.max(0, taxableIncome), regime);
         
         const payDed = employeePF + pt;
         const netYearly = grossYearly - payDed - annualTax;
         const monthlyInHand = netYearly / 12;
 
-        // Render
+        // Render & Scale
         const inHandText = `₹${fmt(monthlyInHand)}`;
         el.valInHand.innerText = inHandText;
         scaleFontSize(inHandText);
@@ -562,7 +579,6 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         }
     }
 
-    // Font Scaler
     function scaleFontSize(text) {
         const len = text.length;
         if(len > 12) el.valInHand.style.fontSize = "1.5rem";
@@ -571,11 +587,10 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         else el.valInHand.style.fontSize = "2.75rem";
     }
 
-    // --- ADVANCED TAX LOGIC (Matches Tax Calculator) ---
+    // --- ADVANCED TAX LOGIC (Imported from Tax Calculator) ---
     function calculateAdvancedTax(income, r) {
         if(income <= 0) return 0;
-        
-        // Slabs
+
         const slabsNew = [
             { up: 400000, pct: 0 }, { up: 800000, pct: 5 }, { up: 1200000, pct: 10 },
             { up: 1600000, pct: 15 }, { up: 2000000, pct: 20 }, { up: 2400000, pct: 25 },
@@ -588,7 +603,6 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
         
         const slabs = r === 'new' ? slabsNew : slabsOld;
 
-        // Helper: Base Tax
         function getBaseTax(taxable, currentSlabs) {
             let tax = 0;
             let prevLimit = 0;
@@ -603,7 +617,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
 
         let baseTax = getBaseTax(income, slabs);
 
-        // Rebate & Relief
+        // Rebate & 87A Relief
         let rebate = 0;
         let rebateRelief = 0;
 
@@ -634,7 +648,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
                 let theorySurcharge = taxAfterRebate * (rate / 100);
                 surcharge = theorySurcharge;
 
-                // Surcharge Relief
+                // Surcharge Marginal Relief
                 let threshold = 0;
                 if (income > 50000000) threshold = 50000000;
                 else if (income > 20000000) threshold = 20000000;
@@ -643,7 +657,6 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
 
                 if (threshold > 0) {
                     const taxOnThreshold = getBaseTax(threshold, slabs);
-                    // Get rate at threshold
                     let tRate = 0;
                     if (threshold === 5000000) tRate = 0;
                     else if (threshold === 10000000) tRate = 10;
@@ -670,7 +683,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_salary.w
     el.ctc.addEventListener('input', estimateStructure);
     el.basic.addEventListener('input', handleBasicChange);
     
-    [el.hra, el.special, el.bonus, el.employerPF, el.gratuity, el.employeePF, el.pt, el.taxInvestments].forEach(i => {
+    [el.hra, el.special, el.bonus, el.employerPF, el.gratuity, el.otherCTCDed, el.employeePF, el.pt, el.taxInvestments].forEach(i => {
         i.addEventListener('input', calculate);
     });
 
