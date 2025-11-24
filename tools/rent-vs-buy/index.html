@@ -34,7 +34,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_rentbuy.
   }
   .dark .lbl { color: #9ca3af; }
 
-  /* --- SVG CHART --- */
+/* --- SVG CHART --- */
   .chart-wrapper {
       width: 100%;
       height: 350px;
@@ -42,10 +42,17 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_rentbuy.
       border-bottom: 1px solid #e5e7eb;
       border-left: 1px solid #e5e7eb;
       margin-top: 20px;
+      /* THE FIX: Clip contents that go out of bounds */
+      overflow: hidden; 
   }
   .dark .chart-wrapper { border-color: #333; }
 
-  svg { width: 100%; height: 100%; overflow: visible; }
+  svg { 
+      width: 100%; 
+      height: 100%; 
+      /* REMOVED: overflow: visible; */
+      display: block; /* Removes whitespace */
+  }
   
   .line { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
   .line-buy { stroke: #1d1d1f; } 
@@ -295,12 +302,29 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_rentbuy.
     }
 
     function drawChart() {
-        const maxVal = Math.max(...chartData.map(d => Math.max(d.buy, d.rent)));
-        const points = chartData.length - 1;
+        // 1. Calculate Min and Max to handle negative values gracefully
+        const allValues = chartData.flatMap(d => [d.buy, d.rent]);
+        const maxVal = Math.max(...allValues);
+        const minVal = Math.min(...allValues);
+        
+        // If values go negative, we need to adjust the range
+        // Total Range = Max - Min (if Min is negative)
+        // Actually, for simplicity in this specific tool:
+        // We pin the bottom of the chart (Y=500) to the Minimum Value if it's negative,
+        // OR to 0 if everything is positive.
+        
+        const chartMin = Math.min(minVal, 0); // Allow dipping below zero
+        const range = maxVal - chartMin;
+        
+        // Avoid divide by zero
+        const scaleY = range === 0 ? 1 : range;
 
         // Map Data to SVG Coordinates (1000 x 500)
-        const getX = (i) => (i / points) * 1000;
-        const getY = (val) => 500 - ((val / maxVal) * 500);
+        const getX = (i) => (i / (chartData.length - 1)) * 1000;
+        
+        // Inverted Y-Axis for SVG (0 is top)
+        // Value mapped to 0-500 range relative to chartMin
+        const getY = (val) => 500 - (((val - chartMin) / scaleY) * 500);
 
         let pathBuy = `M 0 ${getY(chartData[0].buy)} `;
         let pathRent = `M 0 ${getY(chartData[0].rent)} `;
@@ -313,6 +337,10 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_rentbuy.
 
         el.lineBuy.setAttribute('d', pathBuy);
         el.lineRent.setAttribute('d', pathRent);
+        
+        // Draw Zero Line (if range crosses zero)
+        // If chartMin < 0, we should show where 0 is.
+        // (Optional visual improvement)
     }
 
     // Interaction (Mouse + Touch)
