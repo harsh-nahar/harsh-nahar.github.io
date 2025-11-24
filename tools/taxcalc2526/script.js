@@ -76,9 +76,9 @@
       if (amt > 0) {
         rows += `<tr>
                    <td>₹${fmt(prev)}–₹${s.up===Infinity?'∞':fmt(s.up)}</td>
-                   <td>₹${fmt(amt)}</td>
-                   <td>${s.pct}%</td>
-                   <td>₹${fmt(Math.round(t))}</td>
+                   <td class="text-right">₹${fmt(amt)}</td>
+                   <td class="text-right">${s.pct}%</td>
+                   <td class="text-right">₹${fmt(Math.round(t))}</td>
                  </tr>`;
       }
       tax += t;
@@ -125,17 +125,17 @@
     let rebateRow = '';
     if (rebate > 0) {
         rebateRow = `<tr class="text-green-600 dark:text-green-400">
-                        <td colspan="3"><strong>Less: Tax Rebate u/s 87A</strong></td>
-                        <td><strong>-₹${fmt(Math.round(rebate))}</strong></td>
+                        <td colspan="3" class="text-right"><strong>Less: Tax Rebate u/s 87A</strong></td>
+                        <td class="text-right"><strong>-₹${fmt(Math.round(rebate))}</strong></td>
                      </tr>`;
     }
 
-    const grossRow = `<tr><td colspan="3" class="pt-4"><strong>Gross Tax</strong></td><td class="pt-4"><strong>₹${fmt(Math.round(tax))}</strong></td></tr>`;
+    const grossRow = `<tr><td colspan="3" class="pt-4 text-right"><strong>Gross Tax</strong></td><td class="pt-4 text-right"><strong>₹${fmt(Math.round(tax))}</strong></td></tr>`;
     
     const finalRows = rows + grossRow + rebateRow + 
-      (rebate > 0 ? `<tr><td colspan="3"><strong>Net Tax</strong></td><td><strong>₹${fmt(Math.round(taxAfterRebate))}</strong></td></tr>` : '') +
-      `<tr><td colspan="3">Surcharge (${rate}%)</td><td>₹${fmt(Math.round(surcharge))}</td></tr>` +
-      `<tr><td colspan="3">Cess (4%)</td><td>₹${fmt(Math.round(cess))}</td></tr>`;
+      (rebate > 0 ? `<tr><td colspan="3" class="text-right"><strong>Net Tax</strong></td><td class="text-right"><strong>₹${fmt(Math.round(taxAfterRebate))}</strong></td></tr>` : '') +
+      `<tr><td colspan="3" class="text-right">Surcharge (${rate}%)</td><td class="text-right">₹${fmt(Math.round(surcharge))}</td></tr>` +
+      `<tr><td colspan="3" class="text-right">Cess (4%)</td><td class="text-right">₹${fmt(Math.round(cess))}</td></tr>`;
 
     // If income is 0, keep table empty but neat
     if(income > 0) {
