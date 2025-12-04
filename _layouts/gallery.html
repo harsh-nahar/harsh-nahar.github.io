@@ -1,0 +1,43 @@
+---
+layout: default
+title: "Photography"
+description: "collections from the road."
+image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaisalmer/jaisalmer_camelwalkers.webp"
+---
+
+<div class="fade-in">
+    <div class="mb-12">
+        <h1 class="text-3xl font-bold mb-2 dark:text-white">Photography</h1>
+        <p class="text-[#86868b] dark:text-gray-400">Collections from the road. For high-res, visit <a href="https://www.behance.net/hrsvnr" target="_blank" class="text-blue-600 hover:underline">Behance</a>.</p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-12">
+      {% assign galleries = site.gallery | sort: "date" | reverse %}
+      {% for gallery in galleries %}
+        {% assign thumb = gallery.thumbnail %}
+        {% if thumb == nil %}
+            {% assign first_img = gallery.content | regex_replace: ".*?!\\[[^)]*\\]\\(([^)]*)\\).*", "\\1" %}
+            {% assign thumb = first_img %}
+        {% endif %}
+        
+        <a href="{{ gallery.url | relative_url }}" class="group cursor-pointer block">
+            <div class="overflow-hidden rounded-2xl mb-4 bg-gray-100 dark:bg-white/5 relative aspect-[3/2] shadow-sm hover:shadow-md transition-all">
+                {% if thumb %}
+                <img src="{{ thumb | relative_url }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" alt="{{ gallery.title }}" loading="lazy">
+                {% else %}
+                <div class="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-800 text-gray-400">No Image</div>
+                {% endif %}
+            </div>
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="text-lg font-semibold text-[#1d1d1f] dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{{ gallery.title }}</h3>
+                    <p class="text-[#86868b] dark:text-gray-400 text-sm">{{ gallery.description }}</p>
+                </div>
+                {% if gallery.date %}
+                <span class="font-mono text-xs bg-gray-50 dark:bg-white/10 px-2 py-1 rounded text-[#86868b] dark:text-gray-300 h-fit">{{ gallery.date | date: "%Y" }}</span>
+                {% endif %}
+            </div>
+        </a>
+      {% endfor %}
+    </div>
+</div>

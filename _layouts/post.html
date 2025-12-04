@@ -1,0 +1,42 @@
+---
+layout: default
+---
+<article class="fade-in">
+    <!-- Header: Pure title and metadata, NO back button -->
+    <header class="mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight text-[#1d1d1f] dark:text-white">{{ page.title }}</h1>
+        
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-white/10 pb-4">
+            <time class="font-mono text-xs text-[#86868b]">{{ page.date | date: "%b %-d, %Y" }}</time>
+            
+            <!-- Share Button Only -->
+            <button onclick="sharePost()" class="group flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-50 dark:bg-white/10 hover:bg-gray-100 dark:hover:bg-white/20 transition-colors cursor-pointer">
+                <i data-lucide="share" class="w-3 h-3 text-gray-500 dark:text-gray-300"></i>
+                <span id="share-text" class="text-[10px] font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wide">Share</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <div class="prose prose-lg dark:prose-invert max-w-none">
+        {{ content }}
+    </div>
+</article>
+
+<script>
+async function sharePost() {
+    const url = window.location.href;
+    const title = document.title;
+    const shareText = document.getElementById('share-text');
+    if (navigator.share) {
+        try { await navigator.share({ title, url }); } catch (err) {}
+    } else {
+        try {
+            await navigator.clipboard.writeText(url);
+            const original = shareText.innerText;
+            shareText.innerText = "COPIED";
+            setTimeout(() => shareText.innerText = original, 2000);
+        } catch (err) {}
+    }
+}
+</script>

@@ -1,0 +1,25 @@
+url: "https://harshnahar.com"
+baseurl: ""
+title: "harsh nahar"
+description: "Welcome to my little corner of the web."
+permalink: /blog/:title/
+
+# Unified Defaults (Merged into one list)
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "gallery"
+    values:
+      layout: "gallery_post"
+
+# Gallery collection settings
+collections:
+  gallery:
+    output: true
+    permalink: /gallery/:title/
+
