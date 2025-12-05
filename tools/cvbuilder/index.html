@@ -1,0 +1,651 @@
+---
+layout: default
+title: "cv builder"
+permalink: /tools/cvbuilder/
+description: "build a professional, ats-friendly resume. private, free, and watermark-less."
+image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_cvbuilder.webp"
+---
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+    /* --- 1. GLOBAL & LAYOUT --- */
+    .tool-wrapper { margin-top: -2rem; }
+    @media (min-width: 1024px) {
+        main {
+            max-width: 100vw !important;
+            padding-left: 40px !important;
+            padding-right: 40px !important;
+        }
+        .tool-wrapper { margin-top: -3rem; }
+    }
+
+    .builder-grid {
+        display: grid;
+        grid-template-columns: 1fr; 
+        gap: 0;
+        height: calc(100vh - 140px);
+        overflow: hidden;
+    }
+    @media (min-width: 1024px) {
+        .builder-grid {
+            grid-template-columns: 420px 1fr; 
+            gap: 40px;
+            align-items: start;
+        }
+    }
+
+    /* --- 2. EDITOR PANEL --- */
+    .editor-panel {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        height: 100%;
+        overflow-y: auto;
+        padding: 24px;
+        display: block;
+        padding-bottom: 120px;
+    }
+    @media (min-width: 1024px) {
+        .editor-panel {
+            border-radius: 12px;
+            height: calc(100vh - 140px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            padding-bottom: 24px;
+        }
+    }
+    .dark .editor-panel { background: #1c1c1e; border-color: #333; }
+
+    /* Input Elements */
+    .section-title {
+        font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+        color: #9ca3af; margin-bottom: 12px; margin-top: 32px; border-bottom: 1px solid #f3f4f6; padding-bottom: 8px;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .dark .section-title { border-color: #333; }
+    .section-title:first-child { margin-top: 0; }
+
+    .cv-input {
+        width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #e5e7eb;
+        background: transparent; font-family: inherit; font-size: 0.9rem; color: #1d1d1f;
+        margin-bottom: 10px; transition: border 0.2s;
+    }
+    .dark .cv-input { border-color: #333; color: #fff; }
+    .cv-input:focus { outline: none; border-color: #3b82f6; }
+    textarea.cv-input { resize: vertical; min-height: 70px; line-height: 1.4; }
+
+    .input-group-box {
+        background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; margin-bottom: 12px;
+    }
+    .dark .input-group-box { background: rgba(255,255,255,0.03); border-color: #333; }
+
+    .remove-btn {
+        font-size: 0.7rem; color: #ef4444; cursor: pointer; padding: 4px 8px;
+        border-radius: 4px; background: rgba(239, 68, 68, 0.05); display: inline-block; margin-top: 4px;
+    }
+
+    /* --- 3. PREVIEW PANEL --- */
+    .preview-panel {
+        background: #525659;
+        padding: 40px 20px;
+        display: none; /* Hidden by default mobile */
+        height: 100%;
+        overflow-y: auto; 
+        align-items: flex-start; /* Critical: Starts content at top, not center */
+        justify-content: center;
+    }
+    @media (min-width: 1024px) {
+        .preview-panel {
+            display: flex !important;
+            border-radius: 12px;
+            height: calc(100vh - 140px);
+        }
+    }
+
+    /* --- 4. THE PAPER (A4 LATEX STYLE) --- */
+    #resume-paper {
+        background: white;
+        width: 210mm; /* Fixed A4 Width */
+        min-height: 297mm;
+        padding: 10mm 12mm;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        color: #000;
+        position: relative;
+        font-size: 10pt; 
+        line-height: 1.25;
+        margin-bottom: 40px;
+        cursor: default;
+        overflow: hidden;
+        /* transform-origin controls where the zoom happens */
+        transform-origin: top center;
+        word-wrap: break-word;        /* Legacy support */
+        overflow-wrap: break-word;    /* Modern standard */
+
+    }
+    
+    /* Mobile Scaling Logic */
+    @media (max-width: 850px) {
+        .preview-panel {
+            padding: 20px 0; /* Remove side padding to maximize space */
+            display: flex; /* Use flex to center the paper horizontally */
+        }
+        #resume-paper {
+            /* Force A4 dimensions */
+            min-width: 210mm; 
+            
+            /* Scale down to fit phone screens (approx 360px-400px width) */
+            /* 210mm is approx 794px. 0.45 scale brings it to ~357px */
+            transform: scale(0.45);
+            
+            /* Remove the whitespace created below the scaled element */
+            /* 297mm * (1 - 0.45) = ~163mm of empty space to remove */
+            margin-bottom: -160mm; 
+            margin-top: 0;
+        }
+    }
+
+    /* Page Markers */
+    .page-marker {
+        position: absolute; left: 0; width: 100%; border-bottom: 1px dashed #ef4444;
+        opacity: 0.6; pointer-events: none; z-index: 50;
+    }
+    .page-marker::after {
+        content: "End of Page " attr(data-page);
+        position: absolute; right: 0; top: -14px; color: #ef4444; font-size: 9px;
+        font-weight: bold; background: #fff; padding: 0 4px;
+    }
+
+    /* --- 5. RESUME INTERNALS (Deedy/Latex Style) --- */
+    .font-modern { font-family: 'Lato', sans-serif !important; }
+    .font-classic { font-family: 'Merriweather', serif !important; }
+
+    /* Header: Name Left, Links Right */
+    .cv-header { display: flex; justify-content: space-between; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 10px; }
+    .cv-name { font-size: 20pt; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
+    .cv-contact { font-size: 9pt; text-align: right; line-height: 1.4; }
+    .cv-contact div { display: block; }
+
+    /* Sections */
+    .cv-section { margin-bottom: 10px; }
+    .cv-section-head {
+        font-size: 11pt; font-weight: 700; text-transform: uppercase; 
+        border-bottom: 1px solid #ccc; margin-bottom: 6px; padding-bottom: 2px;
+        letter-spacing: 0.5px;
+    }
+
+    /* Items */
+    .cv-item { margin-bottom: 6px; break-inside: avoid; }
+    .cv-row { display: flex; justify-content: space-between; font-weight: 700; font-size: 10pt; }
+    .cv-sub-row { display: flex; justify-content: space-between; font-style: italic; font-size: 9.5pt; color: #333; margin-bottom: 2px; }
+    
+    /* Bullets */
+    ul.cv-list { padding-left: 16px; margin: 0; list-style-type: disc; }
+    ul.cv-list li { margin-bottom: 1px; text-align: justify; font-size: 9.5pt; }
+    
+    /* Skills */
+    .skill-row { margin-bottom: 2px; font-size: 9.5pt; }
+    .skill-label { font-weight: 700; margin-right: 6px; }
+
+    /* --- 6. UI COMPONENTS --- */
+    .mobile-tabs {
+        display: flex; position: sticky; top: 0; z-index: 50;
+        background: #fff; border-bottom: 1px solid #e5e7eb;
+    }
+    @media (min-width: 1024px) { .mobile-tabs { display: none; } }
+    .dark .mobile-tabs { background: #000; border-color: #333; }
+
+    .tab-btn {
+        flex: 1; padding: 12px; text-align: center; font-weight: 600; font-size: 0.9rem;
+        color: #9ca3af; border-bottom: 2px solid transparent; cursor: pointer;
+    }
+    .tab-btn.active { color: #3b82f6; border-bottom-color: #3b82f6; background: rgba(59, 130, 246, 0.05); }
+
+    .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .btn-small {
+        padding: 5px 10px; font-size: 0.7rem; border-radius: 6px;
+        background: #f3f4f6; color: #1f2937; border: 1px solid #e5e7eb; cursor: pointer;
+    }
+    .dark .btn-small { background: #27272a; border-color: #333; color: #e5e7eb; }
+    .btn-small.active { background: #1d1d1f; color: white; border-color: #1d1d1f; }
+    .dark .btn-small.active { background: #fff; color: black; border-color: #fff; }
+
+    /* Info Banner */
+    .info-banner {
+        background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px;
+        margin-bottom: 20px; font-size: 0.8rem; color: #1e3a8a; display: flex; justify-content: space-between;
+    }
+    .dark .info-banner { background: rgba(30, 58, 138, 0.2); border-color: rgba(30, 58, 138, 0.4); color: #bfdbfe; }
+
+    /* --- 7. PRINT (SANDBOX) --- */
+    /* We hide everything and show only the iframe sandbox when printing is triggered */
+    @media print {
+        body * { visibility: hidden; }
+        #printFrame { visibility: visible; height: 100%; width: 100%; position: absolute; top:0; left:0; }
+    }
+</style>
+
+<div class="fade-in w-full mx-auto mb-20 tool-wrapper">
+    
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 px-4 lg:px-0 pt-4">
+        <div>
+            <h1 class="text-2xl font-bold text-[#1d1d1f] dark:text-white">CV Builder</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400">ATS-Friendly. Private. 1-Page Focused.</p>
+        </div>
+        <div class="flex gap-2 items-center">
+            <button onclick="clearData()" class="text-sm text-red-500 hover:text-red-600 px-2 py-2 font-medium transition-colors">Clear</button>
+            <button onclick="loadDemo()" class="text-sm text-gray-500 hover:text-black dark:hover:text-white px-2 py-2 font-medium transition-colors">Load Demo</button>
+            
+            <!-- Markdown Button -->
+            <button onclick="downloadMD()" class="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-gray-200 font-bold rounded-full hover:bg-gray-200 dark:hover:bg-white/20 transition-colors text-xs">
+                <i data-lucide="file-text" class="w-4 h-4"></i> MD
+            </button>
+
+            <!-- PDF Button -->
+            <button onclick="printResume()" class="flex items-center gap-2 px-5 py-2 bg-[#1d1d1f] dark:bg-white text-white dark:text-black font-bold rounded-full hover:scale-105 transition-transform shadow-lg text-xs">
+                <i data-lucide="download" class="w-4 h-4"></i> PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Tabs -->
+    <div class="mobile-tabs">
+        <div class="tab-btn active" onclick="switchTab('editor')" id="tabEditor">Editor</div>
+        <div class="tab-btn" onclick="switchTab('preview')" id="tabPreview">Preview</div>
+    </div>
+
+    <div class="builder-grid">
+        
+        <!-- LEFT: EDITOR -->
+        <div class="editor-panel" id="editorPanel">
+            
+            <!-- Why One Page? -->
+            <div class="info-banner" id="infoBanner">
+                <div>
+                    <strong>Why One Page?</strong> Recruiters spend ~6 seconds per resume. A dense, single page respects their time and shows you can prioritize.
+                </div>
+                <button onclick="document.getElementById('infoBanner').style.display='none'" class="ml-2 opacity-50 hover:opacity-100">✕</button>
+            </div>
+
+            <div class="toolbar">
+                <button class="btn-small active" onclick="setFont('modern')" id="btnModern">Modern (Lato)</button>
+                <button class="btn-small" onclick="setFont('classic')" id="btnClassic">Classic (Serif)</button>
+                <div class="w-2"></div>
+                <button class="btn-small active" onclick="setOrder('exp')" id="btnExpFirst">Work First</button>
+                <button class="btn-small" onclick="setOrder('edu')" id="btnEduFirst">Edu First</button>
+            </div>
+
+            <!-- 1. Contact -->
+            <div class="section-title">Contact Info</div>
+            <input type="text" id="inpName" class="cv-input" placeholder="Full Name" oninput="updateData()">
+            <div class="grid grid-cols-1 gap-2">
+                <input type="text" id="inpEmail" class="cv-input" placeholder="Email" oninput="updateData()">
+                <input type="text" id="inpPhone" class="cv-input" placeholder="Phone" oninput="updateData()">
+                <input type="text" id="inpLinks" class="cv-input" placeholder="Links (LinkedIn, GitHub, Portfolio)" oninput="updateData()">
+            </div>
+
+            <!-- 2. Skills -->
+            <div class="section-title">Skills</div>
+            <textarea id="inpSkills" class="cv-input" placeholder="Category: Skill 1, Skill 2..." oninput="updateData()"></textarea>
+
+            <!-- 3. Experience -->
+            <div class="section-title">
+                Experience 
+                <button onclick="addExp()" class="text-blue-500 text-xs hover:underline font-medium">+ Add</button>
+            </div>
+            <div id="expInputs"></div>
+
+            <!-- 4. Education -->
+            <div class="section-title">
+                Education
+                <button onclick="addEdu()" class="text-blue-500 text-xs hover:underline font-medium">+ Add</button>
+            </div>
+            <div id="eduInputs"></div>
+
+            <!-- 5. Projects -->
+            <div class="section-title">
+                Projects / Leadership
+                <button onclick="addProj()" class="text-blue-500 text-xs hover:underline font-medium">+ Add</button>
+            </div>
+            <div id="projInputs"></div>
+            
+            <div class="mt-8 text-center text-xs text-gray-400">
+                Format adapted from <a href="https://github.com/sb2nov/resume" target="_blank" class="underline">Deedy/Jake's Resume</a>.
+            </div>
+            <div class="h-12"></div>
+        </div>
+
+        <!-- RIGHT: PREVIEW -->
+        <div class="preview-panel" id="previewPanel">
+            <div id="resume-paper" class="font-modern">
+                
+                <!-- Page Markers -->
+                <div class="page-marker" style="top: 297mm;" data-page="1"></div>
+                <div class="page-marker" style="top: 594mm;" data-page="2"></div>
+
+                <!-- Header -->
+                <div class="cv-header">
+                    <div class="cv-name" id="outName"></div>
+                    <div class="cv-contact" id="outContact"></div>
+                </div>
+
+                <!-- Body -->
+                <div id="cvBody"></div>
+
+                <!-- Skills -->
+                <div class="cv-section" id="secSkills">
+                    <div class="cv-section-head">Skills</div>
+                    <div id="outSkills"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Hidden Iframe for Printing -->
+<iframe id="printFrame" style="position:absolute; top:-9999px; left:-9999px; width:0; height:0;"></iframe>
+
+<script>
+    // --- STATE ---
+    const STORAGE_KEY = 'cv_data_v5';
+    let data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+        name: "", email: "", phone: "", links: "", order: "exp", skills: "", font: "modern",
+        edu: [{ school: "", degree: "", year: "", details: "" }],
+        exp: [{ role: "", company: "", location:"", year: "", details: "" }],
+        proj: [{ name: "", link: "", details: "" }]
+    };
+
+    // --- SECURITY (SANITIZATION) ---
+    function escapeHTML(str) {
+        if (!str) return "";
+        return str.replace(/[&<>'"]/g, 
+            tag => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            }[tag]));
+    }
+
+    // --- AUTO SAVE ---
+    function saveData() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        render();
+    }
+
+    // --- ACTIONS ---
+    function clearData() {
+        if(!confirm("Clear all data?")) return;
+        data = { name:"", email:"", phone:"", links:"", order:"exp", skills:"", font:"modern", edu:[], exp:[], proj:[] };
+        saveData(); updateInputs();
+    }
+
+    function loadDemo() {
+        if(confirm("Load demo data? This will overwrite current fields.")) {
+            data = {
+                name: "Alex Morgan",
+                email: "alex.morgan@email.com",
+                phone: "+91 98765 43210",
+                links: "linkedin.com/in/alex • github.com/alex",
+                skills: "Languages: Java, Python, C++, SQL\nFrameworks: React, Spring Boot, Django\nTools: Git, Docker, Kubernetes, AWS",
+                font: "modern", order: "exp",
+                exp: [
+                    { role: "Senior Software Engineer", company: "Tech Giants Inc.", location: "Bangalore, KA", year: "2021 – Present", details: "- Architected a microservices-based payment gateway handling 10k transactions/sec.\n- Reduced latency by 40% by optimizing database queries and implementing Redis caching.\n- Mentored 4 junior developers and conducted code reviews." },
+                    { role: "Software Engineer", company: "StartUp Solutions", location: "Mumbai, MH", year: "2019 – 2021", details: "- Developed a customer-facing dashboard using React and Node.js.\n- Integrated 3rd party APIs (Stripe, Twilio) to enhance platform functionality.\n- Automated deployment pipelines using Jenkins, reducing release time by 50%." },
+                    { role: "Data Analyst Intern", company: "Big Data Corp", location: "Remote", year: "May 2018 – Aug 2018", details: "- Cleaned and visualized 1TB of log data using Python (Pandas) and Tableau.\n- Identified key user churn patterns, leading to a 5% retention strategy update." },
+                    { role: "Teaching Assistant", company: "University of Delhi", location: "New Delhi", year: "2018", details: "- Assisted 50+ students in Data Structures and Algorithms course." }
+                ],
+                edu: [
+                    { school: "BITS Pilani", degree: "B.E. Computer Science", year: "2015 – 2019", details: "CGPA: 8.9/10. Core Team Member of Coding Club." },
+                    { school: "Delhi Public School", degree: "Class XII (PCM)", year: "2015", details: "Secured 95% in Board Exams." }
+                ],
+                proj: [
+                    { name: "Distributed File System", link: "GitHub", details: "- Implemented a fault-tolerant file system in C++.\n- Handled replication and consistency across 5 nodes." },
+                    { name: "AI Chess Bot", link: "Demo", details: "- Built a chess engine using Minimax algorithm with Alpha-Beta pruning." },
+                    { name: "Personal Portfolio", link: "alex.com", details: "- Static site generator using Jekyll." }
+                ]
+            };
+            saveData(); updateInputs();
+        }
+    }
+
+    // --- PRINT ENGINE ---
+    function printResume() {
+        const frame = document.getElementById('printFrame');
+        const doc = frame.contentWindow.document;
+        const content = document.getElementById('resume-paper').innerHTML;
+        const fontClass = data.font === 'classic' ? 'font-classic' : 'font-modern';
+        
+        doc.open();
+        doc.write(`
+            <html><head><title>${(data.name || 'Resume').replace(/\s+/g,'_')}_CV</title>
+            <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+            <style>
+                @page { size: A4; margin: 0; }
+                body { margin: 0; padding: 0; background: white; }
+                #resume-container {
+                    width: 210mm; min-height: 297mm; padding: 10mm 12mm; 
+                    background: white; color: black; box-sizing: border-box;
+                    font-size: 10pt; line-height: 1.25;
+                }
+                .font-modern { font-family: 'Lato', sans-serif; }
+                .font-classic { font-family: 'Merriweather', serif; }
+                
+                .cv-header { display: flex; justify-content: space-between; border-bottom: 1px solid #000; padding-bottom: 8px; margin-bottom: 10px; }
+                .cv-name { font-size: 20pt; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
+                .cv-contact { font-size: 9pt; text-align: right; line-height: 1.4; }
+                .cv-section { margin-bottom: 10px; }
+                .cv-section-head {
+                    font-size: 11pt; font-weight: 700; text-transform: uppercase; 
+                    border-bottom: 1px solid #ccc; margin-bottom: 6px; padding-bottom: 2px; letter-spacing: 0.5px;
+                }
+                .cv-item { margin-bottom: 6px; page-break-inside: avoid; }
+                .cv-row { display: flex; justify-content: space-between; font-weight: 700; font-size: 10pt; }
+                .cv-sub-row { display: flex; justify-content: space-between; font-style: italic; font-size: 9.5pt; margin-bottom: 2px; }
+                ul.cv-list { padding-left: 16px; margin: 0; list-style-type: disc; }
+                ul.cv-list li { margin-bottom: 1px; text-align: justify; font-size: 9.5pt; }
+                .skill-row { margin-bottom: 2px; font-size: 9.5pt; }
+                .skill-label { font-weight: 700; margin-right: 6px; }
+                .page-marker { display: none; } /* Hide markers in PDF */
+            </style></head><body>
+            <div id="resume-container" class="${fontClass}">${content}</div>
+            </body></html>
+        `);
+        doc.close();
+        setTimeout(() => { frame.contentWindow.print(); }, 500);
+    }
+
+    // --- MARKDOWN DOWNLOAD ---
+    function downloadMD() {
+        let md = `# ${data.name}\n${data.email} | ${data.phone} | ${data.links}\n\n`;
+        
+        if(data.skills) md += `## Skills\n${data.skills}\n\n`;
+        
+        const expMD = data.exp.map(i => `### ${i.role} | ${i.company}\n*${i.year} | ${i.location}*\n${i.details}\n`).join('\n');
+        const eduMD = data.edu.map(i => `### ${i.school}\n*${i.degree}, ${i.year}*\n${i.details}\n`).join('\n');
+        const projMD = data.proj.map(i => `### ${i.name}\n*${i.link}*\n${i.details}\n`).join('\n');
+        
+        if(data.order === 'exp') md += `## Experience\n${expMD}\n## Education\n${eduMD}\n## Projects\n${projMD}`;
+        else md += `## Education\n${eduMD}\n## Experience\n${expMD}\n## Projects\n${projMD}`;
+        
+        const blob = new Blob([md], { type: 'text/markdown' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `${(data.name || 'resume').replace(/\s+/g,'_')}.md`;
+        link.click();
+    }
+
+    // --- RENDER ENGINE ---
+    function render() {
+        document.getElementById('outName').textContent = data.name || "YOUR NAME";
+        
+        // Sanitize Contact
+        const email = escapeHTML(data.email);
+        const phone = escapeHTML(data.phone);
+        const links = escapeHTML(data.links);
+        const contactHtml = [email, phone, links].filter(Boolean).join('<br>');
+        document.getElementById('outContact').innerHTML = contactHtml || "Contact Details";
+        
+        // Skills (Sanitized)
+        if (data.skills) {
+            const skillsArr = data.skills.split('\n').map(line => {
+                const safeLine = escapeHTML(line);
+                const parts = safeLine.split(':');
+                if (parts.length > 1) {
+                    return `<div class="skill-row"><span class="skill-label">${parts[0]}:</span>${parts[1]}</div>`;
+                }
+                return `<div class="skill-row">${safeLine}</div>`;
+            }).join('');
+            document.getElementById('outSkills').innerHTML = skillsArr;
+            document.getElementById('secSkills').style.display = 'block';
+        } else {
+            document.getElementById('secSkills').style.display = 'none';
+        }
+
+        const cvBody = document.getElementById('cvBody');
+        
+        const eduHTML = generateSection('Education', data.edu, i => `
+            <div class="cv-item">
+                <div class="cv-row"><span>${escapeHTML(i.school)}</span><span>${escapeHTML(i.year)}</span></div>
+                <div class="cv-sub-row"><span>${escapeHTML(i.degree)}</span></div>
+                <ul class="cv-list">${formatBullets(i.details)}</ul>
+            </div>
+        `);
+
+        const expHTML = generateSection('Experience', data.exp, i => `
+            <div class="cv-item">
+                <div class="cv-row"><span>${escapeHTML(i.company)}</span><span>${escapeHTML(i.year)}</span></div>
+                <div class="cv-sub-row"><span>${escapeHTML(i.role)}</span><span>${escapeHTML(i.location)}</span></div>
+                <ul class="cv-list">${formatBullets(i.details)}</ul>
+            </div>
+        `);
+
+        const projHTML = generateSection('Projects', data.proj, i => `
+            <div class="cv-item">
+                <div class="cv-row"><span>${escapeHTML(i.name)}</span><span>${escapeHTML(i.link)}</span></div>
+                <ul class="cv-list">${formatBullets(i.details)}</ul>
+            </div>
+        `);
+
+        cvBody.innerHTML = data.order === 'exp' ? (expHTML + eduHTML + projHTML) : (eduHTML + expHTML + projHTML);
+        
+        const paper = document.getElementById('resume-paper');
+        paper.className = data.font === 'modern' ? 'font-modern' : 'font-classic';
+        
+        document.getElementById('btnModern').className = `btn-small ${data.font==='modern'?'active':''}`;
+        document.getElementById('btnClassic').className = `btn-small ${data.font==='classic'?'active':''}`;
+        document.getElementById('btnExpFirst').className = `btn-small ${data.order==='exp'?'active':''}`;
+        document.getElementById('btnEduFirst').className = `btn-small ${data.order==='edu'?'active':''}`;
+    }
+
+    function generateSection(title, arr, fn) {
+        if (!arr.some(i => Object.values(i).some(v => v.trim()))) return '';
+        return `<div class="cv-section"><div class="cv-section-head">${title}</div>${arr.map(fn).join('')}</div>`;
+    }
+
+    function formatBullets(text) {
+        if (!text) return "";
+        return text.split('\n').map(l => {
+            const clean = escapeHTML(l.replace(/^-\s*/, '').replace(/^•\s*/, '')).trim();
+            return clean ? `<li>${clean}</li>` : '';
+        }).join('');
+    }
+
+    // --- INPUTS ---
+    function updateData() {
+        data.name = document.getElementById('inpName').value;
+        data.email = document.getElementById('inpEmail').value;
+        data.phone = document.getElementById('inpPhone').value;
+        data.links = document.getElementById('inpLinks').value;
+        data.skills = document.getElementById('inpSkills').value;
+        saveData(); render();
+    }
+
+    function updateInputs() {
+        document.getElementById('inpName').value = data.name;
+        document.getElementById('inpEmail').value = data.email;
+        document.getElementById('inpPhone').value = data.phone;
+        document.getElementById('inpLinks').value = data.links;
+        document.getElementById('inpSkills').value = data.skills;
+        
+        renderList('eduInputs', data.edu, createEduInput);
+        renderList('expInputs', data.exp, createExpInput);
+        renderList('projInputs', data.proj, createProjInput);
+    }
+
+    function renderList(id, arr, fn) {
+        const el = document.getElementById(id); el.innerHTML = '';
+        arr.forEach((item, i) => el.appendChild(fn(item, i)));
+    }
+
+    function createInputBox(inputs, removeFn) {
+        const div = document.createElement('div'); div.className = "input-group-box";
+        inputs.forEach(inp => {
+            const el = document.createElement(inp.tag || 'input');
+            el.className = "cv-input"; el.placeholder = inp.placeholder; el.value = inp.value || "";
+            el.oninput = (e) => { inp.update(e.target.value); saveData(); render(); };
+            div.appendChild(el);
+        });
+        const btn = document.createElement('div'); btn.className="text-right";
+        const span = document.createElement('span'); span.innerText = "Remove"; span.className = "remove-btn";
+        span.onclick = removeFn; btn.appendChild(span); div.appendChild(btn);
+        return div;
+    }
+
+    const createEduInput = (item, i) => createInputBox([
+        { placeholder: "School", value: item.school, update: v => data.edu[i].school = v },
+        { placeholder: "Degree", value: item.degree, update: v => data.edu[i].degree = v },
+        { placeholder: "Year", value: item.year, update: v => data.edu[i].year = v },
+        { tag: 'textarea', placeholder: "Details", value: item.details, update: v => data.edu[i].details = v }
+    ], () => { data.edu.splice(i, 1); saveData(); updateInputs(); });
+
+    const createExpInput = (item, i) => createInputBox([
+        { placeholder: "Company", value: item.company, update: v => data.exp[i].company = v },
+        { placeholder: "Role", value: item.role, update: v => data.exp[i].role = v },
+        { placeholder: "Location", value: item.location, update: v => data.exp[i].location = v },
+        { placeholder: "Year", value: item.year, update: v => data.exp[i].year = v },
+        { tag: 'textarea', placeholder: "Details (- for bullets)", value: item.details, update: v => data.exp[i].details = v }
+    ], () => { data.exp.splice(i, 1); saveData(); updateInputs(); });
+
+    const createProjInput = (item, i) => createInputBox([
+        { placeholder: "Project", value: item.name, update: v => data.proj[i].name = v },
+        { placeholder: "Link", value: item.link, update: v => data.proj[i].link = v },
+        { tag: 'textarea', placeholder: "Details", value: item.details, update: v => data.proj[i].details = v }
+    ], () => { data.proj.splice(i, 1); saveData(); updateInputs(); });
+
+    // --- ACTIONS ---
+    window.addEdu = () => { data.edu.push({school:"", degree:"", year:"", details:""}); saveData(); updateInputs(); };
+    window.addExp = () => { data.exp.push({company:"", role:"", location:"", year:"", details:""}); saveData(); updateInputs(); };
+    window.addProj = () => { data.proj.push({name:"", link:"", details:""}); saveData(); updateInputs(); };
+    window.setFont = (f) => { data.font = f; saveData(); render(); };
+    window.setOrder = (o) => { data.order = o; saveData(); render(); };
+
+    window.switchTab = (t) => {
+        const ed = document.getElementById('editorPanel');
+        const pr = document.getElementById('previewPanel');
+        const tabEd = document.getElementById('tabEditor');
+        const tabPr = document.getElementById('tabPreview');
+        if(t === 'editor') {
+            ed.style.display = 'block'; pr.style.setProperty('display', 'none', 'important');
+            tabEd.classList.add('active'); tabPr.classList.remove('active');
+        } else {
+            ed.style.display = 'none'; pr.style.setProperty('display', 'flex', 'important');
+            tabPr.classList.add('active'); tabEd.classList.remove('active');
+        }
+    };
+
+    document.getElementById('inpName').addEventListener('input', (e) => { data.name = e.target.value; saveData(); });
+    document.getElementById('inpEmail').addEventListener('input', (e) => { data.email = e.target.value; saveData(); });
+    document.getElementById('inpPhone').addEventListener('input', (e) => { data.phone = e.target.value; saveData(); });
+    document.getElementById('inpLinks').addEventListener('input', (e) => { data.links = e.target.value; saveData(); });
+    document.getElementById('inpSkills').addEventListener('input', (e) => { data.skills = e.target.value; saveData(); });
+
+    // Start
+    updateInputs();
+    render();
+    lucide.createIcons();
+</script>
