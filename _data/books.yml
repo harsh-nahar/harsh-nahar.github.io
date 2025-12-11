@@ -26,7 +26,7 @@
   pages: 198
   date_read: "2025-07-31"
 
-- title: "I, Claudius"
+- title: "I, Claudius (Claudius, #1)"
   author: "Robert Graves"
   id: "18765"
   rating: 3
@@ -40,19 +40,26 @@
   pages: 358
   date_read: "2025-06-06"
 
-- title: "The Stalin Affair"
+- title: "The Stalin Affair: The Impossible Alliance That Won the War"
   author: "Giles Milton"
   id: "203578717"
   rating: 4
   pages: 336
   date_read: "2025-05-25"
 
-- title: "The Hitchhiker's Guide to the Galaxy"
+- title: "The Hitchhiker's Guide to the Galaxy (Hitchhiker's Guide to the Galaxy, #1)"
   author: "Douglas Adams"
   id: "14"
   rating: 4
   pages: 215
   date_read: "2025-01-08"
+
+- title: "Sputnik Sweetheart"
+  author: "Haruki Murakami"
+  id: "9557"
+  rating: 3
+  pages: 229
+  date_read: "2024-03-30"
 
 - title: "Make Something Wonderful"
   author: "Steve Jobs"
@@ -82,7 +89,7 @@
   pages: 264
   date_read: "2021-07-04"
 
-- title: "Persepolis"
+- title: "Persepolis: The Story of a Childhood and The Story of a Return"
   author: "Marjane Satrapi"
   id: "3106983"
   rating: 3
@@ -96,14 +103,14 @@
   pages: 238
   date_read: "2021-06-26"
 
-- title: "The Spy and the Traitor"
+- title: "The Spy and the Traitor: The Greatest Espionage Story of the Cold War"
   author: "Ben Macintyre"
   id: "37542581"
   rating: 5
   pages: 384
   date_read: "2021-06-05"
 
-- title: "The Good, the Bad and the Ridiculous"
+- title: "The Good, the Bad and the Ridiculous: Profiles"
   author: "Khushwant Singh"
   id: "26819503"
   rating: 0
@@ -117,14 +124,14 @@
   pages: 227
   date_read: "2021-02-15"
 
-- title: "The Psychology of Money"
+- title: "The Psychology of Money: Timeless Lessons on Wealth, Greed, and Happiness"
   author: "Morgan Housel"
   id: "55290131"
   rating: 4
   pages: 242
   date_read: "2021-02-09"
 
-- title: "How To"
+- title: "How To: Absurd Scientific Advice for Common Real-World Problems"
   author: "Randall Munroe"
   id: "42086897"
   rating: 4
@@ -135,7 +142,7 @@
   author: "Barack Obama"
   id: "55364115"
   rating: 5
-  pages: 768
+  pages: 27
   date_read: "2021-01-18"
 
 - title: "Stocks To Riches"
@@ -145,7 +152,7 @@
   pages: 132
   date_read: "2020-12-15"
 
-- title: "The Complete Maus"
+- title: "The Complete Maus: A Survivor's Tale (Maus, #1-2)"
   author: "Art Spiegelman"
   id: "331692"
   rating: 5
@@ -156,14 +163,14 @@
   author: "Vladimir Nabokov"
   id: "18982175"
   rating: 4
-  pages: 292
+  pages: 0
   date_read: "2020-12-03"
 
 - title: "The Bastard of Istanbul"
   author: "Elif Shafak"
   id: "52841272"
   rating: 4
-  pages: 368
+  pages: 12
   date_read: "2020-11-10"
 
 - title: "The Stranger"
@@ -173,7 +180,7 @@
   pages: 123
   date_read: "2020-10-06"
 
-- title: "Delhi Riots 2020"
+- title: "Delhi Riots 2020: The Untold Story"
   author: "Monika Arora"
   id: "54386487"
   rating: 0
@@ -194,7 +201,7 @@
   pages: 150
   date_read: "2020-08-23"
 
-- title: "India’s Most Fearless"
+- title: "India's Most Fearless"
   author: "Shiv Aroor"
   id: "36149971"
   rating: 4
@@ -222,14 +229,14 @@
   pages: 110
   date_read: "2020-07-19"
 
-- title: "Adolf Hitler: A Life"
+- title: "Adolf Hitler: A Life from Beginning to End"
   author: "Hourly History"
   id: "32682214"
   rating: 3
   pages: 128
   date_read: "2020-07-16"
 
-- title: "Poonachi"
+- title: "Poonachi: Or the Story of a Black Goat"
   author: "Perumal Murugan"
   id: "38318462"
   rating: 5
@@ -242,13 +249,6 @@
   rating: 3
   pages: 298
   date_read: "2020-07-11"
-
-- title: "When Stars Are Scattered"
-  author: "Victoria Jamieson"
-  id: "51215165"
-  rating: 5
-  pages: 264
-  date_read: "2021-07-04"
 
 - title: "Circe"
   author: "Madeline Miller"
@@ -264,25 +264,18 @@
   pages: 192
   date_read: "2020-06-27"
 
-- title: "Norse Mythology"
-  author: "Neil Gaiman"
-  id: "37903770"
-  rating: 5
-  pages: 301
-  date_read: "2020-06-20"
-
-- title: "1001 Ways To Humiliate Yourself"
+- title: "1001 Ways To Humiliate Yourself And Others"
   author: "Fiona J. Bowron"
   id: "228750"
   rating: 1
   pages: 96
   date_read: "2020-06-20"
 
-- title: "The Hound of the Baskervilles"
-  author: "Arthur Conan Doyle"
-  id: "8921"
-  rating: 0
-  pages: 256
+- title: "Norse Mythology"
+  author: "Neil Gaiman"
+  id: "37903770"
+  rating: 5
+  pages: 301
   date_read: "2020-06-20"
 
 - title: "The Master and Margarita"
@@ -292,21 +285,28 @@
   pages: 372
   date_read: "2020-06-18"
 
-- title: "Thing Explainer"
+- title: "Thing Explainer: Complicated Stuff in Simple Words"
   author: "Randall Munroe"
   id: "25329850"
   rating: 3
   pages: 64
   date_read: "2020-06-06"
 
-- title: "The Visitor"
+- title: "The Visitor (Jack Reacher #4)"
   author: "Lee Child"
   id: "19738287"
   rating: 2
   pages: 492
   date_read: "2020-05-29"
 
-- title: "The Psychology Book"
+- title: "Rodrick Rules (Diary of a Wimpy Kid, #2)"
+  author: "Jeff Kinney"
+  id: "1809465"
+  rating: 3
+  pages: 226
+  date_read: "2020-05-27"
+
+- title: "The Psychology Book: Big Ideas Simply Explained"
   author: "Nigel C. Benson"
   id: "13766064"
   rating: 4
@@ -320,14 +320,14 @@
   pages: 242
   date_read: "2020-04-15"
 
-- title: "Hyperbole and a Half"
+- title: "Hyperbole and a Half: Unfortunate Situations, Flawed Coping Mechanisms, Mayhem, and Other Things That Happened"
   author: "Allie Brosh"
   id: "17571564"
   rating: 5
   pages: 371
   date_read: "2020-04-01"
 
-- title: "Sapiens"
+- title: "Sapiens: A Brief History of Humankind"
   author: "Yuval Noah Harari"
   id: "23692271"
   rating: 5
@@ -348,7 +348,7 @@
   pages: 321
   date_read: "2020-01-15"
 
-- title: "What If?"
+- title: "What If?: Serious Scientific Answers to Absurd Hypothetical Questions"
   author: "Randall Munroe"
   id: "21413662"
   rating: 4
@@ -376,13 +376,6 @@
   pages: 212
   date_read: "2019-09-03"
 
-- title: "A Gentleman in Moscow"
-  author: "Amor Towles"
-  id: "34066798"
-  rating: 5
-  pages: 495
-  date_read: "2019-09-03"
-
 - title: "Norwegian Wood"
   author: "Haruki Murakami"
   id: "11297"
@@ -390,102 +383,11 @@
   pages: 296
   date_read: "2018-01-09"
 
-- title: "The Alchemist"
-  author: "Paulo Coelho"
-  id: "865"
-  rating: 3
-  pages: 197
-  date_read: "2017-12-22"
-
-- title: "Revolution 2020"
-  author: "Chetan Bhagat"
-  id: "12615008"
-  rating: 1
-  pages: 296
-  date_read: "2017-12-22"
-
-- title: "2 States"
-  author: "Chetan Bhagat"
-  id: "6969361"
-  rating: 2
-  pages: 269
-  date_read: "2017-12-22"
-
-- title: "The 3 Mistakes of My Life"
-  author: "Chetan Bhagat"
-  id: "3320520"
-  rating: 2
-  pages: 258
-  date_read: "2017-12-22"
-
-- title: "Five Point Someone"
-  author: "Chetan Bhagat"
-  id: "105576"
-  rating: 1
-  pages: 267
-  date_read: "2017-12-22"
-
-- title: "One Night at the Call Center"
-  author: "Chetan Bhagat"
-  id: "105578"
-  rating: 1
-  pages: 320
-  date_read: "2017-12-22"
-
-- title: "Shall We Tell the President?"
-  author: "Jeffrey Archer"
-  id: "78989"
-  rating: 3
-  pages: 228
-  date_read: "2017-12-22"
-
-- title: "Only Time Will Tell"
-  author: "Jeffrey Archer"
-  id: "10872085"
-  rating: 3
-  pages: 400
-  date_read: "2017-12-22"
-
-- title: "Bloodline"
-  author: "Sidney Sheldon"
-  id: "300225"
-  rating: 3
-  pages: 409
-  date_read: "2017-12-22"
-
-- title: "Are You Afraid of the Dark?"
-  author: "Sidney Sheldon"
-  id: "43324"
-  rating: 3
-  pages: 401
-  date_read: "2017-12-22"
-
-- title: "Kathy Ryan: Office Romance"
-  author: "Kathy Ryan"
-  id: "22271843"
-  rating: 5
-  pages: 160
-  date_read: "2017-12-22"
-
-- title: "The Kite Runner"
-  author: "Khaled Hosseini"
-  id: "77203"
-  rating: 3
-  pages: 371
-  date_read: "2017-12-22"
-
 - title: "The Man in the High Castle"
   author: "Philip K. Dick"
   id: "216363"
   rating: 4
   pages: 259
-  date_read: "2017-12-22"
-
-- title: "The Girl With the Dragon Tattoo"
-  author: "Stieg Larsson"
-  id: "2429135"
-  rating: 5
-  pages: 480
   date_read: "2017-12-27"
 
 - title: "Animal Farm"
@@ -495,9 +397,107 @@
   pages: 129
   date_read: "2013-06-01"
 
-- title: "The Hound of the Baskervilles"
+- title: "The Hound of the Baskervilles (Sherlock Holmes, #5)"
   author: "Arthur Conan Doyle"
   id: "8921"
   rating: 0
   pages: 256
   date_read: "2012-05-01"
+
+- title: "2 States: The Story of My Marriage"
+  author: "Chetan Bhagat"
+  id: "6969361"
+  rating: 2
+  pages: 269
+  date_read: ""
+
+- title: "Are You Afraid of the Dark?"
+  author: "Sidney Sheldon"
+  id: "43324"
+  rating: 3
+  pages: 401
+  date_read: ""
+
+- title: "Bloodline"
+  author: "Sidney Sheldon"
+  id: "300225"
+  rating: 3
+  pages: 409
+  date_read: ""
+
+- title: "Five Point Someone: What Not to Do at IIT"
+  author: "Chetan Bhagat"
+  id: "105576"
+  rating: 1
+  pages: 267
+  date_read: ""
+
+- title: "Office Romance: Photographs from Inside the New York Times Building"
+  author: "Kathy Ryan"
+  id: "22271843"
+  rating: 5
+  pages: 160
+  date_read: ""
+
+- title: "Mastery"
+  author: "Robert Greene"
+  id: "13589182"
+  rating: 0
+  pages: 318
+  date_read: ""
+
+- title: "One Night at the Call Center"
+  author: "Chetan Bhagat"
+  id: "105578"
+  rating: 1
+  pages: 320
+  date_read: ""
+
+- title: "Only Time Will Tell"
+  author: "Jeffrey Archer"
+  id: "10872085"
+  rating: 3
+  pages: 400
+  date_read: ""
+
+- title: "Revolution 2020"
+  author: "Chetan Bhagat"
+  id: "12615008"
+  rating: 1
+  pages: 296
+  date_read: ""
+
+- title: "Shall We Tell the President?"
+  author: "Jeffrey Archer"
+  id: "78989"
+  rating: 3
+  pages: 228
+  date_read: ""
+
+- title: "The 3 Mistakes of My Life"
+  author: "Chetan Bhagat"
+  id: "3320520"
+  rating: 2
+  pages: 258
+  date_read: ""
+
+- title: "The Alchemist"
+  author: "Paulo Coelho"
+  id: "865"
+  rating: 3
+  pages: 197
+  date_read: ""
+
+- title: "The Girl With the Dragon Tattoo (Millennium, #1)"
+  author: "Stieg Larsson"
+  id: "2429135"
+  rating: 5
+  pages: 480
+  date_read: ""
+
+- title: "The Kite Runner"
+  author: "Khaled Hosseini"
+  id: "77203"
+  rating: 3
+  pages: 371
+  date_read: ""
