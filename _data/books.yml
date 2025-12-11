@@ -4,7 +4,6 @@
   rating: 3
   pages: 528
   date_read: "2025-12-10"
-  year: 2025
 
 - title: "Tomorrow, and Tomorrow, and Tomorrow"
   author: "Gabrielle Zevin"
@@ -12,7 +11,6 @@
   rating: 3
   pages: 416
   date_read: "2025-09-18"
-  year: 2025
 
 - title: "A Gentleman in Moscow"
   author: "Amor Towles"
@@ -20,7 +18,6 @@
   rating: 5
   pages: 495
   date_read: "2025-09-06"
-  year: 2025
 
 - title: "Interpreter of Maladies"
   author: "Jhumpa Lahiri"
@@ -28,7 +25,6 @@
   rating: 3
   pages: 198
   date_read: "2025-07-31"
-  year: 2025
 
 - title: "I, Claudius"
   author: "Robert Graves"
@@ -36,7 +32,7 @@
   rating: 3
   pages: 469
   date_read: "2025-07-22"
-  year: 2025
+  review: "In the beginning it was really difficult to read, but once all the characters and their motivations had been explained, the pacing was much better and I loved the story from there."
 
 - title: "Murder at the Mushaira"
   author: "Raza Mir"
@@ -44,15 +40,13 @@
   rating: 5
   pages: 358
   date_read: "2025-06-06"
-  year: 2025
 
-- title: "The Stalin Affair"
+- title: "The Stalin Affair: The Impossible Alliance That Won the War"
   author: "Giles Milton"
   id: "203578717"
   rating: 4
   pages: 336
   date_read: "2025-05-25"
-  year: 2025
 
 - title: "The Hitchhiker's Guide to the Galaxy"
   author: "Douglas Adams"
@@ -60,7 +54,6 @@
   rating: 4
   pages: 215
   date_read: "2025-01-08"
-  year: 2025
 
 - title: "Make Something Wonderful"
   author: "Steve Jobs"
@@ -68,23 +61,6 @@
   rating: 5
   pages: 194
   date_read: "2023-04-14"
-  year: 2023
-
-- title: "When Stars Are Scattered"
-  author: "Victoria Jamieson"
-  id: "51215165"
-  rating: 5
-  pages: 264
-  date_read: "2021-07-04"
-  year: 2021
-
-- title: "Persepolis"
-  author: "Marjane Satrapi"
-  id: "3106983"
-  rating: 3
-  pages: 344
-  date_read: "2021-07-02"
-  year: 2021
 
 - title: "To Kill a Mockingbird: a graphic novel"
   author: "Fred Fordham"
@@ -92,15 +68,20 @@
   rating: 4
   pages: 288
   date_read: "2021-07-14"
-  year: 2021
 
-- title: "BoJack Horseman: The Art Before the Horse"
-  author: "Chris McDonnell"
-  id: "35888337"
+- title: "When Stars Are Scattered"
+  author: "Victoria Jamieson"
+  id: "51215165"
   rating: 5
-  pages: 240
-  date_read: "2021-07-19"
-  year: 2021
+  pages: 264
+  date_read: "2021-07-04"
+
+- title: "Persepolis"
+  author: "Marjane Satrapi"
+  id: "3106983"
+  rating: 3
+  pages: 344
+  date_read: "2021-07-02"
 
 - title: "Slaughterhouse-Five"
   author: "Kurt Vonnegut Jr."
@@ -108,7 +89,6 @@
   rating: 4
   pages: 238
   date_read: "2021-06-26"
-  year: 2021
 
 - title: "The Spy and the Traitor"
   author: "Ben Macintyre"
@@ -116,7 +96,6 @@
   rating: 5
   pages: 384
   date_read: "2021-06-05"
-  year: 2021
 
 - title: "The Good, the Bad and the Ridiculous"
   author: "Khushwant Singh"
@@ -124,7 +103,6 @@
   rating: 0
   pages: 221
   date_read: "2021-05-29"
-  year: 2021
 
 - title: "Fahrenheit 451"
   author: "Ray Bradbury"
@@ -132,7 +110,6 @@
   rating: 4
   pages: 227
   date_read: "2021-02-15"
-  year: 2021
 
 - title: "The Psychology of Money"
   author: "Morgan Housel"
@@ -140,15 +117,13 @@
   rating: 4
   pages: 242
   date_read: "2021-02-09"
-  year: 2021
 
-- title: "How To"
+- title: "How To: Absurd Scientific Advice"
   author: "Randall Munroe"
   id: "42086897"
   rating: 4
   pages: 308
   date_read: "2021-01-22"
-  year: 2021
 
 - title: "A Promised Land"
   author: "Barack Obama"
@@ -156,7 +131,6 @@
   rating: 5
   pages: 768
   date_read: "2021-01-18"
-  year: 2021
 
 - title: "Stocks To Riches"
   author: "Parag Parikh"
@@ -164,7 +138,6 @@
   rating: 4
   pages: 132
   date_read: "2020-12-15"
-  year: 2020
 
 - title: "The Complete Maus"
   author: "Art Spiegelman"
@@ -172,7 +145,6 @@
   rating: 5
   pages: 296
   date_read: "2020-12-07"
-  year: 2020
 
 - title: "Laughter in the Dark"
   author: "Vladimir Nabokov"
@@ -180,7 +152,6 @@
   rating: 4
   pages: 292
   date_read: "2020-12-03"
-  year: 2020
 
 - title: "The Bastard of Istanbul"
   author: "Elif Shafak"
@@ -188,7 +159,6 @@
   rating: 4
   pages: 368
   date_read: "2020-11-10"
-  year: 2020
 
 - title: "The Stranger"
   author: "Albert Camus"
@@ -196,7 +166,6 @@
   rating: 3
   pages: 123
   date_read: "2020-10-06"
-  year: 2020
 
 - title: "Delhi Riots 2020"
   author: "Monika Arora"
@@ -204,7 +173,6 @@
   rating: 0
   pages: 200
   date_read: "2020-09-29"
-  year: 2020
 
 - title: "Srimad Bhagavad Gita"
   author: "Gita Press"
@@ -212,7 +180,6 @@
   rating: 0
   pages: 222
   date_read: "2020-09-14"
-  year: 2020
 
 - title: "I, The Lurker"
   author: "Natasha Virdi"
@@ -220,7 +187,6 @@
   rating: 4
   pages: 150
   date_read: "2020-08-23"
-  year: 2020
 
 - title: "India’s Most Fearless"
   author: "Shiv Aroor"
@@ -228,7 +194,6 @@
   rating: 4
   pages: 256
   date_read: "2020-08-16"
-  year: 2020
 
 - title: "The Best We Could Do"
   author: "Thi Bui"
@@ -236,7 +201,6 @@
   rating: 5
   pages: 329
   date_read: "2020-07-30"
-  year: 2020
 
 - title: "The Liberation of Sita"
   author: "Volga"
@@ -244,7 +208,6 @@
   rating: 4
   pages: 128
   date_read: "2020-07-20"
-  year: 2020
 
 - title: "Adulthood Is a Myth"
   author: "Sarah Andersen"
@@ -252,7 +215,6 @@
   rating: 4
   pages: 110
   date_read: "2020-07-19"
-  year: 2020
 
 - title: "Adolf Hitler: A Life"
   author: "Hourly History"
@@ -260,7 +222,6 @@
   rating: 3
   pages: 128
   date_read: "2020-07-16"
-  year: 2020
 
 - title: "Poonachi"
   author: "Perumal Murugan"
@@ -268,7 +229,6 @@
   rating: 5
   pages: 179
   date_read: "2020-07-15"
-  year: 2020
 
 - title: "1984"
   author: "George Orwell"
@@ -276,7 +236,6 @@
   rating: 3
   pages: 298
   date_read: "2020-07-11"
-  year: 2020
 
 - title: "Circe"
   author: "Madeline Miller"
@@ -284,7 +243,6 @@
   rating: 5
   pages: 393
   date_read: "2020-07-01"
-  year: 2020
 
 - title: "The Invisible Man"
   author: "H.G. Wells"
@@ -292,7 +250,48 @@
   rating: 3
   pages: 192
   date_read: "2020-06-27"
-  year: 2020
+
+- title: "The Shape of Ideas"
+  author: "Grant Snider"
+  id: "31305479"
+  rating: 0
+  pages: 144
+  date_read: "2020-06-23"
+
+- title: "The Art of Rick and Morty"
+  author: "James Siciliano"
+  id: "34480814"
+  rating: 0
+  pages: 224
+  date_read: "2020-06-23"
+
+- title: "Humble Pi: A Comedy of Maths Errors"
+  author: "Matt Parker"
+  id: "39074550"
+  rating: 0
+  pages: 314
+  date_read: "2020-06-21"
+
+- title: "Will My Cat Eat My Eyeballs?"
+  author: "Caitlin Doughty"
+  id: "43785830"
+  rating: 0
+  pages: 200
+  date_read: "2020-06-21"
+
+- title: "Memoirs of a Geisha"
+  author: "Arthur Golden"
+  id: "929"
+  rating: 0
+  pages: 503
+  date_read: "2020-06-21"
+
+- title: "Educated"
+  author: "Tara Westover"
+  id: "35133922"
+  rating: 0
+  pages: 352
+  date_read: "2020-06-21"
 
 - title: "Norse Mythology"
   author: "Neil Gaiman"
@@ -300,7 +299,6 @@
   rating: 5
   pages: 301
   date_read: "2020-06-20"
-  year: 2020
 
 - title: "1001 Ways To Humiliate Yourself"
   author: "Fiona J. Bowron"
@@ -308,7 +306,6 @@
   rating: 1
   pages: 96
   date_read: "2020-06-20"
-  year: 2020
 
 - title: "The Hound of the Baskervilles"
   author: "Arthur Conan Doyle"
@@ -316,7 +313,13 @@
   rating: 0
   pages: 256
   date_read: "2020-06-20"
-  year: 2020
+
+- title: "The High Crusade"
+  author: "Poul Anderson"
+  id: "338325"
+  rating: 0
+  pages: 192
+  date_read: "2020-06-20"
 
 - title: "The Master and Margarita"
   author: "Mikhail Bulgakov"
@@ -324,7 +327,6 @@
   rating: 4
   pages: 372
   date_read: "2020-06-18"
-  year: 2020
 
 - title: "Thing Explainer"
   author: "Randall Munroe"
@@ -332,7 +334,6 @@
   rating: 3
   pages: 64
   date_read: "2020-06-06"
-  year: 2020
 
 - title: "The Visitor"
   author: "Lee Child"
@@ -340,7 +341,6 @@
   rating: 2
   pages: 492
   date_read: "2020-05-29"
-  year: 2020
 
 - title: "The Psychology Book"
   author: "Nigel C. Benson"
@@ -348,7 +348,6 @@
   rating: 4
   pages: 352
   date_read: "2020-05-25"
-  year: 2020
 
 - title: "Men Without Women"
   author: "Haruki Murakami"
@@ -356,7 +355,6 @@
   rating: 4
   pages: 242
   date_read: "2020-04-15"
-  year: 2020
 
 - title: "Hyperbole and a Half"
   author: "Allie Brosh"
@@ -364,7 +362,6 @@
   rating: 5
   pages: 371
   date_read: "2020-04-01"
-  year: 2020
 
 - title: "Sapiens"
   author: "Yuval Noah Harari"
@@ -372,7 +369,6 @@
   rating: 5
   pages: 512
   date_read: "2020-03-31"
-  year: 2020
 
 - title: "When Breath Becomes Air"
   author: "Paul Kalanithi"
@@ -380,7 +376,6 @@
   rating: 3
   pages: 208
   date_read: "2020-01-21"
-  year: 2020
 
 - title: "The God of Small Things"
   author: "Arundhati Roy"
@@ -388,7 +383,6 @@
   rating: 3
   pages: 321
   date_read: "2020-01-15"
-  year: 2020
 
 - title: "What If?"
   author: "Randall Munroe"
@@ -396,7 +390,6 @@
   rating: 4
   pages: 303
   date_read: "2020-01-01"
-  year: 2020
 
 - title: "Kafka on the Shore"
   author: "Haruki Murakami"
@@ -404,7 +397,6 @@
   rating: 4
   pages: 467
   date_read: "2019-10-07"
-  year: 2019
 
 - title: "Five C's of Cinematography"
   author: "Joseph V. Mascelli"
@@ -412,7 +404,6 @@
   rating: 5
   pages: 251
   date_read: "2019-09-03"
-  year: 2019
 
 - title: "The Subtle Art of Not Giving a F*ck"
   author: "Mark Manson"
@@ -420,7 +411,6 @@
   rating: 3
   pages: 212
   date_read: "2019-09-03"
-  year: 2019
 
 - title: "Norwegian Wood"
   author: "Haruki Murakami"
@@ -428,4 +418,101 @@
   rating: 5
   pages: 296
   date_read: "2018-01-09"
-  year: 2018
+
+- title: "Animal Farm"
+  author: "George Orwell"
+  id: "7613"
+  rating: 4
+  pages: 129
+  date_read: "2013-06-01"
+
+- title: "Revolution 2020"
+  author: "Chetan Bhagat"
+  id: "12615008"
+  rating: 1
+  pages: 296
+  date_read: "2017-12-22"
+
+- title: "2 States: The Story of My Marriage"
+  author: "Chetan Bhagat"
+  id: "6969361"
+  rating: 2
+  pages: 269
+  date_read: "2017-12-22"
+
+- title: "The 3 Mistakes of My Life"
+  author: "Chetan Bhagat"
+  id: "3320520"
+  rating: 2
+  pages: 258
+  date_read: "2017-12-22"
+
+- title: "Five Point Someone"
+  author: "Chetan Bhagat"
+  id: "105576"
+  rating: 1
+  pages: 267
+  date_read: "2017-12-22"
+
+- title: "One Night at the Call Center"
+  author: "Chetan Bhagat"
+  id: "105578"
+  rating: 1
+  pages: 320
+  date_read: "2017-12-22"
+
+- title: "Shall We Tell the President?"
+  author: "Jeffrey Archer"
+  id: "78989"
+  rating: 3
+  pages: 228
+  date_read: "2017-12-22"
+
+- title: "Only Time Will Tell"
+  author: "Jeffrey Archer"
+  id: "10872085"
+  rating: 3
+  pages: 400
+  date_read: "2017-12-22"
+
+- title: "Bloodline"
+  author: "Sidney Sheldon"
+  id: "300225"
+  rating: 3
+  pages: 409
+  date_read: "2017-12-22"
+
+- title: "Are You Afraid of the Dark?"
+  author: "Sidney Sheldon"
+  id: "43324"
+  rating: 3
+  pages: 401
+  date_read: "2017-12-22"
+
+- title: "Kathy Ryan: Office Romance"
+  author: "Kathy Ryan"
+  id: "22271843"
+  rating: 5
+  pages: 160
+  date_read: "2017-12-22"
+
+- title: "The Kite Runner"
+  author: "Khaled Hosseini"
+  id: "77203"
+  rating: 3
+  pages: 371
+  date_read: "2017-12-22"
+
+- title: "The Man in the High Castle"
+  author: "Philip K. Dick"
+  id: "216363"
+  rating: 4
+  pages: 259
+  date_read: "2017-12-22"
+
+- title: "The Girl With the Dragon Tattoo"
+  author: "Stieg Larsson"
+  id: "2429135"
+  rating: 5
+  pages: 480
+  date_read: "2017-12-27"

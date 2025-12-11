@@ -1,153 +1,173 @@
 ---
 layout: default
-title: "bookshelf"
+title: "reading log"
 permalink: /reading/
-description: "a log of my reading journey."
+description: "a log of books and articles."
 image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_page_snippet.webp"
 ---
 
 <style>
-    /* --- DASHBOARD --- */
-    .dashboard-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 16px;
-        margin-bottom: 40px;
-    }
-    
-    .stat-card {
-        padding: 20px;
+    /* --- DASHBOARD (Full Width) --- */
+    .stat-bar {
+        padding: 24px;
         border: 1px solid #e5e7eb;
         border-radius: 12px;
         background: #fff;
-    }
-    .dark .stat-card { background: #1c1c1e; border-color: #333; }
-
-    .stat-label { font-size: 0.75rem; text-transform: uppercase; color: #9ca3af; letter-spacing: 0.05em; margin-bottom: 4px; }
-    .stat-val { font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 700; color: #1d1d1f; }
-    .dark .stat-val { color: #fff; }
-
-    /* --- CHART BARS --- */
-    .bar-chart {
+        margin-bottom: 40px;
         display: flex;
-        align-items: flex-end;
-        height: 60px;
-        gap: 6px;
-        margin-top: 10px;
+        justify-content: space-around;
+        align-items: center;
+        text-align: center;
     }
-    .bar {
-        flex: 1;
-        background: #e5e7eb;
-        border-radius: 2px;
-        position: relative;
-        transition: height 0.5s ease;
-    }
-    .dark .bar { background: #333; }
-    .bar:hover { background: #3b82f6; }
-    
-    .bar-label {
-        position: absolute;
-        bottom: -20px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 9px;
-        color: #9ca3af;
-    }
+    .dark .stat-bar { background: #1c1c1e; border-color: #333; }
 
-    /* Rating Stack */
-    .rating-stack { display: flex; height: 8px; border-radius: 99px; overflow: hidden; margin-top: 12px; }
-    .rs-5 { background: #10b981; } /* Green */
-    .rs-4 { background: #3b82f6; } /* Blue */
-    .rs-3 { background: #fbbf24; } /* Yellow */
-    .rs-2 { background: #f97316; } /* Orange */
-    .rs-1 { background: #ef4444; } /* Red */
-    .rs-0 { background: #e5e7eb; } /* Gray */
+    .stat-val { 
+        font-family: 'JetBrains Mono', monospace; 
+        font-size: 1.8rem; 
+        font-weight: 700; 
+        color: #1d1d1f; 
+        line-height: 1;
+        margin-bottom: 4px;
+    }
+    .dark .stat-val { color: #fff; }
+    
+    .stat-label { 
+        font-size: 0.75rem; 
+        text-transform: uppercase; 
+        color: #9ca3af; 
+        letter-spacing: 0.05em; 
+    }
 
     /* --- BOOK LIST --- */
     .year-header {
         font-size: 2rem;
         font-weight: 700;
         color: #e5e7eb;
-        margin-top: 40px;
+        margin-top: 50px;
         margin-bottom: 20px;
         border-bottom: 1px solid #f3f4f6;
     }
     .dark .year-header { color: #333; border-color: #27272a; }
 
     .book-row {
+        padding: 16px 0;
+        border-bottom: 1px dashed #f3f4f6;
+    }
+    .dark .book-row { border-color: #27272a; }
+
+    .b-header {
         display: flex;
         justify-content: space-between;
         align-items: baseline;
-        padding: 12px 0;
-        border-bottom: 1px dashed #f3f4f6;
-        transition: opacity 0.2s;
+        margin-bottom: 6px;
     }
-    .dark .book-row { border-color: #27272a; }
-    .book-row:hover { opacity: 0.7; }
 
     .b-title {
         font-weight: 600;
         color: #1d1d1f;
         text-decoration: none;
-        margin-right: 10px;
+        margin-right: 8px;
+        font-size: 1.05rem;
     }
     .dark .b-title { color: #fff; }
+    .b-title:hover { text-decoration: underline; text-decoration-thickness: 1px; }
 
-    .b-meta {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.75rem;
-        color: #9ca3af;
-        white-space: nowrap;
+    .b-author {
+        font-size: 0.9rem;
+        color: #6b7280;
     }
 
-    .rating-dots { color: #fbbf24; letter-spacing: 2px; }
-    .rating-dots.dim { color: #e5e7eb; }
-    .dark .rating-dots.dim { color: #333; }
+    /* Monochrome Rating Dots */
+    .rating-dots { 
+        font-size: 0.8rem; 
+        letter-spacing: 2px;
+        color: #1d1d1f;
+    }
+    .dark .rating-dots { color: #fff; }
+    
+    .rating-dots .empty { 
+        color: #d1d5db; /* Light Gray */
+    }
+    .dark .rating-dots .empty { 
+        color: #4b5563; /* Dark Gray */
+    }
+
+    /* Review Text */
+    .b-review {
+        font-family: 'Georgia', serif;
+        font-style: italic;
+        color: #6b7280;
+        font-size: 0.95rem;
+        margin-top: 8px;
+        padding-left: 12px;
+        border-left: 2px solid #e5e7eb;
+        line-height: 1.5;
+    }
+    .dark .b-review { color: #9ca3af; border-color: #333; }
+
+    /* --- ARTICLES SECTION --- */
+    .section-divider {
+        margin-top: 60px;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .divider-line { flex: 1; height: 1px; background: #e5e7eb; }
+    .dark .divider-line { background: #333; }
+    
+    .section-label {
+        font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: #9ca3af; letter-spacing: 0.1em;
+    }
+
+    .article-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #f3f4f6;
+    }
+    .dark .article-item { border-color: #27272a; }
+    
+    .article-link {
+        font-size: 1rem;
+        color: #1d1d1f;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 2px;
+    }
+    .dark .article-link { color: #fff; }
+    .article-link:hover { color: #3b82f6; }
+    
+    .article-meta { font-size: 0.8rem; color: #9ca3af; font-family: 'JetBrains Mono', monospace; }
+
 </style>
 
-<div class="fade-in max-w-4xl mx-auto mb-20">
+<div class="fade-in max-w-3xl mx-auto mb-20">
 
     <div class="mb-10">
         <h1 class="text-3xl font-bold text-[#1d1d1f] dark:text-white mb-2">Reading Log</h1>
-        <p class="text-sm text-gray-500 dark:text-gray-400">Archive of books read.</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+            A chronological log of books and articles.
+        </p>
     </div>
 
-    <!-- STATS DASHBOARD -->
-    <div class="dashboard-grid">
-        <!-- 1. Total Volume -->
-        <div class="stat-card">
-            <p class="stat-label">Total Volume</p>
-            <div class="flex items-baseline gap-2">
-                <div id="totalBooks" class="stat-val">0</div>
-                <span class="text-xs text-gray-400">Books</span>
-            </div>
-            <div class="flex items-baseline gap-2 mt-1">
-                <div id="totalPages" class="stat-val text-sm text-gray-500">0</div>
-                <span class="text-xs text-gray-400">Pages Read</span>
-            </div>
+    <!-- STATS (Full Width) -->
+    <div class="stat-bar">
+        <div>
+            <div id="totalBooks" class="stat-val">0</div>
+            <p class="stat-label">Books</p>
         </div>
-
-        <!-- 2. Ratings -->
-        <div class="stat-card">
-            <p class="stat-label">Rating Distribution</p>
-            <div id="ratingStack" class="rating-stack">
-                <!-- JS Filled -->
-            </div>
-            <div class="flex justify-between text-[10px] text-gray-400 mt-2 font-mono">
-                <span>5★</span><span>4★</span><span>3★</span><span>2★</span><span>1★</span>
-            </div>
+        <div>
+            <div id="totalPages" class="stat-val">0</div>
+            <p class="stat-label">Pages</p>
         </div>
-
-        <!-- 3. Velocity -->
-        <div class="stat-card">
-            <p class="stat-label">Books Per Year</p>
-            <div id="yearChart" class="bar-chart">
-                <!-- JS Filled -->
-            </div>
+        <div>
+            <div id="totalArticles" class="stat-val">0</div>
+            <p class="stat-label">Articles</p>
         </div>
     </div>
 
-    <!-- BOOK LIST (Generated by Liquid) -->
+    <!-- BOOK LIST -->
     <div id="bookList">
         {% assign all_books = site.data.books | sort: 'date_read' | reverse %}
         {% assign current_year = "" %}
@@ -161,81 +181,65 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
             {% endif %}
 
             <div class="book-row">
-                <div>
-                    <a href="https://www.goodreads.com/book/show/{{ book.id }}" target="_blank" class="b-title">
-                        {{ book.title }}
-                    </a>
-                    <span class="text-xs text-gray-400">by {{ book.author }}</span>
-                </div>
-                <div class="b-meta">
-                    <span class="rating-dots">
+                <div class="b-header">
+                    <div>
+                        <a href="https://www.goodreads.com/book/show/{{ book.id }}" target="_blank" class="b-title">
+                            {{ book.title }}
+                        </a>
+                        <span class="b-author">by {{ book.author }}</span>
+                    </div>
+                    
+                    <!-- Monochrome Rating -->
+                    <div class="rating-dots" title="{{ book.rating }}/5">
                         {% for i in (1..5) %}
-                            {% if i <= book.rating %}●{% else %}<span class="dim">●</span>{% endif %}
+                            {% if i <= book.rating %}●{% else %}<span class="empty">●</span>{% endif %}
                         {% endfor %}
-                    </span>
+                    </div>
                 </div>
+
+                <!-- Review (Only if exists) -->
+                {% if book.review %}
+                    <p class="b-review">“{{ book.review }}”</p>
+                {% endif %}
             </div>
+        {% endfor %}
+    </div>
+
+    <!-- ARTICLES SECTION -->
+    <div class="section-divider">
+        <div class="divider-line"></div>
+        <span class="section-label">Web / Articles</span>
+        <div class="divider-line"></div>
+    </div>
+
+    <div class="article-list">
+        {% assign articles = site.data.articles | sort: 'date' | reverse %}
+        {% for article in articles %}
+        <div class="article-item">
+            <div>
+                <a href="{{ article.link }}" target="_blank" class="article-link">{{ article.title }}</a>
+                <span class="text-sm text-gray-500">by {{ article.author }}</span>
+            </div>
+            <div class="article-meta">
+                {{ article.host }} <span class="mx-1">•</span> {{ article.date | date: "%Y" }}
+            </div>
+        </div>
         {% endfor %}
     </div>
 
 </div>
 
-<!-- DATA SCRIPT -->
+<!-- STATS SCRIPT -->
 <script>
-    // We can access Jekyll Data in JS via Liquid!
+    // Pull Liquid Data into JS for counting
     const books = {{ site.data.books | jsonify }};
+    const articles = {{ site.data.articles | jsonify }};
 
-    function initStats() {
-        // 1. Totals
-        document.getElementById('totalBooks').textContent = books.length;
-        
-        const pages = books.reduce((sum, b) => sum + (b.pages || 0), 0);
-        document.getElementById('totalPages').textContent = pages.toLocaleString();
+    document.getElementById('totalBooks').textContent = books.length;
+    
+    // Sum Pages (Handle missing page counts safely)
+    const pages = books.reduce((sum, b) => sum + (b.pages || 0), 0);
+    document.getElementById('totalPages').textContent = pages.toLocaleString();
 
-        // 2. Ratings
-        const ratings = { 5:0, 4:0, 3:0, 2:0, 1:0, 0:0 };
-        books.forEach(b => {
-            const r = Math.round(b.rating || 0);
-            if(ratings[r] !== undefined) ratings[r]++;
-        });
-
-        const stack = document.getElementById('ratingStack');
-        [5,4,3,2,1].forEach(r => {
-            const count = ratings[r];
-            if(count > 0) {
-                const pct = (count / books.length) * 100;
-                const bar = document.createElement('div');
-                bar.className = `rs-${r}`;
-                bar.style.width = `${pct}%`;
-                bar.title = `${r} Stars: ${count} books`;
-                stack.appendChild(bar);
-            }
-        });
-
-        // 3. Years Chart
-        const years = {};
-        books.forEach(b => {
-            const y = b.year || (b.date_read ? b.date_read.substring(0,4) : 'Unk');
-            years[y] = (years[y] || 0) + 1;
-        });
-
-        const sortedYears = Object.keys(years).sort().slice(-6); // Last 6 active years
-        const maxVal = Math.max(...Object.values(years));
-        const chart = document.getElementById('yearChart');
-
-        sortedYears.forEach(y => {
-            const count = years[y];
-            const height = (count / maxVal) * 100;
-            
-            const bar = document.createElement('div');
-            bar.className = 'bar';
-            bar.style.height = `${height}%`;
-            bar.innerHTML = `<span class="bar-label">${y}</span>`;
-            bar.title = `${y}: ${count} Books`;
-            
-            chart.appendChild(bar);
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', initStats);
+    document.getElementById('totalArticles').textContent = articles.length;
 </script>
