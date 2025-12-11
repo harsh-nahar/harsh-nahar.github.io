@@ -1,8 +1,8 @@
 ---
 layout: default
-title: "bookshelf"
+title: "reading log"
 permalink: /reading/
-description: "a chronological log of books and essays."
+description: "a chronological list of what i read."
 image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_page_snippet.webp"
 ---
 
@@ -10,15 +10,15 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
     /* --- TABS --- */
     .tab-nav {
         display: flex;
-        gap: 20px;
+        gap: 24px;
         border-bottom: 1px solid #e5e7eb;
         margin-bottom: 30px;
     }
     .dark .tab-nav { border-color: #27272a; }
 
     .tab-btn {
-        padding-bottom: 10px;
-        font-size: 0.9rem;
+        padding-bottom: 12px;
+        font-size: 0.95rem;
         font-weight: 500;
         color: #9ca3af;
         cursor: pointer;
@@ -38,11 +38,11 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
 
     /* --- STATS BAR --- */
     .stat-bar {
-        padding: 20px;
+        padding: 24px;
         border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        background: #fff;
-        margin-bottom: 30px;
+        border-radius: 16px;
+        background: #f9fafb; /* Slight contrast */
+        margin-bottom: 40px;
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -52,116 +52,112 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
 
     .stat-val { 
         font-family: 'JetBrains Mono', monospace; 
-        font-size: 1.5rem; 
+        font-size: 1.6rem; 
         font-weight: 700; 
         color: #1d1d1f; 
         line-height: 1;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
     }
     .dark .stat-val { color: #fff; }
     
     .stat-label { 
         font-size: 0.7rem; 
         text-transform: uppercase; 
-        color: #9ca3af; 
+        color: #6b7280; 
         letter-spacing: 0.05em; 
+        font-weight: 600;
     }
 
     /* --- FILTERS --- */
     .filter-row {
         display: flex;
         gap: 8px;
-        margin-bottom: 24px;
+        margin-bottom: 30px;
         flex-wrap: wrap;
     }
     .filter-chip {
         font-size: 0.75rem;
-        padding: 4px 10px;
+        padding: 6px 14px;
         border-radius: 99px;
-        background: #f3f4f6;
+        background: #fff;
+        border: 1px solid #e5e7eb;
         color: #6b7280;
         cursor: pointer;
-        border: 1px solid transparent;
         transition: all 0.2s;
+        font-weight: 500;
     }
-    .dark .filter-chip { background: #27272a; color: #9ca3af; }
+    .dark .filter-chip { background: #000; border-color: #333; color: #9ca3af; }
     
-    .filter-chip:hover { background: #e5e7eb; }
-    .dark .filter-chip:hover { background: #3f3f46; }
+    .filter-chip:hover { border-color: #9ca3af; color: #1d1d1f; }
+    .dark .filter-chip:hover { color: #fff; border-color: #666; }
 
     .filter-chip.active {
-        background: #1d1d1f; color: #fff;
+        background: #1d1d1f; color: #fff; border-color: #1d1d1f;
     }
-    .dark .filter-chip.active { background: #fff; color: #000; }
+    .dark .filter-chip.active { background: #fff; color: #000; border-color: #fff; }
 
-    /* --- COLLAPSIBLE YEARS --- */
-    details { margin-bottom: 24px; }
+    /* --- YEAR COLLAPSIBLE --- */
+    details.year-group { margin-bottom: 24px; }
     
-    summary {
+    summary.year-summary {
         list-style: none;
         cursor: pointer;
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: baseline;
         padding-bottom: 12px;
-        border-bottom: 1px solid #f3f4f6;
+        border-bottom: 1px solid #e5e7eb;
         margin-bottom: 16px;
+        transition: border-color 0.2s;
     }
-    .dark summary { border-color: #27272a; }
-    summary::-webkit-details-marker { display: none; }
+    .dark summary.year-summary { border-color: #27272a; }
+    summary.year-summary::-webkit-details-marker { display: none; } /* Hide default arrow */
 
-    summary:hover .year-title { color: #3b82f6; }
+    summary.year-summary:hover { border-bottom-color: #9ca3af; }
 
     .year-title {
         font-size: 1.5rem;
         font-weight: 700;
-        color: #e5e7eb;
+        color: #e5e7eb; /* Default gray */
         transition: color 0.2s;
     }
     .dark .year-title { color: #333; }
     
-    /* When open, highlight year */
+    /* Open State */
     details[open] summary .year-title { color: #1d1d1f; }
     .dark details[open] summary .year-title { color: #fff; }
 
-    .year-count {
+    .year-meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
         font-family: 'JetBrains Mono', monospace;
-        font-size: 0.75rem;
+        font-size: 0.8rem;
         color: #9ca3af;
     }
-    
-    /* Arrow icon rotation */
-    summary::after {
-        content: '+';
-        font-family: monospace;
-        font-size: 1.2rem;
-        color: #9ca3af;
-        margin-left: 10px;
+
+    /* Custom Arrow */
+    .year-arrow {
+        font-size: 0.8rem;
+        transition: transform 0.2s;
     }
-    details[open] summary::after { content: '−'; }
+    details[open] .year-arrow { transform: rotate(180deg); }
 
 
-    /* --- BOOK LIST --- */
+    /* --- BOOK LIST ITEMS --- */
     .book-row {
-        padding: 12px 0;
+        padding: 16px 0;
         border-bottom: 1px dashed #f3f4f6;
-        display: block; /* Default display */
     }
-    .book-row.hidden { display: none; }
     .dark .book-row { border-color: #27272a; }
+    .book-row:last-child { border-bottom: none; }
+    .book-row.hidden { display: none; }
 
-    /* Flex container for alignment */
     .b-header {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start; /* Aligns text top if title wraps */
-        gap: 12px;
-    }
-
-    /* Left side (Title + Author) */
-    .b-info {
-        flex-grow: 1;
-        padding-right: 10px;
+        align-items: flex-start;
+        gap: 16px;
     }
 
     .b-title {
@@ -172,50 +168,42 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         line-height: 1.4;
     }
     .dark .b-title { color: #fff; }
-    .b-title:hover { text-decoration: underline; text-decoration-thickness: 1px; }
+    .b-title:hover { color: #3b82f6; }
 
     .b-author {
         font-size: 0.85rem;
         color: #6b7280;
         margin-left: 6px;
-        white-space: nowrap; /* Keep author name together if possible */
+        white-space: nowrap;
     }
 
-    /* Right side (Rating) - Fixed width, no shrink */
     .rating-dots { 
         font-size: 0.75rem; 
         letter-spacing: 2px;
         color: #1d1d1f;
-        flex-shrink: 0; /* Prevents wrapping */
-        white-space: nowrap;
-        margin-top: 3px; /* Optical alignment with title */
+        flex-shrink: 0;
+        margin-top: 3px;
     }
     .dark .rating-dots { color: #fff; }
     
-    .rating-dots .empty { 
-        color: #d1d5db; opacity: 0.5;
-    }
-    .dark .rating-dots .empty { 
-        color: #4b5563; opacity: 0.5;
-    }
+    .rating-dots .empty { color: #e5e7eb; }
+    .dark .rating-dots .empty { color: #333; }
 
-    /* Review Text */
     .b-review {
         font-family: 'Georgia', serif;
         font-style: italic;
-        color: #6b7280;
-        font-size: 0.9rem;
-        margin-top: 6px;
-        padding-left: 10px;
+        color: #4b5563;
+        font-size: 0.95rem;
+        margin-top: 8px;
+        padding-left: 12px;
         border-left: 2px solid #e5e7eb;
-        line-height: 1.5;
-        display: block;
+        line-height: 1.6;
     }
     .dark .b-review { color: #9ca3af; border-color: #333; }
 
-    /* --- ESSAYS LIST --- */
+    /* --- ESSAYS --- */
     .article-item {
-        padding: 12px 0;
+        padding: 16px 0;
         border-bottom: 1px solid #f3f4f6;
     }
     .dark .article-item { border-color: #27272a; }
@@ -226,26 +214,26 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         color: #1d1d1f;
         text-decoration: none;
         display: block;
-        margin-bottom: 2px;
+        margin-bottom: 4px;
     }
     .dark .article-link { color: #fff; }
-    .article-link:hover { color: #3b82f6; }
+    .article-link:hover { color: #3b82f6; text-decoration: underline; }
     
     .article-meta { 
         font-size: 0.8rem; 
         color: #9ca3af; 
     }
-
-    /* Utilities */
+    
+    /* Utility */
     .hidden { display: none !important; }
 </style>
 
 <div class="fade-in max-w-3xl mx-auto mb-20">
 
-    <div class="mb-8">
+    <div class="mb-10">
         <h1 class="text-3xl font-bold text-[#1d1d1f] dark:text-white mb-2">reading log</h1>
         <p class="text-sm text-gray-500 dark:text-gray-400">
-            a chronological log of what i read.
+            a chronological list of what i read.
         </p>
     </div>
 
@@ -280,18 +268,26 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
 
         <!-- Book List (Grouped by Year) -->
         <div id="bookListContainer">
-            {% assign books_by_year = site.data.books | group_by: "year" %}
+            {% comment %}
+                1. Group books by 'year'.
+                2. Sort groups by name (year) descending so 2025 is first.
+            {% endcomment %}
+            {% assign books_by_year = site.data.books | group_by: "year" | sort: "name" | reverse %}
             {% assign current_year = "now" | date: "%Y" %}
 
-            {% for year in books_by_year %}
-            <details {% if year.name == current_year %}open{% endif %} class="year-group">
-                <summary>
-                    <span class="year-title">{{ year.name }}</span>
-                    <span class="year-count">{{ year.items | size }} Books</span>
+            {% for year_group in books_by_year %}
+            <details {% if year_group.name == current_year %}open{% endif %} class="year-group">
+                <summary class="year-summary">
+                    <span class="year-title">{{ year_group.name }}</span>
+                    <div class="year-meta">
+                        <span>{{ year_group.items | size }} Books</span>
+                        <span class="year-arrow">▼</span>
+                    </div>
                 </summary>
                 
                 <div class="year-items">
-                {% for book in year.items %}
+                {% for book in year_group.items %}
+                    <!-- Rating data attribute for filtering -->
                     <div class="book-row" data-rating="{{ book.rating | round }}">
                         <div class="b-header">
                             <div class="b-info">
@@ -345,7 +341,12 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
 <script>
     // 1. Data Stats
     const booksData = {{ site.data.books | jsonify }};
+    const articlesData = {{ site.data.articles | jsonify }};
+
+    // Calculate Counts
     document.getElementById('totalBooks').textContent = booksData.length;
+    
+    // Sum Pages
     const pages = booksData.reduce((sum, b) => sum + (b.pages || 0), 0);
     document.getElementById('totalPages').textContent = pages.toLocaleString();
 
@@ -375,8 +376,8 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
         btn.classList.add('active');
 
+        // Filter Rows
         const rows = document.querySelectorAll('.book-row');
-        
         rows.forEach(row => {
             const r = parseInt(row.getAttribute('data-rating'));
             if(rating === 'all' || r === rating) {
@@ -386,7 +387,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
             }
         });
 
-        // Hide Empty Years? Optional, but cleaner
+        // Hide Empty Years if all books in that year are hidden
         document.querySelectorAll('.year-group').forEach(group => {
             const visibleBooks = group.querySelectorAll('.book-row:not(.hidden)').length;
             if(visibleBooks === 0) group.style.display = 'none';
