@@ -2,7 +2,7 @@
 layout: default
 title: "reading log"
 permalink: /reading/
-description: "a chronological list of what i read."
+description: "a chronological log of what i read."
 image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_page_snippet.webp"
 ---
 
@@ -13,6 +13,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         gap: 24px;
         border-bottom: 1px solid #e5e7eb;
         margin-bottom: 30px;
+        margin-top: 20px;
     }
     .dark .tab-nav { border-color: #27272a; }
 
@@ -41,7 +42,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         padding: 24px;
         border: 1px solid #e5e7eb;
         border-radius: 16px;
-        background: #f9fafb; /* Slight contrast */
+        background: #f9fafb;
         margin-bottom: 40px;
         display: flex;
         justify-content: space-around;
@@ -57,6 +58,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         color: #1d1d1f; 
         line-height: 1;
         margin-bottom: 6px;
+        transition: color 0.2s;
     }
     .dark .stat-val { color: #fff; }
     
@@ -111,14 +113,14 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         transition: border-color 0.2s;
     }
     .dark summary.year-summary { border-color: #27272a; }
-    summary.year-summary::-webkit-details-marker { display: none; } /* Hide default arrow */
+    summary.year-summary::-webkit-details-marker { display: none; }
 
     summary.year-summary:hover { border-bottom-color: #9ca3af; }
 
     .year-title {
         font-size: 1.5rem;
         font-weight: 700;
-        color: #e5e7eb; /* Default gray */
+        color: #e5e7eb;
         transition: color 0.2s;
     }
     .dark .year-title { color: #333; }
@@ -136,7 +138,6 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         color: #9ca3af;
     }
 
-    /* Custom Arrow */
     .year-arrow {
         font-size: 0.8rem;
         transition: transform 0.2s;
@@ -160,6 +161,11 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         gap: 16px;
     }
 
+    .b-info {
+        flex-grow: 1;
+        padding-right: 10px;
+    }
+
     .b-title {
         font-weight: 600;
         color: #1d1d1f;
@@ -177,12 +183,14 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         white-space: nowrap;
     }
 
+    /* Fixed width rating to prevent wrapping */
     .rating-dots { 
         font-size: 0.75rem; 
         letter-spacing: 2px;
         color: #1d1d1f;
         flex-shrink: 0;
         margin-top: 3px;
+        white-space: nowrap;
     }
     .dark .rating-dots { color: #fff; }
     
@@ -224,16 +232,15 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         color: #9ca3af; 
     }
     
-    /* Utility */
     .hidden { display: none !important; }
 </style>
 
 <div class="fade-in max-w-3xl mx-auto mb-20">
 
-    <div class="mb-10">
+    <div class="mb-8">
         <h1 class="text-3xl font-bold text-[#1d1d1f] dark:text-white mb-2">reading log</h1>
         <p class="text-sm text-gray-500 dark:text-gray-400">
-            a chronological list of what i read.
+            a chronological log of what i read.
         </p>
     </div>
 
@@ -269,26 +276,28 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         <!-- Book List (Grouped by Year) -->
         <div id="bookListContainer">
             {% comment %}
-                1. Group books by 'year'.
-                2. Sort groups by name (year) descending so 2025 is first.
+                Group books by 'year'.
+                Sort descending (2025 at top).
             {% endcomment %}
             {% assign books_by_year = site.data.books | group_by: "year" | sort: "name" | reverse %}
-            {% assign current_year = "now" | date: "%Y" %}
+            {% assign current_year_str = "now" | date: "%Y" %}
 
             {% for year_group in books_by_year %}
-            <details {% if year_group.name == current_year %}open{% endif %} class="year-group">
+            
+            <!-- Default Open ONLY for Current Year -->
+            <details {% if year_group.name == current_year_str %}open{% endif %} class="year-group">
                 <summary class="year-summary">
                     <span class="year-title">{{ year_group.name }}</span>
                     <div class="year-meta">
-                        <span>{{ year_group.items | size }} Books</span>
+                        <!-- ID for dynamic update via JS -->
+                        <span class="year-count-label" id="count-{{ year_group.name }}">{{ year_group.items | size }} Books</span>
                         <span class="year-arrow">▼</span>
                     </div>
                 </summary>
                 
                 <div class="year-items">
                 {% for book in year_group.items %}
-                    <!-- Rating data attribute for filtering -->
-                    <div class="book-row" data-rating="{{ book.rating | round }}">
+                    <div class="book-row" data-rating="{{ book.rating | round }}" data-pages="{{ book.pages }}">
                         <div class="b-header">
                             <div class="b-info">
                                 <a href="https://www.goodreads.com/book/show/{{ book.id }}" target="_blank" class="b-title">
@@ -339,16 +348,14 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
 
 <!-- LOGIC -->
 <script>
-    // 1. Data Stats
+    // 1. Initial Stats Calculation (Liquid injected)
     const booksData = {{ site.data.books | jsonify }};
-    const articlesData = {{ site.data.articles | jsonify }};
+    updateGlobalStats(booksData.length, booksData.reduce((s, b) => s + (b.pages || 0), 0));
 
-    // Calculate Counts
-    document.getElementById('totalBooks').textContent = booksData.length;
-    
-    // Sum Pages
-    const pages = booksData.reduce((sum, b) => sum + (b.pages || 0), 0);
-    document.getElementById('totalPages').textContent = pages.toLocaleString();
+    function updateGlobalStats(count, pages) {
+        document.getElementById('totalBooks').textContent = count;
+        document.getElementById('totalPages').textContent = pages.toLocaleString();
+    }
 
     // 2. Tab Switcher
     function switchTab(tab) {
@@ -370,28 +377,45 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         }
     }
 
-    // 3. Filter Logic
+    // 3. Dynamic Filter Logic
     function filterRating(rating, btn) {
         // Toggle Active Chip
         document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
         btn.classList.add('active');
 
-        // Filter Rows
-        const rows = document.querySelectorAll('.book-row');
-        rows.forEach(row => {
-            const r = parseInt(row.getAttribute('data-rating'));
-            if(rating === 'all' || r === rating) {
-                row.classList.remove('hidden');
-            } else {
-                row.classList.add('hidden');
-            }
+        const years = document.querySelectorAll('.year-group');
+        let globalVisibleCount = 0;
+        let globalPagesCount = 0;
+
+        years.forEach(yearGroup => {
+            const rows = yearGroup.querySelectorAll('.book-row');
+            let yearVisibleCount = 0;
+
+            rows.forEach(row => {
+                const r = parseInt(row.getAttribute('data-rating'));
+                const p = parseInt(row.getAttribute('data-pages')) || 0;
+                
+                if(rating === 'all' || r === rating) {
+                    row.classList.remove('hidden');
+                    yearVisibleCount++;
+                    globalPagesCount += p;
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+
+            // Update Year Header Count
+            const countLabel = yearGroup.querySelector('.year-count-label');
+            if(countLabel) countLabel.textContent = `${yearVisibleCount} Books`;
+
+            // Hide Empty Years
+            if(yearVisibleCount === 0) yearGroup.style.display = 'none';
+            else yearGroup.style.display = 'block';
+
+            globalVisibleCount += yearVisibleCount;
         });
 
-        // Hide Empty Years if all books in that year are hidden
-        document.querySelectorAll('.year-group').forEach(group => {
-            const visibleBooks = group.querySelectorAll('.book-row:not(.hidden)').length;
-            if(visibleBooks === 0) group.style.display = 'none';
-            else group.style.display = 'block';
-        });
+        // Update Global Stats based on Filter
+        updateGlobalStats(globalVisibleCount, globalPagesCount);
     }
 </script>
