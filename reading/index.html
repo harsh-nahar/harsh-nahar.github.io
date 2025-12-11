@@ -1,19 +1,48 @@
 ---
 layout: default
-title: "reading log"
+title: "bookshelf"
 permalink: /reading/
-description: "a log of books and articles."
+description: "a chronological log of books and essays."
 image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_page_snippet.webp"
 ---
 
 <style>
-    /* --- DASHBOARD (Full Width) --- */
+    /* --- TABS --- */
+    .tab-nav {
+        display: flex;
+        gap: 20px;
+        border-bottom: 1px solid #e5e7eb;
+        margin-bottom: 30px;
+    }
+    .dark .tab-nav { border-color: #27272a; }
+
+    .tab-btn {
+        padding-bottom: 10px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #9ca3af;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        transition: all 0.2s;
+        margin-bottom: -1px;
+    }
+    .tab-btn:hover { color: #1d1d1f; }
+    .dark .tab-btn:hover { color: #fff; }
+
+    .tab-btn.active {
+        color: #1d1d1f;
+        font-weight: 700;
+        border-bottom-color: #1d1d1f;
+    }
+    .dark .tab-btn.active { color: #fff; border-bottom-color: #fff; }
+
+    /* --- STATS BAR --- */
     .stat-bar {
-        padding: 24px;
+        padding: 20px;
         border: 1px solid #e5e7eb;
         border-radius: 12px;
         background: #fff;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -23,7 +52,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
 
     .stat-val { 
         font-family: 'JetBrains Mono', monospace; 
-        font-size: 1.8rem; 
+        font-size: 1.5rem; 
         font-weight: 700; 
         color: #1d1d1f; 
         line-height: 1;
@@ -32,64 +61,142 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
     .dark .stat-val { color: #fff; }
     
     .stat-label { 
-        font-size: 0.75rem; 
+        font-size: 0.7rem; 
         text-transform: uppercase; 
         color: #9ca3af; 
         letter-spacing: 0.05em; 
     }
 
-    /* --- BOOK LIST --- */
-    .year-header {
-        font-size: 2rem;
+    /* --- FILTERS --- */
+    .filter-row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+    }
+    .filter-chip {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+        border-radius: 99px;
+        background: #f3f4f6;
+        color: #6b7280;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: all 0.2s;
+    }
+    .dark .filter-chip { background: #27272a; color: #9ca3af; }
+    
+    .filter-chip:hover { background: #e5e7eb; }
+    .dark .filter-chip:hover { background: #3f3f46; }
+
+    .filter-chip.active {
+        background: #1d1d1f; color: #fff;
+    }
+    .dark .filter-chip.active { background: #fff; color: #000; }
+
+    /* --- COLLAPSIBLE YEARS --- */
+    details { margin-bottom: 24px; }
+    
+    summary {
+        list-style: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #f3f4f6;
+        margin-bottom: 16px;
+    }
+    .dark summary { border-color: #27272a; }
+    summary::-webkit-details-marker { display: none; }
+
+    summary:hover .year-title { color: #3b82f6; }
+
+    .year-title {
+        font-size: 1.5rem;
         font-weight: 700;
         color: #e5e7eb;
-        margin-top: 50px;
-        margin-bottom: 20px;
-        border-bottom: 1px solid #f3f4f6;
+        transition: color 0.2s;
     }
-    .dark .year-header { color: #333; border-color: #27272a; }
+    .dark .year-title { color: #333; }
+    
+    /* When open, highlight year */
+    details[open] summary .year-title { color: #1d1d1f; }
+    .dark details[open] summary .year-title { color: #fff; }
 
-    .book-row {
-        padding: 16px 0;
-        border-bottom: 1px dashed #f3f4f6;
+    .year-count {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        color: #9ca3af;
     }
+    
+    /* Arrow icon rotation */
+    summary::after {
+        content: '+';
+        font-family: monospace;
+        font-size: 1.2rem;
+        color: #9ca3af;
+        margin-left: 10px;
+    }
+    details[open] summary::after { content: '−'; }
+
+
+    /* --- BOOK LIST --- */
+    .book-row {
+        padding: 12px 0;
+        border-bottom: 1px dashed #f3f4f6;
+        display: block; /* Default display */
+    }
+    .book-row.hidden { display: none; }
     .dark .book-row { border-color: #27272a; }
 
+    /* Flex container for alignment */
     .b-header {
         display: flex;
         justify-content: space-between;
-        align-items: baseline;
-        margin-bottom: 6px;
+        align-items: flex-start; /* Aligns text top if title wraps */
+        gap: 12px;
+    }
+
+    /* Left side (Title + Author) */
+    .b-info {
+        flex-grow: 1;
+        padding-right: 10px;
     }
 
     .b-title {
         font-weight: 600;
         color: #1d1d1f;
         text-decoration: none;
-        margin-right: 8px;
-        font-size: 1.05rem;
+        font-size: 1rem;
+        line-height: 1.4;
     }
     .dark .b-title { color: #fff; }
     .b-title:hover { text-decoration: underline; text-decoration-thickness: 1px; }
 
     .b-author {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         color: #6b7280;
+        margin-left: 6px;
+        white-space: nowrap; /* Keep author name together if possible */
     }
 
-    /* Monochrome Rating Dots */
+    /* Right side (Rating) - Fixed width, no shrink */
     .rating-dots { 
-        font-size: 0.8rem; 
+        font-size: 0.75rem; 
         letter-spacing: 2px;
         color: #1d1d1f;
+        flex-shrink: 0; /* Prevents wrapping */
+        white-space: nowrap;
+        margin-top: 3px; /* Optical alignment with title */
     }
     .dark .rating-dots { color: #fff; }
     
     .rating-dots .empty { 
-        color: #d1d5db; /* Light Gray */
+        color: #d1d5db; opacity: 0.5;
     }
     .dark .rating-dots .empty { 
-        color: #4b5563; /* Dark Gray */
+        color: #4b5563; opacity: 0.5;
     }
 
     /* Review Text */
@@ -97,39 +204,25 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
         font-family: 'Georgia', serif;
         font-style: italic;
         color: #6b7280;
-        font-size: 0.95rem;
-        margin-top: 8px;
-        padding-left: 12px;
+        font-size: 0.9rem;
+        margin-top: 6px;
+        padding-left: 10px;
         border-left: 2px solid #e5e7eb;
         line-height: 1.5;
+        display: block;
     }
     .dark .b-review { color: #9ca3af; border-color: #333; }
 
-    /* --- ARTICLES SECTION --- */
-    .section-divider {
-        margin-top: 60px;
-        margin-bottom: 30px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-    .divider-line { flex: 1; height: 1px; background: #e5e7eb; }
-    .dark .divider-line { background: #333; }
-    
-    .section-label {
-        font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: #9ca3af; letter-spacing: 0.1em;
-    }
-
+    /* --- ESSAYS LIST --- */
     .article-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 0;
+        padding: 12px 0;
         border-bottom: 1px solid #f3f4f6;
     }
     .dark .article-item { border-color: #27272a; }
     
     .article-link {
         font-size: 1rem;
+        font-weight: 500;
         color: #1d1d1f;
         text-decoration: none;
         display: block;
@@ -138,108 +231,166 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/tools_pa
     .dark .article-link { color: #fff; }
     .article-link:hover { color: #3b82f6; }
     
-    .article-meta { font-size: 0.8rem; color: #9ca3af; font-family: 'JetBrains Mono', monospace; }
+    .article-meta { 
+        font-size: 0.8rem; 
+        color: #9ca3af; 
+    }
 
+    /* Utilities */
+    .hidden { display: none !important; }
 </style>
 
 <div class="fade-in max-w-3xl mx-auto mb-20">
 
-    <div class="mb-10">
-        <h1 class="text-3xl font-bold text-[#1d1d1f] dark:text-white mb-2">Reading Log</h1>
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-[#1d1d1f] dark:text-white mb-2">reading log</h1>
         <p class="text-sm text-gray-500 dark:text-gray-400">
-            A chronological log of books and articles.
+            a chronological log of what i read.
         </p>
     </div>
 
-    <!-- STATS (Full Width) -->
-    <div class="stat-bar">
-        <div>
-            <div id="totalBooks" class="stat-val">0</div>
-            <p class="stat-label">Books</p>
-        </div>
-        <div>
-            <div id="totalPages" class="stat-val">0</div>
-            <p class="stat-label">Pages</p>
-        </div>
-        <div>
-            <div id="totalArticles" class="stat-val">0</div>
-            <p class="stat-label">Articles</p>
-        </div>
+    <!-- TABS -->
+    <div class="tab-nav">
+        <div class="tab-btn active" onclick="switchTab('books')" id="tabBooksBtn">Books</div>
+        <div class="tab-btn" onclick="switchTab('essays')" id="tabEssaysBtn">Essays</div>
     </div>
 
-    <!-- BOOK LIST -->
-    <div id="bookList">
-        {% assign all_books = site.data.books | sort: 'date_read' | reverse %}
-        {% assign current_year = "" %}
-
-        {% for book in all_books %}
-            {% assign book_year = book.date_read | date: "%Y" %}
-            
-            {% if book_year != current_year %}
-                <h2 class="year-header">{{ book_year }}</h2>
-                {% assign current_year = book_year %}
-            {% endif %}
-
-            <div class="book-row">
-                <div class="b-header">
-                    <div>
-                        <a href="https://www.goodreads.com/book/show/{{ book.id }}" target="_blank" class="b-title">
-                            {{ book.title }}
-                        </a>
-                        <span class="b-author">by {{ book.author }}</span>
-                    </div>
-                    
-                    <!-- Monochrome Rating -->
-                    <div class="rating-dots" title="{{ book.rating }}/5">
-                        {% for i in (1..5) %}
-                            {% if i <= book.rating %}●{% else %}<span class="empty">●</span>{% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <!-- Review (Only if exists) -->
-                {% if book.review %}
-                    <p class="b-review">“{{ book.review }}”</p>
-                {% endif %}
-            </div>
-        {% endfor %}
-    </div>
-
-    <!-- ARTICLES SECTION -->
-    <div class="section-divider">
-        <div class="divider-line"></div>
-        <span class="section-label">Web / Articles</span>
-        <div class="divider-line"></div>
-    </div>
-
-    <div class="article-list">
-        {% assign articles = site.data.articles | sort: 'date' | reverse %}
-        {% for article in articles %}
-        <div class="article-item">
+    <!-- === BOOK TAB === -->
+    <div id="tabBooksContent">
+        
+        <!-- Stats (Books Only) -->
+        <div class="stat-bar">
             <div>
-                <a href="{{ article.link }}" target="_blank" class="article-link">{{ article.title }}</a>
-                <span class="text-sm text-gray-500">by {{ article.author }}</span>
+                <div id="totalBooks" class="stat-val">0</div>
+                <p class="stat-label">Books Read</p>
             </div>
-            <div class="article-meta">
-                {{ article.host }} <span class="mx-1">•</span> {{ article.date | date: "%Y" }}
+            <div>
+                <div id="totalPages" class="stat-val">0</div>
+                <p class="stat-label">Pages Turned</p>
             </div>
         </div>
-        {% endfor %}
+
+        <!-- Filters -->
+        <div class="filter-row">
+            <div class="filter-chip active" onclick="filterRating('all', this)">All</div>
+            <div class="filter-chip" onclick="filterRating(5, this)">5 Stars</div>
+            <div class="filter-chip" onclick="filterRating(4, this)">4 Stars</div>
+            <div class="filter-chip" onclick="filterRating(3, this)">3 Stars</div>
+        </div>
+
+        <!-- Book List (Grouped by Year) -->
+        <div id="bookListContainer">
+            {% assign books_by_year = site.data.books | group_by: "year" %}
+            {% assign current_year = "now" | date: "%Y" %}
+
+            {% for year in books_by_year %}
+            <details {% if year.name == current_year %}open{% endif %} class="year-group">
+                <summary>
+                    <span class="year-title">{{ year.name }}</span>
+                    <span class="year-count">{{ year.items | size }} Books</span>
+                </summary>
+                
+                <div class="year-items">
+                {% for book in year.items %}
+                    <div class="book-row" data-rating="{{ book.rating | round }}">
+                        <div class="b-header">
+                            <div class="b-info">
+                                <a href="https://www.goodreads.com/book/show/{{ book.id }}" target="_blank" class="b-title">
+                                    {{ book.title }}
+                                </a>
+                                <span class="b-author">by {{ book.author }}</span>
+                            </div>
+                            
+                            <!-- Rating -->
+                            <div class="rating-dots" title="{{ book.rating }}/5">
+                                {% for i in (1..5) %}
+                                    {% if i <= book.rating %}●{% else %}<span class="empty">●</span>{% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        {% if book.review %}
+                            <p class="b-review">“{{ book.review }}”</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                </div>
+            </details>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- === ESSAYS TAB === -->
+    <div id="tabEssaysContent" class="hidden">
+        <div class="article-list">
+            {% assign articles = site.data.articles | sort: 'date' | reverse %}
+            {% for article in articles %}
+            <div class="article-item">
+                <a href="{{ article.link }}" target="_blank" class="article-link">{{ article.title }}</a>
+                <div class="article-meta">
+                    {{ article.author }} <span class="mx-1">•</span> {{ article.date | date: "%Y" }}
+                </div>
+            </div>
+            {% endfor %}
+            
+            {% if articles.size == 0 %}
+                <p class="text-center text-gray-400 py-10">No essays logged yet.</p>
+            {% endif %}
+        </div>
     </div>
 
 </div>
 
-<!-- STATS SCRIPT -->
+<!-- LOGIC -->
 <script>
-    // Pull Liquid Data into JS for counting
-    const books = {{ site.data.books | jsonify }};
-    const articles = {{ site.data.articles | jsonify }};
-
-    document.getElementById('totalBooks').textContent = books.length;
-    
-    // Sum Pages (Handle missing page counts safely)
-    const pages = books.reduce((sum, b) => sum + (b.pages || 0), 0);
+    // 1. Data Stats
+    const booksData = {{ site.data.books | jsonify }};
+    document.getElementById('totalBooks').textContent = booksData.length;
+    const pages = booksData.reduce((sum, b) => sum + (b.pages || 0), 0);
     document.getElementById('totalPages').textContent = pages.toLocaleString();
 
-    document.getElementById('totalArticles').textContent = articles.length;
+    // 2. Tab Switcher
+    function switchTab(tab) {
+        const booksContent = document.getElementById('tabBooksContent');
+        const essaysContent = document.getElementById('tabEssaysContent');
+        const booksBtn = document.getElementById('tabBooksBtn');
+        const essaysBtn = document.getElementById('tabEssaysBtn');
+
+        if(tab === 'books') {
+            booksContent.classList.remove('hidden');
+            essaysContent.classList.add('hidden');
+            booksBtn.classList.add('active');
+            essaysBtn.classList.remove('active');
+        } else {
+            booksContent.classList.add('hidden');
+            essaysContent.classList.remove('hidden');
+            essaysBtn.classList.add('active');
+            booksBtn.classList.remove('active');
+        }
+    }
+
+    // 3. Filter Logic
+    function filterRating(rating, btn) {
+        // Toggle Active Chip
+        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+
+        const rows = document.querySelectorAll('.book-row');
+        
+        rows.forEach(row => {
+            const r = parseInt(row.getAttribute('data-rating'));
+            if(rating === 'all' || r === rating) {
+                row.classList.remove('hidden');
+            } else {
+                row.classList.add('hidden');
+            }
+        });
+
+        // Hide Empty Years? Optional, but cleaner
+        document.querySelectorAll('.year-group').forEach(group => {
+            const visibleBooks = group.querySelectorAll('.book-row:not(.hidden)').length;
+            if(visibleBooks === 0) group.style.display = 'none';
+            else group.style.display = 'block';
+        });
+    }
 </script>
