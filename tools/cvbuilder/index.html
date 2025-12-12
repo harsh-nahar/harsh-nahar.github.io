@@ -345,8 +345,10 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_cvbuilde
     </div>
 </div>
 
-<!-- Hidden Iframe for Printing -->
-<iframe id="printFrame" style="position:absolute; top:-9999px; left:-9999px; width:0; height:0;"></iframe>
+<!-- Hidden Iframe for Printing -->   
+<iframe id="printFrame" style="position:absolute; top:-9999px; left:-9999px; width:1px; height:1px;"></iframe>
+
+  
 
 <script>
     // --- STATE ---
@@ -456,7 +458,13 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_cvbuilde
             </body></html>
         `);
         doc.close();
-        setTimeout(() => { frame.contentWindow.print(); }, 500);
+        frame.contentWindow.document.fonts.ready.then(() => {
+            // Wait a tiny buffer to ensure the render engine catches up
+            setTimeout(() => {
+                frame.contentWindow.focus();
+                frame.contentWindow.print();
+            }, 100);
+        });
     }
 
     // --- MARKDOWN DOWNLOAD ---
