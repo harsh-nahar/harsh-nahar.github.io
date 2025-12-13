@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  
+  <!-- Social Preview Meta Tags -->
+  <title>blog - harsh nahar</title>
+  <meta name="description" content="Welcome to my little corner of the web.">
+  
+  <!-- Open Graph / Facebook / iMessage -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:4000/blog/">
+  <meta property="og:title" content="blog">
+  <meta property="og:description" content="Welcome to my little corner of the web.">
+  
+  
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="http://localhost:4000/blog/">
+  <meta property="twitter:title" content="blog">
+  <meta property="twitter:description" content="Welcome to my little corner of the web.">
+  
+    <meta property="twitter:image" content="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  
+
+  <!-- Tailwind CSS & Typography Plugin -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: { bg: '#000000', card: '#1c1c1e', text: '#f5f5f7', muted: '#86868b', border: '#333333' }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"Inter"', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', '"JetBrains Mono"', 'monospace'],
+          },
+          typography: (theme) => ({
+            DEFAULT: { css: { '--tw-prose-body': '#1d1d1f', '--tw-prose-headings': '#1d1d1f', '--tw-prose-links': '#0071e3', maxWidth: 'none' } },
+            invert: { css: { '--tw-prose-body': '#f5f5f7', '--tw-prose-headings': '#f5f5f7', '--tw-prose-links': '#2997ff' } },
+          }),
+        }
+      }
+    }
+  </script>
+  <style>
+    body { transition: background-color 0.3s ease, color 0.3s ease; }
+    .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .dark .glass-nav { background: rgba(0, 0, 0, 0.7); border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-white text-[#1d1d1f] dark:bg-dark-bg dark:text-dark-text min-h-screen flex flex-col antialiased selection:bg-blue-100 dark:selection:bg-blue-900">
+
+  <!-- NAVIGATION: Hidden if page.layout == 'home' -->
+  
+  <nav class="fixed top-0 w-full z-50 glass-nav">
+    <div class="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-70 transition-opacity whitespace-nowrap">harsh nahar</a>
+      <div class="flex items-center gap-6">
+        <div class="hidden sm:flex gap-6 text-sm font-medium text-[#86868b] dark:text-gray-400">
+          <a href="/blog/" class="hover:text-black dark:hover:text-white transition-colors">blog</a>
+          <a href="/gallery/" class="hover:text-black dark:hover:text-white transition-colors">photography</a>
+          <a href="/reading/" class="hover:text-black dark:hover:text-white transition-colors">books</a>
+          <a href="/tools/" class="hover:text-black dark:hover:text-white transition-colors">fun-stuff</a>
+        </div>
+        <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
+          <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+          <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Nav -->
+    <div class="sm:hidden border-t border-gray-100 dark:border-white/5 py-2 overflow-x-auto no-scrollbar px-6 flex gap-6 text-sm font-medium text-[#86868b] dark:text-gray-400">
+       <a href="/blog/" class="hover:text-black dark:hover:text-white whitespace-nowrap">blog</a>
+       <a href="/gallery/" class="hover:text-black dark:hover:text-white whitespace-nowrap">photography</a>
+       <a href="/reading/" class="hover:text-black dark:hover:text-white transition-colors">books</a>
+       <a href="/tools/" class="hover:text-black dark:hover:text-white whitespace-nowrap">fun-stuff</a>
+    </div>
+  </nav>
+  
+
+  <!-- MAIN CONTENT: Increased width to max-w-3xl -->
+  <main class="flex-grow w-full max-w-3xl mx-auto px-6 py-12 mt-24">
+    <div class="fade-in">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-8 md:mb-12 gap-4">
+        <div>
+            <h1 class="text-3xl font-bold mb-2 dark:text-white">Writing</h1>
+            <p class="text-[#86868b] dark:text-gray-400">Recent essays and thoughts.</p>
+        </div>
+        
+        <div class="relative w-full md:w-auto">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <input type="text" id="blog-search" placeholder="Search posts..." class="pl-9 pr-4 py-2 text-sm bg-gray-100 dark:bg-white/10 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:text-white w-full md:w-64 transition-all hover:bg-gray-50 dark:hover:bg-white/20 placeholder-gray-500">
+        </div>
+    </div>
+
+    <div id="blog-posts-container" class="space-y-10">
+        
+        <a href="/blog/blog-setup/" class="blog-post-item group block" data-title="setting up this blog">
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-1">
+                <h2 class="text-xl font-semibold text-[#1d1d1f] dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">setting up this blog</h2>
+                <time class="font-mono text-xs text-[#86868b] whitespace-nowrap">May 11, 2025</time>
+            </div>
+            <p class="text-base text-[#86868b] dark:text-gray-400 leading-relaxed line-clamp-2">
+                how did I(or AI) create this website
+            </p>
+        </a>
+        
+        <a href="/blog/dream/" class="blog-post-item group block" data-title="dream">
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-1">
+                <h2 class="text-xl font-semibold text-[#1d1d1f] dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">dream</h2>
+                <time class="font-mono text-xs text-[#86868b] whitespace-nowrap">Feb 27, 2025</time>
+            </div>
+            <p class="text-base text-[#86868b] dark:text-gray-400 leading-relaxed line-clamp-2">
+                My heart sank
+            </p>
+        </a>
+        
+        <a href="/blog/loneliness-in-bengaluru/" class="blog-post-item group block" data-title="bengaluru and its inviting loneliness">
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-1">
+                <h2 class="text-xl font-semibold text-[#1d1d1f] dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">bengaluru and its inviting loneliness</h2>
+                <time class="font-mono text-xs text-[#86868b] whitespace-nowrap">Oct 13, 2024</time>
+            </div>
+            <p class="text-base text-[#86868b] dark:text-gray-400 leading-relaxed line-clamp-2">
+                2 months, give or take. 2 months is all it takes for you to either think that you belong to a new place or for you to have the painful...
+            </p>
+        </a>
+        
+        <a href="/blog/flawed-human/" class="blog-post-item group block" data-title="flawed human">
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-1">
+                <h2 class="text-xl font-semibold text-[#1d1d1f] dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">flawed human</h2>
+                <time class="font-mono text-xs text-[#86868b] whitespace-nowrap">Aug 15, 2020</time>
+            </div>
+            <p class="text-base text-[#86868b] dark:text-gray-400 leading-relaxed line-clamp-2">
+                I’m a flawed human. Before it seems like I’m imparting some knowledge, know that I cannot influence someone else’s life, let alone my own.
+
+            </p>
+        </a>
+        
+    </div>
+
+    <div id="no-results" class="hidden text-center py-12 text-gray-400">
+        No posts found.
+    </div>
+</div>
+
+<script>
+    const searchInput = document.getElementById('blog-search');
+    const noResults = document.getElementById('no-results');
+
+    if(searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const posts = document.querySelectorAll('.blog-post-item');
+            let hasResults = false;
+            posts.forEach(post => {
+                const title = post.getAttribute('data-title');
+                if(title.includes(term)) { post.style.display = 'block'; hasResults = true; } 
+                else { post.style.display = 'none'; }
+            });
+            noResults.style.display = hasResults ? 'none' : 'block';
+        });
+    }
+</script>
+
+
+  </main>
+
+  <footer class="py-8 text-center text-xs text-[#86868b] opacity-60 font-mono">
+    © 2025 Harsh Nahar
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+</body>
+
+</html>
+
+

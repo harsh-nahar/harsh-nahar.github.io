@@ -6,8 +6,15 @@ description: "a chronological log of books and essays i have read."
 image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_reading.webp"
 ---
 
+<!-- 
+    ========================================
+    1. STYLESHEET
+    Contains specific overrides for the Dashboard, Chart, and Lists.
+    Relies on Tailwind for layout, but custom CSS for specific components.
+    ========================================
+-->
 <style>
-    /* --- DASHBOARD --- */
+    /* --- DASHBOARD CONTAINER --- */
     .stat-card {
         padding: 24px;
         border: 1px solid #e5e7eb;
@@ -17,11 +24,12 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_rea
     }
     .dark .stat-card { background: #1c1c1e; border-color: #333; }
 
+    /* Stats Typography */
     .stat-label { font-size: 0.75rem; text-transform: uppercase; color: #9ca3af; letter-spacing: 0.05em; margin-bottom: 4px; }
-    .stat-val { font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 700; color: #1d1d1f; }
+    .stat-val { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #1d1d1f; }
     .dark .stat-val { color: #fff; }
 
-    /* --- TABS --- */
+    /* --- TABS (Books vs Essays) --- */
     .tab-bar {
         display: flex;
         gap: 20px;
@@ -37,13 +45,13 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_rea
         color: #9ca3af;
         cursor: pointer;
         transition: color 0.2s;
-        border-bottom: 2px solid transparent;
-        margin-bottom: -1px;
+        border-bottom: 2px solid transparent; /* Invisible border for hover state */
+        margin-bottom: -1px; /* Overlaps the bottom border */
     }
     .tab-btn.active { color: #1d1d1f; border-bottom-color: #1d1d1f; }
     .dark .tab-btn.active { color: #fff; border-bottom-color: #fff; }
 
-    /* --- LISTS --- */
+    /* --- LIST ROWS --- */
     .list-header {
         display: flex; justify-content: space-between; align-items: center;
         margin-bottom: 20px; font-size: 0.75rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em;
@@ -60,6 +68,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_rea
     .dark .item-row { border-color: #27272a; }
     .item-row:hover { opacity: 0.7; }
     
+    /* Flex adjustment for mobile vs desktop in list items */
     .item-left { display: flex; flex-direction: column; gap: 2px; max-width: 80%; }
     @media (min-width: 640px) {
         .item-left { flex-direction: row; align-items: baseline; gap: 8px; }
@@ -68,54 +77,190 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_rea
     .item-title { font-weight: 600; color: #1d1d1f; text-decoration: none; font-size: 1rem; }
     .dark .item-title { color: #fff; }
     .item-author { font-size: 0.85rem; color: #6b7280; font-weight: 400; }
-
     .item-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #9ca3af; white-space: nowrap; }
 
-    /* Monochrome Stars */
+    /* --- STARS (Monochrome System) --- */
     .stars { letter-spacing: 2px; }
     .star-fill { color: #1d1d1f; }
     .star-empty { color: #e5e7eb; }
     .dark .star-fill { color: #fff; }
     .dark .star-empty { color: #333; }
 
-    /* Controls */
+    /* Sort Control Link */
     .sort-toggle { cursor: pointer; display: flex; align-items: center; gap: 4px; }
     .sort-toggle:hover { color: #1d1d1f; dark:color: #fff; }
+
+    /* --- ACCORDION (Year Groups) --- */
+    details {
+        border-bottom: 1px solid #f3f4f6;
+        margin-bottom: 0;
+    }
+    .dark details { border-color: #27272a; }
+    
+    /* Hide default browser triangle */
+    details > summary { list-style: none; outline: none; }
+    details > summary::-webkit-details-marker { display: none; }
+
+    .year-summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px 0;
+        cursor: pointer;
+        font-family: 'JetBrains Mono', monospace;
+        color: #1d1d1f;
+        transition: opacity 0.2s;
+    }
+    .dark .year-summary { color: #fff; }
+    .year-summary:hover { opacity: 0.7; }
+
+    .year-text { font-size: 1.25rem; font-weight: 700; }
+    
+    /* The small bubble showing book count per year */
+    .year-count {
+        font-size: 0.75rem;
+        background: #f3f4f6;
+        color: #6b7280;
+        padding: 2px 8px;
+        border-radius: 99px;
+        margin-left: 10px;
+        vertical-align: middle;
+        font-weight: 600;
+    }
+    .dark .year-count { background: #333; color: #9ca3af; }
+
+    /* Animation logic for accordion */
+    .chevron { transition: transform 0.2s; color: #9ca3af; }
+    details[open] .chevron { transform: rotate(180deg); }
+
+    details[open] > .group-content { animation: slideDown 0.25s ease-out; }
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- CHART VISUALIZER --- */
+    .chart-container {
+        display: flex;
+        align-items: flex-end; /* Aligns bars to bottom */
+        justify-content: flex-end; /* Aligns chart to right */
+        gap: 8px;
+        height: 100%;
+        min-height: 120px;
+        padding-bottom: 24px; /* Space for year labels */
+    }
+
+    .bar-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        height: 100%;
+        flex: 1;
+        max-width: 40px;
+        min-width: 0; /* Important for flex shrinking on mobile */
+        position: relative;
+    }
+
+    .bar {
+        width: 100%;
+        background-color: #d1d5db !important; /* Visible gray */
+        border-radius: 4px 4px 0 0;
+        transition: height 0.5s ease;
+        min-height: 4px; /* Minimum height for empty years */
+    }
+    .dark .bar { background-color: #3f3f46 !important; }
+
+    .bar.active-year { background-color: #1d1d1f !important; }
+    .dark .bar.active-year { background-color: #fff !important; }
+
+    .bar-label {
+        position: absolute;
+        bottom: -24px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.65rem;
+        color: #9ca3af;
+        width: 100%;
+        text-align: center;
+    }
+
+    .bar-val {
+        margin-bottom: 6px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #1d1d1f;
+        z-index: 10;
+    }
+    .dark .bar-val { color: #fff; }
 </style>
 
+
+<!-- 
+    ========================================
+    2. MAIN CONTENT AREA
+    ========================================
+-->
 <div class="fade-in max-w-3xl mx-auto mb-20">
 
+    <!-- Page Title -->
     <div class="mb-10">
         <h1 class="text-3xl font-bold text-[#1d1d1f] dark:text-white mb-2">reading log</h1>
         <p class="text-sm text-gray-500 dark:text-gray-400">a chronological log of books and essays i have read.</p>
     </div>
 
-    <!-- 1. STATS DASHBOARD -->
+    <!-- 
+        STATS DASHBOARD 
+        Split into Left (Metrics) and Right (Chart)
+    -->
     <div class="stat-card">
-        <div class="flex justify-between items-end">
-            <div>
-                <p class="stat-label">Total Volume</p>
-                <div class="flex items-baseline gap-4">
-                    <div><span class="stat-val">{{ site.data.books.size }}</span> <span class="text-xs text-gray-400">Books</span></div>
-                    <div><span class="stat-val" id="totalPages">0</span> <span class="text-xs text-gray-400">Pages</span></div>
+        <!-- Grid: 2 columns even on mobile (side-by-side) -->
+        <div class="grid grid-cols-2 gap-4 sm:gap-8 h-full">
+            
+            <!-- LEFT COLUMN: Key Metrics -->
+            <div class="flex flex-col justify-between">
+                <!-- Top: Total Count -->
+                <div class="mb-4 sm:mb-0">
+                    <p class="stat-label">Total Books</p>
+                    <div class="stat-val text-3xl sm:text-4xl">{{ site.data.books.size }}</div>
+                </div>
+
+                <!-- Bottom: Secondary Stats (Current Year + Avg Rating) -->
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-10">
+                    <div>
+                        <p class="stat-label">This Year</p>
+                        <div class="stat-val text-lg sm:text-xl" id="statCurrentYear">0</div>
+                    </div>
+                    <div>
+                        <p class="stat-label">Avg Rating</p>
+                        <div class="stat-val text-lg sm:text-xl" id="statAvgRating">0.0</div>
+                    </div>
                 </div>
             </div>
-            <!-- Dynamic "Meters" Logic -->
-            <div class="text-right hidden sm:block">
-                <p class="stat-label">Tower Height</p>
-                <div class="stat-val text-lg text-gray-500" id="towerHeight">0 m</div>
+
+            <!-- RIGHT COLUMN: Bar Chart Container -->
+            <div class="border-l border-dashed border-gray-200 dark:border-gray-800 pl-4 sm:pl-8">
+                <!-- The JS will inject HTML bars into this ID -->
+                <div id="readingChart" class="chart-container"></div>
             </div>
+            
         </div>
     </div>
 
-    <!-- 2. TABS -->
+    <!-- TABS -->
     <div class="tab-bar">
         <div class="tab-btn active" onclick="switchTab('books')">Books</div>
         <div class="tab-btn" onclick="switchTab('essays')">Essays</div>
     </div>
 
-    <!-- 3. BOOKS VIEW -->
+    <!-- 
+        ========================================
+        3. BOOKS VIEW (Default)
+        Uses Jekyll Liquid to group and render books
+        ========================================
+    -->
     <div id="viewBooks">
+        <!-- Header with Sort Toggle -->
         <div class="list-header">
             <span>Title / Author</span>
             <span class="sort-toggle" onclick="toggleSort()">
@@ -124,36 +269,103 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_rea
         </div>
 
         <div id="bookListContainer">
-            {% assign books = site.data.books | sort: 'date_read' | reverse %}
-            {% for book in books %}
-            <div class="item-row book-entry" 
-                 data-date="{{ book.date_read }}" 
-                 data-rating="{{ book.rating }}">
-                
-                <div class="item-left">
-                    <a href="https://www.goodreads.com/book/show/{{ book.id }}" target="_blank" class="item-title hover:underline">
-                        {{ book.title }}
-                    </a>
-                    <span class="item-author">by {{ book.author }}</span>
-                </div>
-                
-                <div class="item-meta">
-                    <span class="stars">
-                        {% for i in (1..5) %}
-                            {% if i <= book.rating %}
-                                <span class="star-fill">●</span>
-                            {% else %}
-                                <span class="star-empty">○</span>
-                            {% endif %}
+            
+            {% comment %} --- LIQUID DATA PROCESSING --- {% endcomment %}
+            {% assign all_books = site.data.books %}
+            
+            {% comment %} 1. Separate Dated and Undated books {% endcomment %}
+            {% assign dated_books = all_books | where_exp: "item", "item.date_read != '' and item.date_read != nil" %}
+            {% assign undated_books = all_books | where_exp: "item", "item.date_read == '' or item.date_read == nil" %}
+            
+            {% comment %} 2. Group Dated books by Year (Descending) {% endcomment %}
+            {% assign grouped_books = dated_books | group_by_exp: "item", "item.date_read | date: '%Y'" | sort: 'name' | reverse %}
+
+
+            {% comment %} --- LOOP 1: YEARLY GROUPS --- {% endcomment %}
+            {% for group in grouped_books %}
+                <details class="year-group" {% if forloop.first %}open{% endif %}>
+                    <summary class="year-summary">
+                        <div>
+                            <span class="year-text">{{ group.name }}</span>
+                            <span class="year-count">{{ group.items.size }}</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="chevron w-5 h-5"></i>
+                    </summary>
+                    
+                    <div class="group-content">
+                        {% assign sorted_items = group.items | sort: 'date_read' | reverse %}
+                        {% for book in sorted_items %}
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="{{ book.date_read }}" data-rating="{{ book.rating }}">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/{{ book.id }}" target="_blank" class="item-title hover:underline">
+                                        {{ book.title }}
+                                    </a>
+                                    <span class="item-author">by {{ book.author }}</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        {% for i in (1..5) %}
+                                            {% if i <= book.rating %}
+                                                <span class="star-fill">●</span>
+                                            {% else %}
+                                                <span class="star-empty">○</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                            </div>
                         {% endfor %}
-                    </span>
-                </div>
-            </div>
+                    </div>
+                </details>
             {% endfor %}
+
+
+            {% comment %} --- LOOP 2: UNDATED BOOKS --- {% endcomment %}
+            {% if undated_books.size > 0 %}
+                <details class="year-group">
+                    <summary class="year-summary">
+                        <div>
+                            <span class="year-text">Older</span>
+                            <span class="year-count">{{ undated_books.size }}</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="chevron w-5 h-5"></i>
+                    </summary>
+                    <div class="group-content">
+                        {% for book in undated_books %}
+                            <div class="item-row book-entry" data-date="" data-rating="{{ book.rating }}">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/{{ book.id }}" target="_blank" class="item-title hover:underline">
+                                        {{ book.title }}
+                                    </a>
+                                    <span class="item-author">by {{ book.author }}</span>
+                                </div>
+                                <div class="item-meta">
+                                    <span class="stars">
+                                        {% for i in (1..5) %}
+                                            {% if i <= book.rating %}
+                                                <span class="star-fill">●</span>
+                                            {% else %}
+                                                <span class="star-empty">○</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </details>
+            {% endif %}
+
         </div>
     </div>
 
-    <!-- 4. ESSAYS VIEW -->
+    <!-- 
+        ========================================
+        4. ESSAYS VIEW (Hidden by default)
+        ========================================
+    -->
     <div id="viewEssays" class="hidden">
         <div class="list-header">
             <span>Title / Author</span>
@@ -178,22 +390,71 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_rea
 
 </div>
 
+<!-- 
+    ========================================
+    5. JAVASCRIPT LOGIC
+    ========================================
+-->
 <script>
-    // --- STATS LOGIC ---
-    // Liquid calculates count, JS calculates pages sum
+    // Ingest Jekyll data into JS
     const books = {{ site.data.books | jsonify }};
     
-    function initStats() {
-        const pages = books.reduce((sum, b) => sum + (b.pages || 0), 0);
-        document.getElementById('totalPages').textContent = pages.toLocaleString();
+    // --- DASHBOARD INIT ---
+    function initDashboard() {
+        // 1. Calculate Average Rating
+        const ratedBooks = books.filter(b => b.rating > 0);
+        const totalRating = ratedBooks.reduce((sum, b) => sum + b.rating, 0);
+        const avg = (totalRating / ratedBooks.length).toFixed(1);
+        document.getElementById('statAvgRating').textContent = avg;
+
+        // 2. Prepare Chart Data (Group by Year)
+        const yearMap = {};
+        const currentYear = new Date().getFullYear();
         
-        // 1 meter = approx 10,000 pages (standard paper thickness)
-        // actually avg book thickness 300 pages = 2cm. So 1 page = 0.006 cm.
-        const meters = (pages * 0.006 / 100).toFixed(2);
-        document.getElementById('towerHeight').textContent = `${meters} m`;
+        books.forEach(b => {
+            if(b.date_read) {
+                const y = new Date(b.date_read).getFullYear();
+                yearMap[y] = (yearMap[y] || 0) + 1;
+            }
+        });
+
+        // Update "This Year" Text
+        document.getElementById('statCurrentYear').textContent = yearMap[currentYear] || 0;
+
+        // 3. Render Bar Chart (Last 7 Years)
+        const chartContainer = document.getElementById('readingChart');
+        const yearsToShow = 7;
+        const startYear = currentYear - yearsToShow + 1;
+        
+        // Find max value to determine 100% height
+        let maxCount = 0;
+        for (let y = startYear; y <= currentYear; y++) {
+            if ((yearMap[y] || 0) > maxCount) maxCount = yearMap[y];
+        }
+
+        // Generate HTML for bars
+        let chartHTML = '';
+        for (let y = startYear; y <= currentYear; y++) {
+            const count = yearMap[y] || 0;
+            // Calculate height percentage (min 2% so empty bars show a tiny line)
+            const heightPct = maxCount > 0 ? (count / maxCount) * 100 : 0;
+            const barHeight = Math.max(heightPct, 2); 
+            
+            // Highlight current year
+            const activeClass = y === currentYear ? 'active-year' : '';
+
+            chartHTML += `
+                <div class="bar-group">
+                    <span class="bar-val">${count}</span>
+                    <div class="bar ${activeClass}" style="height: ${barHeight}%"></div>
+                    <span class="bar-label">'${y.toString().slice(2)}</span>
+                </div>
+            `;
+        }
+        chartContainer.innerHTML = chartHTML;
     }
 
-    // --- TABS ---
+    // --- TAB SWITCHING ---
     function switchTab(tab) {
         const booksDiv = document.getElementById('viewBooks');
         const essaysDiv = document.getElementById('viewEssays');
@@ -212,30 +473,40 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_rea
         }
     }
 
-    // --- SORTING ---
-    let sortMode = 'date'; // 'date' or 'rating'
+    // --- SORTING LOGIC ---
+    let sortMode = 'date'; 
 
     function toggleSort() {
         const container = document.getElementById('bookListContainer');
-        const items = Array.from(container.getElementsByClassName('book-entry'));
         const label = document.getElementById('sortLabel');
-
-        if(sortMode === 'date') {
-            // Switch to Rating
+        
+        if (sortMode === 'date') {
+            // Switch to Rating Mode:
+            // 1. Flatten the list (ignore accordion)
+            // 2. Sort DOM elements by data-rating
             sortMode = 'rating';
             label.textContent = "Best Rated";
-            items.sort((a, b) => b.getAttribute('data-rating') - a.getAttribute('data-rating'));
+            
+            const allEntries = Array.from(document.querySelectorAll('.book-entry'));
+            allEntries.sort((a, b) => {
+                const rA = parseFloat(a.getAttribute('data-rating')) || 0;
+                const rB = parseFloat(b.getAttribute('data-rating')) || 0;
+                return rB - rA; // Descending
+            });
+            
+            // Clear current view and append sorted list
+            container.innerHTML = '';
+            allEntries.forEach(entry => container.appendChild(entry));
         } else {
-            // Switch to Date
-            sortMode = 'date';
-            label.textContent = "Newest First";
-            items.sort((a, b) => new Date(b.getAttribute('data-date')) - new Date(a.getAttribute('data-date')));
+            // Switch to Date Mode:
+            // Simplest way to restore Accordion structure is to reload
+            window.location.reload();
         }
-
-        container.innerHTML = "";
-        items.forEach(i => container.appendChild(i));
     }
 
-    document.addEventListener('DOMContentLoaded', initStats);
-    lucide.createIcons();
+    // Initialize on Load
+    document.addEventListener('DOMContentLoaded', () => {
+        initDashboard();
+        if(typeof lucide !== 'undefined') lucide.createIcons();
+    });
 </script>

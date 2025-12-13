@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  
+  <!-- Social Preview Meta Tags -->
+  <title>setting up this blog - harsh nahar</title>
+  <meta name="description" content="how did I(or AI) create this website">
+  
+  <!-- Open Graph / Facebook / iMessage -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:4000/blog/blog-setup/">
+  <meta property="og:title" content="setting up this blog">
+  <meta property="og:description" content="how did I(or AI) create this website">
+  
+  
+    <meta property="og:image" content="https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blog-images/Initial%20Design.webp">
+  
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="http://localhost:4000/blog/blog-setup/">
+  <meta property="twitter:title" content="setting up this blog">
+  <meta property="twitter:description" content="how did I(or AI) create this website">
+  
+    <meta property="twitter:image" content="https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blog-images/Initial%20Design.webp">
+  
+
+  <!-- Tailwind CSS & Typography Plugin -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: { bg: '#000000', card: '#1c1c1e', text: '#f5f5f7', muted: '#86868b', border: '#333333' }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"Inter"', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', '"JetBrains Mono"', 'monospace'],
+          },
+          typography: (theme) => ({
+            DEFAULT: { css: { '--tw-prose-body': '#1d1d1f', '--tw-prose-headings': '#1d1d1f', '--tw-prose-links': '#0071e3', maxWidth: 'none' } },
+            invert: { css: { '--tw-prose-body': '#f5f5f7', '--tw-prose-headings': '#f5f5f7', '--tw-prose-links': '#2997ff' } },
+          }),
+        }
+      }
+    }
+  </script>
+  <style>
+    body { transition: background-color 0.3s ease, color 0.3s ease; }
+    .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .dark .glass-nav { background: rgba(0, 0, 0, 0.7); border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-white text-[#1d1d1f] dark:bg-dark-bg dark:text-dark-text min-h-screen flex flex-col antialiased selection:bg-blue-100 dark:selection:bg-blue-900">
+
+  <!-- NAVIGATION: Hidden if page.layout == 'home' -->
+  
+  <nav class="fixed top-0 w-full z-50 glass-nav">
+    <div class="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-70 transition-opacity whitespace-nowrap">harsh nahar</a>
+      <div class="flex items-center gap-6">
+        <div class="hidden sm:flex gap-6 text-sm font-medium text-[#86868b] dark:text-gray-400">
+          <a href="/blog/" class="hover:text-black dark:hover:text-white transition-colors">blog</a>
+          <a href="/gallery/" class="hover:text-black dark:hover:text-white transition-colors">photography</a>
+          <a href="/reading/" class="hover:text-black dark:hover:text-white transition-colors">books</a>
+          <a href="/tools/" class="hover:text-black dark:hover:text-white transition-colors">fun-stuff</a>
+        </div>
+        <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
+          <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+          <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Nav -->
+    <div class="sm:hidden border-t border-gray-100 dark:border-white/5 py-2 overflow-x-auto no-scrollbar px-6 flex gap-6 text-sm font-medium text-[#86868b] dark:text-gray-400">
+       <a href="/blog/" class="hover:text-black dark:hover:text-white whitespace-nowrap">blog</a>
+       <a href="/gallery/" class="hover:text-black dark:hover:text-white whitespace-nowrap">photography</a>
+       <a href="/reading/" class="hover:text-black dark:hover:text-white transition-colors">books</a>
+       <a href="/tools/" class="hover:text-black dark:hover:text-white whitespace-nowrap">fun-stuff</a>
+    </div>
+  </nav>
+  
+
+  <!-- MAIN CONTENT: Increased width to max-w-3xl -->
+  <main class="flex-grow w-full max-w-3xl mx-auto px-6 py-12 mt-24">
+    <article class="fade-in">
+    <!-- Header: Pure title and metadata, NO back button -->
+    <header class="mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight text-[#1d1d1f] dark:text-white">setting up this blog</h1>
+        
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-white/10 pb-4">
+            <time class="font-mono text-xs text-[#86868b]">May 11, 2025</time>
+            
+            <!-- Share Button Only -->
+            <button onclick="sharePost()" class="group flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-50 dark:bg-white/10 hover:bg-gray-100 dark:hover:bg-white/20 transition-colors cursor-pointer">
+                <i data-lucide="share" class="w-3 h-3 text-gray-500 dark:text-gray-300"></i>
+                <span id="share-text" class="text-[10px] font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wide">Share</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <div class="prose prose-lg dark:prose-invert max-w-none">
+        <blockquote>
+  <p>UPDATE: On November 22, 2025, I made big design changes to this website that do not adhere to the design choices in this post.</p>
+</blockquote>
+
+<p>I have had the <code class="language-plaintext highlighter-rouge">harshnahar.com</code> domain for over five years now. Back in 2020-21, I had purchased the cheapest WIX plan, which was probably 300/- a month for hosting, and they offered a year’s worth of domain registration free. This plan also had about 10GB of hosting space and about 100GB of bandwidth per month for a site. I did not know what all that meant and Googled along the way to get the site up and running.</p>
+
+<p>As I am a photographer and I occasionally write, I wanted a simple yet modern blog which could display my gallery and posts. WIX’s drag-and-drop functionality, margins, and paddings made it pretty intuitive to build the look of the site, and they also had a CMS so that I could add posts to the blog page. In no time, I set up the site with the minimal design I had in mind, and it looked fine on a phone too!</p>
+
+<p>About 1-2 years later, I felt the design was boring and I probably did not need one for now(the charges seemed high to me). So I took it down.</p>
+
+<p>It has been a couple of years since then. I have tried to learn how to get a simple site running for low/no cost but always dreaded the amount of work required in setting one up.</p>
+
+<p><strong>And then came ChatGPT</strong></p>
+
+<p>Well, GPT has been around for a while. What I meant is GPT 4-o and the reasoning model.
+This changed the game when it helped me build an iOS, web app for a tax calculator which is hosted on GitHub. It was entirely coded by AI. It did require many iterations and corrections by me, having to prompt a million times, but it worked nonetheless.</p>
+
+<hr />
+
+<p>May 8th, 2025</p>
+
+<p>After using GPT to understand how to build a PDF parsing system that can then use that data to categorize and visualize my expenses, I had enough zeal in me to start with the blog generation process.</p>
+
+<p>The first thing I did was to create a working prototype in Figma for the home, blog, and posts’ pages. My initial idea was for it to be extremely simple for load times and to draw attention to the posted content, so a white background and black text were decided. The website should look like a document rather than an app. It should open in milliseconds. Yet, it should feel like there was some thought put into this.</p>
+
+<p><img src="https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blog-images/Initial%20Design.webp" alt="Initial Design" /></p>
+
+<p>Then I remembered that Kailash Nadh, the CTO of Zerodha, has his own blog, which is very close to what I wanted. He posts his musings and pictures there. One interesting thing is his use of orange (#ff5232) for links and important words. I liked it so much that I decided to include it in my site too.</p>
+
+<p>With that in mind, I came up with some hover effects and transitions, and my vision was almost there.</p>
+
+<p>Now it was time for me to help GPT understand the requirement(sometimes quite difficult).</p>
+
+<hr />
+
+<p>May 9th, 2025</p>
+
+<p>I exported a PDF of the designs and annotated it at various places along with a long description, thinking GPT would read those and figure things out.</p>
+
+<p><img src="https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blog-images/Initial%20Prompt.webp" alt="Initial Prompt" /></p>
+
+<p>From here on, it started building the HTML and CSS files required for the page. This process took a very long time. For it to understand the design I wanted, the font, bg-color, hover effects, font switcher, transition times, etc., it felt like an endless effort.</p>
+
+<p>Somehow, in some hours, I had a working local file that resembled the site I wanted.</p>
+
+<p>Off to sleep.</p>
+
+<hr />
+
+<p>May 10th, 2025 (morning to noon)</p>
+
+<p>In retrospect, if I had known how painful this would be, I might not have taken up this project.
+Now, I know a web developer would find this hilarious or stupid, but to a commoner - man, why is this so difficult?</p>
+
+<p>My morning started with the usual “hey, now help me get this site up and running from here” prompts. GPT had already decided to suggest using GitHub and something called “Jekyll,” which is a static website generator native to GitHub, to develop my site. An unknown word scares me sometimes. I thought I would let GPT handle it, and I would just follow instructions.</p>
+
+<p>During lunch break, I had taken some time to look at the code both in HTML and CSS and tweaked a few things here and there to better fit my vision.</p>
+
+<p><img src="https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blog-images/Code%20Screenshot.webp" alt="Project Roadmap" /></p>
+
+<p>After this, the following is what I did to get the site on GitHub:</p>
+<ul>
+  <li>Create a new GitHub account and a repo for my site.</li>
+  <li>Add files and folders in the following structure:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Root of the GitHub Pages site
+├── _config.yml               # Jekyll configuration
+├── index.md                  # Homepage content (uses home layout)
+├── blog/                     # Blog directory
+│   └── index.md              # Blog grid page (uses blog layout)
+├── styles.css                # Main stylesheet
+├── CNAME                     # (auto) contains: harshnahar.com when using custom domain
+├── _layouts/                 # Jekyll layouts
+│   ├── default.html          # Base wrapper (head, CSS, body)  
+│   ├── home.html             # Homepage inner markup  
+│   ├── blog.html             # Blog grid markup + search  
+│   └── post.html             # Individual post layout (header, content, footer)
+└── _posts/                   # Markdown posts
+  ├── 2025-01-10-post-1.md
+  ├── 2025-02-05-post-2.md
+</code></pre></div>    </div>
+  </li>
+  <li>After this was done, GitHub Pages in the repo setting had to be enabled. This basically means that your site is up and running with a github.io extension.</li>
+</ul>
+
+<hr />
+
+<p><img src="https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blog-images/Roadmap.webp" alt="Project Roadmap" /></p>
+
+<p>May 10th, 2025 (evening)</p>
+
+<p>My excitement was short-lived. As I had not yet added my domain to this repo, which was the final goal. I had bought this domain from GoDaddy. GitHub lets you add your domains in the settings-pages-CustomDomain in the repo.</p>
+
+<p>Here is the process -</p>
+<ul>
+  <li>Go to the DNS settings of your domain.</li>
+  <li>Add four A records and one CNAME record in the DNS records:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|Type|Host|Points to|TTL|
+|A|@|185.199.108.153|Default|
+|A|@|185.199.109.153|Default|
+|A|@|185.199.110.153|Default|
+|A|@|185.199.111.153|Default|
+|-|
+|Type|Host|Points to|TTL|
+|CNAME|www|`github repo link`|Default|
+</code></pre></div></div>
+<ul>
+  <li>Go to the repo settings - Pages - Custom Domain - add your personal domain</li>
+  <li>Here, GitHub will do a domain check and after successful completion, your website can be accessed directly by the personal domain. GitHub also adds HTTPS to your website for free this way.</li>
+</ul>
+
+<p>I tried adding the mentioned record in GoDaddy DNS settings but then GitHub could not do a successful DNS check no matter what I tried. When I looked online, it seemed like others had similar issues with GoDaddy as well.</p>
+
+<p>This prompted me to transfer my domain over to NameCheap. By this time it was already getting dark. I initiated the transfer process and paid the fees. Now I just had to wait for that to happen.</p>
+
+<p>To let my mind rest, I turned off the computer and went for a walk. All this time I was restless as I was so close to completion. When I returned, the transfer was complete.</p>
+
+<p>I tried the DNS records step again but it kept throwing random errors at me. GPT kept repeating the same things: “check your root folder for a .nojekyll file, have some patience” etc.;</p>
+
+<p>Not to mention, the frequent “You have reached the limit, wait for 2 hours to continue this chat”.</p>
+
+<p>Exactly when I was about to give everything up, the site somehow went live on my domain. I was confused. I kept looking at the URL bar and none of the refreshes threw an error. When the realization hit that it was indeed working, I let out a sigh of relief and thought to myself:</p>
+
+<p>“I might never want to do this again”</p>
+
+    </div>
+</article>
+
+<script>
+async function sharePost() {
+    const url = window.location.href;
+    const title = document.title;
+    const shareText = document.getElementById('share-text');
+    if (navigator.share) {
+        try { await navigator.share({ title, url }); } catch (err) {}
+    } else {
+        try {
+            await navigator.clipboard.writeText(url);
+            const original = shareText.innerText;
+            shareText.innerText = "COPIED";
+            setTimeout(() => shareText.innerText = original, 2000);
+        } catch (err) {}
+    }
+}
+</script>
+  </main>
+
+  <footer class="py-8 text-center text-xs text-[#86868b] opacity-60 font-mono">
+    © 2025 Harsh Nahar
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+</body>
+
+</html>
+
+

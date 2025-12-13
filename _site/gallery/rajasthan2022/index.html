@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  
+  <!-- Social Preview Meta Tags -->
+  <title>Rajasthan - harsh nahar</title>
+  <meta name="description" content="We visited 4 places in 10 days and I made this poster showing our trip route
+">
+  
+  <!-- Open Graph / Facebook / iMessage -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:4000/gallery/rajasthan2022/">
+  <meta property="og:title" content="Rajasthan">
+  <meta property="og:description" content="We visited 4 places in 10 days and I made this poster showing our trip route
+">
+  
+  
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaipur/jaipur_citypalace_painting.webp">
+  
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="http://localhost:4000/gallery/rajasthan2022/">
+  <meta property="twitter:title" content="Rajasthan">
+  <meta property="twitter:description" content="We visited 4 places in 10 days and I made this poster showing our trip route
+">
+  
+    <meta property="twitter:image" content="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaipur/jaipur_citypalace_painting.webp">
+  
+
+  <!-- Tailwind CSS & Typography Plugin -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: { bg: '#000000', card: '#1c1c1e', text: '#f5f5f7', muted: '#86868b', border: '#333333' }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"Inter"', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', '"JetBrains Mono"', 'monospace'],
+          },
+          typography: (theme) => ({
+            DEFAULT: { css: { '--tw-prose-body': '#1d1d1f', '--tw-prose-headings': '#1d1d1f', '--tw-prose-links': '#0071e3', maxWidth: 'none' } },
+            invert: { css: { '--tw-prose-body': '#f5f5f7', '--tw-prose-headings': '#f5f5f7', '--tw-prose-links': '#2997ff' } },
+          }),
+        }
+      }
+    }
+  </script>
+  <style>
+    body { transition: background-color 0.3s ease, color 0.3s ease; }
+    .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .dark .glass-nav { background: rgba(0, 0, 0, 0.7); border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-white text-[#1d1d1f] dark:bg-dark-bg dark:text-dark-text min-h-screen flex flex-col antialiased selection:bg-blue-100 dark:selection:bg-blue-900">
+
+  <!-- NAVIGATION: Hidden if page.layout == 'home' -->
+  
+  <nav class="fixed top-0 w-full z-50 glass-nav">
+    <div class="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-70 transition-opacity whitespace-nowrap">harsh nahar</a>
+      <div class="flex items-center gap-6">
+        <div class="hidden sm:flex gap-6 text-sm font-medium text-[#86868b] dark:text-gray-400">
+          <a href="/blog/" class="hover:text-black dark:hover:text-white transition-colors">blog</a>
+          <a href="/gallery/" class="hover:text-black dark:hover:text-white transition-colors">photography</a>
+          <a href="/reading/" class="hover:text-black dark:hover:text-white transition-colors">books</a>
+          <a href="/tools/" class="hover:text-black dark:hover:text-white transition-colors">fun-stuff</a>
+        </div>
+        <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
+          <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+          <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Nav -->
+    <div class="sm:hidden border-t border-gray-100 dark:border-white/5 py-2 overflow-x-auto no-scrollbar px-6 flex gap-6 text-sm font-medium text-[#86868b] dark:text-gray-400">
+       <a href="/blog/" class="hover:text-black dark:hover:text-white whitespace-nowrap">blog</a>
+       <a href="/gallery/" class="hover:text-black dark:hover:text-white whitespace-nowrap">photography</a>
+       <a href="/reading/" class="hover:text-black dark:hover:text-white transition-colors">books</a>
+       <a href="/tools/" class="hover:text-black dark:hover:text-white whitespace-nowrap">fun-stuff</a>
+    </div>
+  </nav>
+  
+
+  <!-- MAIN CONTENT: Increased width to max-w-3xl -->
+  <main class="flex-grow w-full max-w-3xl mx-auto px-6 py-12 mt-24">
+    <article class="fade-in">
+    <!-- Header (Back button removed) -->
+    <header class="mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight text-[#1d1d1f] dark:text-white">Rajasthan</h1>
+        
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-white/10 pb-4">
+            <time class="font-mono text-xs text-[#86868b]">Nov 2022</time>
+            
+            <!-- Share Button -->
+            <button onclick="sharePost()" class="group flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-50 dark:bg-white/10 hover:bg-gray-100 dark:hover:bg-white/20 transition-colors cursor-pointer">
+                <i data-lucide="share" class="w-3 h-3 text-gray-500 dark:text-gray-300"></i>
+                <span id="share-text" class="text-[10px] font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wide">Share</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <div class="prose prose-lg dark:prose-invert max-w-none">
+        <p>We visited 4 places in 10 days and I made this poster showing our trip route</p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/rajasthan_coverpage.webp" alt="Poster of Rajasthan Trip" /></p>
+
+<p>To view the images in high resolution, check out my Behance project - <strong><a href="https://www.behance.net/gallery/169505287/Rajasthan-2022">Rajasthan 2022</a></strong></p>
+
+<hr />
+<h3 id="jaipur">Jaipur</h3>
+<hr />
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaipur/jaipur_hawamahal.webp" alt="Hawa Mahal, Jaipur" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaipur/jaipur_citypalace.webp" alt="City Palace, Jaipur" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaipur/jaipur_citypalace_painting.webp" alt="A painting on the wall of city palace" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaipur/jaipur_jantarmantar.webp" alt="Jantar Mantar, Jaipur" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaipur/jaipur_cityvendor.webp" alt="Street Vendor, Jaipur" /></td>
+    </tr>
+    <tr>
+      <td><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaipur/jaipur_man_on_street.webp" alt="A man on the street, Jaipur" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaipur/jaipur_cityscape.webp" alt="Jaipur cityscape" /></p>
+
+<hr />
+<h4 id="jodhpur">Jodhpur</h4>
+<hr />
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jodhpur/jodhpur_street3.webp" alt="A dog on street, Jodhpur" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jodhpur/jodhpur_streetwall.webp" alt="Art on wall, Jodhpur" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jodhpur/jodhpur_street2.webp" alt="Streets of Jodhpur" /></td>
+    </tr>
+    <tr>
+      <td><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jodhpur/jodhpur_street1.webp" alt="Streets of Jodhpur" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jodhpur/jodhpur_mehrangarhfort_entrance2.webp" alt="A man playing Indian String Instrument, Jodhpur" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jodhpur/jodhpur_mehrangarhfort_entrance1.webp" alt="A family of musicians outside Mehrangarh Fort, Jodhpur" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jodhpur/jodhpur_mehrangarhfort_entrance.webp" alt="A woman at the entrance of Mehrangarh Fort, Jodhpur" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jodhpur/jodhpur_mehrangarhfort_bedroom.webp" alt="A royal room in Mehrangarh Fort, Jodhpur" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jodhpur/jodhpur_mehrangarhfort_couple.webp" alt="A couple outside Mehrangarh Fort, Jodhpur" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jodhpur/jodhpur_cityscape2.webp" alt="Jodhpur from Mehrangarh Fort" /></td>
+    </tr>
+    <tr>
+      <td><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jodhpur/jodhpur_cityscape1.webp" alt="Jodhpur from Mehrangarh Fort" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+<h4 id="jaisalmer">Jaisalmer</h4>
+<hr />
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaisalmer/jaisalmer_shop.webp" alt="A shop in Jaisalmer City" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaisalmer/jaisalmer_cattle_grazing.webp" alt="Cattle grazing in Jaisalmer" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaisalmer/jaisalmer_lady_in_desert.webp" alt="A lady in Sam Sand Dunes, Jaisalmer" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaisalmer/jaisalmer_boy_walking_camel.webp" alt="A boy walking a camel, Jaisalmer" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaisalmer/jaisalmer_camelwalkers.webp" alt="Camel walkers resting during sunset, Jaisalmer" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaisalmer/jaisalmer_jeepsafari.webp" alt="Jeep safari in the sand dunes, Jaisalmer" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaisalmer/jaisalmer_fireshow1.webp" alt="A performer playing with fire, Jaisalmer" /></td>
+    </tr>
+    <tr>
+      <td><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaisalmer/jaisalmer_fireshow2.webp" alt="A performer playing with fire, Jaisalmer" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaisalmer/jaisalmer_stars.webp" alt="A sky full of stars, Jaisalmer" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaisalmer/jaisalmer_milkyway2.webp" alt="A tent with a view of milkyway galaxy, Jaisalmer" /></td>
+      <td><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/jaisalmer/jaisalmer_milkyway.webp" alt="Milkyway Galaxy, Jaisalmer" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+<h4 id="udaipur">Udaipur</h4>
+<hr />
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/udaipur/udaipur_saheliyokibadi1.webp" alt="A woman with her child, Udaipur" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/udaipur/udaipur_saheliyokibadi2.webp" alt="A painting on the wall, Udaipur" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/udaipur/udaipur_puppetshow.webp" alt="A puppet show, Udaipur" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/udaipur/udaipur_lakepalace.webp" alt="Lake Palace, Udaipur" /></td>
+      <td><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/udaipur/udaipur_citypalace.webp" alt="City Palace, Udaipur" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/udaipur/udaipur_fatehsagarlake_evening.webp" alt="Evening at Fatehsagar lake, Udaipur" /></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/rajasthan_2022/udaipur/udaipur_citypalace_sunset.webp" alt="Sunset from Fatehsagar lake, Udaipur" /></p>
+
+<p>Thank you for your time.</p>
+
+    </div>
+</article>
+
+<script>
+async function sharePost() {
+    const url = window.location.href;
+    const title = document.title;
+    const shareText = document.getElementById('share-text');
+    if (navigator.share) {
+        try { await navigator.share({ title, url }); } catch (err) {}
+    } else {
+        try {
+            await navigator.clipboard.writeText(url);
+            const original = shareText.innerText;
+            shareText.innerText = "COPIED";
+            setTimeout(() => shareText.innerText = original, 2000);
+        } catch (err) {}
+    }
+}
+</script>
+  </main>
+
+  <footer class="py-8 text-center text-xs text-[#86868b] opacity-60 font-mono">
+    © 2025 Harsh Nahar
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+</body>
+
+</html>
+
+

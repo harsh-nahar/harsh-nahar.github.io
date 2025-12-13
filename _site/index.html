@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  
+  <!-- Social Preview Meta Tags -->
+  <title>home - harsh nahar</title>
+  <meta name="description" content="Welcome to my little corner of the web.">
+  
+  <!-- Open Graph / Facebook / iMessage -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:4000/">
+  <meta property="og:title" content="home">
+  <meta property="og:description" content="welcome to my little corner of the web">
+  
+  
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="http://localhost:4000/">
+  <meta property="twitter:title" content="home">
+  <meta property="twitter:description" content="welcome to my little corner of the web">
+  
+    <meta property="twitter:image" content="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  
+
+  <!-- Tailwind CSS & Typography Plugin -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: { bg: '#000000', card: '#1c1c1e', text: '#f5f5f7', muted: '#86868b', border: '#333333' }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"Inter"', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', '"JetBrains Mono"', 'monospace'],
+          },
+          typography: (theme) => ({
+            DEFAULT: { css: { '--tw-prose-body': '#1d1d1f', '--tw-prose-headings': '#1d1d1f', '--tw-prose-links': '#0071e3', maxWidth: 'none' } },
+            invert: { css: { '--tw-prose-body': '#f5f5f7', '--tw-prose-headings': '#f5f5f7', '--tw-prose-links': '#2997ff' } },
+          }),
+        }
+      }
+    }
+  </script>
+  <style>
+    body { transition: background-color 0.3s ease, color 0.3s ease; }
+    .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .dark .glass-nav { background: rgba(0, 0, 0, 0.7); border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-white text-[#1d1d1f] dark:bg-dark-bg dark:text-dark-text min-h-screen flex flex-col antialiased selection:bg-blue-100 dark:selection:bg-blue-900">
+
+  <!-- NAVIGATION: Hidden if page.layout == 'home' -->
+  
+
+  <!-- MAIN CONTENT: Increased width to max-w-3xl -->
+  <main class="flex-grow w-full max-w-3xl mx-auto px-6 py-12 ">
+    <!-- Standalone Theme Toggle for Home -->
+<div class="fixed top-6 right-6 z-40">
+    <button onclick="toggleTheme()" class="p-2 rounded-full bg-gray-50 dark:bg-white/10 hover:bg-gray-100 dark:hover:bg-white/20 transition-colors text-gray-500 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-transparent">
+        <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+        <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+    </button>
+</div>
+
+<div class="min-h-[60vh] flex flex-col justify-center fade-in mt-16 sm:mt-24">
+    <div class="mb-12">
+        <p class="text-xl md:text-2xl leading-relaxed font-medium text-[#1d1d1f] dark:text-white mb-6">
+            Hello, I’m Harsh Nahar.
+        </p>
+        <p class="text-xl md:text-2xl leading-relaxed text-[#86868b] dark:text-dark-muted font-light">
+            Welcome to my little corner of the web - where I share <span class="text-[#1d1d1f] dark:text-white font-normal">thoughts</span>, <span class="text-[#1d1d1f] dark:text-white font-normal">visuals</span>, and what’s on my <span class="text-[#1d1d1f] dark:text-white font-normal">nightstand</span>.
+        </p>
+    </div>
+
+    <ul class="space-y-3 mb-16 text-xl md:text-2xl text-[#1d1d1f] dark:text-white">
+        <li><a href="/blog/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative group">blog<span class="absolute left-0 bottom-1 w-0 h-[1px] bg-current transition-all group-hover:w-full"></span></a></li>
+        <li><a href="/gallery/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative group">photography<span class="absolute left-0 bottom-1 w-0 h-[1px] bg-current transition-all group-hover:w-full"></span></a></li>
+        <li><a href="/reading/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative group">bookshelf<span class="absolute left-0 bottom-1 w-0 h-[1px] bg-current transition-all group-hover:w-full"></span></a></li>
+        <li><a href="/tools/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative group">fun-stuff<span class="absolute left-0 bottom-1 w-0 h-[1px] bg-current transition-all group-hover:w-full"></span></a></li>
+    </ul>
+
+    <div class="pt-8 border-t border-gray-100 dark:border-white/10">
+        <p class="font-mono text-xs text-[#86868b] dark:text-gray-500 uppercase tracking-wider mb-4">Currently Reading</p>
+        <a href="https://www.goodreads.com/book/show/8695.The_Restaurant_at_the_End_of_the_Universe" target="_blank" class="group inline-flex items-start gap-4 hover:opacity-80 transition-opacity">
+            <div class="h-14 w-10 bg-gray-200 dark:bg-gray-800 rounded-sm shadow-sm flex-shrink-0 flex items-center justify-center">
+                 <i data-lucide="book" class="w-4 h-4 text-gray-400"></i>
+            </div>
+            <div>
+                <h3 class="text-base font-medium leading-tight dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">The Restaurant at the End of the Universe</h3>
+                <p class="text-sm text-[#86868b] dark:text-gray-500 mt-0.5">Douglas Adams</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+
+
+  </main>
+
+  <footer class="py-8 text-center text-xs text-[#86868b] opacity-60 font-mono">
+    © 2025 Harsh Nahar
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+</body>
+
+</html>
+
+

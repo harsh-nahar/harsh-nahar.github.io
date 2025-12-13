@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  
+  <!-- Social Preview Meta Tags -->
+  <title>the real cost calculator - harsh nahar</title>
+  <meta name="description" content="Welcome to my little corner of the web.">
+  
+  <!-- Open Graph / Facebook / iMessage -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:4000/tools/opportunity-cost/">
+  <meta property="og:title" content="the real cost calculator">
+  <meta property="og:description" content="see how many hours of work an item costs you, and what it costs your future self.">
+  
+  
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_realcost.webp">
+  
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="http://localhost:4000/tools/opportunity-cost/">
+  <meta property="twitter:title" content="the real cost calculator">
+  <meta property="twitter:description" content="see how many hours of work an item costs you, and what it costs your future self.">
+  
+    <meta property="twitter:image" content="https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_realcost.webp">
+  
+
+  <!-- Tailwind CSS & Typography Plugin -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: { bg: '#000000', card: '#1c1c1e', text: '#f5f5f7', muted: '#86868b', border: '#333333' }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"Inter"', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', '"JetBrains Mono"', 'monospace'],
+          },
+          typography: (theme) => ({
+            DEFAULT: { css: { '--tw-prose-body': '#1d1d1f', '--tw-prose-headings': '#1d1d1f', '--tw-prose-links': '#0071e3', maxWidth: 'none' } },
+            invert: { css: { '--tw-prose-body': '#f5f5f7', '--tw-prose-headings': '#f5f5f7', '--tw-prose-links': '#2997ff' } },
+          }),
+        }
+      }
+    }
+  </script>
+  <style>
+    body { transition: background-color 0.3s ease, color 0.3s ease; }
+    .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .dark .glass-nav { background: rgba(0, 0, 0, 0.7); border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-white text-[#1d1d1f] dark:bg-dark-bg dark:text-dark-text min-h-screen flex flex-col antialiased selection:bg-blue-100 dark:selection:bg-blue-900">
+
+  <!-- NAVIGATION: Hidden if page.layout == 'home' -->
+  
+  <nav class="fixed top-0 w-full z-50 glass-nav">
+    <div class="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-70 transition-opacity whitespace-nowrap">harsh nahar</a>
+      <div class="flex items-center gap-6">
+        <div class="hidden sm:flex gap-6 text-sm font-medium text-[#86868b] dark:text-gray-400">
+          <a href="/blog/" class="hover:text-black dark:hover:text-white transition-colors">blog</a>
+          <a href="/gallery/" class="hover:text-black dark:hover:text-white transition-colors">photography</a>
+          <a href="/reading/" class="hover:text-black dark:hover:text-white transition-colors">books</a>
+          <a href="/tools/" class="hover:text-black dark:hover:text-white transition-colors">fun-stuff</a>
+        </div>
+        <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
+          <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+          <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Nav -->
+    <div class="sm:hidden border-t border-gray-100 dark:border-white/5 py-2 overflow-x-auto no-scrollbar px-6 flex gap-6 text-sm font-medium text-[#86868b] dark:text-gray-400">
+       <a href="/blog/" class="hover:text-black dark:hover:text-white whitespace-nowrap">blog</a>
+       <a href="/gallery/" class="hover:text-black dark:hover:text-white whitespace-nowrap">photography</a>
+       <a href="/reading/" class="hover:text-black dark:hover:text-white transition-colors">books</a>
+       <a href="/tools/" class="hover:text-black dark:hover:text-white whitespace-nowrap">fun-stuff</a>
+    </div>
+  </nav>
+  
+
+  <!-- MAIN CONTENT: Increased width to max-w-3xl -->
+  <main class="flex-grow w-full max-w-3xl mx-auto px-6 py-12 mt-24">
+    <style>
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type=number] { -moz-appearance: textfield; }
+
+  .mono-input {
+      font-family: 'JetBrains Mono', monospace;
+      width: 100%;
+      background: transparent;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 1rem;
+      color: #111;
+      transition: all 0.2s;
+  }
+  .dark .mono-input {
+      border-color: #333;
+      color: #eee;
+  }
+  .mono-input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  }
+
+  .lbl {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6b7280;
+      margin-bottom: 6px;
+      display: block;
+  }
+  .dark .lbl { color: #9ca3af; }
+
+  .result-card {
+      padding: 24px;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  }
+  .dark .result-card {
+      background: #050505;
+      border-color: #27272a;
+  }
+  
+  .big-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-top: 8px;
+      margin-bottom: 8px;
+      letter-spacing: -0.03em;
+      /* Overflow Handling */
+      white-space: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none; 
+  }
+  .big-num::-webkit-scrollbar { display: none; }
+  
+  .sub-stat {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-top: 4px;
+  }
+</style>
+
+<div class="fade-in max-w-5xl mx-auto mb-20">
+  
+  <div class="mb-12 border-b border-gray-100 dark:border-white/10 pb-8">
+    <h1 class="text-3xl font-bold text-[#1d1d1f] dark:text-white">The Real Cost</h1>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Measure purchases in Time & Future Wealth.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      
+      <!-- INPUTS -->
+      <div class="lg:col-span-5 space-y-8">
+        
+        <section>
+            <div class="mb-6">
+                <label class="lbl">Monthly In-Hand Salary (₹)</label>
+                <input type="number" id="salary" placeholder="e.g. 80000" class="mono-input">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="lbl">Hours/Week</label>
+                    <input type="number" id="hours" value="45" class="mono-input">
+                </div>
+                <div>
+                    <label class="lbl">Real Hourly Rate</label>
+                    <div class="p-3 border border-gray-100 dark:border-white/10 rounded-lg text-right">
+                        <span id="hourlyRate" class="font-mono font-bold text-gray-400">₹0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-gray-100 dark:border-white/10">
+
+        <section>
+            <label class="lbl" style="color: #3b82f6;">Item Price (₹)</label>
+            <input type="number" id="price" placeholder="e.g. 1500" class="mono-input" style="border-color: #3b82f6; font-size: 1.5rem; padding: 16px;">
+        </section>
+
+        <details class="group">
+            <summary class="flex items-center gap-2 text-xs font-medium text-gray-500 cursor-pointer hover:text-black dark:hover:text-white transition-colors">
+                <i data-lucide="settings-2" class="w-3 h-3"></i> Configure Investment Assumptions
+            </summary>
+            <div class="mt-4 p-4 bg-gray-50 dark:bg-white/5 rounded-lg grid grid-cols-2 gap-4">
+                <div>
+                    <label class="lbl">Return Rate (%)</label>
+                    <input type="number" id="roi" value="12" class="mono-input text-sm">
+                </div>
+                <div>
+                    <label class="lbl">Years to Grow</label>
+                    <input type="number" id="years" value="10" class="mono-input text-sm">
+                </div>
+            </div>
+        </details>
+
+      </div>
+
+      <!-- OUTPUTS -->
+      <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          
+          <!-- Time Cost -->
+          <div class="result-card">
+              <div>
+                  <p class="lbl">Time Cost</p>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">To earn this amount, you must work for:</p>
+              </div>
+              <div>
+                  <div id="timeResult" class="big-num text-[#1d1d1f] dark:text-white">0 Hours</div>
+                  <p id="daysResult" class="sub-stat">approx 0 work days</p>
+              </div>
+          </div>
+
+          <!-- Future Value -->
+          <div class="result-card border-orange-200 dark:border-orange-900/30 bg-orange-50/30 dark:bg-orange-900/5">
+              <div>
+                  <p class="lbl text-orange-600 dark:text-orange-400">Opportunity Cost</p>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">If invested, this money would grow to:</p>
+              </div>
+              <div>
+                  <div id="futureResult" class="big-num text-orange-600 dark:text-orange-400">₹0</div>
+                  <p id="futureDetail" class="sub-stat">in 10 years @ 12%</p>
+              </div>
+          </div>
+
+          <!-- Verdict -->
+          <div class="sm:col-span-2 p-6 rounded-2xl bg-gray-100 dark:bg-white/10 text-[#1d1d1f] dark:text-white text-center border border-gray-200 dark:border-white/5">
+              <p class="text-xs font-bold uppercase tracking-widest opacity-60 mb-2">Perspective</p>
+              <p id="verdictText" class="text-lg font-medium leading-relaxed">
+                  Enter Salary and Price to see the impact.
+              </p>
+          </div>
+
+      </div>
+  </div>
+
+  <!-- Explainer -->
+  <div class="mt-20 pt-10 border-t border-gray-100 dark:border-white/10 max-w-2xl mx-auto prose dark:prose-invert">
+      <h3>How is this calculated?</h3>
+      
+      <h4>1. Your "Real" Hourly Rate</h4>
+      <p>
+          We calculate your effective hourly wage by dividing your monthly In-Hand salary by your total monthly work hours (Weekly Hours × 4.33 weeks).
+      </p>
+
+      <h4>2. The Opportunity Cost</h4>
+      <p>
+          Money spent today is money that cannot grow. We use the standard <strong>Compound Interest Formula</strong>: <code>P × (1 + r/100)^t</code>.
+          <br>
+          By default, we assume a <strong>12% return</strong> (Index Funds) over <strong>10 years</strong>, but you can adjust these in the settings.
+      </p>
+  </div>
+
+</div>
+
+<script>
+    const el = {
+        salary: document.getElementById('salary'),
+        hours: document.getElementById('hours'),
+        price: document.getElementById('price'),
+        roi: document.getElementById('roi'),
+        years: document.getElementById('years'),
+        hourlyRate: document.getElementById('hourlyRate'),
+        timeResult: document.getElementById('timeResult'),
+        daysResult: document.getElementById('daysResult'),
+        futureResult: document.getElementById('futureResult'),
+        futureDetail: document.getElementById('futureDetail'),
+        verdictText: document.getElementById('verdictText')
+    };
+
+    const fmt = (n) => Math.round(n).toLocaleString('en-IN');
+
+    function calculate() {
+        const salary = parseFloat(el.salary.value) || 0;
+        const weeklyHours = parseFloat(el.hours.value) || 45;
+        const price = parseFloat(el.price.value) || 0;
+        const roi = parseFloat(el.roi.value) || 12;
+        const years = parseFloat(el.years.value) || 10;
+
+        const monthlyHours = weeklyHours * 4.33;
+        const hourlyRate = monthlyHours > 0 ? (salary / monthlyHours) : 0;
+        
+        el.hourlyRate.textContent = `₹${Math.round(hourlyRate)}/hr`;
+
+        if (hourlyRate > 0 && price > 0) {
+            const hoursNeeded = price / hourlyRate;
+            const daysNeeded = hoursNeeded / 8; 
+
+            el.timeResult.textContent = `${Math.round(hoursNeeded)} Hours`;
+            el.daysResult.textContent = `approx ${daysNeeded.toFixed(1)} work days`;
+
+            const futureValue = price * Math.pow((1 + roi/100), years);
+            el.futureResult.textContent = `₹${fmt(futureValue)}`;
+            el.futureDetail.textContent = `in ${years} years @ ${roi}%`;
+
+            if (daysNeeded > 5) {
+                el.verdictText.innerHTML = `This purchase requires <strong>${Math.round(daysNeeded)} days</strong> of labor.<br>Is it worth a week of your life?`;
+            } else {
+                el.verdictText.innerHTML = `This costs <strong>${Math.round(hoursNeeded)} hours</strong> of work.<br>If it adds value to your life, go for it.`;
+            }
+        } else {
+            el.timeResult.textContent = "0 Hours";
+            el.futureResult.textContent = "₹0";
+        }
+    }
+
+    [el.salary, el.hours, el.price, el.roi, el.years].forEach(i => i.addEventListener('input', calculate));
+    lucide.createIcons();
+</script>
+  </main>
+
+  <footer class="py-8 text-center text-xs text-[#86868b] opacity-60 font-mono">
+    © 2025 Harsh Nahar
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+</body>
+
+</html>
+
+

@@ -1,0 +1,3301 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/harsh-home.jpg">
+  
+  <!-- Social Preview Meta Tags -->
+  <title>reading log - harsh nahar</title>
+  <meta name="description" content="Welcome to my little corner of the web.">
+  
+  <!-- Open Graph / Facebook / iMessage -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:4000/reading/">
+  <meta property="og:title" content="reading log">
+  <meta property="og:description" content="a chronological log of books and essays i have read.">
+  
+  
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_reading.webp">
+  
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="http://localhost:4000/reading/">
+  <meta property="twitter:title" content="reading log">
+  <meta property="twitter:description" content="a chronological log of books and essays i have read.">
+  
+    <meta property="twitter:image" content="https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_reading.webp">
+  
+
+  <!-- Tailwind CSS & Typography Plugin -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: { bg: '#000000', card: '#1c1c1e', text: '#f5f5f7', muted: '#86868b', border: '#333333' }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"Inter"', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', '"JetBrains Mono"', 'monospace'],
+          },
+          typography: (theme) => ({
+            DEFAULT: { css: { '--tw-prose-body': '#1d1d1f', '--tw-prose-headings': '#1d1d1f', '--tw-prose-links': '#0071e3', maxWidth: 'none' } },
+            invert: { css: { '--tw-prose-body': '#f5f5f7', '--tw-prose-headings': '#f5f5f7', '--tw-prose-links': '#2997ff' } },
+          }),
+        }
+      }
+    }
+  </script>
+  <style>
+    body { transition: background-color 0.3s ease, color 0.3s ease; }
+    .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .dark .glass-nav { background: rgba(0, 0, 0, 0.7); border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-white text-[#1d1d1f] dark:bg-dark-bg dark:text-dark-text min-h-screen flex flex-col antialiased selection:bg-blue-100 dark:selection:bg-blue-900">
+
+  <!-- NAVIGATION: Hidden if page.layout == 'home' -->
+  
+  <nav class="fixed top-0 w-full z-50 glass-nav">
+    <div class="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="/" class="text-lg font-semibold tracking-tight hover:opacity-70 transition-opacity whitespace-nowrap">harsh nahar</a>
+      <div class="flex items-center gap-6">
+        <div class="hidden sm:flex gap-6 text-sm font-medium text-[#86868b] dark:text-gray-400">
+          <a href="/blog/" class="hover:text-black dark:hover:text-white transition-colors">blog</a>
+          <a href="/gallery/" class="hover:text-black dark:hover:text-white transition-colors">photography</a>
+          <a href="/reading/" class="hover:text-black dark:hover:text-white transition-colors">books</a>
+          <a href="/tools/" class="hover:text-black dark:hover:text-white transition-colors">fun-stuff</a>
+        </div>
+        <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
+          <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+          <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Nav -->
+    <div class="sm:hidden border-t border-gray-100 dark:border-white/5 py-2 overflow-x-auto no-scrollbar px-6 flex gap-6 text-sm font-medium text-[#86868b] dark:text-gray-400">
+       <a href="/blog/" class="hover:text-black dark:hover:text-white whitespace-nowrap">blog</a>
+       <a href="/gallery/" class="hover:text-black dark:hover:text-white whitespace-nowrap">photography</a>
+       <a href="/reading/" class="hover:text-black dark:hover:text-white transition-colors">books</a>
+       <a href="/tools/" class="hover:text-black dark:hover:text-white whitespace-nowrap">fun-stuff</a>
+    </div>
+  </nav>
+  
+
+  <!-- MAIN CONTENT: Increased width to max-w-3xl -->
+  <main class="flex-grow w-full max-w-3xl mx-auto px-6 py-12 mt-24">
+    <!-- 
+    ========================================
+    1. STYLESHEET
+    Contains specific overrides for the Dashboard, Chart, and Lists.
+    Relies on Tailwind for layout, but custom CSS for specific components.
+    ========================================
+-->
+<style>
+    /* --- DASHBOARD CONTAINER --- */
+    .stat-card {
+        padding: 24px;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        background: #fff;
+        margin-bottom: 40px;
+    }
+    .dark .stat-card { background: #1c1c1e; border-color: #333; }
+
+    /* Stats Typography */
+    .stat-label { font-size: 0.75rem; text-transform: uppercase; color: #9ca3af; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .stat-val { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #1d1d1f; }
+    .dark .stat-val { color: #fff; }
+
+    /* --- TABS (Books vs Essays) --- */
+    .tab-bar {
+        display: flex;
+        gap: 20px;
+        border-bottom: 1px solid #e5e7eb;
+        margin-bottom: 30px;
+    }
+    .dark .tab-bar { border-color: #333; }
+
+    .tab-btn {
+        padding-bottom: 10px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #9ca3af;
+        cursor: pointer;
+        transition: color 0.2s;
+        border-bottom: 2px solid transparent; /* Invisible border for hover state */
+        margin-bottom: -1px; /* Overlaps the bottom border */
+    }
+    .tab-btn.active { color: #1d1d1f; border-bottom-color: #1d1d1f; }
+    .dark .tab-btn.active { color: #fff; border-bottom-color: #fff; }
+
+    /* --- LIST ROWS --- */
+    .list-header {
+        display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 20px; font-size: 0.75rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+
+    .item-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 12px 0;
+        border-bottom: 1px dashed #f3f4f6;
+        transition: opacity 0.2s;
+    }
+    .dark .item-row { border-color: #27272a; }
+    .item-row:hover { opacity: 0.7; }
+    
+    /* Flex adjustment for mobile vs desktop in list items */
+    .item-left { display: flex; flex-direction: column; gap: 2px; max-width: 80%; }
+    @media (min-width: 640px) {
+        .item-left { flex-direction: row; align-items: baseline; gap: 8px; }
+    }
+
+    .item-title { font-weight: 600; color: #1d1d1f; text-decoration: none; font-size: 1rem; }
+    .dark .item-title { color: #fff; }
+    .item-author { font-size: 0.85rem; color: #6b7280; font-weight: 400; }
+    .item-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #9ca3af; white-space: nowrap; }
+
+    /* --- STARS (Monochrome System) --- */
+    .stars { letter-spacing: 2px; }
+    .star-fill { color: #1d1d1f; }
+    .star-empty { color: #e5e7eb; }
+    .dark .star-fill { color: #fff; }
+    .dark .star-empty { color: #333; }
+
+    /* Sort Control Link */
+    .sort-toggle { cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .sort-toggle:hover { color: #1d1d1f; dark:color: #fff; }
+
+    /* --- ACCORDION (Year Groups) --- */
+    details {
+        border-bottom: 1px solid #f3f4f6;
+        margin-bottom: 0;
+    }
+    .dark details { border-color: #27272a; }
+    
+    /* Hide default browser triangle */
+    details > summary { list-style: none; outline: none; }
+    details > summary::-webkit-details-marker { display: none; }
+
+    .year-summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px 0;
+        cursor: pointer;
+        font-family: 'JetBrains Mono', monospace;
+        color: #1d1d1f;
+        transition: opacity 0.2s;
+    }
+    .dark .year-summary { color: #fff; }
+    .year-summary:hover { opacity: 0.7; }
+
+    .year-text { font-size: 1.25rem; font-weight: 700; }
+    
+    /* The small bubble showing book count per year */
+    .year-count {
+        font-size: 0.75rem;
+        background: #f3f4f6;
+        color: #6b7280;
+        padding: 2px 8px;
+        border-radius: 99px;
+        margin-left: 10px;
+        vertical-align: middle;
+        font-weight: 600;
+    }
+    .dark .year-count { background: #333; color: #9ca3af; }
+
+    /* Animation logic for accordion */
+    .chevron { transition: transform 0.2s; color: #9ca3af; }
+    details[open] .chevron { transform: rotate(180deg); }
+
+    details[open] > .group-content { animation: slideDown 0.25s ease-out; }
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- CHART VISUALIZER --- */
+    .chart-container {
+        display: flex;
+        align-items: flex-end; /* Aligns bars to bottom */
+        justify-content: flex-end; /* Aligns chart to right */
+        gap: 8px;
+        height: 100%;
+        min-height: 120px;
+        padding-bottom: 24px; /* Space for year labels */
+    }
+
+    .bar-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        height: 100%;
+        flex: 1;
+        max-width: 40px;
+        min-width: 0; /* Important for flex shrinking on mobile */
+        position: relative;
+    }
+
+    .bar {
+        width: 100%;
+        background-color: #d1d5db !important; /* Visible gray */
+        border-radius: 4px 4px 0 0;
+        transition: height 0.5s ease;
+        min-height: 4px; /* Minimum height for empty years */
+    }
+    .dark .bar { background-color: #3f3f46 !important; }
+
+    .bar.active-year { background-color: #1d1d1f !important; }
+    .dark .bar.active-year { background-color: #fff !important; }
+
+    .bar-label {
+        position: absolute;
+        bottom: -24px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.65rem;
+        color: #9ca3af;
+        width: 100%;
+        text-align: center;
+    }
+
+    .bar-val {
+        margin-bottom: 6px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #1d1d1f;
+        z-index: 10;
+    }
+    .dark .bar-val { color: #fff; }
+</style>
+
+
+<!-- 
+    ========================================
+    2. MAIN CONTENT AREA
+    ========================================
+-->
+<div class="fade-in max-w-3xl mx-auto mb-20">
+
+    <!-- Page Title -->
+    <div class="mb-10">
+        <h1 class="text-3xl font-bold text-[#1d1d1f] dark:text-white mb-2">reading log</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400">a chronological log of books and essays i have read.</p>
+    </div>
+
+    <!-- 
+        STATS DASHBOARD 
+        Split into Left (Metrics) and Right (Chart)
+    -->
+    <div class="stat-card">
+        <!-- Grid: 2 columns even on mobile (side-by-side) -->
+        <div class="grid grid-cols-2 gap-4 sm:gap-8 h-full">
+            
+            <!-- LEFT COLUMN: Key Metrics -->
+            <div class="flex flex-col justify-between">
+                <!-- Top: Total Count -->
+                <div class="mb-4 sm:mb-0">
+                    <p class="stat-label">Total Books</p>
+                    <div class="stat-val text-3xl sm:text-4xl">72</div>
+                </div>
+
+                <!-- Bottom: Secondary Stats (Current Year + Avg Rating) -->
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-10">
+                    <div>
+                        <p class="stat-label">This Year</p>
+                        <div class="stat-val text-lg sm:text-xl" id="statCurrentYear">0</div>
+                    </div>
+                    <div>
+                        <p class="stat-label">Avg Rating</p>
+                        <div class="stat-val text-lg sm:text-xl" id="statAvgRating">0.0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Bar Chart Container -->
+            <div class="border-l border-dashed border-gray-200 dark:border-gray-800 pl-4 sm:pl-8">
+                <!-- The JS will inject HTML bars into this ID -->
+                <div id="readingChart" class="chart-container"></div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tab-bar">
+        <div class="tab-btn active" onclick="switchTab('books')">Books</div>
+        <div class="tab-btn" onclick="switchTab('essays')">Essays</div>
+    </div>
+
+    <!-- 
+        ========================================
+        3. BOOKS VIEW (Default)
+        Uses Jekyll Liquid to group and render books
+        ========================================
+    -->
+    <div id="viewBooks">
+        <!-- Header with Sort Toggle -->
+        <div class="list-header">
+            <span>Title / Author</span>
+            <span class="sort-toggle" onclick="toggleSort()">
+                <span id="sortLabel">Newest First</span> <i data-lucide="arrow-up-down" class="w-3 h-3"></i>
+            </span>
+        </div>
+
+        <div id="bookListContainer">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+
+            
+            
+                <details class="year-group" open>
+                    <summary class="year-summary">
+                        <div>
+                            <span class="year-text">2025</span>
+                            <span class="year-count">8</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="chevron w-5 h-5"></i>
+                    </summary>
+                    
+                    <div class="group-content">
+                        
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2025-12-10" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/222717408" target="_blank" class="item-title hover:underline">
+                                        Shattered Lands
+                                    </a>
+                                    <span class="item-author">by Sam Dalrymple</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2025-09-18" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/58784475" target="_blank" class="item-title hover:underline">
+                                        Tomorrow, and Tomorrow, and Tomorrow
+                                    </a>
+                                    <span class="item-author">by Gabrielle Zevin</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2025-09-06" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/34066798" target="_blank" class="item-title hover:underline">
+                                        A Gentleman in Moscow
+                                    </a>
+                                    <span class="item-author">by Amor Towles</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2025-07-31" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/5439" target="_blank" class="item-title hover:underline">
+                                        Interpreter of Maladies
+                                    </a>
+                                    <span class="item-author">by Jhumpa Lahiri</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2025-07-22" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/18765" target="_blank" class="item-title hover:underline">
+                                        I, Claudius
+                                    </a>
+                                    <span class="item-author">by Robert Graves</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2025-06-06" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/56253393" target="_blank" class="item-title hover:underline">
+                                        Murder at the Mushaira
+                                    </a>
+                                    <span class="item-author">by Raza Mir</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2025-05-25" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/203578717" target="_blank" class="item-title hover:underline">
+                                        The Stalin Affair
+                                    </a>
+                                    <span class="item-author">by Giles Milton</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2025-01-08" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/14" target="_blank" class="item-title hover:underline">
+                                        The Hitchhiker's Guide to the Galaxy
+                                    </a>
+                                    <span class="item-author">by Douglas Adams</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </details>
+            
+                <details class="year-group" >
+                    <summary class="year-summary">
+                        <div>
+                            <span class="year-text">2024</span>
+                            <span class="year-count">1</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="chevron w-5 h-5"></i>
+                    </summary>
+                    
+                    <div class="group-content">
+                        
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2024-03-30" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/9557" target="_blank" class="item-title hover:underline">
+                                        Sputnik Sweetheart
+                                    </a>
+                                    <span class="item-author">by Haruki Murakami</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </details>
+            
+                <details class="year-group" >
+                    <summary class="year-summary">
+                        <div>
+                            <span class="year-text">2023</span>
+                            <span class="year-count">1</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="chevron w-5 h-5"></i>
+                    </summary>
+                    
+                    <div class="group-content">
+                        
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2023-04-14" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/128533513" target="_blank" class="item-title hover:underline">
+                                        Make Something Wonderful
+                                    </a>
+                                    <span class="item-author">by Steve Jobs</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </details>
+            
+                <details class="year-group" >
+                    <summary class="year-summary">
+                        <div>
+                            <span class="year-text">2021</span>
+                            <span class="year-count">11</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="chevron w-5 h-5"></i>
+                    </summary>
+                    
+                    <div class="group-content">
+                        
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2021-07-19" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/35888337" target="_blank" class="item-title hover:underline">
+                                        BoJack Horseman: The Art Before the Horse
+                                    </a>
+                                    <span class="item-author">by Chris McDonnell</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2021-07-14" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/38589785" target="_blank" class="item-title hover:underline">
+                                        To Kill a Mockingbird: a graphic novel
+                                    </a>
+                                    <span class="item-author">by Fred Fordham</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2021-07-04" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/51215165" target="_blank" class="item-title hover:underline">
+                                        When Stars Are Scattered
+                                    </a>
+                                    <span class="item-author">by Victoria Jamieson</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2021-07-02" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/3106983" target="_blank" class="item-title hover:underline">
+                                        Persepolis
+                                    </a>
+                                    <span class="item-author">by Marjane Satrapi</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2021-06-26" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/40554155" target="_blank" class="item-title hover:underline">
+                                        Slaughterhouse-Five
+                                    </a>
+                                    <span class="item-author">by Kurt Vonnegut Jr.</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2021-06-05" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/37542581" target="_blank" class="item-title hover:underline">
+                                        The Spy and the Traitor
+                                    </a>
+                                    <span class="item-author">by Ben Macintyre</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2021-05-29" data-rating="0">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/26819503" target="_blank" class="item-title hover:underline">
+                                        The Good, the Bad and the Ridiculous
+                                    </a>
+                                    <span class="item-author">by Khushwant Singh</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2021-02-15" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/16032905" target="_blank" class="item-title hover:underline">
+                                        Fahrenheit 451
+                                    </a>
+                                    <span class="item-author">by Ray Bradbury</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2021-02-09" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/55290131" target="_blank" class="item-title hover:underline">
+                                        The Psychology of Money
+                                    </a>
+                                    <span class="item-author">by Morgan Housel</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2021-01-22" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/42086897" target="_blank" class="item-title hover:underline">
+                                        How To
+                                    </a>
+                                    <span class="item-author">by Randall Munroe</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2021-01-18" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/55364115" target="_blank" class="item-title hover:underline">
+                                        A Promised Land
+                                    </a>
+                                    <span class="item-author">by Barack Obama</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </details>
+            
+                <details class="year-group" >
+                    <summary class="year-summary">
+                        <div>
+                            <span class="year-text">2020</span>
+                            <span class="year-count">30</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="chevron w-5 h-5"></i>
+                    </summary>
+                    
+                    <div class="group-content">
+                        
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-12-15" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/6857031" target="_blank" class="item-title hover:underline">
+                                        Stocks To Riches
+                                    </a>
+                                    <span class="item-author">by Parag Parikh</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-12-07" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/331692" target="_blank" class="item-title hover:underline">
+                                        The Complete Maus
+                                    </a>
+                                    <span class="item-author">by Art Spiegelman</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-12-03" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/18982175" target="_blank" class="item-title hover:underline">
+                                        Laughter in the Dark
+                                    </a>
+                                    <span class="item-author">by Vladimir Nabokov</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-11-10" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/52841272" target="_blank" class="item-title hover:underline">
+                                        The Bastard of Istanbul
+                                    </a>
+                                    <span class="item-author">by Elif Shafak</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-10-06" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/49552" target="_blank" class="item-title hover:underline">
+                                        The Stranger
+                                    </a>
+                                    <span class="item-author">by Albert Camus</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-09-29" data-rating="0">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/54386487" target="_blank" class="item-title hover:underline">
+                                        Delhi Riots 2020
+                                    </a>
+                                    <span class="item-author">by Monika Arora</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-09-14" data-rating="0">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/39355510" target="_blank" class="item-title hover:underline">
+                                        Srimad Bhagavad Gita
+                                    </a>
+                                    <span class="item-author">by Gita Press</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-08-23" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/36665462" target="_blank" class="item-title hover:underline">
+                                        I, The Lurker
+                                    </a>
+                                    <span class="item-author">by Natasha Virdi</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-08-16" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/36149971" target="_blank" class="item-title hover:underline">
+                                        India's Most Fearless
+                                    </a>
+                                    <span class="item-author">by Shiv Aroor</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-07-30" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/29936927" target="_blank" class="item-title hover:underline">
+                                        The Best We Could Do
+                                    </a>
+                                    <span class="item-author">by Thi Bui</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-07-20" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/39827255" target="_blank" class="item-title hover:underline">
+                                        The Liberation of Sita
+                                    </a>
+                                    <span class="item-author">by Volga</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-07-19" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/25855506" target="_blank" class="item-title hover:underline">
+                                        Adulthood Is a Myth
+                                    </a>
+                                    <span class="item-author">by Sarah Andersen</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-07-16" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/32682214" target="_blank" class="item-title hover:underline">
+                                        Adolf Hitler: A Life from Beginning to End
+                                    </a>
+                                    <span class="item-author">by Hourly History</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-07-15" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/38318462" target="_blank" class="item-title hover:underline">
+                                        Poonachi
+                                    </a>
+                                    <span class="item-author">by Perumal Murugan</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-07-11" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/40961427" target="_blank" class="item-title hover:underline">
+                                        1984
+                                    </a>
+                                    <span class="item-author">by George Orwell</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-07-01" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/35959740" target="_blank" class="item-title hover:underline">
+                                        Circe
+                                    </a>
+                                    <span class="item-author">by Madeline Miller</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-06-27" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/17184" target="_blank" class="item-title hover:underline">
+                                        The Invisible Man
+                                    </a>
+                                    <span class="item-author">by H.G. Wells</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-06-20" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/37903770" target="_blank" class="item-title hover:underline">
+                                        Norse Mythology
+                                    </a>
+                                    <span class="item-author">by Neil Gaiman</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-06-20" data-rating="1">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/228750" target="_blank" class="item-title hover:underline">
+                                        1001 Ways To Humiliate Yourself And Others
+                                    </a>
+                                    <span class="item-author">by Fiona J. Bowron</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-06-18" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/117833" target="_blank" class="item-title hover:underline">
+                                        The Master and Margarita
+                                    </a>
+                                    <span class="item-author">by Mikhail Bulgakov</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-06-06" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/25329850" target="_blank" class="item-title hover:underline">
+                                        Thing Explainer
+                                    </a>
+                                    <span class="item-author">by Randall Munroe</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-05-29" data-rating="2">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/19738287" target="_blank" class="item-title hover:underline">
+                                        The Visitor
+                                    </a>
+                                    <span class="item-author">by Lee Child</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-05-27" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/1809465" target="_blank" class="item-title hover:underline">
+                                        Rodrick Rules
+                                    </a>
+                                    <span class="item-author">by Jeff Kinney</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-05-25" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/13766064" target="_blank" class="item-title hover:underline">
+                                        The Psychology Book
+                                    </a>
+                                    <span class="item-author">by Nigel C. Benson</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-04-15" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/33652490" target="_blank" class="item-title hover:underline">
+                                        Men Without Women
+                                    </a>
+                                    <span class="item-author">by Haruki Murakami</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-04-01" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/17571564" target="_blank" class="item-title hover:underline">
+                                        Hyperbole and a Half
+                                    </a>
+                                    <span class="item-author">by Allie Brosh</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-03-31" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/23692271" target="_blank" class="item-title hover:underline">
+                                        Sapiens
+                                    </a>
+                                    <span class="item-author">by Yuval Noah Harari</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-01-21" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/25899336" target="_blank" class="item-title hover:underline">
+                                        When Breath Becomes Air
+                                    </a>
+                                    <span class="item-author">by Paul Kalanithi</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-01-15" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/9777" target="_blank" class="item-title hover:underline">
+                                        The God of Small Things
+                                    </a>
+                                    <span class="item-author">by Arundhati Roy</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2020-01-01" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/21413662" target="_blank" class="item-title hover:underline">
+                                        What If?
+                                    </a>
+                                    <span class="item-author">by Randall Munroe</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </details>
+            
+                <details class="year-group" >
+                    <summary class="year-summary">
+                        <div>
+                            <span class="year-text">2019</span>
+                            <span class="year-count">3</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="chevron w-5 h-5"></i>
+                    </summary>
+                    
+                    <div class="group-content">
+                        
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2019-10-07" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/4929" target="_blank" class="item-title hover:underline">
+                                        Kafka on the Shore
+                                    </a>
+                                    <span class="item-author">by Haruki Murakami</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2019-09-03" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/28257707" target="_blank" class="item-title hover:underline">
+                                        The Subtle Art of Not Giving a F*ck
+                                    </a>
+                                    <span class="item-author">by Mark Manson</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2019-09-03" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/26433" target="_blank" class="item-title hover:underline">
+                                        Five C's of Cinematography
+                                    </a>
+                                    <span class="item-author">by Joseph V. Mascelli</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </details>
+            
+                <details class="year-group" >
+                    <summary class="year-summary">
+                        <div>
+                            <span class="year-text">2018</span>
+                            <span class="year-count">1</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="chevron w-5 h-5"></i>
+                    </summary>
+                    
+                    <div class="group-content">
+                        
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2018-01-09" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/11297" target="_blank" class="item-title hover:underline">
+                                        Norwegian Wood
+                                    </a>
+                                    <span class="item-author">by Haruki Murakami</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </details>
+            
+                <details class="year-group" >
+                    <summary class="year-summary">
+                        <div>
+                            <span class="year-text">2017</span>
+                            <span class="year-count">1</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="chevron w-5 h-5"></i>
+                    </summary>
+                    
+                    <div class="group-content">
+                        
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2017-12-27" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/216363" target="_blank" class="item-title hover:underline">
+                                        The Man in the High Castle
+                                    </a>
+                                    <span class="item-author">by Philip K. Dick</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </details>
+            
+                <details class="year-group" >
+                    <summary class="year-summary">
+                        <div>
+                            <span class="year-text">2013</span>
+                            <span class="year-count">1</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="chevron w-5 h-5"></i>
+                    </summary>
+                    
+                    <div class="group-content">
+                        
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2013-06-01" data-rating="4">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/7613" target="_blank" class="item-title hover:underline">
+                                        Animal Farm
+                                    </a>
+                                    <span class="item-author">by George Orwell</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </details>
+            
+                <details class="year-group" >
+                    <summary class="year-summary">
+                        <div>
+                            <span class="year-text">2012</span>
+                            <span class="year-count">1</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="chevron w-5 h-5"></i>
+                    </summary>
+                    
+                    <div class="group-content">
+                        
+                        
+                            <!-- Single Book Row -->
+                            <div class="item-row book-entry" data-date="2012-05-01" data-rating="0">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/8921" target="_blank" class="item-title hover:underline">
+                                        The Hound of the Baskervilles
+                                    </a>
+                                    <span class="item-author">by Arthur Conan Doyle</span>
+                                </div>
+                                <div class="item-meta">
+                                    <!-- Star Rendering Loop -->
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </details>
+            
+
+
+            
+            
+                <details class="year-group">
+                    <summary class="year-summary">
+                        <div>
+                            <span class="year-text">Older</span>
+                            <span class="year-count">14</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="chevron w-5 h-5"></i>
+                    </summary>
+                    <div class="group-content">
+                        
+                            <div class="item-row book-entry" data-date="" data-rating="2">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/6969361" target="_blank" class="item-title hover:underline">
+                                        2 States
+                                    </a>
+                                    <span class="item-author">by Chetan Bhagat</span>
+                                </div>
+                                <div class="item-meta">
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <div class="item-row book-entry" data-date="" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/43324" target="_blank" class="item-title hover:underline">
+                                        Are You Afraid of the Dark?
+                                    </a>
+                                    <span class="item-author">by Sidney Sheldon</span>
+                                </div>
+                                <div class="item-meta">
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <div class="item-row book-entry" data-date="" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/300225" target="_blank" class="item-title hover:underline">
+                                        Bloodline
+                                    </a>
+                                    <span class="item-author">by Sidney Sheldon</span>
+                                </div>
+                                <div class="item-meta">
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <div class="item-row book-entry" data-date="" data-rating="1">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/105576" target="_blank" class="item-title hover:underline">
+                                        Five Point Someone
+                                    </a>
+                                    <span class="item-author">by Chetan Bhagat</span>
+                                </div>
+                                <div class="item-meta">
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <div class="item-row book-entry" data-date="" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/22271843" target="_blank" class="item-title hover:underline">
+                                        Office Romance
+                                    </a>
+                                    <span class="item-author">by Kathy Ryan</span>
+                                </div>
+                                <div class="item-meta">
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <div class="item-row book-entry" data-date="" data-rating="0">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/13589182" target="_blank" class="item-title hover:underline">
+                                        Mastery
+                                    </a>
+                                    <span class="item-author">by Robert Greene</span>
+                                </div>
+                                <div class="item-meta">
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <div class="item-row book-entry" data-date="" data-rating="1">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/105578" target="_blank" class="item-title hover:underline">
+                                        One Night at the Call Center
+                                    </a>
+                                    <span class="item-author">by Chetan Bhagat</span>
+                                </div>
+                                <div class="item-meta">
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <div class="item-row book-entry" data-date="" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/10872085" target="_blank" class="item-title hover:underline">
+                                        Only Time Will Tell
+                                    </a>
+                                    <span class="item-author">by Jeffrey Archer</span>
+                                </div>
+                                <div class="item-meta">
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <div class="item-row book-entry" data-date="" data-rating="1">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/12615008" target="_blank" class="item-title hover:underline">
+                                        Revolution 2020
+                                    </a>
+                                    <span class="item-author">by Chetan Bhagat</span>
+                                </div>
+                                <div class="item-meta">
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <div class="item-row book-entry" data-date="" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/78989" target="_blank" class="item-title hover:underline">
+                                        Shall We Tell the President?
+                                    </a>
+                                    <span class="item-author">by Jeffrey Archer</span>
+                                </div>
+                                <div class="item-meta">
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <div class="item-row book-entry" data-date="" data-rating="2">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/3320520" target="_blank" class="item-title hover:underline">
+                                        The 3 Mistakes of My Life
+                                    </a>
+                                    <span class="item-author">by Chetan Bhagat</span>
+                                </div>
+                                <div class="item-meta">
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <div class="item-row book-entry" data-date="" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/865" target="_blank" class="item-title hover:underline">
+                                        The Alchemist
+                                    </a>
+                                    <span class="item-author">by Paulo Coelho</span>
+                                </div>
+                                <div class="item-meta">
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <div class="item-row book-entry" data-date="" data-rating="5">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/2429135" target="_blank" class="item-title hover:underline">
+                                        The Girl With the Dragon Tattoo
+                                    </a>
+                                    <span class="item-author">by Stieg Larsson</span>
+                                </div>
+                                <div class="item-meta">
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <div class="item-row book-entry" data-date="" data-rating="3">
+                                <div class="item-left">
+                                    <a href="https://www.goodreads.com/book/show/77203" target="_blank" class="item-title hover:underline">
+                                        The Kite Runner
+                                    </a>
+                                    <span class="item-author">by Khaled Hosseini</span>
+                                </div>
+                                <div class="item-meta">
+                                    <span class="stars">
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-fill">●</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                            
+                                                <span class="star-empty">○</span>
+                                            
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </details>
+            
+
+        </div>
+    </div>
+
+    <!-- 
+        ========================================
+        4. ESSAYS VIEW (Hidden by default)
+        ========================================
+    -->
+    <div id="viewEssays" class="hidden">
+        <div class="list-header">
+            <span>Title / Author</span>
+            <span>Date</span>
+        </div>
+
+        
+        
+        <div class="item-row">
+            <div class="item-left">
+                <a href="https://threads.championswimmer.in/p/hustle-culture" target="_blank" class="item-title hover:underline">
+                    Hustle Culture is Killing Us
+                </a>
+                <span class="item-author">Arnav Gupta</span>
+            </div>
+            <div class="item-meta">
+                2022
+            </div>
+        </div>
+        
+        <div class="item-row">
+            <div class="item-left">
+                <a href="https://invertedpassion.com/my-moral-code/" target="_blank" class="item-title hover:underline">
+                    My moral code
+                </a>
+                <span class="item-author">Paras Chopra</span>
+            </div>
+            <div class="item-meta">
+                2021
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+
+<!-- 
+    ========================================
+    5. JAVASCRIPT LOGIC
+    ========================================
+-->
+<script>
+    // Ingest Jekyll data into JS
+    const books = [{"title":"Shattered Lands","author":"Sam Dalrymple","id":"222717408","rating":3,"pages":528,"date_read":"2025-12-10"},{"title":"Tomorrow, and Tomorrow, and Tomorrow","author":"Gabrielle Zevin","id":"58784475","rating":3,"pages":416,"date_read":"2025-09-18"},{"title":"A Gentleman in Moscow","author":"Amor Towles","id":"34066798","rating":5,"pages":495,"date_read":"2025-09-06"},{"title":"Interpreter of Maladies","author":"Jhumpa Lahiri","id":"5439","rating":3,"pages":198,"date_read":"2025-07-31"},{"title":"I, Claudius","author":"Robert Graves","id":"18765","rating":3,"pages":469,"date_read":"2025-07-22"},{"title":"Murder at the Mushaira","author":"Raza Mir","id":"56253393","rating":5,"pages":358,"date_read":"2025-06-06"},{"title":"The Stalin Affair","author":"Giles Milton","id":"203578717","rating":4,"pages":336,"date_read":"2025-05-25"},{"title":"The Hitchhiker's Guide to the Galaxy","author":"Douglas Adams","id":"14","rating":4,"pages":215,"date_read":"2025-01-08"},{"title":"Sputnik Sweetheart","author":"Haruki Murakami","id":"9557","rating":3,"pages":229,"date_read":"2024-03-30"},{"title":"Make Something Wonderful","author":"Steve Jobs","id":"128533513","rating":5,"pages":194,"date_read":"2023-04-14"},{"title":"BoJack Horseman: The Art Before the Horse","author":"Chris McDonnell","id":"35888337","rating":5,"pages":240,"date_read":"2021-07-19"},{"title":"To Kill a Mockingbird: a graphic novel","author":"Fred Fordham","id":"38589785","rating":4,"pages":288,"date_read":"2021-07-14"},{"title":"When Stars Are Scattered","author":"Victoria Jamieson","id":"51215165","rating":5,"pages":264,"date_read":"2021-07-04"},{"title":"Persepolis","author":"Marjane Satrapi","id":"3106983","rating":3,"pages":344,"date_read":"2021-07-02"},{"title":"Slaughterhouse-Five","author":"Kurt Vonnegut Jr.","id":"40554155","rating":4,"pages":238,"date_read":"2021-06-26"},{"title":"The Spy and the Traitor","author":"Ben Macintyre","id":"37542581","rating":5,"pages":384,"date_read":"2021-06-05"},{"title":"The Good, the Bad and the Ridiculous","author":"Khushwant Singh","id":"26819503","rating":0,"pages":221,"date_read":"2021-05-29"},{"title":"Fahrenheit 451","author":"Ray Bradbury","id":"16032905","rating":4,"pages":227,"date_read":"2021-02-15"},{"title":"The Psychology of Money","author":"Morgan Housel","id":"55290131","rating":4,"pages":242,"date_read":"2021-02-09"},{"title":"How To","author":"Randall Munroe","id":"42086897","rating":4,"pages":308,"date_read":"2021-01-22"},{"title":"A Promised Land","author":"Barack Obama","id":"55364115","rating":5,"pages":27,"date_read":"2021-01-18"},{"title":"Stocks To Riches","author":"Parag Parikh","id":"6857031","rating":4,"pages":132,"date_read":"2020-12-15"},{"title":"The Complete Maus","author":"Art Spiegelman","id":"331692","rating":5,"pages":296,"date_read":"2020-12-07"},{"title":"Laughter in the Dark","author":"Vladimir Nabokov","id":"18982175","rating":4,"pages":0,"date_read":"2020-12-03"},{"title":"The Bastard of Istanbul","author":"Elif Shafak","id":"52841272","rating":4,"pages":12,"date_read":"2020-11-10"},{"title":"The Stranger","author":"Albert Camus","id":"49552","rating":3,"pages":123,"date_read":"2020-10-06"},{"title":"Delhi Riots 2020","author":"Monika Arora","id":"54386487","rating":0,"pages":200,"date_read":"2020-09-29"},{"title":"Srimad Bhagavad Gita","author":"Gita Press","id":"39355510","rating":0,"pages":222,"date_read":"2020-09-14"},{"title":"I, The Lurker","author":"Natasha Virdi","id":"36665462","rating":4,"pages":150,"date_read":"2020-08-23"},{"title":"India's Most Fearless","author":"Shiv Aroor","id":"36149971","rating":4,"pages":256,"date_read":"2020-08-16"},{"title":"The Best We Could Do","author":"Thi Bui","id":"29936927","rating":5,"pages":329,"date_read":"2020-07-30"},{"title":"The Liberation of Sita","author":"Volga","id":"39827255","rating":4,"pages":128,"date_read":"2020-07-20"},{"title":"Adulthood Is a Myth","author":"Sarah Andersen","id":"25855506","rating":4,"pages":110,"date_read":"2020-07-19"},{"title":"Adolf Hitler: A Life from Beginning to End","author":"Hourly History","id":"32682214","rating":3,"pages":128,"date_read":"2020-07-16"},{"title":"Poonachi","author":"Perumal Murugan","id":"38318462","rating":5,"pages":179,"date_read":"2020-07-15"},{"title":"1984","author":"George Orwell","id":"40961427","rating":3,"pages":298,"date_read":"2020-07-11"},{"title":"Circe","author":"Madeline Miller","id":"35959740","rating":5,"pages":393,"date_read":"2020-07-01"},{"title":"The Invisible Man","author":"H.G. Wells","id":"17184","rating":3,"pages":192,"date_read":"2020-06-27"},{"title":"1001 Ways To Humiliate Yourself And Others","author":"Fiona J. Bowron","id":"228750","rating":1,"pages":96,"date_read":"2020-06-20"},{"title":"Norse Mythology","author":"Neil Gaiman","id":"37903770","rating":5,"pages":301,"date_read":"2020-06-20"},{"title":"The Master and Margarita","author":"Mikhail Bulgakov","id":"117833","rating":4,"pages":372,"date_read":"2020-06-18"},{"title":"Thing Explainer","author":"Randall Munroe","id":"25329850","rating":3,"pages":64,"date_read":"2020-06-06"},{"title":"The Visitor","author":"Lee Child","id":"19738287","rating":2,"pages":492,"date_read":"2020-05-29"},{"title":"Rodrick Rules","author":"Jeff Kinney","id":"1809465","rating":3,"pages":226,"date_read":"2020-05-27"},{"title":"The Psychology Book","author":"Nigel C. Benson","id":"13766064","rating":4,"pages":352,"date_read":"2020-05-25"},{"title":"Men Without Women","author":"Haruki Murakami","id":"33652490","rating":4,"pages":242,"date_read":"2020-04-15"},{"title":"Hyperbole and a Half","author":"Allie Brosh","id":"17571564","rating":5,"pages":371,"date_read":"2020-04-01"},{"title":"Sapiens","author":"Yuval Noah Harari","id":"23692271","rating":5,"pages":512,"date_read":"2020-03-31"},{"title":"When Breath Becomes Air","author":"Paul Kalanithi","id":"25899336","rating":3,"pages":208,"date_read":"2020-01-21"},{"title":"The God of Small Things","author":"Arundhati Roy","id":"9777","rating":3,"pages":321,"date_read":"2020-01-15"},{"title":"What If?","author":"Randall Munroe","id":"21413662","rating":4,"pages":303,"date_read":"2020-01-01"},{"title":"Kafka on the Shore","author":"Haruki Murakami","id":"4929","rating":4,"pages":467,"date_read":"2019-10-07"},{"title":"Five C's of Cinematography","author":"Joseph V. Mascelli","id":"26433","rating":5,"pages":251,"date_read":"2019-09-03"},{"title":"The Subtle Art of Not Giving a F*ck","author":"Mark Manson","id":"28257707","rating":3,"pages":212,"date_read":"2019-09-03"},{"title":"Norwegian Wood","author":"Haruki Murakami","id":"11297","rating":5,"pages":296,"date_read":"2018-01-09"},{"title":"The Man in the High Castle","author":"Philip K. Dick","id":"216363","rating":4,"pages":259,"date_read":"2017-12-27"},{"title":"Animal Farm","author":"George Orwell","id":"7613","rating":4,"pages":129,"date_read":"2013-06-01"},{"title":"The Hound of the Baskervilles","author":"Arthur Conan Doyle","id":"8921","rating":0,"pages":256,"date_read":"2012-05-01"},{"title":"2 States","author":"Chetan Bhagat","id":"6969361","rating":2,"pages":269,"date_read":""},{"title":"Are You Afraid of the Dark?","author":"Sidney Sheldon","id":"43324","rating":3,"pages":401,"date_read":""},{"title":"Bloodline","author":"Sidney Sheldon","id":"300225","rating":3,"pages":409,"date_read":""},{"title":"Five Point Someone","author":"Chetan Bhagat","id":"105576","rating":1,"pages":267,"date_read":""},{"title":"Office Romance","author":"Kathy Ryan","id":"22271843","rating":5,"pages":160,"date_read":""},{"title":"Mastery","author":"Robert Greene","id":"13589182","rating":0,"pages":318,"date_read":""},{"title":"One Night at the Call Center","author":"Chetan Bhagat","id":"105578","rating":1,"pages":320,"date_read":""},{"title":"Only Time Will Tell","author":"Jeffrey Archer","id":"10872085","rating":3,"pages":400,"date_read":""},{"title":"Revolution 2020","author":"Chetan Bhagat","id":"12615008","rating":1,"pages":296,"date_read":""},{"title":"Shall We Tell the President?","author":"Jeffrey Archer","id":"78989","rating":3,"pages":228,"date_read":""},{"title":"The 3 Mistakes of My Life","author":"Chetan Bhagat","id":"3320520","rating":2,"pages":258,"date_read":""},{"title":"The Alchemist","author":"Paulo Coelho","id":"865","rating":3,"pages":197,"date_read":""},{"title":"The Girl With the Dragon Tattoo","author":"Stieg Larsson","id":"2429135","rating":5,"pages":480,"date_read":""},{"title":"The Kite Runner","author":"Khaled Hosseini","id":"77203","rating":3,"pages":371,"date_read":""}];
+    
+    // --- DASHBOARD INIT ---
+    function initDashboard() {
+        // 1. Calculate Average Rating
+        const ratedBooks = books.filter(b => b.rating > 0);
+        const totalRating = ratedBooks.reduce((sum, b) => sum + b.rating, 0);
+        const avg = (totalRating / ratedBooks.length).toFixed(1);
+        document.getElementById('statAvgRating').textContent = avg;
+
+        // 2. Prepare Chart Data (Group by Year)
+        const yearMap = {};
+        const currentYear = new Date().getFullYear();
+        
+        books.forEach(b => {
+            if(b.date_read) {
+                const y = new Date(b.date_read).getFullYear();
+                yearMap[y] = (yearMap[y] || 0) + 1;
+            }
+        });
+
+        // Update "This Year" Text
+        document.getElementById('statCurrentYear').textContent = yearMap[currentYear] || 0;
+
+        // 3. Render Bar Chart (Last 7 Years)
+        const chartContainer = document.getElementById('readingChart');
+        const yearsToShow = 7;
+        const startYear = currentYear - yearsToShow + 1;
+        
+        // Find max value to determine 100% height
+        let maxCount = 0;
+        for (let y = startYear; y <= currentYear; y++) {
+            if ((yearMap[y] || 0) > maxCount) maxCount = yearMap[y];
+        }
+
+        // Generate HTML for bars
+        let chartHTML = '';
+        for (let y = startYear; y <= currentYear; y++) {
+            const count = yearMap[y] || 0;
+            // Calculate height percentage (min 2% so empty bars show a tiny line)
+            const heightPct = maxCount > 0 ? (count / maxCount) * 100 : 0;
+            const barHeight = Math.max(heightPct, 2); 
+            
+            // Highlight current year
+            const activeClass = y === currentYear ? 'active-year' : '';
+
+            chartHTML += `
+                <div class="bar-group">
+                    <span class="bar-val">${count}</span>
+                    <div class="bar ${activeClass}" style="height: ${barHeight}%"></div>
+                    <span class="bar-label">'${y.toString().slice(2)}</span>
+                </div>
+            `;
+        }
+        chartContainer.innerHTML = chartHTML;
+    }
+
+    // --- TAB SWITCHING ---
+    function switchTab(tab) {
+        const booksDiv = document.getElementById('viewBooks');
+        const essaysDiv = document.getElementById('viewEssays');
+        const btns = document.querySelectorAll('.tab-btn');
+
+        if(tab === 'books') {
+            booksDiv.classList.remove('hidden');
+            essaysDiv.classList.add('hidden');
+            btns[0].classList.add('active');
+            btns[1].classList.remove('active');
+        } else {
+            booksDiv.classList.add('hidden');
+            essaysDiv.classList.remove('hidden');
+            btns[1].classList.add('active');
+            btns[0].classList.remove('active');
+        }
+    }
+
+    // --- SORTING LOGIC ---
+    let sortMode = 'date'; 
+
+    function toggleSort() {
+        const container = document.getElementById('bookListContainer');
+        const label = document.getElementById('sortLabel');
+        
+        if (sortMode === 'date') {
+            // Switch to Rating Mode:
+            // 1. Flatten the list (ignore accordion)
+            // 2. Sort DOM elements by data-rating
+            sortMode = 'rating';
+            label.textContent = "Best Rated";
+            
+            const allEntries = Array.from(document.querySelectorAll('.book-entry'));
+            allEntries.sort((a, b) => {
+                const rA = parseFloat(a.getAttribute('data-rating')) || 0;
+                const rB = parseFloat(b.getAttribute('data-rating')) || 0;
+                return rB - rA; // Descending
+            });
+            
+            // Clear current view and append sorted list
+            container.innerHTML = '';
+            allEntries.forEach(entry => container.appendChild(entry));
+        } else {
+            // Switch to Date Mode:
+            // Simplest way to restore Accordion structure is to reload
+            window.location.reload();
+        }
+    }
+
+    // Initialize on Load
+    document.addEventListener('DOMContentLoaded', () => {
+        initDashboard();
+        if(typeof lucide !== 'undefined') lucide.createIcons();
+    });
+</script>
+  </main>
+
+  <footer class="py-8 text-center text-xs text-[#86868b] opacity-60 font-mono">
+    © 2025 Harsh Nahar
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+</body>
+
+</html>
+
+

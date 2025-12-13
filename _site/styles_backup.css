@@ -1,0 +1,552 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   1. Web-Font & Base Resets
+───────────────────────────────────────────────────────────────────────────────*/
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&display=swap');
+
+/*──────────────────────────────────────────────────────────────────────────────
+  Import Inter & CV‐page font rule
+───────────────────────────────────────────────────────────────────────────────*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap') screen;
+
+/* On the CV page we want Inter instead of Garamond */
+.cv-page {
+  font-family: 'Inter', sans-serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'EB Garamond', serif;
+  transition: opacity 0.3s;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-in;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   2. Container Utility
+───────────────────────────────────────────────────────────────────────────────*/
+.container {
+  max-width: 800px;
+  width: 90%;
+  margin: auto;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/*───────────────────────────────────────────────────────────────────────────────
+  3. HOMEPAGE CORE STYLING (Adjusted Sizes)
+───────────────────────────────────────────────────────────────────────────────*/
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background: #fff;
+}
+
+.home-intro {
+  font-size: 24px;
+  color: #444;
+  line-height: 1.5;
+  margin: 0 0 2rem 0;
+  padding: 0 2rem;           /* bring it in from the container edge */
+  text-align: left;
+}
+
+.home-links {
+  list-style: none;
+  margin: 0;
+  padding-inline-start: 2rem; /* indent list to line up under intro */
+}
+.home-links li {
+  margin-bottom: 1.25rem;
+}
+
+.home-links .link {
+  font-size: 36px;
+  font-style: normal;
+  color: #000;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.home-links .link:hover {
+  color: #ff5232;
+}
+
+/* container stays as is */
+.container {
+  max-width: 800px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 0 2rem;
+  box-sizing: border-box;
+}
+
+/* mobile tweaks */
+@media (max-width: 600px) {
+  .home-container { padding: 2rem 0; }
+  .home-intro {
+    font-size: 20px;
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;        /* narrower gutter on small screens */
+  }
+  .home-links {
+    padding-inline-start: 1rem;
+  }
+  .home-links .link { font-size: 28px; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   4. Blog List Layout
+───────────────────────────────────────────────────────────────────────────────*/
+.blog-container {
+  background: #fff;
+}
+
+.header-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.back-home {
+  font-size: 30px;
+  color: #000;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.back-home:hover {
+  color: #ff5232;
+}
+.search {
+  font-size: 20px;
+  padding: 0.5rem;
+  margin-left: auto;
+}
+
+.post-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.post-list li {
+  border-bottom: 1px solid #ddd;
+}
+.post-list li:last-child {
+  border-bottom: none;
+}
+.post-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s, background 0.2s;
+}
+.post-link h3 {
+  font-size: 28px;
+  margin: 0;
+  flex: 1;
+}
+.post-link time {
+  font-size: 16px;
+  color: #666;
+  white-space: nowrap;
+  margin-left: 1rem;
+}
+.post-link:hover {
+  color: #ff5232;
+  background: rgba(255,82,50,0.05);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   5. Individual Post Page
+───────────────────────────────────────────────────────────────────────────────*/
+.post-page {
+  background: #FFFFFF; /* Previously used #F8F5F1 */
+}
+.full-bg {
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.back-link {
+  font-size: 28px;
+  color: #000;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.back-link:hover {
+  color: #ff5232;
+}
+.font-switch {
+  font-size: 20px;
+  background: none;
+  border: 1px solid #ccc;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+.post-content {
+  max-width: 800px;
+  margin: auto;
+  padding: 0 1rem;
+}
+.post-content h1 {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.content {
+  font-size: 20px;
+  line-height: 1.6;
+}
+.content p + p {
+  margin-top: 1rem;
+}
+.share-btn {
+  display: block;
+  margin-left: auto;
+  margin-top: 2rem;
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.share-btn:hover {
+  color: #ff5232;
+}
+
+/* Responsive images & code */
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+}
+.post-content pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 1rem;
+  background: #f4f4f4;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.post-content code {
+  word-break: break-word;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   6. Responsive Tweaks (≤600px)
+───────────────────────────────────────────────────────────────────────────────*/
+@media (max-width: 600px) {
+  /* Edge-to-edge container */
+  .container {
+    width: 100%;
+    padding: 1rem;
+  }
+  /* Homepage title */
+  .home-container .site-title {
+    font-size: 48px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  /* Nav links shrink */
+  .link {
+    font-size: 32px;
+  }
+  /* Header bar no wrap */
+  .header-bar {
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+  }
+  .search {
+    flex: 0 0 auto;
+    max-width: 150px;
+    font-size: 16px;
+    padding: 0.5rem;
+    margin-left: auto;
+  }
+  /* Post page padding & text tweaks */
+  .full-bg {
+    padding: 1rem 0;
+  }
+  .post-content {
+    padding: 0 0.5rem;
+  }
+  .post-content h1 {
+    font-size: 28px;
+  }
+  .content {
+    font-size: 18px;
+  }
+  .back-link {
+    font-size: 28px;
+  }
+  .font-switch,
+  .share-btn {
+    font-size: 18px;
+  }
+  /* Stack list items */
+  .post-link {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .post-link time {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+  .post-link h3 {
+    font-size: 24px;
+  }
+}
+
+/* ---------- Gallery Index ---------- */
+
+.page-desc {
+  color: #555;
+  text-align: center;
+  margin-bottom: 1.8rem;
+}
+
+.external-link {
+  text-align: center;
+  font-weight: bold;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.external-link a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.external-link a:hover {
+  color: #ff5232;
+}
+
+.gallery-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.gallery-card {
+  text-decoration: none;
+  color: inherit;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f8f8f8;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.gallery-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.gallery-info {
+  padding: 1rem;
+}
+
+.gallery-info h2 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.3rem;
+}
+
+.gallery-date {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 0.3rem;
+}
+
+.gallery-info p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+}
+
+.show-more {
+  display: block;
+  margin: 2rem auto;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.show-more:hover {
+  background: #333;
+}
+
+/* ---------- Individual Gallery ---------- */
+
+.gallery-images img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+  display: block;
+  border-radius: 0; /* no rounded corners */
+}
+
+/* ---------- Gallery Page Header (scoped only to gallery layout) ---------- */
+.gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 720px;
+  margin: 0 auto 1.5rem;
+  padding: 0 1rem;
+}
+
+.gallery-header .back-link {
+  font-size: 28px;
+  color: #555;
+  text-decoration: none;
+  text-transform: lowercase;
+  line-height: 1.2;
+}
+
+.gallery-header .back-link:hover {
+  color: #ff5232;
+}
+
+.gallery-header .font-switch {
+  font-size: 20px;
+  border: 1px solid #ccc;
+  background: none;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+.gallery-header-center {
+  justify-content: center;
+  position: relative;
+}
+
+.gallery-header-center .back-link {
+  position: absolute;
+  left: 0;
+}
+
+/* === GALLERY LINK HOVER EFFECTS (TEXT ONLY, NO BOX) === */
+
+/* For gallery index page links — titles, thumbnails, Behance link, back-home */
+.gallery-list a:hover,
+.gallery-links a:hover,
+.gallery-home:hover,
+.back-link:hover {
+  color: #ff5232;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+/* Bold-ing the behance link on gallery-list page */
+.portfolio-link {
+  font-weight: bold;
+}
+
+/* For links within gallery posts — e.g., Behance project link inside a post */
+.gallery-page a:hover,
+.gallery-post a:hover {
+  color: #ff5232;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+/* ============================================== */
+/* Base: remove default blue/underline for links inside gallery pages/posts/list */
+.container.post-container .gallery-images a,
+.container.post-container .gallery-images a:link,
+.container.post-container .gallery-images a:visited,
+.gallery-list a:visited,
+.gallery-header .back-link,
+.gallery-header .back-link:link,
+.gallery-header .back-link:visited,
+.external-link a,
+.external-link a:link,
+.external-link a:visited {
+  color: inherit;              /* match surrounding text color */
+  text-decoration: none !important; /* explicitly remove underline */
+  outline: none;
+}
+
+/* Specific: Behance or external links that are inline text inside post content */
+.container.post-container .post-content a.external,
+.container.post-container .post-content a[rel~="noopener"],
+.container.post-container .post-content a[target="_blank"] {
+  color: inherit;
+  text-decoration: none !important;
+}
+
+/* Hover / focus states — orange text only (no box) */
+.gallery-list a:hover,
+.gallery-list a:focus,
+.container.post-container .gallery-images a:hover,
+.container.post-container .gallery-images a:focus,
+.gallery-header .back-link:hover,
+.external-link a:hover,
+.gallery-home:hover,
+.back-link:hover {
+  color: #ff5232;
+  text-decoration: none !important;
+  transition: color 0.16s ease-in-out;
+}
+/* ============================================== */
+
+
+/* Faint orange background on hover for clickable cards (like your gallery post previews) */
+.gallery-card a:hover {
+  background: rgba(255, 82, 50, 0.05);
+  color: #ff5232;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
