@@ -1,3 +1,10 @@
+- title: "The Restaurant at the End of the Universe"
+  author: "Douglas Adams"
+  id: "8695"
+  rating: 4
+  pages: 250
+  date_read: "2025-12-18"
+
 - title: "Shattered Lands"
   author: "Sam Dalrymple"
   id: "222717408"
@@ -8,7 +15,7 @@
 - title: "Tomorrow, and Tomorrow, and Tomorrow"
   author: "Gabrielle Zevin"
   id: "58784475"
-  rating: 3
+  rating: 2
   pages: 416
   date_read: "2025-09-18"
 
@@ -29,7 +36,7 @@
 - title: "I, Claudius"
   author: "Robert Graves"
   id: "18765"
-  rating: 3
+  rating: 4
   pages: 469
   date_read: "2025-07-22"
 
@@ -43,7 +50,7 @@
 - title: "The Stalin Affair"
   author: "Giles Milton"
   id: "203578717"
-  rating: 4
+  rating: 3
   pages: 336
   date_read: "2025-05-25"
 
@@ -53,11 +60,18 @@
   rating: 4
   pages: 215
   date_read: "2025-01-08"
-
+  
+- title: "Man's Search for Meaning"
+  author: "Viktor E. Frankl"
+  id: "4069"
+  rating: 3
+  pages: 165
+  date_read: "2024-12-08"
+  
 - title: "Sputnik Sweetheart"
   author: "Haruki Murakami"
   id: "9557"
-  rating: 3
+  rating: 2
   pages: 229
   date_read: "2024-03-30"
 
@@ -113,7 +127,7 @@
 - title: "The Good, the Bad and the Ridiculous"
   author: "Khushwant Singh"
   id: "26819503"
-  rating: 0
+  rating: 2
   pages: 221
   date_read: "2021-05-29"
 
