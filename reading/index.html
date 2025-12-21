@@ -67,11 +67,23 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
     }
     .dark .item-row { border-color: #27272a; }
     .item-row:hover { opacity: 0.7; }
+
+    /* Hide the non-relevant rows when filtering */
+    .item-row.hidden { display: none !important; }
     
     /* Flex adjustment for mobile vs desktop in list items */
+    /* Mobile: Stack them vertically */
     .item-left { display: flex; flex-direction: column; gap: 2px; max-width: 80%; }
+    /* Desktop: Flow them like a sentence to remove the gap */
     @media (min-width: 640px) {
-        .item-left { flex-direction: row; align-items: baseline; gap: 8px; }
+        .item-left {
+            display: block;
+        }
+        /* Add a small separator before the author */
+        .item-author::before {
+            content: " ";
+            margin-left: 6px;
+        }
     }
 
     .item-title { font-weight: 600; color: #1d1d1f; text-decoration: none; font-size: 1rem; }
@@ -79,6 +91,53 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
     .item-author { font-size: 0.85rem; color: #6b7280; font-weight: 400; }
     .item-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #9ca3af; white-space: nowrap; }
 
+    /* --- Micro-Tags for type of books --- */
+    .tag-pill {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem; /* Smaller than normal text */
+    padding: 1px 6px;
+    border: 1px solid #f3f4f6;
+    border-radius: 4px;
+    color: #4b5563;
+    margin-left: 6px;
+    background: transparent;
+    text-transform: lowercase;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    }
+    .tag-pill:hover {
+    background: #e5e7eb; /* Slightly darker on hover */
+    color: #1d1d1f;
+    }
+
+    /* Dark mode overrides */
+    .dark .tag-pill {
+    border-color: #333;
+    background: transparent;
+    color: #6b7280;
+    }
+    .dark .tag-pill:hover {
+    background: #4b5563;
+    color: #fff;
+    }
+
+    /* Mobile tweak: reduce margin on small screens if needed */
+    @media (max-width: 640px) {
+    .tag-pill { margin-left: 4px; padding: 1px 4px; }
+    }
+    .filter-active-badge {
+        display: inline-flex; align-items: center; gap: 6px;
+        background: #1d1d1f; color: #fff;
+        padding: 4px 12px; border-radius: 99px;
+        font-size: 0.75rem; cursor: pointer;
+        font-family: 'JetBrains Mono', monospace;
+    }
+    .dark .filter-active-badge {
+        background: #fff; color: #000;
+    }
+    
     /* --- STARS (Monochrome System) --- */
     .stars { letter-spacing: 2px; }
     .star-fill { color: #1d1d1f; }
@@ -268,6 +327,15 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
             </span>
         </div>
 
+        <!-- FILTER STATUS (Hidden by default) -->
+         <div id="filterStatus" class="mb-6 hidden fade-in">
+            <div class="filter-active-badge" onclick="clearFilter()">
+                <span id="filterLabel">tag</span>
+                <span id="filterCount" class="opacity-60 ml-1 text-xs"></span>
+                <i data-lucide="x" class="w-3 h-3"></i>
+            </div>
+        </div>
+
         <div id="bookListContainer">
             
             {% comment %} --- LIQUID DATA PROCESSING --- {% endcomment %}
@@ -296,12 +364,19 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
                         {% assign sorted_items = group.items | sort: 'date_read' | reverse %}
                         {% for book in sorted_items %}
                             <!-- Single Book Row -->
-                            <div class="item-row book-entry" data-date="{{ book.date_read }}" data-rating="{{ book.rating }}">
+                            <div class="item-row book-entry" data-date="{{ book.date_read }}" data-rating="{{ book.rating }}" data-tags="{{ book.tags | join: ',' | downcase }}">
                                 <div class="item-left">
                                     <a href="https://www.goodreads.com/book/show/{{ book.id }}" target="_blank" class="item-title hover:underline">
                                         {{ book.title }}
                                     </a>
-                                    <span class="item-author">by {{ book.author }}</span>
+                                    <span class="item-author">
+                                        by {{ book.author }}
+                                        {% if book.tags %}
+                                            {% for tag in book.tags limit:3 %}
+                                                <span class="tag-pill" onclick="filterByTag('{{ tag }}')">{{ tag }}</span>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </span>
                                 </div>
                                 <div class="item-meta">
                                     <!-- Star Rendering Loop -->
@@ -334,12 +409,19 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
                     </summary>
                     <div class="group-content">
                         {% for book in undated_books %}
-                            <div class="item-row book-entry" data-date="" data-rating="{{ book.rating }}">
+                            <div class="item-row book-entry" data-date="" data-rating="{{ book.rating }}" data-tags="{{ book.tags | join: ',' | downcase }}">
                                 <div class="item-left">
                                     <a href="https://www.goodreads.com/book/show/{{ book.id }}" target="_blank" class="item-title hover:underline">
                                         {{ book.title }}
                                     </a>
-                                    <span class="item-author">by {{ book.author }}</span>
+                                    <span class="item-author">
+                                        by {{ book.author }}
+                                        {% if book.tags %}
+                                            {% for tag in book.tags limit:3 %}
+                                                <span class="tag-pill" onclick="filterByTag('{{ tag }}')">{{ tag }}</span>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </span>
                                 </div>
                                 <div class="item-meta">
                                     <span class="stars">
@@ -399,6 +481,11 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
     // Ingest Jekyll data into JS
     const books = {{ site.data.books | jsonify }};
     
+    // --- GLOBAL STATE ---
+    let sortMode = 'date'; 
+    let currentFilter = null;
+    let originalHTML = ''; // Stores the initial "Date View" to restore later
+
     // --- DASHBOARD INIT ---
     function initDashboard() {
         // 1. Calculate Average Rating
@@ -426,7 +513,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
         const yearsToShow = 7;
         const startYear = currentYear - yearsToShow + 1;
         
-        // Find max value to determine 100% height
+        // Find max value
         let maxCount = 0;
         for (let y = startYear; y <= currentYear; y++) {
             if ((yearMap[y] || 0) > maxCount) maxCount = yearMap[y];
@@ -436,11 +523,8 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
         let chartHTML = '';
         for (let y = startYear; y <= currentYear; y++) {
             const count = yearMap[y] || 0;
-            // Calculate height percentage (min 2% so empty bars show a tiny line)
             const heightPct = maxCount > 0 ? (count / maxCount) * 100 : 0;
             const barHeight = Math.max(heightPct, 2); 
-            
-            // Highlight current year
             const activeClass = y === currentYear ? 'active-year' : '';
 
             chartHTML += `
@@ -474,39 +558,130 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
     }
 
     // --- SORTING LOGIC ---
-    let sortMode = 'date'; 
-
     function toggleSort() {
         const container = document.getElementById('bookListContainer');
         const label = document.getElementById('sortLabel');
         
         if (sortMode === 'date') {
-            // Switch to Rating Mode:
-            // 1. Flatten the list (ignore accordion)
-            // 2. Sort DOM elements by data-rating
+            // SWITCH TO: BEST RATED
             sortMode = 'rating';
             label.textContent = "Best Rated";
             
+            // 1. Grab all book entries (ignoring current DOM structure)
             const allEntries = Array.from(document.querySelectorAll('.book-entry'));
+            
+            // 2. Sort by Rating (Descending)
             allEntries.sort((a, b) => {
                 const rA = parseFloat(a.getAttribute('data-rating')) || 0;
                 const rB = parseFloat(b.getAttribute('data-rating')) || 0;
-                return rB - rA; // Descending
+                // Tie-breaker: Date
+                if (rA === rB) {
+                    return (b.getAttribute('data-date')||'').localeCompare(a.getAttribute('data-date')||'');
+                }
+                return rB - rA; 
             });
             
-            // Clear current view and append sorted list
+            // 3. Render Flat List
             container.innerHTML = '';
             allEntries.forEach(entry => container.appendChild(entry));
+
         } else {
-            // Switch to Date Mode:
-            // Simplest way to restore Accordion structure is to reload
-            window.location.reload();
+            // SWITCH TO: NEWEST FIRST (Restore Date View)
+            sortMode = 'date';
+            label.textContent = "Newest First";
+            
+            // Restore the Accordion Structure from memory
+            container.innerHTML = originalHTML;
+            
+            // Re-initialize icons for the restored HTML
+            if(typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        // CRITICAL: Re-apply the current filter if one exists
+        if (currentFilter) {
+            filterByTag(currentFilter);
         }
     }
 
-    // Initialize on Load
+    // --- FILTERING LOGIC ---
+    function filterByTag(tagName) {
+        currentFilter = tagName;
+        const cleanTag = tagName.toLowerCase().trim();
+        let visibleCount = 0;
+
+        // 1. Update UI Label
+        document.getElementById('filterLabel').textContent = '#' + cleanTag;
+        document.getElementById('filterStatus').classList.remove('hidden');
+
+        // 2. Determine View Mode (Accordion vs Flat)
+        const yearGroups = document.querySelectorAll('.year-group');
+        const isYearMode = yearGroups.length > 0;
+
+        if (isYearMode) {
+            // --- ACCORDION MODE (Date View) ---
+            yearGroups.forEach(group => {
+                const rows = group.querySelectorAll('.book-entry');
+                let groupHasBook = false;
+                const countBubble = group.querySelector('.year-count');
+
+                rows.forEach(row => {
+                    const rowTags = row.getAttribute('data-tags') || "";
+                    if (rowTags.includes(cleanTag)) {
+                        row.classList.remove('hidden');
+                        groupHasBook = true;
+                        visibleCount++;
+                    } else {
+                        row.classList.add('hidden');
+                    }
+                });
+
+                if (groupHasBook) {
+                    group.classList.remove('hidden');
+                    group.open = true; // Force open
+                    if(countBubble) countBubble.style.display = 'none'; // Hide year count
+                } else {
+                    group.classList.add('hidden');
+                }
+            });
+        } else {
+            // --- FLAT MODE (Rated View) ---
+            const allRows = document.querySelectorAll('.book-entry');
+            allRows.forEach(row => {
+                const rowTags = row.getAttribute('data-tags') || "";
+                if (rowTags.includes(cleanTag)) {
+                    row.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+        }
+
+        // 3. Update the Count Badge
+        const countSpan = document.getElementById('filterCount');
+        if(countSpan) countSpan.textContent = `(${visibleCount})`;
+    }
+
+    function clearFilter() {
+        currentFilter = null;
+        document.getElementById('filterStatus').classList.add('hidden');
+        
+        // Show all rows and groups
+        document.querySelectorAll('.book-entry').forEach(el => el.classList.remove('hidden'));
+        document.querySelectorAll('.year-group').forEach(el => el.classList.remove('hidden'));
+        
+        // Restore Year Bubbles
+        document.querySelectorAll('.year-count').forEach(el => el.style.display = 'inline-block');
+    }
+
+    // --- INITIALIZE ---
     document.addEventListener('DOMContentLoaded', () => {
         initDashboard();
+        
+        // Save the initial HTML (Date View) so we can restore it later without reloading
+        const container = document.getElementById('bookListContainer');
+        if(container) originalHTML = container.innerHTML;
+
         if(typeof lucide !== 'undefined') lucide.createIcons();
     });
 </script>

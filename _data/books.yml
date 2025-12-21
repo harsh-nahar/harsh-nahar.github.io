@@ -1,5 +1,14 @@
+- title: "Dark Matter"
+  author: "Blake Crouch"
+  tags: ["fiction", "scifi", "thriller"]
+  id: "27833670"
+  rating: 3
+  pages: 342
+  date_read: "2025-12-21"
+
 - title: "The Restaurant at the End of the Universe"
   author: "Douglas Adams"
+  tags: ["fiction", "scifi", "humour"]
   id: "8695"
   rating: 4
   pages: 250
@@ -7,6 +16,7 @@
 
 - title: "Shattered Lands"
   author: "Sam Dalrymple"
+  tags: ["non-fiction", "history", "political"]
   id: "222717408"
   rating: 3
   pages: 528
@@ -14,6 +24,7 @@
 
 - title: "Tomorrow, and Tomorrow, and Tomorrow"
   author: "Gabrielle Zevin"
+  tags: ["fiction", "literary", "identity"]
   id: "58784475"
   rating: 2
   pages: 416
@@ -21,6 +32,7 @@
 
 - title: "A Gentleman in Moscow"
   author: "Amor Towles"
+  tags: ["fiction", "literary", "historical"]
   id: "34066798"
   rating: 5
   pages: 495
@@ -28,6 +40,7 @@
 
 - title: "Interpreter of Maladies"
   author: "Jhumpa Lahiri"
+  tags: ["fiction", "literary", "social"]
   id: "5439"
   rating: 3
   pages: 198
@@ -35,6 +48,7 @@
 
 - title: "I, Claudius"
   author: "Robert Graves"
+  tags: ["fiction", "historical", "power"]
   id: "18765"
   rating: 4
   pages: 469
@@ -42,6 +56,7 @@
 
 - title: "Murder at the Mushaira"
   author: "Raza Mir"
+  tags: ["fiction", "mystery", "cultural"]
   id: "56253393"
   rating: 5
   pages: 358
@@ -49,6 +64,7 @@
 
 - title: "The Stalin Affair"
   author: "Giles Milton"
+  tags: ["non-fiction", "history", "power"]
   id: "203578717"
   rating: 3
   pages: 336
@@ -56,20 +72,23 @@
 
 - title: "The Hitchhiker's Guide to the Galaxy"
   author: "Douglas Adams"
+  tags: ["fiction", "scifi", "humour"]
   id: "14"
   rating: 4
   pages: 215
   date_read: "2025-01-08"
-  
+
 - title: "Man's Search for Meaning"
   author: "Viktor E. Frankl"
+  tags: ["non-fiction", "psychology", "philosophical"]
   id: "4069"
   rating: 3
   pages: 165
   date_read: "2024-12-08"
-  
+
 - title: "Sputnik Sweetheart"
   author: "Haruki Murakami"
+  tags: ["fiction", "literary", "identity"]
   id: "9557"
   rating: 2
   pages: 229
@@ -77,6 +96,7 @@
 
 - title: "Make Something Wonderful"
   author: "Steve Jobs"
+  tags: ["non-fiction", "biography", "technology"]
   id: "128533513"
   rating: 5
   pages: 194
@@ -84,6 +104,7 @@
 
 - title: "BoJack Horseman: The Art Before the Horse"
   author: "Chris McDonnell"
+  tags: ["non-fiction", "art", "cultural"]
   id: "35888337"
   rating: 5
   pages: 240
@@ -91,6 +112,7 @@
 
 - title: "To Kill a Mockingbird: a graphic novel"
   author: "Fred Fordham"
+  tags: ["fiction", "graphic-novel", "ethical"]
   id: "38589785"
   rating: 4
   pages: 288
@@ -98,6 +120,7 @@
 
 - title: "When Stars Are Scattered"
   author: "Victoria Jamieson"
+  tags: ["non-fiction", "graphic-novel", "identity"]
   id: "51215165"
   rating: 5
   pages: 264
@@ -105,6 +128,7 @@
 
 - title: "Persepolis"
   author: "Marjane Satrapi"
+  tags: ["non-fiction", "graphic-novel", "identity"]
   id: "3106983"
   rating: 3
   pages: 344
@@ -112,6 +136,7 @@
 
 - title: "Slaughterhouse-Five"
   author: "Kurt Vonnegut Jr."
+  tags: ["fiction", "experimental", "war"]
   id: "40554155"
   rating: 4
   pages: 238
@@ -119,6 +144,7 @@
 
 - title: "The Spy and the Traitor"
   author: "Ben Macintyre"
+  tags: ["non-fiction", "history", "power"]
   id: "37542581"
   rating: 5
   pages: 384
@@ -126,6 +152,7 @@
 
 - title: "The Good, the Bad and the Ridiculous"
   author: "Khushwant Singh"
+  tags: ["non-fiction", "essay", "humour"]
   id: "26819503"
   rating: 2
   pages: 221
@@ -133,6 +160,7 @@
 
 - title: "Fahrenheit 451"
   author: "Ray Bradbury"
+  tags: ["fiction", "dystopian", "political"]
   id: "16032905"
   rating: 4
   pages: 227
@@ -140,6 +168,7 @@
 
 - title: "The Psychology of Money"
   author: "Morgan Housel"
+  tags: ["non-fiction", "economics", "psychological"]
   id: "55290131"
   rating: 4
   pages: 242
@@ -147,6 +176,7 @@
 
 - title: "How To"
   author: "Randall Munroe"
+  tags: ["non-fiction", "science", "humour"]
   id: "42086897"
   rating: 4
   pages: 308
@@ -154,6 +184,7 @@
 
 - title: "A Promised Land"
   author: "Barack Obama"
+  tags: ["non-fiction", "memoir", "power"]
   id: "55364115"
   rating: 5
   pages: 27
@@ -161,6 +192,7 @@
 
 - title: "Stocks To Riches"
   author: "Parag Parikh"
+  tags: ["non-fiction", "economics", "psychological"]
   id: "6857031"
   rating: 4
   pages: 132
@@ -168,6 +200,7 @@
 
 - title: "The Complete Maus"
   author: "Art Spiegelman"
+  tags: ["non-fiction", "graphic-novel", "historical"]
   id: "331692"
   rating: 5
   pages: 296
@@ -175,6 +208,7 @@
 
 - title: "Laughter in the Dark"
   author: "Vladimir Nabokov"
+  tags: ["fiction", "literary", "psychological"]
   id: "18982175"
   rating: 4
   pages: 0
@@ -182,6 +216,7 @@
 
 - title: "The Bastard of Istanbul"
   author: "Elif Shafak"
+  tags: ["fiction", "literary", "identity"]
   id: "52841272"
   rating: 4
   pages: 12
@@ -189,6 +224,7 @@
 
 - title: "The Stranger"
   author: "Albert Camus"
+  tags: ["fiction", "literary", "philosophical"]
   id: "49552"
   rating: 3
   pages: 123
@@ -196,6 +232,7 @@
 
 - title: "Delhi Riots 2020"
   author: "Monika Arora"
+  tags: ["non-fiction", "history", "political"]
   id: "54386487"
   rating: 0
   pages: 200
@@ -203,6 +240,7 @@
 
 - title: "Srimad Bhagavad Gita"
   author: "Gita Press"
+  tags: ["non-fiction", "philosophy", "ethical"]
   id: "39355510"
   rating: 0
   pages: 222
@@ -210,6 +248,7 @@
 
 - title: "I, The Lurker"
   author: "Natasha Virdi"
+  tags: ["fiction", "thriller", "psychological"]
   id: "36665462"
   rating: 4
   pages: 150
@@ -217,6 +256,7 @@
 
 - title: "India's Most Fearless"
   author: "Shiv Aroor"
+  tags: ["non-fiction", "history", "war"]
   id: "36149971"
   rating: 4
   pages: 256
@@ -224,6 +264,7 @@
 
 - title: "The Best We Could Do"
   author: "Thi Bui"
+  tags: ["non-fiction", "graphic-novel", "family"]
   id: "29936927"
   rating: 5
   pages: 329
@@ -231,6 +272,7 @@
 
 - title: "The Liberation of Sita"
   author: "Volga"
+  tags: ["fiction", "mythology", "identity"]
   id: "39827255"
   rating: 4
   pages: 128
@@ -238,6 +280,7 @@
 
 - title: "Adulthood Is a Myth"
   author: "Sarah Andersen"
+  tags: ["non-fiction", "graphic-novel", "humour"]
   id: "25855506"
   rating: 4
   pages: 110
@@ -245,6 +288,7 @@
 
 - title: "Adolf Hitler: A Life from Beginning to End"
   author: "Hourly History"
+  tags: ["non-fiction", "biography", "power"]
   id: "32682214"
   rating: 3
   pages: 128
@@ -252,6 +296,7 @@
 
 - title: "Poonachi"
   author: "Perumal Murugan"
+  tags: ["fiction", "literary", "social"]
   id: "38318462"
   rating: 5
   pages: 179
@@ -259,6 +304,7 @@
 
 - title: "1984"
   author: "George Orwell"
+  tags: ["fiction", "dystopian", "power"]
   id: "40961427"
   rating: 3
   pages: 298
@@ -266,6 +312,7 @@
 
 - title: "Circe"
   author: "Madeline Miller"
+  tags: ["fiction", "mythology", "identity"]
   id: "35959740"
   rating: 5
   pages: 393
@@ -273,6 +320,7 @@
 
 - title: "The Invisible Man"
   author: "H.G. Wells"
+  tags: ["fiction", "scifi", "ethical"]
   id: "17184"
   rating: 3
   pages: 192
@@ -280,6 +328,7 @@
 
 - title: "1001 Ways To Humiliate Yourself And Others"
   author: "Fiona J. Bowron"
+  tags: ["non-fiction", "essay", "humour"]
   id: "228750"
   rating: 1
   pages: 96
@@ -287,6 +336,7 @@
 
 - title: "Norse Mythology"
   author: "Neil Gaiman"
+  tags: ["fiction", "mythology", "cultural"]
   id: "37903770"
   rating: 5
   pages: 301
@@ -294,6 +344,7 @@
 
 - title: "The Master and Margarita"
   author: "Mikhail Bulgakov"
+  tags: ["fiction", "magical-realism", "power"]
   id: "117833"
   rating: 4
   pages: 372
@@ -301,6 +352,7 @@
 
 - title: "Thing Explainer"
   author: "Randall Munroe"
+  tags: ["non-fiction", "science", "technology"]
   id: "25329850"
   rating: 3
   pages: 64
@@ -308,6 +360,7 @@
 
 - title: "The Visitor"
   author: "Lee Child"
+  tags: ["fiction", "thriller", "power"]
   id: "19738287"
   rating: 2
   pages: 492
@@ -315,6 +368,7 @@
 
 - title: "Rodrick Rules"
   author: "Jeff Kinney"
+  tags: ["fiction", "literary", "humour"]
   id: "1809465"
   rating: 3
   pages: 226
@@ -322,6 +376,7 @@
 
 - title: "The Psychology Book"
   author: "Nigel C. Benson"
+  tags: ["non-fiction", "psychology", "reference"]
   id: "13766064"
   rating: 4
   pages: 352
@@ -329,6 +384,7 @@
 
 - title: "Men Without Women"
   author: "Haruki Murakami"
+  tags: ["fiction", "literary", "identity"]
   id: "33652490"
   rating: 4
   pages: 242
@@ -336,6 +392,7 @@
 
 - title: "Hyperbole and a Half"
   author: "Allie Brosh"
+  tags: ["non-fiction", "graphic-novel", "humour"]
   id: "17571564"
   rating: 5
   pages: 371
@@ -343,6 +400,7 @@
 
 - title: "Sapiens"
   author: "Yuval Noah Harari"
+  tags: ["non-fiction", "history", "philosophical"]
   id: "23692271"
   rating: 5
   pages: 512
@@ -350,6 +408,7 @@
 
 - title: "When Breath Becomes Air"
   author: "Paul Kalanithi"
+  tags: ["non-fiction", "memoir", "ethical"]
   id: "25899336"
   rating: 3
   pages: 208
@@ -357,6 +416,7 @@
 
 - title: "The God of Small Things"
   author: "Arundhati Roy"
+  tags: ["fiction", "literary", "social"]
   id: "9777"
   rating: 3
   pages: 321
@@ -364,6 +424,7 @@
 
 - title: "What If?"
   author: "Randall Munroe"
+  tags: ["non-fiction", "science", "humour"]
   id: "21413662"
   rating: 4
   pages: 303
@@ -371,6 +432,7 @@
 
 - title: "Kafka on the Shore"
   author: "Haruki Murakami"
+  tags: ["fiction", "magical-realism", "identity"]
   id: "4929"
   rating: 4
   pages: 467
@@ -378,6 +440,7 @@
 
 - title: "Five C's of Cinematography"
   author: "Joseph V. Mascelli"
+  tags: ["non-fiction", "self-help", "technology"]
   id: "26433"
   rating: 5
   pages: 251
@@ -385,6 +448,7 @@
 
 - title: "The Subtle Art of Not Giving a F*ck"
   author: "Mark Manson"
+  tags: ["non-fiction", "self-help", "philosophical"]
   id: "28257707"
   rating: 3
   pages: 212
@@ -392,6 +456,7 @@
 
 - title: "Norwegian Wood"
   author: "Haruki Murakami"
+  tags: ["fiction", "literary", "romance"]
   id: "11297"
   rating: 5
   pages: 296
@@ -399,6 +464,7 @@
 
 - title: "The Man in the High Castle"
   author: "Philip K. Dick"
+  tags: ["fiction", "scifi", "power"]
   id: "216363"
   rating: 4
   pages: 259
@@ -406,6 +472,7 @@
 
 - title: "Animal Farm"
   author: "George Orwell"
+  tags: ["fiction", "satire", "political"]
   id: "7613"
   rating: 4
   pages: 129
@@ -413,6 +480,7 @@
 
 - title: "The Hound of the Baskervilles"
   author: "Arthur Conan Doyle"
+  tags: ["fiction", "mystery", "power"]
   id: "8921"
   rating: 0
   pages: 256
@@ -420,6 +488,7 @@
 
 - title: "2 States"
   author: "Chetan Bhagat"
+  tags: ["fiction", "literary", "romance"]
   id: "6969361"
   rating: 2
   pages: 269
@@ -427,6 +496,7 @@
 
 - title: "Are You Afraid of the Dark?"
   author: "Sidney Sheldon"
+  tags: ["fiction", "thriller", "power"]
   id: "43324"
   rating: 3
   pages: 401
@@ -434,6 +504,7 @@
 
 - title: "Bloodline"
   author: "Sidney Sheldon"
+  tags: ["fiction", "thriller", "power"]
   id: "300225"
   rating: 3
   pages: 409
@@ -441,6 +512,7 @@
 
 - title: "Five Point Someone"
   author: "Chetan Bhagat"
+  tags: ["fiction", "literary", "identity"]
   id: "105576"
   rating: 1
   pages: 267
@@ -448,6 +520,7 @@
 
 - title: "Office Romance"
   author: "Kathy Ryan"
+  tags: ["fiction", "literary", "romance"]
   id: "22271843"
   rating: 5
   pages: 160
@@ -455,6 +528,7 @@
 
 - title: "Mastery"
   author: "Robert Greene"
+  tags: ["non-fiction", "self-help", "power"]
   id: "13589182"
   rating: 0
   pages: 318
@@ -462,6 +536,7 @@
 
 - title: "One Night at the Call Center"
   author: "Chetan Bhagat"
+  tags: ["fiction", "literary", "identity"]
   id: "105578"
   rating: 1
   pages: 320
@@ -469,6 +544,7 @@
 
 - title: "Only Time Will Tell"
   author: "Jeffrey Archer"
+  tags: ["fiction", "literary", "family"]
   id: "10872085"
   rating: 3
   pages: 400
@@ -476,6 +552,7 @@
 
 - title: "Revolution 2020"
   author: "Chetan Bhagat"
+  tags: ["fiction", "literary", "political"]
   id: "12615008"
   rating: 1
   pages: 296
@@ -483,6 +560,7 @@
 
 - title: "Shall We Tell the President?"
   author: "Jeffrey Archer"
+  tags: ["fiction", "thriller", "political"]
   id: "78989"
   rating: 3
   pages: 228
@@ -490,6 +568,7 @@
 
 - title: "The 3 Mistakes of My Life"
   author: "Chetan Bhagat"
+  tags: ["fiction", "literary", "identity"]
   id: "3320520"
   rating: 2
   pages: 258
@@ -497,6 +576,7 @@
 
 - title: "The Alchemist"
   author: "Paulo Coelho"
+  tags: ["fiction", "literary", "philosophical"]
   id: "865"
   rating: 3
   pages: 197
@@ -504,6 +584,7 @@
 
 - title: "The Girl With the Dragon Tattoo"
   author: "Stieg Larsson"
+  tags: ["fiction", "thriller", "power"]
   id: "2429135"
   rating: 5
   pages: 480
@@ -511,6 +592,7 @@
 
 - title: "The Kite Runner"
   author: "Khaled Hosseini"
+  tags: ["fiction", "literary", "family"]
   id: "77203"
   rating: 3
   pages: 371
