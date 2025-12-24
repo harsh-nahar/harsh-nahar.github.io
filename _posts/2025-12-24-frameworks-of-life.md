@@ -19,11 +19,11 @@ Having a neutral stance is the “objective” way, but it is rarely easy. We na
 
 Lately, this has made me take active measures to try and be a good person in general. Not for others, but for my own happiness. It’s easier to lie to the world, but we can’t shut the voices in our head.
 
-A good general goal is to be a good person in life. One that also does not inherently assume the worst in others. A good chunk of time gets wasted away in this pursuit. It gets us nowhere. This does not mean that obvious hints are ignored and we just keep accepting wrongdoings.
+A nice general goal is to be a good person in life. One that also does not inherently assume the worst in others. A good chunk of time gets wasted away in this pursuit. It gets us nowhere. This does not mean that obvious hints are ignored and we just keep accepting wrongdoings.
 
 Moral Superiority is a bad thing. It clouds judgement. It makes us think based on biases and not reason.
 
-Doing good to others but making our closed ones suffer for it is also not a good thing. We must be good to everyone as much as we can. If we only do good because we want some positive responses from people, we tend to take our closed ones for granted.
+Doing good to others but making our closed ones suffer for it is also not a nice thing. We must be nice to everyone as much as we can. If we only do good because we want some positive responses from people, we tend to take our closed ones for granted.
 
 ### Decision Making
 
