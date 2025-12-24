@@ -40,14 +40,14 @@ Eventually, owning our decisions is important. They define us in many ways. They
 ### Failure
 
 Failures will happen. Because we did not decide soon enough. Decided way too soon. An opportunity missed. A hurtful comment made. Struggling to understand a concept. Failed an exam.
-Many things could happen. Decide our own failure. And use our definition as a benchmark. 
+Many things could happen. Define our own failure. And use our definition as a benchmark. 
 If we are under the benchmark, acceptance will be the only way to be grounded in reality and course-correct.
 
 > As long as we are physically and mentally healthy, financially stable, and have a few good connections, we have not failed. This positive reinforcement is crucial to remain sane.
 
 ### Ambitions
 
-An important goal in our lives is to save and grow wealth. As money tends to solve a lot of issues. Like managing hospital bills, fulfilling some overdue dreams and hobbies.
+An important goal in our lives is to save and grow wealth as money tends to solve a lot of issues. Like managing hospital bills, fulfilling some overdue dreams and hobbies.
 
 There have been times when wanting something led me to emotional suffering due to the immense effort I put into achieving it. Only to find emptiness when I eventually achieved it. There was nothing left to do after. And I found myself jumping to something new to fill the void.
 
@@ -59,8 +59,8 @@ Learning should be a never-ending affair. Something that sparks interest can kee
 
 As long as it is feasible, we should keep working. For others or for ourselves. For money or for free. Because it will give us a mission to follow, look up to, keep us motivated and distracted during tough times in life.
 
-I hate sounding rhetorical and preachy, but I can’t help but notice that this write-up is mostly that. My hope is that as I grow, it evolves into something of substance. 
+I hate sounding rhetorical and preachy, and I can’t help but notice that this write-up is mostly that. My hope is that as I grow, it evolves into something of substance. 
 
-Eventually, it was my effort to create a proverbial “walking stick” when the days are tough and I don’t have anyone to lean on for answers. 
+Ultimately, it was my effort to create a proverbial “walking stick” when the days are tough and I don’t have anyone to lean on for answers. 
 
 And despite all this, a hard rule is that no guideline or framework should have a negative impact on others. 
