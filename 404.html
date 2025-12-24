@@ -1,50 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
- <meta charset="UTF-8" />
- <meta name="viewport" content="width=device-width, initial-scale=1" />
- <title>Page Not Found — harsh nahar</title>
- <link rel="stylesheet" href="/styles.css" />
- <style>
-   body {
-     margin: 0;
-     font-family: 'Cormorant Garamond', serif;
-     background: white;
-     display: flex;
-     flex-direction: column;
-     justify-content: center;
-     align-items: center;
-     min-height: 100vh;
-     text-align: center;
-   }
-   .error-img {
-     width: 200px;
-     height: 200px;
-     object-fit: contain;
-     margin-bottom: 1rem;
-   }
-   .error-title {
-     font-size: 28px;
-     margin-bottom: 1.5rem;
-   }
-   .link {
-     font-size: 20px;
-     color: #000;
-     text-decoration: none;
-     transition: color 0.2s;
-   }
-   .link:hover {
-     color: #ff5232;
-   }
- </style>
-</head>
-<body>
- <img
-   src="https://raw.githubusercontent.com/harsh-nahar/assets/5da36cd26cbf31c8cea5acdf2f6c3b6459d44117/blog-images/404.png"
-   alt="404 Not Found"
-   class="error-img"
- />
- <h2 class="error-title">Something isn’t right</h2>
- <a href="/" class="link">Back to Home</a>
-</body>
-</html>
+---
+layout: default
+title: "404"
+permalink: /404.html
+---
+
+<div class="flex flex-col items-center justify-center min-h-[60vh] text-center fade-in px-6">
+    
+    <!-- Big Mono 404 -->
+    <h1 class="font-mono text-8xl md:text-9xl font-bold tracking-tighter text-[#1d1d1f] dark:text-white mb-2 opacity-10">
+        404
+    </h1>
+
+    <!-- Message -->
+    <h2 class="text-2xl md:text-3xl font-bold text-[#1d1d1f] dark:text-white mb-4">
+        you are lost.
+    </h2>
+    
+    <p class="text-[#86868b] dark:text-gray-400 max-w-md mx-auto mb-10 leading-relaxed">
+        the page you are looking for has wandered off, or perhaps it never existed in the first place.
+    </p>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-col sm:flex-row gap-4">
+        <a href="{{ '/' | relative_url }}" class="px-6 py-3 rounded-full bg-[#1d1d1f] dark:bg-white text-white dark:text-black font-medium text-sm transition-transform active:scale-95 hover:opacity-90">
+            return home
+        </a>
+        <a href="{{ '/blog/' | relative_url }}" class="px-6 py-3 rounded-full border border-gray-200 dark:border-white/10 text-[#1d1d1f] dark:text-white font-medium text-sm hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+            read something
+        </a>
+        <a href="{{ '/gallery/' | relative_url }}" class="px-6 py-3 rounded-full border border-gray-200 dark:border-white/10 text-[#1d1d1f] dark:text-white font-medium text-sm hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+            check photos
+        </a>
+    </div>
+
+</div>

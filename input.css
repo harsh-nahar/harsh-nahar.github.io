@@ -3,3 +3,41 @@
 @tailwind utilities;
 
 /* You can add custom CSS here if you ever need to */
+
+/* JetBrains Mono (Data Font) */
+
+/* Regular (400) */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/jetbrains-mono-v13-latin-regular.woff2') format('woff2');
+}
+
+/* Medium (500) - Optional, good for subheaders */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/jetbrains-mono-v13-latin-500.woff2') format('woff2');
+}
+
+/* SemiBold (600) - Often used for emphasis */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/jetbrains-mono-v13-latin-600.woff2') format('woff2');
+}
+
+/* Bold (700) - CRITICAL for your calculator numbers */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/jetbrains-mono-v13-latin-700.woff2') format('woff2');
+}
