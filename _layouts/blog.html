@@ -1,58 +1,145 @@
 ---
 layout: default
-title: "Writing"
+title: "writing"
 permalink: /blog/
 excerpt: "recent essays and thoughts"
-image: "https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blog-images/harsh-home.jpg" # Using the same home image as a dedicated fallback for this list page
+image: "https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blog-images/harsh-home.jpg"
 ---
 <div class="fade-in">
-    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-8 md:mb-12 gap-4">
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-8 md:mb-10 gap-4">
         <div>
-            <h1 class="text-3xl font-bold mb-2 dark:text-white">Writing</h1>
-            <p class="text-[#86868b] dark:text-gray-400">Recent essays and thoughts.</p>
+            <h1 class="text-3xl font-bold mb-2 dark:text-white">writing</h1>
+            <p class="text-[#86868b] dark:text-gray-400">recent essays and thoughts.</p>
         </div>
         
         <div class="relative w-full md:w-auto">
             <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-            <input type="text" id="blog-search" placeholder="Search posts..." class="pl-9 pr-4 py-2 text-sm bg-gray-100 dark:bg-white/10 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:text-white w-full md:w-64 transition-all hover:bg-gray-50 dark:hover:bg-white/20 placeholder-gray-500">
+            <input type="text" id="blog-search" placeholder="Search posts..." class="pl-9 pr-4 py-2 text-sm bg-gray-100 dark:bg-white/10 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:text-white w-full md:w-64 transition-all hover:bg-gray-50 dark:hover:bg-white/20 placeholder-gray-500 font-sans">
         </div>
     </div>
 
+    <!-- TAG FILTER BAR (Horizontal Scroll) -->
+    <!-- The -mx-6 px-6 classes let it scroll edge-to-edge on mobile phones -->
+    <div class="flex overflow-x-auto flex-nowrap gap-2 mb-12 pb-2 no-scrollbar -mx-6 px-6 sm:mx-0 sm:px-0">
+        
+        <!-- 'All' Button -->
+        <button onclick="filterByTag('all')" class="filter-btn active flex-shrink-0 px-3 py-1 text-xs font-mono rounded-full border border-gray-200 dark:border-white/10 hover:border-black dark:hover:border-white transition-colors bg-black text-white dark:bg-white dark:text-black whitespace-nowrap">
+            all
+        </button>
+        
+        <!-- Liquid Logic to collect unique tags -->
+        {% assign rawtags = "" %}
+        {% for post in site.posts %}
+            {% assign ttags = post.tags | join:'|' | append:'|' %}
+            {% assign rawtags = rawtags | append:ttags %}
+        {% endfor %}
+        {% assign rawtags = rawtags | split:'|' | sort | uniq %}
+        
+        <!-- Loop through unique tags -->
+        {% for tag in rawtags %}
+            {% if tag != "" %}
+            <button onclick="filterByTag('{{ tag }}')" class="filter-btn flex-shrink-0 px-3 py-1 text-xs font-mono rounded-full border border-gray-200 dark:border-white/10 text-[#86868b] hover:text-black dark:hover:text-white hover:border-black dark:hover:border-white transition-colors whitespace-nowrap">
+                #{{ tag }}
+            </button>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- Posts List -->
     <div id="blog-posts-container" class="space-y-10">
         {% for post in site.posts %}
-        <a href="{{ post.url | relative_url }}" class="blog-post-item group block" data-title="{{ post.title | downcase }}">
+        <a href="{{ post.url | relative_url }}" class="blog-post-item group block" data-title="{{ post.title | downcase }}" data-tags="{{ post.tags | join: ',' | downcase }}">
             <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2 gap-1">
                 <h2 class="text-xl font-semibold text-[#1d1d1f] dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{{ post.title }}</h2>
-                <time class="font-mono text-xs text-[#86868b] whitespace-nowrap">{{ post.date | date: "%b %-d, %Y" }}</time>
+                <div class="flex items-center gap-3">
+                    <!-- Display Tags on Desktop -->
+                    {% if post.tags %}
+                    <div class="hidden sm:flex gap-2">
+                        {% for tag in post.tags %}
+                        <span class="text-[10px] font-mono text-gray-400">#{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <time class="font-mono text-xs text-[#86868b] whitespace-nowrap">{{ post.date | date: "%b %Y" }}</time>
+                </div>
             </div>
             <p class="text-base text-[#86868b] dark:text-gray-400 leading-relaxed line-clamp-2">
                 {{ post.excerpt | strip_html | truncatewords: 30 }}
             </p>
+            <!-- Display Tags on Mobile -->
+            {% if post.tags %}
+            <div class="flex sm:hidden gap-2 mt-2">
+                {% for tag in post.tags %}
+                <span class="text-[10px] font-mono text-gray-400">#{{ tag }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
         </a>
         {% endfor %}
     </div>
 
-    <div id="no-results" class="hidden text-center py-12 text-gray-400">
-        No posts found.
+    <div id="no-results" class="hidden text-center py-12 text-gray-400 font-mono text-sm">
+        no matching posts found.
     </div>
 </div>
 
 <script>
     const searchInput = document.getElementById('blog-search');
     const noResults = document.getElementById('no-results');
+    const posts = document.querySelectorAll('.blog-post-item');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    
+    let currentTag = 'all';
+    let currentSearch = '';
+
+    // Filter Logic
+    function runFilter() {
+        let visibleCount = 0;
+        
+        posts.forEach(post => {
+            const postTitle = post.getAttribute('data-title');
+            const postTags = post.getAttribute('data-tags').split(','); // Exact match
+            
+            const matchesSearch = postTitle.includes(currentSearch);
+            const matchesTag = currentTag === 'all' || postTags.includes(currentTag);
+
+            if (matchesSearch && matchesTag) {
+                post.style.display = 'block';
+                visibleCount++;
+            } else {
+                post.style.display = 'none';
+            }
+        });
+
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    // Tag Click Handler
+    window.filterByTag = (tag) => {
+        currentTag = tag;
+        
+        // Visual Toggle
+        filterBtns.forEach(btn => {
+            btn.classList.remove('bg-black', 'text-white', 'dark:bg-white', 'dark:text-black');
+            btn.classList.add('text-[#86868b]');
+            
+            const btnText = btn.innerText.replace('#', '').trim();
+            if(btnText === tag || (tag === 'all' && btnText === 'all')) {
+                btn.classList.add('bg-black', 'text-white', 'dark:bg-white', 'dark:text-black');
+                btn.classList.remove('text-[#86868b]');
+            }
+        });
+
+        runFilter();
+    }
 
     if(searchInput) {
         searchInput.addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            const posts = document.querySelectorAll('.blog-post-item');
-            let hasResults = false;
-            posts.forEach(post => {
-                const title = post.getAttribute('data-title');
-                if(title.includes(term)) { post.style.display = 'block'; hasResults = true; } 
-                else { post.style.display = 'none'; }
-            });
-            noResults.style.display = hasResults ? 'none' : 'block';
+            currentSearch = e.target.value.toLowerCase();
+            runFilter();
         });
     }
+    
+    lucide.createIcons();
 </script>
-

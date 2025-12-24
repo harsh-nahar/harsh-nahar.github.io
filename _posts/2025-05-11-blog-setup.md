@@ -2,6 +2,7 @@
 title: "setting up this blog"
 date: 2025-05-11
 excerpt: "how did I(or AI) create this website"
+tags: ["tech"]
 image: "https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blog-images/Initial%20Design.webp"
 ---
 > UPDATE: On November 22, 2025, I made big design changes to this website that do not adhere to the design choices in this post.

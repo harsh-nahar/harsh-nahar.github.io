@@ -626,7 +626,8 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
 
                 rows.forEach(row => {
                     const rowTags = row.getAttribute('data-tags') || "";
-                    if (rowTags.includes(cleanTag)) {
+                    // Split the string into an array and check for an exact match
+                    if (rowTags.split(',').includes(cleanTag)) {
                         row.classList.remove('hidden');
                         groupHasBook = true;
                         visibleCount++;
@@ -648,7 +649,8 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
             const allRows = document.querySelectorAll('.book-entry');
             allRows.forEach(row => {
                 const rowTags = row.getAttribute('data-tags') || "";
-                if (rowTags.includes(cleanTag)) {
+                // Split and check exact match
+                if (rowTags.split(',').includes(cleanTag)) { 
                     row.classList.remove('hidden');
                     visibleCount++;
                 } else {
