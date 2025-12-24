@@ -59,6 +59,8 @@ Learning should be a never-ending affair. Something that sparks interest can kee
 
 As long as it is feasible, we should keep working. For others or for ourselves. For money or for free. Because it will give us a mission to follow, look up to, keep us motivated and distracted during tough times in life.
 
+---
+
 I hate sounding rhetorical and preachy, and I can’t help but notice that this write-up is mostly that. My hope is that as I grow, it evolves into something of substance. 
 
 Ultimately, it was my effort to create a proverbial “walking stick” when the days are tough and I don’t have anyone to lean on for answers. 
