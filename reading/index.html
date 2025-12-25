@@ -13,245 +13,135 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
     Relies on Tailwind for layout, but custom CSS for specific components.
     ========================================
 -->
+    
 <style>
     /* --- DASHBOARD CONTAINER --- */
     .stat-card {
-        padding: 24px;
+        padding: 24px; /* Standard comfortable padding */
         border: 1px solid #e5e7eb;
-        border-radius: 12px;
+        border-radius: 16px;
         background: #fff;
-        margin-bottom: 40px;
+        margin-bottom: 32px;
     }
     .dark .stat-card { background: #1c1c1e; border-color: #333; }
 
     /* Stats Typography */
     .stat-label { font-size: 0.75rem; text-transform: uppercase; color: #9ca3af; letter-spacing: 0.05em; margin-bottom: 4px; }
-    .stat-val { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #1d1d1f; }
+    .stat-val { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #1d1d1f; line-height: 1.2; }
     .dark .stat-val { color: #fff; }
-
-    /* --- TABS (Books vs Essays) --- */
-    .tab-bar {
-        display: flex;
-        gap: 20px;
-        border-bottom: 1px solid #e5e7eb;
-        margin-bottom: 30px;
-    }
-    .dark .tab-bar { border-color: #333; }
-
-    .tab-btn {
-        padding-bottom: 10px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: #9ca3af;
-        cursor: pointer;
-        transition: color 0.2s;
-        border-bottom: 2px solid transparent; /* Invisible border for hover state */
-        margin-bottom: -1px; /* Overlaps the bottom border */
-    }
-    .tab-btn.active { color: #1d1d1f; border-bottom-color: #1d1d1f; }
-    .dark .tab-btn.active { color: #fff; border-bottom-color: #fff; }
-
-    /* --- LIST ROWS --- */
-    .list-header {
-        display: flex; justify-content: space-between; align-items: center;
-        margin-bottom: 20px; font-size: 0.75rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em;
-    }
-
-    .item-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        padding: 12px 0;
-        border-bottom: 1px dashed #f3f4f6;
-        transition: opacity 0.2s;
-    }
-    .dark .item-row { border-color: #27272a; }
-    .item-row:hover { opacity: 0.7; }
-
-    /* Hide the non-relevant rows when filtering */
-    .item-row.hidden { display: none !important; }
-    
-    /* Flex adjustment for mobile vs desktop in list items */
-    /* Mobile: Stack them vertically */
-    .item-left { display: flex; flex-direction: column; gap: 2px; max-width: 80%; }
-    /* Desktop: Flow them like a sentence to remove the gap */
-    @media (min-width: 640px) {
-        .item-left {
-            display: block;
-        }
-        /* Add a small separator before the author */
-        .item-author::before {
-            content: " ";
-            margin-left: 6px;
-        }
-    }
-
-    .item-title { font-weight: 600; color: #1d1d1f; text-decoration: none; font-size: 1rem; }
-    .dark .item-title { color: #fff; }
-    .item-author { font-size: 0.85rem; color: #6b7280; font-weight: 400; }
-    .item-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #9ca3af; white-space: nowrap; }
-
-    /* --- Micro-Tags for type of books --- */
-    .tag-pill {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem; /* Smaller than normal text */
-    padding: 1px 6px;
-    border: 1px solid #f3f4f6;
-    border-radius: 4px;
-    color: #4b5563;
-    margin-left: 6px;
-    background: transparent;
-    text-transform: lowercase;
-    vertical-align: middle;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    }
-    .tag-pill:hover {
-    background: #e5e7eb; /* Slightly darker on hover */
-    color: #1d1d1f;
-    }
-
-    /* Dark mode overrides */
-    .dark .tag-pill {
-    border-color: #333;
-    background: transparent;
-    color: #6b7280;
-    }
-    .dark .tag-pill:hover {
-    background: #4b5563;
-    color: #fff;
-    }
-
-    /* Mobile tweak: reduce margin on small screens if needed */
-    @media (max-width: 640px) {
-    .tag-pill { margin-left: 4px; padding: 1px 4px; }
-    }
-    .filter-active-badge {
-        display: inline-flex; align-items: center; gap: 6px;
-        background: #1d1d1f; color: #fff;
-        padding: 4px 12px; border-radius: 99px;
-        font-size: 0.75rem; cursor: pointer;
-        font-family: 'JetBrains Mono', monospace;
-    }
-    .dark .filter-active-badge {
-        background: #fff; color: #000;
-    }
-    
-    /* --- STARS (Monochrome System) --- */
-    .stars { letter-spacing: 2px; }
-    .star-fill { color: #1d1d1f; }
-    .star-empty { color: #e5e7eb; }
-    .dark .star-fill { color: #fff; }
-    .dark .star-empty { color: #333; }
-
-    /* Sort Control Link */
-    .sort-toggle { cursor: pointer; display: flex; align-items: center; gap: 4px; }
-    .sort-toggle:hover { color: #1d1d1f; dark:color: #fff; }
-
-    /* --- ACCORDION (Year Groups) --- */
-    details {
-        border-bottom: 1px solid #f3f4f6;
-        margin-bottom: 0;
-    }
-    .dark details { border-color: #27272a; }
-    
-    /* Hide default browser triangle */
-    details > summary { list-style: none; outline: none; }
-    details > summary::-webkit-details-marker { display: none; }
-
-    .year-summary {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 24px 0;
-        cursor: pointer;
-        font-family: 'JetBrains Mono', monospace;
-        color: #1d1d1f;
-        transition: opacity 0.2s;
-    }
-    .dark .year-summary { color: #fff; }
-    .year-summary:hover { opacity: 0.7; }
-
-    .year-text { font-size: 1.25rem; font-weight: 700; }
-    
-    /* The small bubble showing book count per year */
-    .year-count {
-        font-size: 0.75rem;
-        background: #f3f4f6;
-        color: #6b7280;
-        padding: 2px 8px;
-        border-radius: 99px;
-        margin-left: 10px;
-        vertical-align: middle;
-        font-weight: 600;
-    }
-    .dark .year-count { background: #333; color: #9ca3af; }
-
-    /* Animation logic for accordion */
-    .chevron { transition: transform 0.2s; color: #9ca3af; }
-    details[open] .chevron { transform: rotate(180deg); }
-
-    details[open] > .group-content { animation: slideDown 0.25s ease-out; }
-    @keyframes slideDown {
-        from { opacity: 0; transform: translateY(-5px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
 
     /* --- CHART VISUALIZER --- */
     .chart-container {
         display: flex;
-        align-items: flex-end; /* Aligns bars to bottom */
-        justify-content: flex-end; /* Aligns chart to right */
-        gap: 8px;
-        height: 100%;
-        min-height: 120px;
-        padding-bottom: 24px; /* Space for year labels */
+        flex-direction: column;
+        gap: 10px;
+        height: auto;
+        padding: 0;
     }
 
     .bar-group {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: 32px 1fr 24px;
         align-items: center;
-        justify-content: flex-end;
-        height: 100%;
-        flex: 1;
-        max-width: 40px;
-        min-width: 0; /* Important for flex shrinking on mobile */
-        position: relative;
+        gap: 10px;
+    }
+
+    .bar-track {
+        width: 100%;
+        height: 8px;
+        background: transparent;
     }
 
     .bar {
-        width: 100%;
-        background-color: #d1d5db !important; /* Visible gray */
-        border-radius: 4px 4px 0 0;
-        transition: height 0.5s ease;
-        min-height: 4px; /* Minimum height for empty years */
+        height: 100%;
+        background-color: #e5e7eb !important;
+        border-radius: 4px;
+        transition: width 0.4s ease;
     }
-    .dark .bar { background-color: #3f3f46 !important; }
 
-    .bar.active-year { background-color: #1d1d1f !important; }
-    .dark .bar.active-year { background-color: #fff !important; }
+    .bar.active-year {
+        background-color: #1d1d1f !important;
+    }
+
+    .dark .bar {
+        background-color: #3f3f46 !important;
+    }
+
+    .dark .bar.active-year {
+        background-color: #fff !important;
+    }
 
     .bar-label {
-        position: absolute;
-        bottom: -24px;
         font-family: 'JetBrains Mono', monospace;
         font-size: 0.65rem;
         color: #9ca3af;
-        width: 100%;
-        text-align: center;
+        text-align: right;
     }
 
     .bar-val {
-        margin-bottom: 6px;
         font-family: 'JetBrains Mono', monospace;
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         font-weight: 700;
         color: #1d1d1f;
-        z-index: 10;
+        text-align: right;
     }
+    /* Show number on hover OR if it's the current year */
+    .bar-group:hover .bar-val, .bar-group:active .bar-val { opacity: 1; }
     .dark .bar-val { color: #fff; }
+
+    /* --- TABS & LISTS --- */
+    .tab-bar { display: flex; gap: 20px; border-bottom: 1px solid #e5e7eb; margin-bottom: 30px; }
+    .dark .tab-bar { border-color: #333; }
+    .tab-btn { padding-bottom: 10px; font-size: 0.9rem; font-weight: 500; color: #9ca3af; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+    .tab-btn.active { color: #1d1d1f; border-bottom-color: #1d1d1f; }
+    .dark .tab-btn.active { color: #fff; border-bottom-color: #fff; }
+
+    .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 0.75rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em; }
+    
+    .item-row { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; border-bottom: 1px dashed #f3f4f6; transition: opacity 0.2s; }
+    .dark .item-row { border-color: #27272a; }
+    .item-row:hover { opacity: 0.7; }
+    .item-row.hidden { display: none !important; }
+    
+    @media (min-width: 640px) {
+        .item-left { display: block; }
+        .item-author::before { content: " "; margin-left: 6px; }
+    }
+    .item-left { display: flex; flex-direction: column; gap: 2px; max-width: 80%; }
+
+    .item-title { font-weight: 600; color: #1d1d1f; font-size: 1rem; }
+    .dark .item-title { color: #fff; }
+    .item-author { font-size: 0.85rem; color: #6b7280; font-weight: 400; }
+    .item-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #9ca3af; white-space: nowrap; }
+
+    .tag-pill { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; padding: 1px 6px; border: 1px solid #f3f4f6; border-radius: 4px; color: #4b5563; margin-left: 6px; cursor: pointer; transition: all 0.2s ease; }
+    .tag-pill:hover { background: #e5e7eb; color: #1d1d1f; }
+    .dark .tag-pill { border-color: #333; color: #6b7280; }
+    .dark .tag-pill:hover { background: #4b5563; color: #fff; }
+
+    .filter-active-badge { display: inline-flex; align-items: center; gap: 6px; background: #1d1d1f; color: #fff; padding: 4px 12px; border-radius: 99px; font-size: 0.75rem; cursor: pointer; font-family: 'JetBrains Mono', monospace; }
+    .dark .filter-active-badge { background: #fff; color: #000; }
+    
+    .stars { letter-spacing: 2px; }
+    .star-fill { color: #1d1d1f; } .star-empty { color: #e5e7eb; }
+    .dark .star-fill { color: #fff; } .dark .star-empty { color: #333; }
+    .sort-toggle { cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .sort-toggle:hover { color: #1d1d1f; } .dark .sort-toggle:hover { color: #fff; }
+
+    details { border-bottom: 1px solid #f3f4f6; margin-bottom: 0; }
+    .dark details { border-color: #27272a; }
+    details > summary { list-style: none; outline: none; }
+    details > summary::-webkit-details-marker { display: none; }
+    .year-summary { display: flex; justify-content: space-between; align-items: center; padding: 24px 0; cursor: pointer; font-family: 'JetBrains Mono', monospace; color: #1d1d1f; transition: opacity 0.2s; }
+    .dark .year-summary { color: #fff; }
+    .year-summary:hover { opacity: 0.7; }
+    .year-text { font-size: 1.25rem; font-weight: 700; }
+    .year-count { font-size: 0.75rem; background: #f3f4f6; color: #6b7280; padding: 2px 8px; border-radius: 99px; margin-left: 10px; font-weight: 600; }
+    .dark .year-count { background: #333; color: #9ca3af; }
+    .chevron { transition: transform 0.2s; color: #9ca3af; }
+    details[open] .chevron { transform: rotate(180deg); }
+    details[open] > .group-content { animation: slideDown 0.25s ease-out; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 
 
@@ -285,7 +175,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
                 </div>
 
                 <!-- Bottom: Secondary Stats (Current Year + Avg Rating) -->
-                <div class="flex flex-col sm:flex-row gap-2 sm:gap-10">
+                <div class="flex flex-row gap-8">
                     <div>
                         <p class="stat-label">This Year</p>
                         <div class="stat-val text-lg sm:text-xl" id="statCurrentYear">0</div>
@@ -508,9 +398,9 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
         // Update "This Year" Text
         document.getElementById('statCurrentYear').textContent = yearMap[currentYear] || 0;
 
-        // 3. Render Bar Chart (Last 7 Years)
+        // 3. Render Bar Chart (Last 5 Years)
         const chartContainer = document.getElementById('readingChart');
-        const yearsToShow = 7;
+        const yearsToShow = 5;
         const startYear = currentYear - yearsToShow + 1;
         
         // Find max value
@@ -529,9 +419,11 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
 
             chartHTML += `
                 <div class="bar-group">
-                    <span class="bar-val">${count}</span>
-                    <div class="bar ${activeClass}" style="height: ${barHeight}%"></div>
                     <span class="bar-label">'${y.toString().slice(2)}</span>
+                    <div class="bar-track">
+                        <div class="bar ${activeClass}" style="width: ${barHeight}%"></div>
+                    </div>
+                    <span class="bar-val">${count}</span>
                 </div>
             `;
         }

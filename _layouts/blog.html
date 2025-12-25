@@ -126,7 +126,7 @@ image: "https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blo
             
             const btnText = btn.innerText.replace('#', '').trim();
             if(btnText === tag || (tag === 'all' && btnText === 'all')) {
-                btn.classList.add('bg-black', 'text-white', 'dark:bg-white', 'dark:text-black');
+                btn.classList.add('bg-black', '!text-white', 'dark:bg-white', '!dark:text-black');
                 btn.classList.remove('text-[#86868b]');
             }
         });
