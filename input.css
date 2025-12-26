@@ -4,7 +4,45 @@
 
 /* You can add custom CSS here if you ever need to */
 
-/* JetBrains Mono (Data Font) */
+/* --- 1. INTER (UI Font - v20) --- */
+
+/* Regular (400) */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/inter-v20-latin-regular.woff2') format('woff2');
+}
+
+/* Medium (500) */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/assets/fonts/inter-v20-latin-500.woff2') format('woff2');
+}
+
+/* SemiBold (600) */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/assets/fonts/inter-v20-latin-600.woff2') format('woff2');
+}
+
+/* Bold (700) */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/assets/fonts/inter-v20-latin-700.woff2') format('woff2');
+}
+
+/* --- 2. JetBrains Mono (Data Font) --- */
 
 /* Regular (400) */
 @font-face {
