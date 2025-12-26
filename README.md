@@ -11,7 +11,24 @@ The source code for my personal blog.
 *   **Hosting:** Cloudflare Pages.
 *   **Icons:** [Lucide](https://lucide.dev/).
 *   **Fonts:** Self-hosted `Inter` (UI) and `JetBrains Mono` (Data).
-*   **Analytics:** None (or Privacy-preserving Cloudflare Analytics).
+*   **Analytics:** None.
+
+---
+
+## Infrastructure & Deployment
+
+This site is hosted on **Cloudflare Pages** for performance at the edge, connected directly to this GitHub repository.
+
+**DNS Setup (Namecheap to Cloudflare):**
+1.  **Cloudflare:** The domain is added to the main Cloudflare Dashboard (Free Plan) to manage DNS.
+2.  **Namecheap:** In the *Domain List* -> *Manage* -> *Nameservers*, **Custom DNS** is selected.
+3.  **Link:** The two Cloudflare Nameservers (e.g., `bob.ns.cloudflare.com`) are pasted into Namecheap.
+4.  **Cloudflare Pages:** In *Workers & Pages* -> *[Project]* -> *Custom Domains*, `harshnahar.com` is linked. Cloudflare automatically handles SSL and internal routing.
+
+**Build Settings:**
+*   **Build Command:** `jekyll build`
+*   **Output Directory:** `_site`
+*   **Environment:** Ruby (latest stable).
 
 ---
 

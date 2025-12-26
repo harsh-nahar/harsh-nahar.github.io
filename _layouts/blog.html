@@ -121,13 +121,37 @@ image: "https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blo
         
         // Visual Toggle
         filterBtns.forEach(btn => {
-            btn.classList.remove('bg-black', 'text-white', 'dark:bg-white', 'dark:text-black');
+            // 1. Reset: Remove ALL active classes (Clean Slate)
+            btn.classList.remove(
+                'bg-black', 
+                'text-white', 
+                'dark:bg-white', 
+                'dark:text-black',
+                // Remove the specific hover overrides we are about to add
+                '!hover:text-white', 
+                '!dark:hover:text-black'
+            );
+            
+            // 2. Set Inactive State
             btn.classList.add('text-[#86868b]');
             
+            // 3. Set Active State
             const btnText = btn.innerText.replace('#', '').trim();
             if(btnText === tag || (tag === 'all' && btnText === 'all')) {
-                btn.classList.add('bg-black', '!text-white', 'dark:bg-white', '!dark:text-black');
                 btn.classList.remove('text-[#86868b]');
+                
+                btn.classList.add(
+                    // Base Colors (Correct for Light/Dark)
+                    'bg-black', 
+                    'text-white', 
+                    'dark:bg-white', 
+                    'dark:text-black',
+                    
+                    // The Mobile "Sticky Hover" Fix
+                    // Force the hover state to match the active state
+                    '!hover:text-white', 
+                    '!dark:hover:text-black'
+                );
             }
         });
 

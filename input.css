@@ -79,3 +79,25 @@
   font-display: swap;
   src: url('/assets/fonts/jetbrains-mono-v24-latin-700.woff2') format('woff2');
 }
+
+/* --- 3. GLOBAL OVERRIDES (Must be last) --- */
+
+/* Light Mode: Black Highlight, White Text */
+::selection {
+  background-color: #000000;
+  color: #ffffff;
+}
+::-moz-selection {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Dark Mode: White Highlight, Black Text */
+html.dark ::selection {
+  background-color: #ffffff;
+  color: #000000;
+}
+html.dark ::-moz-selection {
+  background-color: #ffffff;
+  color: #000000;
+}
