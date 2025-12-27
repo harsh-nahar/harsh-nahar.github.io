@@ -600,8 +600,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_cvbuilde
     document.getElementById('inpLinks').addEventListener('input', (e) => { data.links = e.target.value; saveData(); });
     document.getElementById('inpSkills').addEventListener('input', (e) => { data.skills = e.target.value; saveData(); });
 
-    // --- PRINT ENGINE  ---
-    // --- PRINT ENGINE (FIXED HEADERS & MARGINS) ---
+    // --- PRINT ENGINE (FIXED: Selectable Text) ---
     function printResume() {
         const frame = document.getElementById('printFrame');
         const doc = frame.contentWindow.document;
@@ -613,22 +612,21 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_cvbuilde
             <html><head><title>${(data.name || 'Resume').replace(/\s+/g,'_')}_CV</title>
             <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
             <style>
-                /* 1. Remove Browser Headers/Footers */
-                @page { size: A4; margin: 0mm; } 
+                @page { size: A4; margin: 0mm; }
                 
-                body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact; }
+                /* Removed '-webkit-print-color-adjust: exact' to prevent text rasterization */
+                body { margin: 0; padding: 0; background: white; }
                 
-                /* 2. Container handles the visual margins (Padding) */
                 #resume-container { 
                     width: 210mm; 
                     min-height: 297mm; 
-                    padding: 12mm 12mm; /* The actual whitespace */
+                    padding: 12mm 12mm; 
                     background: white; 
                     color: black; 
-                    box-sizing: border-box; /* Fixes the Right Cutoff issue */
+                    box-sizing: border-box; 
                     font-size: 10pt; 
                     line-height: 1.25; 
-                    overflow: hidden; /* Prevents spillover */
+                    overflow: hidden; 
                 }
 
                 .font-modern { font-family: 'Lato', sans-serif; }
@@ -653,7 +651,6 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_cvbuilde
                 
                 .cv-prose-content { font-size: 10pt; text-align: justify; line-height: 1.4; white-space: pre-wrap; }
                 
-                /* Hide Markers in Print */
                 .page-marker { display: none; }
             </style></head><body>
             <div id="resume-container" class="${fontClass}">${content}</div>
@@ -661,12 +658,11 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets/blog-assets/dark_cvbuilde
         `);
         doc.close();
         
-        // Wait for fonts to load before printing
         frame.contentWindow.document.fonts.ready.then(() => { 
             setTimeout(() => { 
                 frame.contentWindow.focus(); 
                 frame.contentWindow.print(); 
-            }, 500); // Increased buffer to ensure layout settles
+            }, 500); 
         });
     }
 
