@@ -1,7 +1,7 @@
 ---
 title: "bengaluru and its inviting loneliness"
 date: 2024-10-13
-tags: ["philosophy"]
+tags: ["musings"]
 ---
 2 months, give or take.
 2 months is all it takes for you to either think that you belong to a new place or for you to have the painful realisation that it is going to take much more than yourself to even survive here.

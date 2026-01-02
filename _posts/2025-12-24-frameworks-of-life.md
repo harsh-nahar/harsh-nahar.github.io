@@ -2,7 +2,7 @@
 title: "frameworks of life"
 date: 2025-12-24
 excerpt: "This second-half is going to be confusing and frameworks will be my walking stick for a myriad of situations that come along."
-tags: ["life", "philosophy"]
+tags: ["philosophy"]
 image: "https://raw.githubusercontent.com/harsh-nahar/assets/refs/heads/main/blog-images/framework_compass.webp"
 ---
 I turn 30 in about 2 years. <br>

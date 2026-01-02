@@ -1,7 +1,7 @@
 ---
 title: "flawed human"
 date: 2020-08-15
-tags: ["philosophy"]
+tags: ["musings"]
 ---
 I'm a flawed human. Before it seems like I'm imparting some knowledge, know that I cannot influence someone else's life, let alone my own.
 
