@@ -102,34 +102,141 @@ html.dark ::-moz-selection {
   color: #000000;
 }
 
-/* --- 4. SYNTAX HIGHLIGHTING (Rouge/Jekyll) --- */
+/* =========================================================
+   4. CODE & TABLE STYLING (Jekyll + Rouge + Typography + restoring Headings from H4)
+   ========================================================= */
 @layer components {
-  /* Base Code Block Styling (Handled mostly by Prose, but tweaks here) */
-  pre.highlight {
-    @apply p-4 rounded-lg overflow-x-auto border border-gray-100 dark:border-white/10 bg-gray-50 dark:bg-white/5;
+
+  /* ---------------------------------
+     A. CODE BLOCKS (Rouge)
+     --------------------------------- */
+
+  /* Code block wrapper */
+  .prose .highlight {
+    margin: 2rem 0;
+    border-radius: 0.75rem;
+    overflow: hidden;
+
+    /* Dark mode */
+    background-color: #1c1c1e;
   }
-  
-  /* Remove Tailwind Typography's default backticks on inline code */
-  .prose :where(code):not(:where([class~="not-prose"] *))::before { content: ""; }
-  .prose :where(code):not(:where([class~="not-prose"] *))::after { content: ""; }
 
-  /* LIGHT MODE COLORS (GitHub-ish) */
-  .highlight .c, .highlight .cm, .highlight .cp, .highlight .c1, .highlight .cs { color: #6a737d; font-style: italic; } /* Comments */
-  .highlight .k, .highlight .kc, .highlight .kd, .highlight .kp, .highlight .kr, .highlight .kt { color: #d73a49; font-weight: bold; } /* Keywords */
-  .highlight .n, .highlight .nb, .highlight .no, .highlight .ni { color: #24292e; } /* Variables/Standard */
-  .highlight .nf, .highlight .fm { color: #6f42c1; } /* Functions */
-  .highlight .s, .highlight .sa, .highlight .sb, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .se, .highlight .sh, .highlight .si, .highlight .sx, .highlight .sr, .highlight .s1, .highlight .ss { color: #032f62; } /* Strings */
-  .highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mx { color: #005cc5; } /* Numbers */
-  .highlight .o, .highlight .ow { color: #d73a49; } /* Operators */
-  .highlight .na, .highlight .nc { color: #6f42c1; } /* Classes/Attributes */
+  /* Light mode */
+  html:not(.dark) .prose .highlight {
+    background-color: #f7fafc;
+  }
 
-  /* DARK MODE COLORS (Dracula-ish) */
-  .dark .highlight .c, .dark .highlight .cm, .dark .highlight .cp, .dark .highlight .c1, .dark .highlight .cs { color: #6272a4; } /* Comments */
-  .dark .highlight .k, .dark .highlight .kc, .dark .highlight .kd, .dark .highlight .kp, .dark .highlight .kr, .dark .highlight .kt { color: #ff79c6; } /* Keywords */
-  .dark .highlight .n, .dark .highlight .nb, .dark .no, .dark .ni { color: #f8f8f2; } /* Variables/Standard */
-  .dark .highlight .nf, .dark .highlight .fm { color: #50fa7b; } /* Functions */
-  .dark .highlight .s, .dark .highlight .sa, .dark .highlight .sb, .dark .highlight .sc, .dark .highlight .dl, .dark .sd, .dark .s2, .dark .se, .dark .sh, .dark .si, .dark .sx, .dark .sr, .dark .s1, .dark .ss { color: #f1fa8c; } /* Strings */
-  .dark .highlight .m, .dark .highlight .mb, .dark .highlight .mf, .dark .highlight .mh, .dark .highlight .mi, .dark .il, .dark .mo, .dark .mx { color: #bd93f9; } /* Numbers */
-  .dark .highlight .o, .dark .highlight .ow { color: #ff79c6; } /* Operators */
-  .dark .highlight .na, .dark .highlight .nc { color: #8be9fd; } /* Classes/Attributes */
+  /* Code itself */
+  .prose .highlight pre {
+    margin: 0;
+    padding: 1.25rem 1.5rem;
+
+    overflow-x: auto;
+    white-space: pre;
+
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.95rem;
+    line-height: 1.65;
+
+    background: transparent;
+    color: #e2e8f0; /* dark mode text */
+  }
+
+  html:not(.dark) .prose .highlight pre {
+    color: #1a202c; /* light mode text */
+  }
+
+  /* Prevent Typography from styling block code */
+  .prose pre code {
+    background: none;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    font-weight: inherit;
+  }
+
+  /* ---------------------------------
+     B. INLINE CODE ONLY
+     --------------------------------- */
+
+  /* Remove typography backticks */
+  .prose code:not(pre code)::before,
+  .prose code:not(pre code)::after {
+    content: "";
+  }
+
+  .prose code:not(pre code) {
+    padding: 0.15rem 0.35rem;
+    border-radius: 0.25rem;
+    background-color: #edf2f7;
+    color: #d53f8c;
+    font-size: 0.85em;
+  }
+
+  html.dark .prose code:not(pre code) {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ff79c6;
+  }
+
+  /* ---------------------------------
+     C. TABLES (Blog posts only)
+     --------------------------------- */
+
+  /* Neutralize typography tables globally */
+  .prose table,
+  .prose th,
+  .prose td {
+    border: none;
+  }
+
+  /* Re-enable tables only for blog posts */
+  .blog-content table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 2rem 0;
+    border: 1px solid #e5e7eb;
+  }
+
+  html.dark .blog-content table {
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .blog-content th,
+  .blog-content td {
+    border: 1px solid #e5e7eb;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  html.dark .blog-content th,
+  html.dark .blog-content td {
+    border-color: rgba(255, 255, 255, 0.12);
+  }
 }
+
+  /* ---------------------------------
+     D. Restore visual hierarchy for h4+ inside prose
+     --------------------------------- */
+  .prose h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose h5 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .prose h6 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+

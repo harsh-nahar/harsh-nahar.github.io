@@ -128,9 +128,22 @@
     {{ content }}
   </main>
 
-  <footer class="py-8 text-center text-xs text-[#86868b] opacity-60 font-mono">
-    © {{ site.time | date: '%Y' }} Harsh Nahar
-  </footer>
+      
+<footer class="py-10 text-center font-mono space-y-4">
+    <!-- Contact Link -->
+    <div>
+        <a href="mailto:me@harshnahar.com" class="text-sm text-[#1d1d1f] dark:text-white border-b border-[#1d1d1f]/30 dark:border-white/30 pb-0.5 hover:border-[#1d1d1f] dark:hover:border-white transition-all">
+            me@harshnahar.com
+        </a>
+    </div>
+
+    <!-- Copyright (Restored to text-xs) -->
+    <div class="text-xs text-[#86868b] opacity-60">
+        © {{ site.time | date: '%Y' }} Harsh Nahar
+    </div>
+</footer>
+
+  
 
   <script defer>
     document.addEventListener("DOMContentLoaded", () => {
