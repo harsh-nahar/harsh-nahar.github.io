@@ -8,8 +8,6 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/portfoli
 
 ![Main View of the portfolio](https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-images/portfolio-tracker-post/net_worth_linechart.webp)
 
-### Index
-
 1. **[Overview](#overview)**
 2. **[Sheet Breakdown](#sheet-breakdown)**  
    [Net Worth](#net-worth-sheet) ·
