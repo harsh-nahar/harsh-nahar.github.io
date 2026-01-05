@@ -101,3 +101,35 @@ html.dark ::-moz-selection {
   background-color: #ffffff;
   color: #000000;
 }
+
+/* --- 4. SYNTAX HIGHLIGHTING (Rouge/Jekyll) --- */
+@layer components {
+  /* Base Code Block Styling (Handled mostly by Prose, but tweaks here) */
+  pre.highlight {
+    @apply p-4 rounded-lg overflow-x-auto border border-gray-100 dark:border-white/10 bg-gray-50 dark:bg-white/5;
+  }
+  
+  /* Remove Tailwind Typography's default backticks on inline code */
+  .prose :where(code):not(:where([class~="not-prose"] *))::before { content: ""; }
+  .prose :where(code):not(:where([class~="not-prose"] *))::after { content: ""; }
+
+  /* LIGHT MODE COLORS (GitHub-ish) */
+  .highlight .c, .highlight .cm, .highlight .cp, .highlight .c1, .highlight .cs { color: #6a737d; font-style: italic; } /* Comments */
+  .highlight .k, .highlight .kc, .highlight .kd, .highlight .kp, .highlight .kr, .highlight .kt { color: #d73a49; font-weight: bold; } /* Keywords */
+  .highlight .n, .highlight .nb, .highlight .no, .highlight .ni { color: #24292e; } /* Variables/Standard */
+  .highlight .nf, .highlight .fm { color: #6f42c1; } /* Functions */
+  .highlight .s, .highlight .sa, .highlight .sb, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .se, .highlight .sh, .highlight .si, .highlight .sx, .highlight .sr, .highlight .s1, .highlight .ss { color: #032f62; } /* Strings */
+  .highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mx { color: #005cc5; } /* Numbers */
+  .highlight .o, .highlight .ow { color: #d73a49; } /* Operators */
+  .highlight .na, .highlight .nc { color: #6f42c1; } /* Classes/Attributes */
+
+  /* DARK MODE COLORS (Dracula-ish) */
+  .dark .highlight .c, .dark .highlight .cm, .dark .highlight .cp, .dark .highlight .c1, .dark .highlight .cs { color: #6272a4; } /* Comments */
+  .dark .highlight .k, .dark .highlight .kc, .dark .highlight .kd, .dark .highlight .kp, .dark .highlight .kr, .dark .highlight .kt { color: #ff79c6; } /* Keywords */
+  .dark .highlight .n, .dark .highlight .nb, .dark .no, .dark .ni { color: #f8f8f2; } /* Variables/Standard */
+  .dark .highlight .nf, .dark .highlight .fm { color: #50fa7b; } /* Functions */
+  .dark .highlight .s, .dark .highlight .sa, .dark .highlight .sb, .dark .highlight .sc, .dark .highlight .dl, .dark .sd, .dark .s2, .dark .se, .dark .sh, .dark .si, .dark .sx, .dark .sr, .dark .s1, .dark .ss { color: #f1fa8c; } /* Strings */
+  .dark .highlight .m, .dark .highlight .mb, .dark .highlight .mf, .dark .highlight .mh, .dark .highlight .mi, .dark .il, .dark .mo, .dark .mx { color: #bd93f9; } /* Numbers */
+  .dark .highlight .o, .dark .highlight .ow { color: #ff79c6; } /* Operators */
+  .dark .highlight .na, .dark .highlight .nc { color: #8be9fd; } /* Classes/Attributes */
+}
