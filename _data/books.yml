@@ -1,3 +1,11 @@
+- title: "Project Hail Mary"
+  author: "Andy Weir"
+  tags: ["scifi", "adventure", "space"]
+  id: "55313155"
+  rating: 5
+  pages: 482
+  date_read: "2026-05-02"
+
 - title: "Will My Cat Eat My Eyeballs? And Other Questions About Dead Bodies"
   author: "Caitlin Doughty"
   tags: ["non-fiction", "science", "humour"]
@@ -24,7 +32,7 @@
 
 - title: "The Restaurant at the End of the Universe"
   author: "Douglas Adams"
-  tags: ["fiction", "scifi", "humour"]
+  tags: ["space", "scifi", "humour"]
   id: "8695"
   rating: 4
   pages: 250
@@ -88,7 +96,7 @@
 
 - title: "The Hitchhiker's Guide to the Galaxy"
   author: "Douglas Adams"
-  tags: ["fiction", "scifi", "humour"]
+  tags: ["space", "scifi", "humour"]
   id: "14"
   rating: 4
   pages: 215
