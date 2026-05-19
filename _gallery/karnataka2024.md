@@ -4,7 +4,7 @@ thumbnail: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/karnatak
 date: 2024-04-10
 ---
 
-Photos from my trip to Karnataka in 2024 — Mysore and Coorg.
+Photos from my trip to Karnataka in 2024 - Mysore and Coorg.
 
 
 ![Top of Chamundeshwari Temple, Mysore](https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/gallery/karnataka_2024/mysore_chamundeshwari.webp)
