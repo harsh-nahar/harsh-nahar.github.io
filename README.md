@@ -9,7 +9,7 @@ The source code for my personal blog.
 *   **Core:** [Jekyll](https://jekyllrb.com/) (Ruby Static Site Generator).
 *   **Styling:** [Tailwind CSS v3](https://tailwindcss.com/) (Standalone CLI). **Zero Runtime JS.**
 *   **Hosting:** Cloudflare Pages.
-*   **Icons:** [Lucide](https://lucide.dev/).
+*   **Icons:** [Lucide](https://lucide.dev/) v0.460.0 (self-hosted).
 *   **Fonts:** Self-hosted `Inter` (UI) and `JetBrains Mono` (Data).
 *   **Analytics:** None.
 
