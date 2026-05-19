@@ -256,7 +256,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
                             <!-- Single Book Row -->
                             <div class="item-row book-entry" data-date="{{ book.date_read }}" data-rating="{{ book.rating }}" data-tags="{{ book.tags | join: ',' | downcase }}">
                                 <div class="item-left">
-                                    <a href="https://www.goodreads.com/book/show/{{ book.id }}" target="_blank" class="item-title hover:underline">
+                                    <a href="https://www.goodreads.com/book/show/{{ book.id }}" target="_blank" rel="noopener" class="item-title hover:underline">
                                         {{ book.title }}
                                     </a>
                                     <span class="item-author">
@@ -301,7 +301,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
                         {% for book in undated_books %}
                             <div class="item-row book-entry" data-date="" data-rating="{{ book.rating }}" data-tags="{{ book.tags | join: ',' | downcase }}">
                                 <div class="item-left">
-                                    <a href="https://www.goodreads.com/book/show/{{ book.id }}" target="_blank" class="item-title hover:underline">
+                                    <a href="https://www.goodreads.com/book/show/{{ book.id }}" target="_blank" rel="noopener" class="item-title hover:underline">
                                         {{ book.title }}
                                     </a>
                                     <span class="item-author">
@@ -348,7 +348,7 @@ image: "https://cdn.jsdelivr.net/gh/harsh-nahar/assets@main/blog-assets/dark_boo
         {% for article in articles %}
         <div class="item-row">
             <div class="item-left">
-                <a href="{{ article.link }}" target="_blank" class="item-title hover:underline">
+                <a href="{{ article.link }}" target="_blank" rel="noopener" class="item-title hover:underline">
                     {{ article.title }}
                 </a>
                 <span class="item-author">{{ article.author }}</span>
