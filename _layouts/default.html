@@ -92,6 +92,9 @@
   <!-- Local Tailwind CSS -->
   <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}">
 
+  <!-- Preload critical font to avoid chain: HTML → CSS → font -->
+  <link rel="preload" href="/assets/fonts/inter-v20-latin-500.woff2" as="font" type="font/woff2" crossorigin>
+
   <!-- Icons -->
   <script src="/assets/js/lucide.min.js" defer></script>
 </head>
@@ -111,7 +114,7 @@
           <a href="{{ '/tools/' | relative_url }}" class="hover:text-black dark:hover:text-white transition-colors">tools</a>
         </div>
         <!-- Toggle Button -->
-        <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
+        <button onclick="toggleTheme()" aria-label="Toggle theme" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
           <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
           <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
         </button>
