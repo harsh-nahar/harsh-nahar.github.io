@@ -1,3 +1,11 @@
+- title: "Notes from Underground"
+  author: "Fyodor Dostoevsky"
+  tags: ["psychology", "literary", "philosophy"]
+  id: "20566675"
+  rating: 1
+  pages: 154
+  date_read: "2026-06-10"
+
 - title: "Project Hail Mary"
   author: "Andy Weir"
   tags: ["scifi", "adventure", "space"]
@@ -104,7 +112,7 @@
 
 - title: "Man's Search for Meaning"
   author: "Viktor E. Frankl"
-  tags: ["non-fiction", "psychology", "philosophical"]
+  tags: ["non-fiction", "psychology", "philosophy"]
   id: "4069"
   rating: 3
   pages: 165
@@ -248,7 +256,7 @@
 
 - title: "The Stranger"
   author: "Albert Camus"
-  tags: ["fiction", "literary", "philosophical"]
+  tags: ["fiction", "literary", "philosophy"]
   id: "49552"
   rating: 3
   pages: 123
@@ -424,7 +432,7 @@
 
 - title: "Sapiens"
   author: "Yuval Noah Harari"
-  tags: ["non-fiction", "history", "philosophical"]
+  tags: ["non-fiction", "history", "philosophy"]
   id: "23692271"
   rating: 5
   pages: 512
@@ -472,7 +480,7 @@
 
 - title: "The Subtle Art of Not Giving a F*ck"
   author: "Mark Manson"
-  tags: ["non-fiction", "self-help", "philosophical"]
+  tags: ["non-fiction", "self-help", "philosophy"]
   id: "28257707"
   rating: 3
   pages: 212
@@ -600,7 +608,7 @@
 
 - title: "The Alchemist"
   author: "Paulo Coelho"
-  tags: ["fiction", "literary", "philosophical"]
+  tags: ["fiction", "literary", "philosophy"]
   id: "865"
   rating: 3
   pages: 197
